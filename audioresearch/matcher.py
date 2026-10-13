@@ -162,6 +162,7 @@ class Match:
     score: float
     via: str                      # "track" | "release"
     release_score: float | None = None
+    artist_sim: float = 0.0       # tie-break: the uploader/account name is the artist
 
 
 @dataclass
@@ -186,8 +187,12 @@ def match_candidates(identity: ReleaseIdentity, tracks: list[TrackRef], candidat
                 continue
             out.releases.append((c, rs))
             hit = False
+            unavailable = set(c.extra.get("unavailable", []))
             for pos, (s, ct) in assign_tracks(identity, c).items():
                 if pos in wanted and s >= TRACK_IN_RELEASE_THRESHOLD:
+                    if ct.url in unavailable:
+                        out.rejected.append((c.for_track(ct, pos), f"{pos} is on a matched release but not streamable"))
+                        continue
                     found.append(Match(pos, c.for_track(ct, pos), s, "release", rs))
                     hit = True
             if not hit:
@@ -199,10 +204,12 @@ def match_candidates(identity: ReleaseIdentity, tracks: list[TrackRef], candidat
             elif len(scored) > 1 and scored[0][0] - scored[1][0] < AMBIGUITY_MARGIN and scored[1][0] >= bar:
                 out.rejected.append((c, f"ambiguous: fits {scored[0][1]} and {scored[1][1]} equally"))
             else:
-                found.append(Match(scored[0][1], c, scored[0][0], "track"))
+                t = identity.track(scored[0][1])
+                found.append(Match(scored[0][1], c, scored[0][0], "track",
+                                   artist_sim=similarity(t.artist, c.artist) if c.artist else 0.0))
     for m in found:
         out.matches.setdefault(m.position, []).append(m)
     for pos, ms in out.matches.items():
-        ms.sort(key=lambda m: (-m.candidate.quality_hint.rank, -m.score))
+        ms.sort(key=lambda m: (-m.candidate.quality_hint.rank, -round(m.score, 2), -m.artist_sim))
         out.matches[pos] = ms[:top]
     return out

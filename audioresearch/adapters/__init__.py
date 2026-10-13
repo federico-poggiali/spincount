@@ -18,6 +18,7 @@ BUILTIN: list[tuple[str, str]] = [
     ("youtube_music", "YouTubeMusic"),
     ("itunes", "ITunesPreview"),
     ("bandcamp", "Bandcamp"),
+    ("bandcamp", "BandcampTracks"),
     ("soundcloud_tracks", "SoundCloudTracks"),
     ("soundcloud_sets", "SoundCloudSets"),
     ("beatport_tracks", "BeatportTracks"),
