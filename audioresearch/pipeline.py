@@ -10,7 +10,7 @@ from typing import Callable, Iterable
 from . import config, decide as decide_mod, events as ev, fetch as fetch_mod, verify as verify_mod
 from .adapters import Registry, default_registry
 from .adapters.base import Adapter
-from .decide import Accepted, decide_track
+from .decide import Accepted, confidence, decide_track
 from .health import AdapterHealth
 from .identify import identify
 from .matcher import Match, MatchOutcome, match_candidates
@@ -43,7 +43,8 @@ class Run:
         self.accepted: dict[str, list[Accepted]] = {t.position: [] for t in identity.tracks}
         self.readings: dict[str, list[Reading]] = {t.position: [] for t in identity.tracks}
         self.results: dict[str, TrackResult] = {t.position: TrackResult(t.position) for t in identity.tracks}
-        self.tried: dict[str, int] = {t.position: 0 for t in identity.tracks}
+        self.overrides = store.overrides(identity.discogs_release_id) if store else {}
+        self.rejected_urls = {o["detail"] for o in self.overrides.values() if o["action"] == "reject" and o["detail"]}
 
     # ---- helpers -------------------------------------------------------------------------------
     def settled(self, pos: str) -> bool:
@@ -192,6 +193,10 @@ class Run:
             adapter = adapters.get(m.candidate.adapter)
             if adapter is None or self.health.is_off(adapter.name):
                 continue
+            if m.candidate.url in self.rejected_urls:
+                self.em.emit(ev.CANDIDATE_REJECTED, level=level, adapter=adapter.name, position=pos,
+                             url=m.candidate.url, reason="rejected by you in review")
+                continue
             dest = fetch_mod.dest_for(self.audio_dir, self.identity, pos, adapter.name)
             got, from_cache = self._cached_fetch(adapter, m.candidate, dest, pos)
             if got is FAILED:
@@ -277,9 +282,12 @@ class Run:
         for t in self.identity.tracks:
             r = self.results[t.position]
             alts = [{"source": a.fetched.adapter, "quality": a.fetched.quality.value,
-                     "confidence": round(a.match.score, 3), "audio_path": str(a.fetched.path), "url": a.fetched.url}
+                     "confidence": round(confidence(a, self.review_threshold), 3), "audio_path": str(a.fetched.path), "url": a.fetched.url}
                     for a in self.accepted[t.position] if str(a.fetched.path) != r.audio_path]
             r.alternatives = alts
+            o = self.overrides.get(t.position)
+            if o and o["action"] == "accept" and r.status == Status.REVIEW and o["detail"] == r.url:
+                r.status, r.reason = Status.FOUND, f"{r.reason}; accepted by you in review"
             tracks.append(r)
         return ReleaseResult(self.identity.discogs_release_id, tracks, sorted(self.health.off))
 

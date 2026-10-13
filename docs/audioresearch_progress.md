@@ -46,3 +46,7 @@ Built: `verify.py` (duration check 6 s for full; unknown Discogs duration reject
 A missing `fpcalc` gives a warning and duration-only verification (tested).
 Thresholds: agree at 0.70 bit similarity, disagree below 0.63. Unrelated synthetic tunes reach ~0.59 at their best offset, so the first guess of 0.65/0.58 was too tight. These need checking on real audio in Step 17.
 Medley detection is keyword based (title words such as "DJ mix", "medley", "EP preview"); the length rule catches the rest.
+
+## Step 10: decide, review and report
+Built: `decide.py` (confidence formula documented at the top of the file; disagreement always means review; level 0 always wins), CLI `research` (table, `--json`), `report <id>` (stored result and the provenance log of the latest run), `review <id>` (accept / reject / paste a link per track; reject remembers the URL so reruns skip it; a pasted link triggers a full rerun that uses the caches).
+Part A is complete: a fake end-to-end run prints a table and writes JSON that passes the schema.
