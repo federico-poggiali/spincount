@@ -35,3 +35,8 @@ Not built: nothing skipped. Past runs list is the 50 latest.
 ## Step 7: shared services
 Built: `store.py` (migrations; identities, candidates, fetched audio, decisions with date, provenance, readings, run events, run results, manual links, review overrides), `http.py` (per-site delay, retry/backoff on 429/5xx and network errors, `Retry-After`, per-adapter stats), adapter health (5 consecutive failures, `AUDIORESEARCH_MAX_FAILURES`).
 Cache rule: a stored result is reused when it covers the requested levels, no adapter reports changed inputs (`Adapter.changed_since`), and any `not_found` is younger than 30 days.
+
+## Step 8: fetch and quality ladder
+Built: `fetch.py` (`ytdlp_download`, `http_download`, `probe_duration` via mutagen then ffprobe, `classify`, `finalize`), `HttpClient.throttle` so yt-dlp calls respect the per-site delay. Quality: clip under 60 s; preview when under 80% of the Discogs duration and 15+ s short; otherwise full; with no Discogs duration the adapter's hint stands.
+Tests generate tiny WAVs at run time (`tests/audio_utils.py`) instead of committing binaries; yt-dlp is mocked.
+Installed with Homebrew: `ffmpeg`, `chromaprint` (provides `fpcalc`).

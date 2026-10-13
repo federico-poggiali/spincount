@@ -48,7 +48,8 @@ class FakeAdapter(Adapter):
         path = dest.parent / (dest.name + ".fake")
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_bytes(b"fake audio")
-        dur = self.durations.get(candidate.url, candidate.duration)
+        default = {Quality.FULL: candidate.duration, Quality.PREVIEW: 90, Quality.CLIP: 30}[candidate.quality_hint]
+        dur = self.durations.get(candidate.url, default)
         return FetchedAudio(path, self.name, candidate.url, candidate.quality_hint, float(dur) if dur else None)
 
 

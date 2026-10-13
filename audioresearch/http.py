@@ -45,6 +45,11 @@ class HttpClient:
             self._sleep(wait)
         self._last[site] = self._clock()
 
+    def throttle(self, site: str) -> None:
+        """Wait for the site's minimum delay before something that bypasses this client (yt-dlp)."""
+        with self._site_locks[site]:
+            self._wait(site)
+
     def request(self, method: str, url: str, *, site: str, adapter: str | None = None, **kw: Any):
         adapter = adapter or site
         kw.setdefault("timeout", 20)
