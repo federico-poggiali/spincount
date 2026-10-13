@@ -24,6 +24,7 @@
   button, select { background: var(--panel); color: var(--text); border: 1px solid var(--line); padding: 9px 14px; border-radius: 6px; font: inherit; cursor: pointer; }
   button.primary { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 600; }
   button:disabled { opacity: .5; cursor: default; }
+  .chk { display: flex; gap: 6px; align-items: center; color: var(--dim); cursor: pointer; } .chk input { accent-color: var(--accent); }
   .total { font: 13px var(--mono); color: var(--dim); margin-left: auto; }
   .release { margin-top: 14px; padding: 12px 14px; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; min-height: 48px; color: var(--dim); }
   .release b { color: var(--text); font-weight: 600; }
@@ -67,6 +68,7 @@
   <h1>Audio research <span>/</span> process viewer</h1>
   <div class="bar">
     <input id="url" type="text" placeholder="https://www.discogs.com/release/…" aria-label="Discogs link" autocomplete="off">
+    <label class="chk" title="Test mode: every level searches every track and the run never stops early (slower, more downloads)"><input type="checkbox" id="searchall"> Search all levels</label>
     <button id="start" class="primary">Start</button>
     <select id="past" aria-label="Past runs"><option value="">Past runs…</option></select>
     <div class="total" id="total">0.0 s</div>
@@ -271,7 +273,7 @@ $("start").onclick = async () => {
   const url = $("url").value.trim(); if (!url) return;
   $("start").disabled = true;
   try {
-    const r = await fetch("/runs", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ url }) });
+    const r = await fetch("/runs", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ url, search_all: $("searchall").checked }) });
     watch((await r.json()).run_id);
   } finally { $("start").disabled = false; }
 };

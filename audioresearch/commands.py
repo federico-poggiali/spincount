@@ -44,7 +44,7 @@ def research(args) -> int:
         elif e.type == "adapter_off":
             print(f"  adapter {e.adapter} switched off: {e.data['reason']}", file=sys.stderr)
 
-    result = run(args.url, args.levels, args.refresh, progress, store=_store())
+    result = run(args.url, args.levels, args.refresh, progress, store=_store(), search_all=args.search_all)
     print_result(result)
     if args.json:
         from pathlib import Path

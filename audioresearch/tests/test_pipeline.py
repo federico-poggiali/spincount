@@ -82,3 +82,21 @@ def test_events_are_emitted_in_order(tmp_path):
     assert [e.seq for e in events] == list(range(1, len(events) + 1))
     finished = next(e for e in events if e.type == "stage_finished" and e.stage == "search")
     assert finished.data["candidates"] == 1
+
+
+def test_search_all_never_stops_and_searches_every_level_for_every_track(tmp_path):
+    def reg():
+        return Registry([FakeAdapter("yt", 1, [tc("yt", 1, "A1", "Night Drive", 360), tc("yt", 1, "A2", "Morning Light", 400),
+                                               tc("yt", 1, "B1", "Deep Water", 380)]),
+                         FakeAdapter("bc", 2, [tc("bc", 2, "A1", "Night Drive", 360)])], disabled=set())
+    normal, everything = reg(), reg()
+    run(normal, tmp_path)
+    assert normal.get("bc").searched == []
+    events = []
+    res = run(everything, tmp_path, search_all=True, on_event=events.append)
+    assert everything.get("bc").searched == [["A1", "A2", "B1"]]
+    assert all(t.status == Status.FOUND for t in res.tracks)
+    matched = [(e.level, e.position) for e in events if e.type == "candidate_matched"]
+    assert (1, "A1") in matched and (2, "A1") in matched
+    assert [a["source"] for a in res.track("A1").alternatives] in (["bc"], ["yt"])
+    assert next(e for e in events if e.type == "run_started").data["search_all"] is True

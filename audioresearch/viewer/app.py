@@ -25,6 +25,7 @@ TERMINAL = {ev.RUN_FINISHED, "run_failed"}
 
 class StartRun(BaseModel):
     url: str
+    search_all: bool = False   # test mode: search every level for every track, never stop
     refresh: bool = True   # watching a run is the point; a cached rerun would finish instantly
 
 
@@ -34,11 +35,11 @@ def create_app(store: Store, *, fake: bool = False, discogs=None, audio_dir: Pat
     factory = registry_factory or (demo_registry if fake else (lambda identity: default_registry()))
     running: set[str] = set()
 
-    def worker(run_id: str, url: str, refresh: bool) -> None:
+    def worker(run_id: str, url: str, refresh: bool, search_all: bool) -> None:
         try:
             identity = identify(url, discogs, store, refresh)
             research(url, range(6), refresh, registry=factory(identity), identity=identity, store=store,
-                     audio_dir=audio_dir, run_id=run_id)
+                     audio_dir=audio_dir, run_id=run_id, search_all=search_all)
         except Exception as e:  # shown in the viewer, never crashes the server
             last = store.get_events(run_id)
             store.add_event(ev.RunEvent(run_id, (last[-1].seq if last else 0) + 1, last[-1].time if last else 0,
@@ -52,7 +53,7 @@ def create_app(store: Store, *, fake: bool = False, discogs=None, audio_dir: Pat
         run_id = ev.new_run_id()
         store.start_run(run_id, body.url)
         running.add(run_id)
-        threading.Thread(target=worker, args=(run_id, body.url, body.refresh), daemon=True).start()
+        threading.Thread(target=worker, args=(run_id, body.url, body.refresh, body.search_all), daemon=True).start()
         return {"run_id": run_id}
 
     @app.get("/runs")

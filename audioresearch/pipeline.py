@@ -33,9 +33,10 @@ class Run:
 
     def __init__(self, identity: ReleaseIdentity, registry: Registry, emitter: ev.Emitter, *, store=None,
                  refresh: bool = False, audio_dir: Path | None = None, review_threshold: float | None = None,
-                 max_candidates: int = 3, health: AdapterHealth | None = None):
+                 max_candidates: int = 3, health: AdapterHealth | None = None, search_all: bool = False):
         self.identity, self.registry, self.em, self.store = identity, registry, emitter, store
         self.refresh = refresh
+        self.search_all = search_all   # test mode: every level searches every track, nothing is ever skipped
         self.audio_dir = audio_dir or config.AUDIO_CACHE_DIR
         self.review_threshold = config.REVIEW_THRESHOLD if review_threshold is None else review_threshold
         self.max_candidates = max_candidates
@@ -52,6 +53,8 @@ class Run:
         return r.level == 0 and r.status == Status.FOUND or (r.status == Status.FOUND and r.quality == Quality.FULL)
 
     def eligible(self, adapter: Adapter, pos: str) -> bool:
+        if self.search_all:
+            return True
         r = self.results[pos]
         if r.status == Status.NOT_FOUND:
             return True
@@ -62,6 +65,8 @@ class Run:
         return True
 
     def unfound(self) -> list[str]:
+        if self.search_all:
+            return list(self.results)
         return [p for p in self.results if not self.settled(p)]
 
     def _guard(self, adapter: Adapter, fn: Callable, *args):
@@ -239,7 +244,8 @@ class Run:
             self.em.emit(ev.CANDIDATE_ACCEPTED, level=level, adapter=adapter.name, position=pos, url=m.candidate.url,
                          quality=fetched.quality.value, score=round(m.score, 3))
             out["accepted_items"].append(Accepted(m, fetched, v, level))
-            break
+            if not self.search_all:
+                break
         return out
 
     def _cached_fetch(self, adapter: Adapter, cand: Candidate, dest: Path, position: str):
@@ -308,7 +314,7 @@ class Run:
 def research(url_or_id: str | int, levels: Iterable[int] = range(0, 6), refresh: bool = False, on_event=None, *,
              registry: Registry | None = None, identity: ReleaseIdentity | None = None, discogs=None, store=None,
              audio_dir: Path | None = None, run_id: str | None = None, review_threshold: float | None = None,
-             max_candidates: int = 3) -> ReleaseResult:
+             max_candidates: int = 3, search_all: bool = False) -> ReleaseResult:
     levels = sorted(set(levels))
     callback = on_event
     if store is not None:
@@ -319,7 +325,7 @@ def research(url_or_id: str | int, levels: Iterable[int] = range(0, 6), refresh:
     em = ev.Emitter(run_id, callback)
     if store is not None:
         store.start_run(em.run_id, str(url_or_id))
-    em.emit(ev.RUN_STARTED, url=str(url_or_id), levels=levels)
+    em.emit(ev.RUN_STARTED, url=str(url_or_id), levels=levels, search_all=search_all)
     t = em.timer()
     if identity is None:
         identity = identify(url_or_id, discogs, store, refresh)
@@ -330,7 +336,7 @@ def research(url_or_id: str | int, levels: Iterable[int] = range(0, 6), refresh:
             tracks=[t_.to_dict() for t_ in identity.tracks], track_count=len(identity.tracks), ms=t.ms)
     registry = registry or default_registry(store=store)
     total = em.timer()
-    if store is not None and not refresh:
+    if store is not None and not refresh and not search_all:
         cached = store.cached_result(identity.discogs_release_id, levels)
         saved_at = (store.get_result(identity.discogs_release_id) or (None, None, ""))[2]
         if cached and not any(a.changed_since(identity.discogs_release_id, saved_at) for a in registry.all()):
@@ -341,7 +347,7 @@ def research(url_or_id: str | int, levels: Iterable[int] = range(0, 6), refresh:
                 store.save_run_result(em.run_id, cached)
             return cached
     run = Run(identity, registry, em, store=store, refresh=refresh, audio_dir=audio_dir,
-              review_threshold=review_threshold, max_candidates=max_candidates)
+              review_threshold=review_threshold, max_candidates=max_candidates, search_all=search_all)
     for level in levels:
         run.run_level(level)
     result = run.final()

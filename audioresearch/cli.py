@@ -22,6 +22,7 @@ def build_parser() -> argparse.ArgumentParser:
     r.add_argument("url", help="Discogs release/master URL or release id")
     r.add_argument("--levels", type=_levels, default=list(range(6)), help="e.g. 0-5 or 1,3")
     r.add_argument("--refresh", action="store_true", help="ignore the cache")
+    r.add_argument("--search-all", action="store_true", help="test mode: search every level for every track, never stop early")
     r.add_argument("--json", metavar="FILE", help="also write the result as JSON")
     rv = sub.add_parser("review", help="accept, reject or paste a link for tracks that need review")
     rv.add_argument("release_id", type=int)
