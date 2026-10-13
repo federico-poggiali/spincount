@@ -11,6 +11,10 @@ class AdapterError(Exception):
     """A search or fetch failed (network, parser, site change). Counted by adapter health."""
 
 
+class AdapterUnavailable(AdapterError):
+    """The adapter cannot work at all right now (blocked by the site, no credentials): switched off at once."""
+
+
 class Adapter:
     name: str = ""
     level: int = 0

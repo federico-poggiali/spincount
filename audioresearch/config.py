@@ -44,3 +44,5 @@ def site_delay(site: str) -> float:
 def disabled_adapters() -> set[str]:
     """Adapters switched off in config (env: AUDIORESEARCH_DISABLED=bandcamp,clone)."""
     return {s.strip() for s in os.environ.get("AUDIORESEARCH_DISABLED", "").split(",") if s.strip()}
+
+BEATPORT_TOKEN: str = os.environ.get("BEATPORT_TOKEN", "")   # OAuth access token for api.beatport.com/v4 (see progress notes)

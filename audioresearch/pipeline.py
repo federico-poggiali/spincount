@@ -9,7 +9,7 @@ from typing import Callable, Iterable
 
 from . import config, decide as decide_mod, events as ev, fetch as fetch_mod, verify as verify_mod
 from .adapters import Registry, default_registry
-from .adapters.base import Adapter
+from .adapters.base import Adapter, AdapterUnavailable
 from .decide import Accepted, confidence, decide_track
 from .health import AdapterHealth
 from .identify import identify
@@ -74,7 +74,8 @@ class Run:
             return out
         except Exception as e:  # network, parser, site change: never kill the run
             log.warning("%s failed: %s", adapter.name, e)
-            if self.health.fail(adapter.name, e):
+            switched = self.health.disable(adapter.name, e) if isinstance(e, AdapterUnavailable) else self.health.fail(adapter.name, e)
+            if switched:
                 self.em.emit(ev.ADAPTER_OFF, adapter=adapter.name, reason=str(e)[:200])
             self.last_error = str(e)
             return FAILED

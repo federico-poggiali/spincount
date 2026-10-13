@@ -29,6 +29,13 @@ class AdapterHealth:
                 return True
             return False
 
+    def disable(self, name: str, reason: object) -> bool:
+        """Switch an adapter off now; True when it was on."""
+        with self._lock:
+            new = name not in self._off
+            self._off.setdefault(name, str(reason)[:200])
+            return new
+
     @property
     def off(self) -> dict[str, str]:
         return dict(self._off)

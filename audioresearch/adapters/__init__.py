@@ -6,9 +6,9 @@ import inspect
 from typing import Iterable
 
 from .. import config
-from .base import Adapter, AdapterError
+from .base import Adapter, AdapterError, AdapterUnavailable
 
-__all__ = ["Adapter", "AdapterError", "Registry", "default_registry", "BUILTIN"]
+__all__ = ["Adapter", "AdapterError", "AdapterUnavailable", "Registry", "default_registry", "BUILTIN"]
 
 # (module, class) in level order; modules that do not exist yet are skipped.
 BUILTIN: list[tuple[str, str]] = [
@@ -21,8 +21,8 @@ BUILTIN: list[tuple[str, str]] = [
     ("bandcamp", "BandcampTracks"),
     ("soundcloud_tracks", "SoundCloudTracks"),
     ("soundcloud_sets", "SoundCloudSets"),
-    ("beatport_tracks", "BeatportTracks"),
-    ("beatport_releases", "BeatportReleases"),
+    ("beatport", "BeatportTracks"),
+    ("beatport", "BeatportReleases"),
     ("stores.deejay_de", "DeejayDe"),
     ("stores.decks_de", "DecksDe"),
     ("stores.hardwax", "Hardwax"),

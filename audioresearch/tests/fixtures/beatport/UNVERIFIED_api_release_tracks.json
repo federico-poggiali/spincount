@@ -1,0 +1,55 @@
+{
+ "count": 2,
+ "results": [
+  {
+   "id": 1,
+   "name": "The Bells",
+   "mix_name": "Original Mix",
+   "artists": [
+    {
+     "id": 1,
+     "name": "Jeff Mills"
+    }
+   ],
+   "release": {
+    "id": 10,
+    "name": "The Bells"
+   },
+   "length_ms": 289000,
+   "bpm": 132,
+   "key": {
+    "name": "A Minor"
+   },
+   "sample_url": "https://geo-samples.beatport.com/track/aaa.LOFI.mp3",
+   "catalog_number": "PM-001",
+   "label": {
+    "name": "Purpose Maker"
+   }
+  },
+  {
+   "id": 2,
+   "name": "The Bells",
+   "mix_name": "Dub Mix",
+   "artists": [
+    {
+     "id": 1,
+     "name": "Jeff Mills"
+    }
+   ],
+   "release": {
+    "id": 10,
+    "name": "The Bells"
+   },
+   "length_ms": 301000,
+   "bpm": 132,
+   "key": {
+    "name": "A Minor"
+   },
+   "sample_url": null,
+   "catalog_number": "PM-001",
+   "label": {
+    "name": "Purpose Maker"
+   }
+  }
+ ]
+}

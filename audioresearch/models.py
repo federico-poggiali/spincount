@@ -106,6 +106,7 @@ class Candidate:
         q = self.extra.get("track_quality", {}).get(t.url)
         return replace(self, kind="track", url=t.url or self.url, title=t.title, artist=t.artist or self.artist,
                        quality_hint=Quality(q) if q else self.quality_hint,
+                       readings=[Reading.from_dict(r) for r in self.extra.get("track_readings", {}).get(t.url, [])] or self.readings,
                        duration=t.duration, tracklist=None, position=position or t.position,
                        extra={**self.extra, "release_url": self.url, "release_title": self.title})
 
