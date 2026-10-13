@@ -3,7 +3,7 @@ PY := .venv/bin/python
 export PATH := $(CURDIR)/.nodeenv/bin:$(PATH)
 PORT ?= 8000
 
-.PHONY: help setup run dev frontend-dev build test test-frontend e2e test-all lint coverage \
+.PHONY: help setup run dev frontend-dev build test test-audioresearch test-frontend e2e test-all lint coverage \
         sync-vault backfill-styles openapi types backup
 
 help:
@@ -53,6 +53,9 @@ e2e: frontend/node_modules
 	cd frontend && npx playwright install chromium >/dev/null && npm run --silent e2e
 
 test-all: test test-frontend e2e
+
+test-audioresearch: $(PY)
+	$(PY) -m pytest audioresearch/tests -q
 
 lint: $(PY)
 	$(PY) -m ruff check backend

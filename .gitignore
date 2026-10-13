@@ -39,3 +39,7 @@ backend/data/
 # bpmkey research leftovers (scripts stay tracked)
 benchmark/*.npy
 benchmark/*.log
+
+# Audio research tool
+audio_cache/
+audioresearch.db*
