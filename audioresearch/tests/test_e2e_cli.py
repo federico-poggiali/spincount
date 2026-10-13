@@ -17,7 +17,7 @@ def ident():
 
 def setup(monkeypatch, tmp_path):
     reg = Registry([FakeAdapter("yt", 1, [Candidate("yt", 1, "track", "https://yt/1", "Night Drive", "Foo", 360, position="A1")])], disabled=set())
-    monkeypatch.setattr(pipeline, "default_registry", lambda: reg)
+    monkeypatch.setattr(pipeline, "default_registry", lambda store=None: reg)
     monkeypatch.setattr(pipeline, "identify", lambda *a, **k: ident())
     monkeypatch.setattr(config, "AUDIORESEARCH_DB", tmp_path / "cli.db")
     monkeypatch.setattr(config, "AUDIO_CACHE_DIR", tmp_path / "audio")

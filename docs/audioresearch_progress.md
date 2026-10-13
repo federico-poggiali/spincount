@@ -50,3 +50,8 @@ Medley detection is keyword based (title words such as "DJ mix", "medley", "EP p
 ## Step 10: decide, review and report
 Built: `decide.py` (confidence formula documented at the top of the file; disagreement always means review; level 0 always wins), CLI `research` (table, `--json`), `report <id>` (stored result and the provenance log of the latest run), `review <id>` (accept / reject / paste a link per track; reject remembers the URL so reruns skip it; a pasted link triggers a full rerun that uses the caches).
 Part A is complete: a fake end-to-end run prints a table and writes JSON that passes the schema.
+
+## Step 11: level 0
+Built: `adapters/local_files.py` (port of `backend/app/analysis/matching.py`, copied; position first, then title; ambiguous files are never guessed; unmatched files appear as rejected candidates in the events and provenance), `adapters/manual_link.py` (links stored in the DB, fetched with yt-dlp or direct download). Level 0 candidates carry `extra["trusted"]` and skip the matcher; confidence is 1.0 for files and 0.95 for pasted links.
+Level 0 is never cached (your folder and links are read fresh), and `changed_since` invalidates a cached result when files or links changed.
+Not built: assigning an unmatched file to a track by hand (rename the file for now).

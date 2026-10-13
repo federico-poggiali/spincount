@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import importlib
+import inspect
 from typing import Iterable
 
 from .. import config
@@ -60,7 +61,7 @@ class Registry:
         return list(groups.values())
 
 
-def default_registry(disabled: Iterable[str] | None = None) -> Registry:
+def default_registry(disabled: Iterable[str] | None = None, store=None) -> Registry:
     reg = Registry(disabled=disabled)
     for module, cls in BUILTIN:
         full = f"{__name__}.{module}"
@@ -70,5 +71,6 @@ def default_registry(disabled: Iterable[str] | None = None) -> Registry:
             if e.name == full or (e.name and full.startswith(e.name)):
                 continue  # adapter not built yet
             raise
-        reg.add(getattr(mod, cls)())
+        klass = getattr(mod, cls)
+        reg.add(klass(store=store) if "store" in inspect.signature(klass.__init__).parameters else klass())
     return reg

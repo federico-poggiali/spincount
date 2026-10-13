@@ -218,6 +218,9 @@ class Store:
     def manual_links(self, release_id: int) -> dict[str, str]:
         return {r["position"]: r["url"] for r in self._all("SELECT * FROM manual_links WHERE release_id=?", (release_id,))}
 
+    def manual_links_changed(self, release_id: int, saved_at: str) -> bool:
+        return bool(self._all("SELECT 1 FROM manual_links WHERE release_id=? AND saved_at>?", (release_id, saved_at)))
+
     def set_override(self, release_id: int, position: str, action: str, detail: str | None = None) -> None:
         self._run("INSERT OR REPLACE INTO overrides VALUES (?,?,?,?,?)", (release_id, position, action, detail, now()))
 

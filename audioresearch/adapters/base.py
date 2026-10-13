@@ -30,6 +30,11 @@ class Adapter:
         extension (audio_cache/<release id>/<position>.<adapter>); the adapter adds it."""
         raise NotImplementedError
 
+    def take_diagnostics(self) -> list[dict]:
+        """Things the adapter noticed but cannot return as candidates, e.g. [{"url": ..., "reason": ...}]
+        for your files that match no track. The pipeline logs them as rejected candidates."""
+        return []
+
     def changed_since(self, release_id: int, saved_at: str) -> bool:
         """True when this adapter's own inputs (your files, pasted links) changed after a cached result."""
         return False

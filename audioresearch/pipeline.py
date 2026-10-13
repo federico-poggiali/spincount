@@ -100,6 +100,11 @@ class Run:
                              candidates=0, error=getattr(self, "last_error", "failed"))
                 continue
             run.candidates = got
+            for d in adapter.take_diagnostics():
+                self.em.emit(ev.CANDIDATE_REJECTED, level=level, adapter=adapter.name, url=d["url"], reason=d["reason"])
+                if self.store:
+                    self.store.add_provenance(self.identity.discogs_release_id, self.em.run_id, adapter.name, d["url"], None,
+                                              None, "rejected", d["reason"], {})
             self.em.emit(ev.STAGE_FINISHED, level=level, adapter=adapter.name, stage=ev.SEARCH, ms=t.ms, candidates=len(got))
 
             self.em.emit(ev.STAGE_STARTED, level=level, adapter=adapter.name, stage=ev.MATCH)
@@ -125,12 +130,13 @@ class Run:
         return out
 
     def _cached_search(self, adapter: Adapter, tracks: list[TrackRef]):
-        if self.store and not self.refresh:
+        cacheable = adapter.level > 0  # level 0 reads your own files and links: always fresh
+        if self.store and not self.refresh and cacheable:
             hit = self.store.get_candidates(self.identity.discogs_release_id, adapter.name, [t.position for t in tracks])
             if hit is not None:
                 return hit
         got = self._guard(adapter, adapter.search, self.identity, tracks)
-        if got is not FAILED and self.store:
+        if got is not FAILED and self.store and cacheable:
             self.store.save_candidates(self.identity.discogs_release_id, adapter.name, [t.position for t in tracks], got)
         return got
 
@@ -206,7 +212,7 @@ class Run:
                 self._provenance(adapter, m.candidate, m.score, "rejected", "fetch failed")
                 continue
             bump("fetched", adapter.name)
-            fetched = got if from_cache else fetch_mod.finalize(got, track.duration)
+            fetched = got if from_cache else fetch_mod.finalize(got, None if m.via == "trusted" else track.duration)
             tv = self.em.timer()
             if m.via == "trusted":
                 v = verify_mod.Verification(True, ["your own file or link"])
@@ -315,7 +321,7 @@ def research(url_or_id: str | int, levels: Iterable[int] = range(0, 6), refresh:
     em.emit(ev.RELEASE_IDENTIFIED, artist=identity.artist, title=identity.title, catno=identity.catno,
             label=identity.label, year=identity.year, release_id=identity.discogs_release_id,
             tracks=[t_.to_dict() for t_ in identity.tracks], track_count=len(identity.tracks), ms=t.ms)
-    registry = registry or default_registry()
+    registry = registry or default_registry(store=store)
     total = em.timer()
     if store is not None and not refresh:
         cached = store.cached_result(identity.discogs_release_id, levels)
