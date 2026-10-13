@@ -57,6 +57,8 @@
   #log .t { color: var(--dim); display: inline-block; min-width: 64px; }
   .summary { display: flex; gap: 24px; flex-wrap: wrap; padding: 14px; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; }
   .summary div b { display: block; font: 600 22px var(--mono); } .summary div span { color: var(--dim); font-size: 12px; }
+  a { color: var(--run); text-decoration: none; word-break: break-all; } a:hover { text-decoration: underline; }
+  td.lnk { font-family: var(--mono); max-width: 360px; } .alt { color: var(--dim); font-size: 11px; display: block; }
   .err { color: var(--accent); font: 12px var(--mono); white-space: pre-wrap; }
 </style>
 </head>
@@ -76,6 +78,9 @@
 
   <h2>Tracks by level</h2>
   <div id="grid"></div>
+
+  <h2>Results and links</h2>
+  <div id="results" class="release">Shown when the run finishes.</div>
 
   <h2>Summary</h2>
   <div id="summary" class="release">Shown when the run finishes.</div>
@@ -129,7 +134,7 @@ function apply(e) {
       const st = e.adapter ? stageOf(L.adapters[e.adapter] ||= {}, e.stage) : stageOf(L.stages, e.stage);
       st.state = e.data.error ? "failed" : "done"; st.counts = counts(e); st.ms = e.data.ms; break;
     }
-    case "track_resolved": state.cells[`${e.position}|${e.level}`] = { status: e.data.status, source: e.data.source, quality: e.data.quality, confidence: e.data.confidence }; break;
+    case "track_resolved": state.cells[`${e.position}|${e.level}`] = { status: e.data.status, source: e.data.source, quality: e.data.quality, confidence: e.data.confidence, url: e.data.url }; break;
     case "adapter_off": state.off[e.adapter] = e.data.reason; break;
     case "run_finished": state.finished = e.data; break;
     case "run_failed": state.failed = e.data; break;
@@ -143,6 +148,24 @@ function box(name, a, off) {
 function stageRow(name, st) {
   st ||= { state: "waiting", counts: "", ms: null };
   return `<div class="stage"><span class="st s-${st.state}"><span class="dot"></span>${name}</span><span class="cnt">${esc(st.counts)} ${st.ms != null ? `<span class="s-waiting">${fmt(st.ms)}</span>` : ""}</span></div>`;
+}
+
+const isUrl = (u) => /^https?:/.test(u || "");
+const link = (u, text) => isUrl(u) ? `<small><a href="${esc(u)}" target="_blank" rel="noopener noreferrer">${esc(text || u)}</a></small>` : (u ? `<small>${esc(u)}</small>` : "");
+
+async function loadResults(runId) {
+  try {
+    const r = await (await fetch(`/runs/${runId}`)).json();
+    const titles = Object.fromEntries((state.release?.tracks || []).map((t) => [t.position, t.title]));
+    let h = "<table><tr><th>Pos</th><th>Title</th><th>Status</th><th>Link</th><th>Source</th><th>Quality</th><th>Conf.</th><th>Why</th></tr>";
+    for (const t of r.tracks) {
+      const alts = (t.alternatives || []).map((a) => `<span class="alt">also: ${esc(a.source)} ${esc(a.quality)} ${a.confidence} ${isUrl(a.url) ? `<a href="${esc(a.url)}" target="_blank" rel="noopener noreferrer">link</a>` : ""}</span>`).join("");
+      h += `<tr><td class="pos">${esc(t.position)}</td><td class="ttl">${esc(titles[t.position])}</td><td class="cell-${t.status === "not_found" ? "notfound" : t.status}">${t.status}</td>
+        <td class="lnk">${isUrl(t.url) ? `<a href="${esc(t.url)}" target="_blank" rel="noopener noreferrer">${esc(t.url)}</a>` : esc(t.url || "")}${alts}</td>
+        <td>${esc(t.source || "")}</td><td>${esc(t.quality || "")}</td><td>${t.source ? t.confidence : ""}</td><td>${esc(t.reason)}</td></tr>`;
+    }
+    $("results").innerHTML = h + "</table>";
+  } catch (e) { $("results").textContent = "No result available."; }
 }
 
 function render() {
@@ -167,7 +190,7 @@ function render() {
       h += `<tr><td class="pos">${esc(t.position)}</td><td class="ttl">${esc(t.title)}</td>`;
       for (const L of s.levels) {
         const c = s.cells[`${t.position}|${L.n}`];
-        if (c) h += `<td class="cell cell-${c.status}">${c.status}<small>${esc(c.source)} · ${esc(c.quality)} · ${c.confidence}</small></td>`;
+        if (c) h += `<td class="cell cell-${c.status}">${c.status}<small>${esc(c.source)} · ${esc(c.quality)} · ${c.confidence}</small>${link(c.url, "open")}</td>`;
         else if (L.status !== "skipped" && L.positions.includes(t.position) && L.status === "done") h += '<td class="cell cell-notfound">not found</td>';
         else if (L.status !== "skipped" && L.positions.includes(t.position)) h += '<td class="cell cell-notfound">…</td>';
         else h += '<td class="cell cell-no">not tried</td>';
@@ -204,7 +227,7 @@ function log(e) {
 function watch(runId) {
   if (es) es.close();
   clearInterval(ticker);
-  state = fresh(); $("log").innerHTML = ""; $("summary").textContent = "Shown when the run finishes.";
+  state = fresh(); $("log").innerHTML = ""; $("summary").textContent = "Shown when the run finishes."; $("results").textContent = "Shown when the run finishes.";
   $("release").textContent = "Starting…";
   es = new EventSource(`/runs/${runId}/events`);
   let queued = false;
@@ -212,7 +235,7 @@ function watch(runId) {
     const e = JSON.parse(m.data);
     apply(e); log(e);
     if (!queued) { queued = true; requestAnimationFrame(() => { queued = false; render(); }); }
-    if (e.type === "run_finished" || e.type === "run_failed") { es.close(); clearInterval(ticker); render(); loadPast(runId); }
+    if (e.type === "run_finished" || e.type === "run_failed") { es.close(); clearInterval(ticker); render(); loadPast(runId); loadResults(runId); }
   });
   es.onerror = () => { if (es.readyState === EventSource.CLOSED) clearInterval(ticker); };
   ticker = setInterval(() => { if (!state.finished && !state.failed) render(); }, 200);

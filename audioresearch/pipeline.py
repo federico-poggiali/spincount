@@ -262,7 +262,7 @@ class Run:
             if changed and new.status != Status.NOT_FOUND:
                 self.em.emit(ev.TRACK_RESOLVED, level=level, position=pos, status=new.status.value, source=new.source,
                              quality=new.quality.value if new.quality else None, confidence=round(new.confidence, 3),
-                             reason=new.reason)
+                             reason=new.reason, url=new.url)
         self.em.emit(ev.STAGE_FINISHED, level=level, stage=ev.DECIDE, ms=t.ms, found=found, review=review)
 
     # ---- one level -----------------------------------------------------------------------------
