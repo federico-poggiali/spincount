@@ -112,7 +112,14 @@ class Candidate:
                 "artist": self.artist, "duration": self.duration, "quality_hint": self.quality_hint.value,
                 "catno": self.catno, "position": self.position,
                 "tracklist": [t.to_dict() for t in self.tracklist] if self.tracklist is not None else None,
-                "readings": [r.to_dict() for r in self.readings]}
+                "readings": [r.to_dict() for r in self.readings], "extra": self.extra}
+
+    @classmethod
+    def from_dict(cls, d: dict) -> "Candidate":
+        return cls(d["adapter"], d["level"], d["kind"], d["url"], d["title"], d["artist"], d.get("duration"),
+                   [TrackRef.from_dict(t) for t in d["tracklist"]] if d.get("tracklist") is not None else None,
+                   Quality(d.get("quality_hint", "full")), [Reading.from_dict(r) for r in d.get("readings", [])],
+                   d.get("catno"), d.get("position"), d.get("extra") or {})
 
 
 @dataclass

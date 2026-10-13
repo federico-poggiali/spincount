@@ -50,3 +50,38 @@ class FakeAdapter(Adapter):
         path.write_bytes(b"fake audio")
         dur = self.durations.get(candidate.url, candidate.duration)
         return FetchedAudio(path, self.name, candidate.url, candidate.quality_hint, float(dur) if dur else None)
+
+
+def demo_registry(identity: ReleaseIdentity, delay: float = 0.35):
+    """Fake adapters for any release (viewer --fake): each level finds a deterministic share of the
+    tracks, with some wrong candidates mixed in, and takes a moment so the viewer shows progress."""
+    import random
+
+    from . import Registry
+
+    rng = random.Random(identity.discogs_release_id)
+    positions = [t.position for t in identity.tracks]
+    pick = lambda p: [t for t in identity.tracks if rng.random() < p]  # noqa: E731
+
+    def track_cand(adapter: str, level: int, t: TrackRef, q: Quality, title: str | None = None) -> Candidate:
+        return Candidate(adapter, level, "track", f"https://{adapter}.example/{identity.discogs_release_id}/{t.position}",
+                         title or t.title, t.artist or identity.artist, t.duration or 300, quality_hint=q, position=t.position)
+
+    yt = [track_cand("discogs_youtube", 1, t, Quality.FULL) for t in pick(0.4)]
+    yt.append(track_cand("discogs_youtube", 1, identity.tracks[0], Quality.FULL, "Completely Different Song"))
+    it = [track_cand("itunes", 1, t, Quality.PREVIEW) for t in pick(0.4)]
+    tracklist = [TrackRef(str(i), t.artist, t.title, t.duration or 300, f"https://bandcamp.example/{t.position}")
+                 for i, t in enumerate(identity.tracks, 1)]
+    bc = [Candidate("bandcamp", 2, "release", "https://bandcamp.example/release", identity.title, identity.artist,
+                    tracklist=tracklist, catno=identity.catno)] if identity.discogs_release_id % 2 == 0 else []
+    sc = [track_cand("soundcloud_tracks", 3, t, Quality.FULL) for t in pick(0.5)]
+    bp = [track_cand("beatport_tracks", 4, t, Quality.PREVIEW) for t in pick(0.5)]
+    st = [track_cand("deejay_de", 5, t, Quality.CLIP) for t in pick(0.7)]
+    return Registry([
+        FakeAdapter("discogs_youtube", 1, yt, group="youtube", delay=delay),
+        FakeAdapter("itunes", 1, it, max_quality=Quality.PREVIEW, delay=delay * 0.7),
+        FakeAdapter("bandcamp", 2, bc, delay=delay),
+        FakeAdapter("soundcloud_tracks", 3, sc, delay=delay),
+        FakeAdapter("beatport_tracks", 4, bp, max_quality=Quality.PREVIEW, delay=delay),
+        FakeAdapter("deejay_de", 5, st, max_quality=Quality.CLIP, delay=delay),
+    ], disabled=set())

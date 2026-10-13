@@ -135,8 +135,8 @@ class Run:
 
     def _provenance(self, adapter, cand: Candidate, score, outcome: str, reason: str, **extra) -> None:
         if self.store:
-            self.store.add_provenance(self.identity.discogs_release_id, self.em.run_id, adapter.name if hasattr(adapter, "name") else adapter,
-                                      cand.url, cand.position, score, outcome, reason, extra)
+            self.store.add_provenance(self.identity.discogs_release_id, self.em.run_id, adapter.name, cand.url,
+                                      cand.position, score, outcome, reason, extra)
 
     # ---- stages 4 to 6 for one level -----------------------------------------------------------
     def _fetch_verify(self, level: int, runs: list[_AdapterRun]) -> None:
@@ -193,7 +193,7 @@ class Run:
             if adapter is None or self.health.is_off(adapter.name):
                 continue
             dest = fetch_mod.dest_for(self.audio_dir, self.identity, pos, adapter.name)
-            got = self._cached_fetch(adapter, m.candidate, dest)
+            got, from_cache = self._cached_fetch(adapter, m.candidate, dest, pos)
             if got is FAILED:
                 bump("failed", adapter.name)
                 self.em.emit(ev.CANDIDATE_REJECTED, level=level, adapter=adapter.name, position=pos,
@@ -201,7 +201,9 @@ class Run:
                 self._provenance(adapter, m.candidate, m.score, "rejected", "fetch failed")
                 continue
             bump("fetched", adapter.name)
-            fetched = fetch_mod.finalize(got, track.duration)
+            fetched = got if from_cache else fetch_mod.finalize(got, track.duration)
+            if self.store and not from_cache:
+                self.store.save_fetched(self.identity.discogs_release_id, pos, fetched)
             tv = self.em.timer()
             v = verify_mod.verify(track, fetched) if m.via != "trusted" else verify_mod.Verification(True, ["trusted"])
             out["verify_ms"] += tv.ms
@@ -219,8 +221,14 @@ class Run:
             break
         return out
 
-    def _cached_fetch(self, adapter: Adapter, cand: Candidate, dest: Path):
-        return self._guard(adapter, adapter.fetch, cand, dest)
+    def _cached_fetch(self, adapter: Adapter, cand: Candidate, dest: Path, position: str):
+        rid = self.identity.discogs_release_id
+        if self.store and not self.refresh and adapter.level > 0:
+            hit = self.store.get_fetched(rid, position, adapter.name, cand.url)
+            if hit:
+                return hit, True
+        got = self._guard(adapter, adapter.fetch, cand, dest)
+        return got, False
 
     def _decide(self, level: int) -> None:
         self.em.emit(ev.STAGE_STARTED, level=level, stage=ev.DECIDE)
@@ -277,20 +285,46 @@ def research(url_or_id: str | int, levels: Iterable[int] = range(0, 6), refresh:
              registry: Registry | None = None, identity: ReleaseIdentity | None = None, discogs=None, store=None,
              audio_dir: Path | None = None, run_id: str | None = None, review_threshold: float | None = None,
              max_candidates: int = 3) -> ReleaseResult:
-    em = ev.Emitter(run_id, on_event)
-    em.emit(ev.RUN_STARTED, url=str(url_or_id), levels=list(levels))
+    levels = sorted(set(levels))
+    callback = on_event
+    if store is not None:
+        def callback(e, _user=on_event):  # noqa: F811  every event is stored so a run can be replayed
+            store.add_event(e)
+            if _user:
+                _user(e)
+    em = ev.Emitter(run_id, callback)
+    if store is not None:
+        store.start_run(em.run_id, str(url_or_id))
+    em.emit(ev.RUN_STARTED, url=str(url_or_id), levels=levels)
     t = em.timer()
     if identity is None:
-        identity = identify(url_or_id, discogs)
+        identity = identify(url_or_id, discogs, store, refresh)
+    elif store is not None:
+        store.save_identity(identity)
     em.emit(ev.RELEASE_IDENTIFIED, artist=identity.artist, title=identity.title, catno=identity.catno,
             label=identity.label, year=identity.year, release_id=identity.discogs_release_id,
             tracks=[t_.to_dict() for t_ in identity.tracks], track_count=len(identity.tracks), ms=t.ms)
-    run = Run(identity, registry or default_registry(), em, store=store, refresh=refresh, audio_dir=audio_dir,
-              review_threshold=review_threshold, max_candidates=max_candidates)
+    registry = registry or default_registry()
     total = em.timer()
-    for level in sorted(set(levels)):
+    if store is not None and not refresh:
+        cached = store.cached_result(identity.discogs_release_id, levels)
+        saved_at = (store.get_result(identity.discogs_release_id) or (None, None, ""))[2]
+        if cached and not any(a.changed_since(identity.discogs_release_id, saved_at) for a in registry.all()):
+            em.emit(ev.CACHE_HIT, saved_at=saved_at)
+            em.emit(ev.RUN_FINISHED, **cached.counts(), ms=total.ms, adapters_off=cached.adapters_off,
+                    release_id=identity.discogs_release_id, cached=True)
+            if store is not None:
+                store.save_run_result(em.run_id, cached)
+            return cached
+    run = Run(identity, registry, em, store=store, refresh=refresh, audio_dir=audio_dir,
+              review_threshold=review_threshold, max_candidates=max_candidates)
+    for level in levels:
         run.run_level(level)
     result = run.final()
+    if store is not None:
+        store.save_result(result, levels, em.run_id)
+        store.save_readings(identity.discogs_release_id, em.run_id, run.readings)
+        store.save_run_result(em.run_id, result)
     em.emit(ev.RUN_FINISHED, **result.counts(), ms=total.ms, adapters_off=result.adapters_off,
             release_id=identity.discogs_release_id)
     return result

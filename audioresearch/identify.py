@@ -36,8 +36,18 @@ def identity_from_release(data: dict, release_id: int) -> ReleaseIdentity:
     )
 
 
-def identify(url_or_id: str | int, client: DiscogsLike | None = None) -> ReleaseIdentity:
-    """Master URLs resolve to the main release."""
+def identify(url_or_id: str | int, client: DiscogsLike | None = None, store=None, refresh: bool = False) -> ReleaseIdentity:
+    """Master URLs resolve to the main release. With a store, a known release needs no network."""
+    url = to_url(url_or_id)
+    kind, id_ = discogs.parse_url(url)
+    alias = f"{kind}/{id_}"
+    if store is not None and not refresh:
+        rid = id_ if kind == "release" else store.resolve_alias(alias)
+        if rid and (cached := store.get_identity(rid)):
+            return cached
     client = client or discogs.DiscogsClient()
-    rid = client.resolve(to_url(url_or_id))
-    return identity_from_release(client.release(rid), rid)
+    rid = client.resolve(url)
+    identity = identity_from_release(client.release(rid), rid)
+    if store is not None:
+        store.save_identity(identity, alias)
+    return identity

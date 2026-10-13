@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Audio research viewer</title>
+<style>
+  :root {
+    --bg: #0c0c0d; --panel: #141416; --line: #26262a; --text: #e8e8ea; --dim: #8b8b93;
+    --accent: #e5484d; --ok: #46a758; --warn: #e5a50a; --run: #5b9cf5;
+    --mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    --sans: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 14px/1.45 var(--sans); }
+  main { max-width: 1280px; margin: 0 auto; padding: 24px 24px 64px; }
+  h1 { font-size: 15px; font-weight: 600; margin: 0 0 16px; letter-spacing: .02em; }
+  h1 span { color: var(--accent); }
+  h2 { font-size: 11px; text-transform: uppercase; letter-spacing: .1em; color: var(--dim); font-weight: 600; margin: 28px 0 10px; }
+  .bar { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  input[type=text] { flex: 1 1 360px; background: var(--panel); border: 1px solid var(--line); color: var(--text);
+    padding: 9px 12px; border-radius: 6px; font: 13px var(--mono); }
+  input[type=text]:focus, select:focus, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+  button, select { background: var(--panel); color: var(--text); border: 1px solid var(--line); padding: 9px 14px; border-radius: 6px; font: inherit; cursor: pointer; }
+  button.primary { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 600; }
+  button:disabled { opacity: .5; cursor: default; }
+  .total { font: 13px var(--mono); color: var(--dim); margin-left: auto; }
+  .release { margin-top: 14px; padding: 12px 14px; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; min-height: 48px; color: var(--dim); }
+  .release b { color: var(--text); font-weight: 600; }
+  .release .meta { font: 12px var(--mono); margin-top: 4px; }
+  .level { display: grid; grid-template-columns: 150px 1fr 80px; gap: 12px; align-items: start; padding: 10px 12px;
+    border: 1px solid var(--line); border-radius: 8px; background: var(--panel); margin-bottom: 8px; }
+  .level.running { border-color: var(--run); } .level.skipped { opacity: .55; }
+  .lname b { display: block; } .lname span { font-size: 12px; color: var(--dim); }
+  .lms { text-align: right; font: 12px var(--mono); color: var(--dim); }
+  .boxes { display: flex; flex-wrap: wrap; gap: 8px; }
+  .abox { border: 1px solid var(--line); border-radius: 6px; padding: 6px 8px; min-width: 190px; background: #101012; }
+  .abox .an { font: 12px var(--mono); margin-bottom: 4px; }
+  .abox.off .an { color: var(--accent); }
+  .stage { display: flex; justify-content: space-between; gap: 10px; font-size: 12px; padding: 2px 0; }
+  .stage .st { color: var(--dim); } .stage .cnt { font-family: var(--mono); }
+  .s-waiting { color: var(--dim); } .s-running { color: var(--run); } .s-done { color: var(--ok); } .s-skipped { color: var(--dim); }
+  .s-failed { color: var(--accent); }
+  .dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: 6px; background: currentColor; }
+  .s-running .dot { animation: pulse 1s infinite; }
+  @keyframes pulse { 50% { opacity: .25; } }
+  @media (prefers-reduced-motion: reduce) { .s-running .dot { animation: none; } }
+  table { border-collapse: collapse; width: 100%; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+  th, td { border-bottom: 1px solid var(--line); padding: 7px 10px; text-align: left; font-size: 12px; vertical-align: top; }
+  th { color: var(--dim); font-weight: 600; text-transform: uppercase; letter-spacing: .06em; font-size: 11px; }
+  td.pos { font-family: var(--mono); white-space: nowrap; } td.ttl { max-width: 260px; }
+  .cell-found { color: var(--ok); } .cell-review { color: var(--warn); } .cell-notfound { color: var(--dim); } .cell-no { color: #4a4a50; }
+  .cell small { display: block; color: var(--dim); font-family: var(--mono); }
+  #log { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; max-height: 360px; overflow: auto;
+    font: 11.5px/1.6 var(--mono); }
+  #log div.rej { color: var(--accent); } #log div.res { color: var(--ok); } #log div.off { color: var(--warn); }
+  #log .t { color: var(--dim); display: inline-block; min-width: 64px; }
+  .summary { display: flex; gap: 24px; flex-wrap: wrap; padding: 14px; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; }
+  .summary div b { display: block; font: 600 22px var(--mono); } .summary div span { color: var(--dim); font-size: 12px; }
+  .err { color: var(--accent); font: 12px var(--mono); white-space: pre-wrap; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Audio research <span>/</span> process viewer</h1>
+  <div class="bar">
+    <input id="url" type="text" placeholder="https://www.discogs.com/release/…" aria-label="Discogs link" autocomplete="off">
+    <button id="start" class="primary">Start</button>
+    <select id="past" aria-label="Past runs"><option value="">Past runs…</option></select>
+    <div class="total" id="total">0.0 s</div>
+  </div>
+  <div class="release" id="release">No run yet. Paste a Discogs release link and press Start.</div>
+
+  <h2>Levels</h2>
+  <div id="levels"></div>
+
+  <h2>Tracks by level</h2>
+  <div id="grid"></div>
+
+  <h2>Summary</h2>
+  <div id="summary" class="release">Shown when the run finishes.</div>
+
+  <h2>Event log</h2>
+  <div id="log" role="log"></div>
+</main>
+<script>
+const LEVELS = [
+  [0, "Your files", "local files, pasted links"], [1, "Discogs find", "YouTube, iTunes"], [2, "Bandcamp", ""],
+  [3, "SoundCloud", "tracks, sets"], [4, "Beatport", "tracks, releases"], [5, "Record stores", "clips"],
+];
+const $ = (id) => document.getElementById(id);
+let es = null, state = null, ticker = null;
+
+const fmt = (ms) => ms == null ? "" : ms < 1000 ? `${ms} ms` : `${(ms / 1000).toFixed(1)} s`;
+const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+function fresh() {
+  return { release: null, levels: LEVELS.map(([n]) => ({ n, status: "waiting", adapters: {}, stages: {}, ms: null, positions: [], resolved: [] })),
+           cells: {}, off: {}, finished: null, started: Date.now(), failed: null, lastMs: 0 };
+}
+const stageOf = (obj, name) => (obj[name] ||= { state: "waiting", counts: "", ms: null });
+
+function counts(e) {
+  const d = e.data, s = e.stage;
+  if (s === "search") return d.error ? `failed: ${d.error}` : `${d.candidates} candidates`;
+  if (s === "match") return `${d.releases} release${d.releases === 1 ? "" : "s"}, ${d.tracks} track${d.tracks === 1 ? "" : "s"}` + (d.rejected ? `, ${d.rejected} rejected` : "");
+  if (s === "fetch") return `${d.fetched} fetched, ${d.failed} failed`;
+  if (s === "verify") return `${d.accepted} accepted, ${d.rejected} rejected`;
+  if (s === "decide") return `${d.found} found, ${d.review} review`;
+  return "";
+}
+
+function apply(e) {
+  state.lastMs = Math.max(state.lastMs, e.time);
+  const L = e.level != null ? state.levels[e.level] : null;
+  switch (e.type) {
+    case "release_identified": state.release = e.data; break;
+    case "level_started":
+      L.status = "running"; L.positions = e.data.positions || [];
+      for (const a of e.data.adapters || []) L.adapters[a] ||= {};
+      break;
+    case "level_finished": L.status = Object.keys(L.adapters).length && (L.stages.fetch || Object.values(L.adapters).some(a => a.search && a.search.state !== "waiting")) ? "done" : "skipped";
+      L.ms = e.data.ms; L.resolved = e.data.resolved || []; break;
+    case "stage_started":
+      if (e.adapter) stageOf(L.adapters[e.adapter] ||= {}, e.stage).state = "running";
+      else stageOf(L.stages, e.stage).state = "running";
+      break;
+    case "stage_finished": {
+      const st = e.adapter ? stageOf(L.adapters[e.adapter] ||= {}, e.stage) : stageOf(L.stages, e.stage);
+      st.state = e.data.error ? "failed" : "done"; st.counts = counts(e); st.ms = e.data.ms; break;
+    }
+    case "track_resolved": state.cells[`${e.position}|${e.level}`] = { status: e.data.status, source: e.data.source, quality: e.data.quality, confidence: e.data.confidence }; break;
+    case "adapter_off": state.off[e.adapter] = e.data.reason; break;
+    case "run_finished": state.finished = e.data; break;
+    case "run_failed": state.failed = e.data; break;
+  }
+}
+
+function box(name, a, off) {
+  const stages = ["search", "match"].map((s) => stageRow(s, a[s])).join("");
+  return `<div class="abox ${off ? "off" : ""}"><div class="an">${esc(name)}${off ? " (off)" : ""}</div>${stages}</div>`;
+}
+function stageRow(name, st) {
+  st ||= { state: "waiting", counts: "", ms: null };
+  return `<div class="stage"><span class="st s-${st.state}"><span class="dot"></span>${name}</span><span class="cnt">${esc(st.counts)} ${st.ms != null ? `<span class="s-waiting">${fmt(st.ms)}</span>` : ""}</span></div>`;
+}
+
+function render() {
+  const s = state;
+  if (s.release) {
+    const r = s.release;
+    $("release").innerHTML = `<b>${esc(r.artist)} — ${esc(r.title)}</b><div class="meta">${esc(r.label || "")} ${esc(r.catno || "")} · ${r.year || "?"} · ${r.track_count} tracks · identified in ${fmt(r.ms)}</div>`;
+  }
+  $("levels").innerHTML = s.levels.map((L) => {
+    const names = Object.keys(L.adapters);
+    const boxes = names.map((n) => box(n, L.adapters[n], n in s.off)).join("");
+    const shared = ["fetch", "verify", "decide"].map((x) => stageRow(x, L.stages[x])).join("");
+    const meta = LEVELS[L.n];
+    return `<div class="level ${L.status}"><div class="lname"><b>${L.n} · ${meta[1]}</b><span class="s-${L.status === "done" ? "done" : L.status}"><span class="dot"></span>${L.status}</span></div>
+      <div class="boxes">${boxes}${L.stages.fetch || L.status === "running" ? `<div class="abox"><div class="an">fetch · verify · decide</div>${shared}</div>` : ""}${!names.length && L.status === "waiting" ? '<span class="s-waiting">waiting</span>' : ""}</div>
+      <div class="lms">${fmt(L.ms)}</div></div>`;
+  }).join("");
+
+  if (s.release) {
+    let h = "<table><tr><th>Pos</th><th>Title</th>" + LEVELS.map(([n]) => `<th>L${n}</th>`).join("") + "</tr>";
+    for (const t of s.release.tracks) {
+      h += `<tr><td class="pos">${esc(t.position)}</td><td class="ttl">${esc(t.title)}</td>`;
+      for (const L of s.levels) {
+        const c = s.cells[`${t.position}|${L.n}`];
+        if (c) h += `<td class="cell cell-${c.status}">${c.status}<small>${esc(c.source)} · ${esc(c.quality)} · ${c.confidence}</small></td>`;
+        else if (L.status !== "skipped" && L.positions.includes(t.position) && L.status === "done") h += '<td class="cell cell-notfound">not found</td>';
+        else if (L.status !== "skipped" && L.positions.includes(t.position)) h += '<td class="cell cell-notfound">…</td>';
+        else h += '<td class="cell cell-no">not tried</td>';
+      }
+      h += "</tr>";
+    }
+    $("grid").innerHTML = h + "</table>";
+  }
+
+  if (s.failed) $("summary").innerHTML = `<div class="err">Run failed: ${esc(s.failed.error)}\n${esc(s.failed.trace || "")}</div>`;
+  else if (s.finished) {
+    const f = s.finished;
+    const per = s.levels.filter((L) => L.ms != null).map((L) => `L${L.n} ${fmt(L.ms)}`).join(" · ");
+    const off = Object.keys(s.off).length ? Object.keys(s.off).join(", ") : "none";
+    $("summary").innerHTML = `<div class="summary"><div><b class="cell-found">${f.found}</b><span>found</span></div><div><b class="cell-review">${f.review}</b><span>review</span></div>
+      <div><b>${f.not_found}</b><span>not found</span></div><div><b>${fmt(f.ms)}</b><span>total${f.cached ? " (cached)" : ""}</span></div></div>
+      <div class="meta" style="margin-top:8px">${esc(per)} · adapters switched off: ${esc(off)}</div>`;
+  }
+  $("total").textContent = fmt(s.finished || s.failed ? s.lastMs : Date.now() - s.started);
+}
+
+function log(e) {
+  const d = document.createElement("div");
+  const cls = e.type === "candidate_rejected" ? "rej" : e.type === "track_resolved" ? "res" : e.type === "adapter_off" ? "off" : "";
+  if (cls) d.className = cls;
+  const tags = [e.level != null ? `L${e.level}` : "", e.adapter || "", e.stage || "", e.position || ""].filter(Boolean).join(" ");
+  const data = Object.entries(e.data || {}).filter(([k]) => !["tracks", "trace", "positions"].includes(k)).map(([k, v]) => `${k}=${typeof v === "object" ? JSON.stringify(v) : v}`).join(" ");
+  d.innerHTML = `<span class="t">+${e.time}ms</span> ${esc(e.type)} <span style="color:var(--dim)">${esc(tags)}</span> ${esc(data)}`;
+  const box = $("log"), stick = box.scrollTop + box.clientHeight >= box.scrollHeight - 30;
+  box.appendChild(d);
+  if (stick) box.scrollTop = box.scrollHeight;
+}
+
+function watch(runId) {
+  if (es) es.close();
+  clearInterval(ticker);
+  state = fresh(); $("log").innerHTML = ""; $("summary").textContent = "Shown when the run finishes.";
+  $("release").textContent = "Starting…";
+  es = new EventSource(`/runs/${runId}/events`);
+  let queued = false;
+  es.addEventListener("run", (m) => {
+    const e = JSON.parse(m.data);
+    apply(e); log(e);
+    if (!queued) { queued = true; requestAnimationFrame(() => { queued = false; render(); }); }
+    if (e.type === "run_finished" || e.type === "run_failed") { es.close(); clearInterval(ticker); render(); loadPast(runId); }
+  });
+  es.onerror = () => { if (es.readyState === EventSource.CLOSED) clearInterval(ticker); };
+  ticker = setInterval(() => { if (!state.finished && !state.failed) render(); }, 200);
+  render();
+}
+
+async function loadPast(select) {
+  const runs = await (await fetch("/runs")).json();
+  $("past").innerHTML = '<option value="">Past runs…</option>' + runs.map((r) =>
+    `<option value="${r.run_id}" ${r.run_id === select ? "selected" : ""}>${esc(r.title || r.url)} — ${esc(r.started_at || "")}</option>`).join("");
+}
+
+$("start").onclick = async () => {
+  const url = $("url").value.trim(); if (!url) return;
+  $("start").disabled = true;
+  try {
+    const r = await fetch("/runs", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ url }) });
+    watch((await r.json()).run_id);
+  } finally { $("start").disabled = false; }
+};
+$("url").onkeydown = (e) => { if (e.key === "Enter") $("start").click(); };
+$("past").onchange = (e) => { if (e.target.value) watch(e.target.value); };
+state = fresh(); render(); loadPast();
+</script>
+</body>
+</html>

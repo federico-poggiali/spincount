@@ -30,6 +30,10 @@ class Adapter:
         extension (audio_cache/<release id>/<position>.<adapter>); the adapter adds it."""
         raise NotImplementedError
 
+    def changed_since(self, release_id: int, saved_at: str) -> bool:
+        """True when this adapter's own inputs (your files, pasted links) changed after a cached result."""
+        return False
+
     @property
     def group_key(self) -> str:
         return self.group or self.name

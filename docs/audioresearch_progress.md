@@ -22,3 +22,16 @@ Additions: `Adapter.group` (adapters in a group run one after another, so `youtu
 ## Step 5: matcher
 Built: `matcher.py` (weights documented at the top), `match_release`, `match_tracks_in_release`, `match_track`, `match_candidates` (top 3 per track, ambiguity and rejection reasons).
 Surprise: `bpmkey.matching.version_penalty` only checks one direction (a plain title passes for a "Dub Mix" track) and charges 0.4, which lets a remix pass the 0.55 bar for unrelated titles. The matcher checks both directions and always charges 0.5, without touching `bpmkey`.
+
+## Step 6: pipeline orchestrator
+Built: `pipeline.py` (`research()`, `Run`), `events.py`, `health.py`; stubs for `fetch.py`, `verify.py`, `decide.py` (replaced in Steps 8 to 10).
+Design points: adapters of a level run in parallel groups; a track keeps being searched at later levels only by adapters that can beat its current quality (`max_quality`); level 0 is never searched again once found; candidates marked `extra["trusted"]` (your files, pasted links) skip the matcher.
+Candidate durations should be the FULL track length even for previews (iTunes `trackTimeMillis`); the real length of the downloaded file is measured on fetch.
+
+## Step 6b: viewer
+Built: `viewer/app.py` (FastAPI, SSE, localhost:8200), `viewer/static/index.html` (plain JS), `adapters/fake.py:demo_registry` for `--fake`. Checked in a real browser (Playwright) against a real Discogs release: no console errors, levels/stages/grid/summary fill in live; a stored run replays the same events (test).
+Not built: nothing skipped. Past runs list is the 50 latest.
+
+## Step 7: shared services
+Built: `store.py` (migrations; identities, candidates, fetched audio, decisions with date, provenance, readings, run events, run results, manual links, review overrides), `http.py` (per-site delay, retry/backoff on 429/5xx and network errors, `Retry-After`, per-adapter stats), adapter health (5 consecutive failures, `AUDIORESEARCH_MAX_FAILURES`).
+Cache rule: a stored result is reused when it covers the requested levels, no adapter reports changed inputs (`Adapter.changed_since`), and any `not_found` is younger than 30 days.

@@ -16,6 +16,7 @@ STAGE_FINISHED = "stage_finished"
 CANDIDATE_REJECTED = "candidate_rejected"
 TRACK_RESOLVED = "track_resolved"
 ADAPTER_OFF = "adapter_off"
+CACHE_HIT = "cache_hit"
 RUN_FINISHED = "run_finished"
 
 SEARCH, MATCH, FETCH, VERIFY, DECIDE = "search", "match", "fetch", "verify", "decide"

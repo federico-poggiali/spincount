@@ -20,4 +20,6 @@ def report(args) -> int:
 
 
 def viewer(args) -> int:
-    return _todo("viewer")
+    from .viewer.app import serve
+
+    return serve(args.fake, args.port)
