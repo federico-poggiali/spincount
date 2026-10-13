@@ -55,3 +55,8 @@ Part A is complete: a fake end-to-end run prints a table and writes JSON that pa
 Built: `adapters/local_files.py` (port of `backend/app/analysis/matching.py`, copied; position first, then title; ambiguous files are never guessed; unmatched files appear as rejected candidates in the events and provenance), `adapters/manual_link.py` (links stored in the DB, fetched with yt-dlp or direct download). Level 0 candidates carry `extra["trusted"]` and skip the matcher; confidence is 1.0 for files and 0.95 for pasted links.
 Level 0 is never cached (your folder and links are read fresh), and `changed_since` invalidates a cached result when files or links changed.
 Not built: assigning an unmatched file to a track by hand (rename the file for now).
+
+## Step 12: level 1
+Built: `adapters/discogs_youtube.py` (linked videos as candidates; matching left to the shared matcher), `adapters/youtube_music.py` (ytmusicapi 1.12.3 pinned; fallback inside the `youtube` group, so only tracks no Discogs video matched are searched), `adapters/itunes.py` (previews; candidate duration is the full track length, the 30 s file turns into `clip` at fetch). `adapters/common.py` strips version brackets from search terms.
+Fixtures from live calls: iTunes (hit and miss) and ytmusicapi (`tests/fixtures/itunes`, `.../youtube_music`).
+Live check (`tests/test_live.py --live`) on Discogs 249504: track A found via the linked video (full, 213 s vs 212 s), track B (a different version) not found at level 1.

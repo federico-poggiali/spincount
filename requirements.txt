@@ -6,3 +6,4 @@ numpy
 librosa
 jsonschema
 mutagen
+ytmusicapi==1.12.3
