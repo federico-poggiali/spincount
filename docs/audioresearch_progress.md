@@ -91,3 +91,6 @@ Built one store at a time against the live sites; shared plumbing in `adapters/s
 - **kalahari_oyster_cult: not built.** No working web address could be found (tried the obvious domains; none resolve), so there is nothing to read. Needs the shop's URL from the owner.
 Fixtures are real pages (deejay.de and hardwax: catalogue number hit, artist/title hit, miss).
 Clips of 60 s or more now measure as `preview` (not `full`) when there is no Discogs duration to compare; under 60 s they stay `clip`.
+
+## Step 17: live run
+16 releases from your library, 87 tracks: 73 found, 3 review, 11 not found. Details in `audioresearch_live_report.md`. The owner has not read the report yet, so by the plan this step is not closed: fixes become new steps.
