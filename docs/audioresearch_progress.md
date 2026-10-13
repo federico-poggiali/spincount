@@ -40,3 +40,9 @@ Cache rule: a stored result is reused when it covers the requested levels, no ad
 Built: `fetch.py` (`ytdlp_download`, `http_download`, `probe_duration` via mutagen then ffprobe, `classify`, `finalize`), `HttpClient.throttle` so yt-dlp calls respect the per-site delay. Quality: clip under 60 s; preview when under 80% of the Discogs duration and 15+ s short; otherwise full; with no Discogs duration the adapter's hint stands.
 Tests generate tiny WAVs at run time (`tests/audio_utils.py`) instead of committing binaries; yt-dlp is mocked.
 Installed with Homebrew: `ffmpeg`, `chromaprint` (provides `fpcalc`).
+
+## Step 9: verification
+Built: `verify.py` (duration check 6 s for full; unknown Discogs duration rejects over 15 min; far-longer audio and mix/medley titles rejected; preview/clip skip the duration check), `fingerprint.py` (`fpcalc -raw`, numpy sliding alignment of the middle 20 s of the shorter file, `compare` = agree / disagree / inconclusive), cross-check between sources, fingerprints stored in the DB with each fetched file.
+A missing `fpcalc` gives a warning and duration-only verification (tested).
+Thresholds: agree at 0.70 bit similarity, disagree below 0.63. Unrelated synthetic tunes reach ~0.59 at their best offset, so the first guess of 0.65/0.58 was too tight. These need checking on real audio in Step 17.
+Medley detection is keyword based (title words such as "DJ mix", "medley", "EP preview"); the length rule catches the rest.

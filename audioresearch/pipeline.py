@@ -202,11 +202,14 @@ class Run:
                 continue
             bump("fetched", adapter.name)
             fetched = got if from_cache else fetch_mod.finalize(got, track.duration)
+            tv = self.em.timer()
+            if m.via == "trusted":
+                v = verify_mod.Verification(True, ["your own file or link"])
+            else:
+                v = verify_mod.verify(track, fetched, m.candidate)
+            out["verify_ms"] += tv.ms
             if self.store and not from_cache:
                 self.store.save_fetched(self.identity.discogs_release_id, pos, fetched)
-            tv = self.em.timer()
-            v = verify_mod.verify(track, fetched) if m.via != "trusted" else verify_mod.Verification(True, ["trusted"])
-            out["verify_ms"] += tv.ms
             if not v.ok:
                 bump("rejected", adapter.name)
                 reason = "; ".join(v.reasons) or "verification failed"
@@ -216,7 +219,7 @@ class Run:
                 continue
             bump("accepted", adapter.name)
             self._provenance(adapter, m.candidate, m.score, "accepted", "; ".join(v.reasons) or "verified",
-                             quality=fetched.quality.value)
+                             quality=fetched.quality.value, warnings=v.warnings)
             out["accepted_items"].append(Accepted(m, fetched, v, level))
             break
         return out
