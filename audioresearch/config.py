@@ -41,6 +41,11 @@ def site_delay(site: str) -> float:
     return _float(f"AUDIORESEARCH_DELAY_{site.upper()}", default)
 
 
+def enabled_adapters() -> set[str]:
+    """Adapters that are off by default but switched on (env: AUDIORESEARCH_ENABLE=decks_de,clone)."""
+    return {s.strip() for s in os.environ.get("AUDIORESEARCH_ENABLE", "").split(",") if s.strip()}
+
+
 def disabled_adapters() -> set[str]:
     """Adapters switched off in config (env: AUDIORESEARCH_DISABLED=bandcamp,clone)."""
     return {s.strip() for s in os.environ.get("AUDIORESEARCH_DISABLED", "").split(",") if s.strip()}

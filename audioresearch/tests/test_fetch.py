@@ -27,6 +27,7 @@ def test_probe_real_duration(tmp_path):
     (355, 360, Quality.PREVIEW, Quality.FULL),        # the site said preview, the file is the whole track
     (300, None, Quality.PREVIEW, Quality.PREVIEW),    # no reference length: trust the hint
     (300, None, Quality.FULL, Quality.FULL),
+    (150, None, Quality.CLIP, Quality.PREVIEW),       # a 150 s store clip with no reference length
     (None, 360, Quality.CLIP, Quality.CLIP),          # could not measure: keep the hint
 ])
 def test_quality_ladder(real, discogs, hint, expected):

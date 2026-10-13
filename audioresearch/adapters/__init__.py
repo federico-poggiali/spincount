@@ -27,8 +27,7 @@ BUILTIN: list[tuple[str, str]] = [
     ("stores.decks_de", "DecksDe"),
     ("stores.hardwax", "Hardwax"),
     ("stores.clone", "Clone"),
-    ("stores.kalahari_oyster_cult", "KalahariOysterCult"),
-]
+    ]
 
 
 class Registry:
@@ -73,5 +72,7 @@ def default_registry(disabled: Iterable[str] | None = None, store=None) -> Regis
                 continue  # adapter not built yet
             raise
         klass = getattr(mod, cls)
-        reg.add(klass(store=store) if "store" in inspect.signature(klass.__init__).parameters else klass())
+        adapter = klass(store=store) if "store" in inspect.signature(klass.__init__).parameters else klass()
+        if adapter.enabled_by_default or adapter.name in config.enabled_adapters():
+            reg.add(adapter)
     return reg

@@ -36,6 +36,17 @@ def norm_catno(s: str | None) -> str:
     return re.sub(r"[^a-z0-9]", "", (s or "").lower())
 
 
+def catno_score(a: str | None, b: str | None) -> float | None:
+    """1.0 equal; 0.9 one contains the other (stores drop the label prefix: '084 DC' vs 'AX084DC'); else 0."""
+    x, y = norm_catno(a), norm_catno(b)
+    if not x or not y:
+        return None
+    if x == y:
+        return 1.0
+    short, long = sorted((x, y), key=len)
+    return 0.9 if len(short) >= 4 and short in long else 0.0
+
+
 def norm_position(p: str) -> str:
     return re.sub(r"\d+", lambda m: str(int(m.group())), p.strip().upper())
 
@@ -116,8 +127,8 @@ def assign_tracks(identity: ReleaseIdentity, cand: Candidate) -> dict[str, tuple
 def match_release(identity: ReleaseIdentity, cand: Candidate) -> float:
     """0..1 score of how likely a release candidate is this Discogs release."""
     parts: list[tuple[float, float]] = []
-    if identity.catno and cand.catno:
-        parts.append((W_CATNO, 1.0 if norm_catno(identity.catno) == norm_catno(cand.catno) else 0.0))
+    if (cs := catno_score(identity.catno, cand.catno)) is not None:
+        parts.append((W_CATNO, cs))
     if cand.title:
         parts.append((W_TITLE, similarity(identity.title, cand.title)))
     if cand.artist and not _is_various(identity.artist) and not _is_various(cand.artist):

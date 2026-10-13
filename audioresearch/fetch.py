@@ -57,7 +57,7 @@ def classify(real_duration: float | None, discogs_duration: int | None, hint: Qu
         if real_duration < PREVIEW_RATIO * discogs_duration and discogs_duration - real_duration > PREVIEW_MIN_GAP:
             return Quality.PREVIEW
         return Quality.FULL
-    return Quality.PREVIEW if hint == Quality.PREVIEW else Quality.FULL
+    return Quality.FULL if hint == Quality.FULL else Quality.PREVIEW   # a 60 s+ clip or excerpt is a preview
 
 
 def finalize(fetched: FetchedAudio, discogs_duration: int | None) -> FetchedAudio:

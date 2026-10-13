@@ -24,6 +24,7 @@ class Adapter:
     # Best quality this adapter can deliver; lets the pipeline skip it for tracks that already
     # have a result of that quality.
     max_quality: Quality = Quality.FULL
+    enabled_by_default: bool = True   # False: built but off until AUDIORESEARCH_ENABLE names it (site not readable yet)
 
     def search(self, release: ReleaseIdentity, tracks: list[TrackRef]) -> list[Candidate]:
         """Metadata only. `tracks` are the tracks still to find at this level."""
