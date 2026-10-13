@@ -114,6 +114,10 @@ class Run:
             for cand, reason in run.outcome.rejected:
                 self.em.emit(ev.CANDIDATE_REJECTED, level=level, adapter=adapter.name, url=cand.url, reason=reason)
                 self._provenance(adapter, cand, None, "rejected", reason)
+            for pos, ms in run.outcome.matches.items():
+                for m in ms:
+                    self.em.emit(ev.CANDIDATE_MATCHED, level=level, adapter=adapter.name, position=pos, url=m.candidate.url,
+                                 score=round(m.score, 3), quality=m.candidate.quality_hint.value, via=m.via)
             self.em.emit(ev.STAGE_FINISHED, level=level, adapter=adapter.name, stage=ev.MATCH, ms=t.ms,
                          releases=len(run.outcome.releases), tracks=len(run.outcome.matches),
                          rejected=len(run.outcome.rejected))
@@ -232,6 +236,8 @@ class Run:
             bump("accepted", adapter.name)
             self._provenance(adapter, m.candidate, m.score, "accepted", "; ".join(v.reasons) or "verified",
                              quality=fetched.quality.value, warnings=v.warnings)
+            self.em.emit(ev.CANDIDATE_ACCEPTED, level=level, adapter=adapter.name, position=pos, url=m.candidate.url,
+                         quality=fetched.quality.value, score=round(m.score, 3))
             out["accepted_items"].append(Accepted(m, fetched, v, level))
             break
         return out

@@ -50,7 +50,7 @@
   th { color: var(--dim); font-weight: 600; text-transform: uppercase; letter-spacing: .06em; font-size: 11px; }
   td.pos { font-family: var(--mono); white-space: nowrap; } td.ttl { max-width: 260px; }
   .cell-found { color: var(--ok); } .cell-review { color: var(--warn); } .cell-notfound { color: var(--dim); } .cell-no { color: #4a4a50; }
-  .cell small { display: block; color: var(--dim); font-family: var(--mono); }
+  .cell small { display: block; margin-top: 2px; color: var(--dim); font-family: var(--mono); }
   #log { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; max-height: 360px; overflow: auto;
     font: 11.5px/1.6 var(--mono); }
   #log div.rej { color: var(--accent); } #log div.res { color: var(--ok); } #log div.off { color: var(--warn); }
@@ -101,7 +101,7 @@ const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<
 
 function fresh() {
   return { release: null, levels: LEVELS.map(([n]) => ({ n, status: "waiting", adapters: {}, stages: {}, ms: null, positions: [], resolved: [] })),
-           cells: {}, off: {}, finished: null, started: Date.now(), failed: null, lastMs: 0 };
+           cells: {}, links: {}, off: {}, finished: null, started: Date.now(), failed: null, lastMs: 0 };
 }
 const stageOf = (obj, name) => (obj[name] ||= { state: "waiting", counts: "", ms: null });
 
@@ -113,6 +113,14 @@ function counts(e) {
   if (s === "verify") return `${d.accepted} accepted, ${d.rejected} rejected`;
   if (s === "decide") return `${d.found} found, ${d.review} review`;
   return "";
+}
+
+function linkFor(e) {
+  const key = `${e.position}|${e.level}`;
+  const list = (state.links[key] ||= []);
+  let l = list.find((x) => x.url === e.data.url);
+  if (!l) list.push((l = { url: e.data.url }));
+  return l;
 }
 
 function apply(e) {
@@ -135,6 +143,9 @@ function apply(e) {
       st.state = e.data.error ? "failed" : "done"; st.counts = counts(e); st.ms = e.data.ms; break;
     }
     case "track_resolved": state.cells[`${e.position}|${e.level}`] = { status: e.data.status, source: e.data.source, quality: e.data.quality, confidence: e.data.confidence, url: e.data.url }; break;
+    case "candidate_matched": linkFor(e).state ||= "matched"; Object.assign(linkFor(e), { adapter: e.adapter, score: e.data.score, hint: e.data.quality }); break;
+    case "candidate_accepted": Object.assign(linkFor(e), { state: "accepted", quality: e.data.quality, adapter: e.adapter }); break;
+    case "candidate_rejected": if (e.position) Object.assign(linkFor(e), { state: "rejected", reason: e.data.reason, adapter: e.adapter }); break;
     case "adapter_off": state.off[e.adapter] = e.data.reason; break;
     case "run_finished": state.finished = e.data; break;
     case "run_failed": state.failed = e.data; break;
@@ -148,6 +159,13 @@ function box(name, a, off) {
 function stageRow(name, st) {
   st ||= { state: "waiting", counts: "", ms: null };
   return `<div class="stage"><span class="st s-${st.state}"><span class="dot"></span>${name}</span><span class="cnt">${esc(st.counts)} ${st.ms != null ? `<span class="s-waiting">${fmt(st.ms)}</span>` : ""}</span></div>`;
+}
+
+function linkRow(l) {
+  const mark = l.state === "accepted" ? "✓" : l.state === "rejected" ? "✗" : "·";
+  const cls = l.state === "accepted" ? "cell-found" : l.state === "rejected" ? "cell-review" : "";
+  const href = isUrl(l.url) ? `<a href="${esc(l.url)}" target="_blank" rel="noopener noreferrer">${esc(l.url.replace(/^https?:\/\/(www\.)?/, "").slice(0, 42))}</a>` : esc(l.url);
+  return `<small class="${cls}" title="${esc(l.reason || "")}">${mark} ${esc(l.adapter || "")} ${l.score ?? ""} ${href}${l.reason ? ` <span class="alt">${esc(l.reason)}</span>` : ""}</small>`;
 }
 
 const isUrl = (u) => /^https?:/.test(u || "");
@@ -190,9 +208,10 @@ function render() {
       h += `<tr><td class="pos">${esc(t.position)}</td><td class="ttl">${esc(t.title)}</td>`;
       for (const L of s.levels) {
         const c = s.cells[`${t.position}|${L.n}`];
-        if (c) h += `<td class="cell cell-${c.status}">${c.status}<small>${esc(c.source)} · ${esc(c.quality)} · ${c.confidence}</small>${link(c.url, "open")}</td>`;
-        else if (L.status !== "skipped" && L.positions.includes(t.position) && L.status === "done") h += '<td class="cell cell-notfound">not found</td>';
-        else if (L.status !== "skipped" && L.positions.includes(t.position)) h += '<td class="cell cell-notfound">…</td>';
+        const links = (s.links[`${t.position}|${L.n}`] || []).map(linkRow).join("");
+        if (c) h += `<td class="cell cell-${c.status}">${c.status}<small>${esc(c.source)} · ${esc(c.quality)} · ${c.confidence}</small>${links}</td>`;
+        else if (L.status !== "skipped" && L.positions.includes(t.position) && L.status === "done") h += `<td class="cell cell-notfound">${links ? "links found, none kept" : "not found"}${links}</td>`;
+        else if (L.status !== "skipped" && L.positions.includes(t.position)) h += `<td class="cell cell-notfound">…${links}</td>`;
         else h += '<td class="cell cell-no">not tried</td>';
       }
       h += "</tr>";
