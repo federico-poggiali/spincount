@@ -45,7 +45,7 @@ class FakeAdapter(Adapter):
             self.fetched.append(candidate.url)
         if candidate.url in self.fetch_errors:
             raise AdapterError(f"{self.name}: simulated fetch failure")
-        path = dest.with_suffix(".fake")
+        path = dest.parent / (dest.name + ".fake")
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_bytes(b"fake audio")
         dur = self.durations.get(candidate.url, candidate.duration)

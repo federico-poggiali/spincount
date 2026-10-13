@@ -1,0 +1,296 @@
+"""Stages 2 to 6 wired together, level by level, per release."""
+from __future__ import annotations
+
+import logging
+from concurrent.futures import ThreadPoolExecutor
+from dataclasses import dataclass, field
+from pathlib import Path
+from typing import Callable, Iterable
+
+from . import config, decide as decide_mod, events as ev, fetch as fetch_mod, verify as verify_mod
+from .adapters import Registry, default_registry
+from .adapters.base import Adapter
+from .decide import Accepted, decide_track
+from .health import AdapterHealth
+from .identify import identify
+from .matcher import Match, MatchOutcome, match_candidates
+from .models import Candidate, Quality, Reading, ReleaseIdentity, ReleaseResult, Status, TrackRef, TrackResult
+
+log = logging.getLogger(__name__)
+FAILED = object()
+
+
+@dataclass
+class _AdapterRun:
+    adapter: Adapter
+    candidates: list[Candidate] = field(default_factory=list)
+    outcome: MatchOutcome | None = None
+    failed: bool = False
+
+
+class Run:
+    """All state of one research run."""
+
+    def __init__(self, identity: ReleaseIdentity, registry: Registry, emitter: ev.Emitter, *, store=None,
+                 refresh: bool = False, audio_dir: Path | None = None, review_threshold: float | None = None,
+                 max_candidates: int = 3, health: AdapterHealth | None = None):
+        self.identity, self.registry, self.em, self.store = identity, registry, emitter, store
+        self.refresh = refresh
+        self.audio_dir = audio_dir or config.AUDIO_CACHE_DIR
+        self.review_threshold = config.REVIEW_THRESHOLD if review_threshold is None else review_threshold
+        self.max_candidates = max_candidates
+        self.health = health or AdapterHealth()
+        self.accepted: dict[str, list[Accepted]] = {t.position: [] for t in identity.tracks}
+        self.readings: dict[str, list[Reading]] = {t.position: [] for t in identity.tracks}
+        self.results: dict[str, TrackResult] = {t.position: TrackResult(t.position) for t in identity.tracks}
+        self.tried: dict[str, int] = {t.position: 0 for t in identity.tracks}
+
+    # ---- helpers -------------------------------------------------------------------------------
+    def settled(self, pos: str) -> bool:
+        r = self.results[pos]
+        return r.level == 0 and r.status == Status.FOUND or (r.status == Status.FOUND and r.quality == Quality.FULL)
+
+    def eligible(self, adapter: Adapter, pos: str) -> bool:
+        r = self.results[pos]
+        if r.status == Status.NOT_FOUND:
+            return True
+        if r.level == 0 and r.status == Status.FOUND:
+            return False  # level 0 always wins and is never replaced
+        if r.status == Status.FOUND and r.quality.rank >= adapter.max_quality.rank:
+            return False
+        return True
+
+    def unfound(self) -> list[str]:
+        return [p for p in self.results if not self.settled(p)]
+
+    def _guard(self, adapter: Adapter, fn: Callable, *args):
+        """Call an adapter; failures are counted, and enough of them switch it off."""
+        if self.health.is_off(adapter.name):
+            return FAILED
+        try:
+            out = fn(*args)
+            self.health.ok(adapter.name)
+            return out
+        except Exception as e:  # network, parser, site change: never kill the run
+            log.warning("%s failed: %s", adapter.name, e)
+            if self.health.fail(adapter.name, e):
+                self.em.emit(ev.ADAPTER_OFF, adapter=adapter.name, reason=str(e)[:200])
+            self.last_error = str(e)
+            return FAILED
+
+    # ---- stage 2 + 3 for one group of adapters -------------------------------------------------
+    def _run_group(self, level: int, group: list[Adapter]) -> list[_AdapterRun]:
+        runs: list[_AdapterRun] = []
+        taken: set[str] = set()   # positions an earlier adapter of the group already matched
+        for adapter in group:
+            run = _AdapterRun(adapter)
+            runs.append(run)
+            tracks = [t for t in self.identity.tracks if t.position not in taken and self.eligible(adapter, t.position)]
+            if not tracks or self.health.is_off(adapter.name):
+                if self.health.is_off(adapter.name):
+                    run.failed = True
+                continue
+            self.em.emit(ev.STAGE_STARTED, level=level, adapter=adapter.name, stage=ev.SEARCH, tracks=len(tracks))
+            t = self.em.timer()
+            got = self._cached_search(adapter, tracks)
+            if got is FAILED:
+                run.failed = True
+                self.em.emit(ev.STAGE_FINISHED, level=level, adapter=adapter.name, stage=ev.SEARCH, ms=t.ms,
+                             candidates=0, error=getattr(self, "last_error", "failed"))
+                continue
+            run.candidates = got
+            self.em.emit(ev.STAGE_FINISHED, level=level, adapter=adapter.name, stage=ev.SEARCH, ms=t.ms, candidates=len(got))
+
+            self.em.emit(ev.STAGE_STARTED, level=level, adapter=adapter.name, stage=ev.MATCH)
+            t = self.em.timer()
+            run.outcome = self._match(adapter, tracks, got)
+            for cand, reason in run.outcome.rejected:
+                self.em.emit(ev.CANDIDATE_REJECTED, level=level, adapter=adapter.name, url=cand.url, reason=reason)
+                self._provenance(adapter, cand, None, "rejected", reason)
+            self.em.emit(ev.STAGE_FINISHED, level=level, adapter=adapter.name, stage=ev.MATCH, ms=t.ms,
+                         releases=len(run.outcome.releases), tracks=len(run.outcome.matches),
+                         rejected=len(run.outcome.rejected))
+            taken |= set(run.outcome.matches)
+        return runs
+
+    def _match(self, adapter: Adapter, tracks: list[TrackRef], cands: list[Candidate]) -> MatchOutcome:
+        trusted = [c for c in cands if c.extra.get("trusted")]
+        rest = [c for c in cands if not c.extra.get("trusted")]
+        out = match_candidates(self.identity, tracks, rest, top=self.max_candidates)
+        wanted = {t.position for t in tracks}
+        for c in trusted:  # level 0: the adapter's own claim (your file, your pasted link) is final
+            if c.position in wanted:
+                out.matches.setdefault(c.position, []).insert(0, Match(c.position, c, 1.0, "trusted"))
+        return out
+
+    def _cached_search(self, adapter: Adapter, tracks: list[TrackRef]):
+        if self.store and not self.refresh:
+            hit = self.store.get_candidates(self.identity.discogs_release_id, adapter.name, [t.position for t in tracks])
+            if hit is not None:
+                return hit
+        got = self._guard(adapter, adapter.search, self.identity, tracks)
+        if got is not FAILED and self.store:
+            self.store.save_candidates(self.identity.discogs_release_id, adapter.name, [t.position for t in tracks], got)
+        return got
+
+    def _provenance(self, adapter, cand: Candidate, score, outcome: str, reason: str, **extra) -> None:
+        if self.store:
+            self.store.add_provenance(self.identity.discogs_release_id, self.em.run_id, adapter.name if hasattr(adapter, "name") else adapter,
+                                      cand.url, cand.position, score, outcome, reason, extra)
+
+    # ---- stages 4 to 6 for one level -----------------------------------------------------------
+    def _fetch_verify(self, level: int, runs: list[_AdapterRun]) -> None:
+        by_adapter = {r.adapter.name: r.adapter for r in runs}
+        per_pos: dict[str, list[Match]] = {}
+        for r in runs:
+            if r.outcome:
+                for pos, ms in r.outcome.matches.items():
+                    per_pos.setdefault(pos, []).extend(ms)
+                    self._collect_readings(pos, ms)
+        for pos in per_pos:  # best quality first, then best score; keep the top few overall
+            per_pos[pos].sort(key=lambda m: (-m.candidate.quality_hint.rank, -m.score))
+            per_pos[pos] = per_pos[pos][:self.max_candidates]
+        if not per_pos:
+            return
+        stats = {"fetched": 0, "failed": 0, "accepted": 0, "rejected": 0}
+        by = {a: {"fetched": 0, "failed": 0, "accepted": 0, "rejected": 0} for a in by_adapter}
+        self.em.emit(ev.STAGE_STARTED, level=level, stage=ev.FETCH, tracks=len(per_pos))
+        tf = self.em.timer()
+        verify_ms = 0
+
+        def work(pos: str):
+            return self._work_position(level, pos, per_pos[pos], by_adapter)
+
+        with ThreadPoolExecutor(max_workers=min(4, len(per_pos))) as pool:
+            outcomes = list(pool.map(work, per_pos))
+        for pos, o in zip(per_pos, outcomes):
+            verify_ms += o["verify_ms"]
+            for k in ("fetched", "failed", "accepted", "rejected"):
+                for adapter_name, n in o[k].items():
+                    stats[k] += n
+                    by[adapter_name][k] += n
+            self.accepted[pos].extend(o["accepted_items"])
+        fetch_ms = max(0, tf.ms - verify_ms)
+        self.em.emit(ev.STAGE_FINISHED, level=level, stage=ev.FETCH, ms=fetch_ms, fetched=stats["fetched"],
+                     failed=stats["failed"], by_adapter={a: {"fetched": s["fetched"], "failed": s["failed"]} for a, s in by.items()})
+        self.em.emit(ev.STAGE_STARTED, level=level, stage=ev.VERIFY)
+        self.em.emit(ev.STAGE_FINISHED, level=level, stage=ev.VERIFY, ms=verify_ms, accepted=stats["accepted"],
+                     rejected=stats["rejected"], by_adapter={a: {"accepted": s["accepted"], "rejected": s["rejected"]} for a, s in by.items()})
+
+    def _collect_readings(self, pos: str, matches: list[Match]) -> None:
+        for m in matches:
+            for r in m.candidate.readings:
+                if not any((r.source, r.bpm, r.key) == (x.source, x.bpm, x.key) for x in self.readings[pos]):
+                    self.readings[pos].append(r)
+
+    def _work_position(self, level: int, pos: str, matches: list[Match], adapters: dict[str, Adapter]) -> dict:
+        """Fetch candidates best first; stop at the first one that verifies."""
+        track = self.identity.track(pos)
+        out = {"fetched": {}, "failed": {}, "accepted": {}, "rejected": {}, "accepted_items": [], "verify_ms": 0}
+        bump = lambda k, name: out[k].__setitem__(name, out[k].get(name, 0) + 1)  # noqa: E731
+        for m in matches:
+            adapter = adapters.get(m.candidate.adapter)
+            if adapter is None or self.health.is_off(adapter.name):
+                continue
+            dest = fetch_mod.dest_for(self.audio_dir, self.identity, pos, adapter.name)
+            got = self._cached_fetch(adapter, m.candidate, dest)
+            if got is FAILED:
+                bump("failed", adapter.name)
+                self.em.emit(ev.CANDIDATE_REJECTED, level=level, adapter=adapter.name, position=pos,
+                             url=m.candidate.url, reason="fetch failed")
+                self._provenance(adapter, m.candidate, m.score, "rejected", "fetch failed")
+                continue
+            bump("fetched", adapter.name)
+            fetched = fetch_mod.finalize(got, track.duration)
+            tv = self.em.timer()
+            v = verify_mod.verify(track, fetched) if m.via != "trusted" else verify_mod.Verification(True, ["trusted"])
+            out["verify_ms"] += tv.ms
+            if not v.ok:
+                bump("rejected", adapter.name)
+                reason = "; ".join(v.reasons) or "verification failed"
+                self.em.emit(ev.CANDIDATE_REJECTED, level=level, adapter=adapter.name, position=pos,
+                             url=m.candidate.url, reason=reason)
+                self._provenance(adapter, m.candidate, m.score, "rejected", reason, quality=fetched.quality.value)
+                continue
+            bump("accepted", adapter.name)
+            self._provenance(adapter, m.candidate, m.score, "accepted", "; ".join(v.reasons) or "verified",
+                             quality=fetched.quality.value)
+            out["accepted_items"].append(Accepted(m, fetched, v, level))
+            break
+        return out
+
+    def _cached_fetch(self, adapter: Adapter, cand: Candidate, dest: Path):
+        return self._guard(adapter, adapter.fetch, cand, dest)
+
+    def _decide(self, level: int) -> None:
+        self.em.emit(ev.STAGE_STARTED, level=level, stage=ev.DECIDE)
+        t = self.em.timer()
+        found = review = 0
+        for pos in self.results:
+            items = self.accepted[pos]
+            for a in items:
+                a.agreement = verify_mod.cross_check_all(a, items) if hasattr(verify_mod, "cross_check_all") else None
+            new = decide_track(pos, items, self.readings[pos], self.review_threshold)
+            old = self.results[pos]
+            self.results[pos] = new
+            found += new.status == Status.FOUND
+            review += new.status == Status.REVIEW
+            changed = (old.status, old.source, old.quality, old.url) != (new.status, new.source, new.quality, new.url)
+            if changed and new.status != Status.NOT_FOUND:
+                self.em.emit(ev.TRACK_RESOLVED, level=level, position=pos, status=new.status.value, source=new.source,
+                             quality=new.quality.value if new.quality else None, confidence=round(new.confidence, 3),
+                             reason=new.reason)
+        self.em.emit(ev.STAGE_FINISHED, level=level, stage=ev.DECIDE, ms=t.ms, found=found, review=review)
+
+    # ---- one level -----------------------------------------------------------------------------
+    def run_level(self, level: int) -> None:
+        before = {p: (r.status, r.source, r.quality) for p, r in self.results.items()}
+        unfound = self.unfound()
+        self.em.emit(ev.LEVEL_STARTED, level=level, unfound=len(unfound), positions=unfound,
+                     adapters=[a.name for a in self.registry.for_level(level)])
+        tl = self.em.timer()
+        groups = self.registry.groups(level)
+        runs: list[_AdapterRun] = []
+        if groups and unfound:
+            with ThreadPoolExecutor(max_workers=len(groups)) as pool:
+                for rs in pool.map(lambda g: self._run_group(level, g), groups):
+                    runs.extend(rs)
+            self._fetch_verify(level, runs)
+            self._decide(level)
+        resolved = [p for p, r in self.results.items()
+                    if r.status != Status.NOT_FOUND and (r.status, r.source, r.quality) != before[p]]
+        self.em.emit(ev.LEVEL_FINISHED, level=level, resolved=resolved, unfound=self.unfound(), ms=tl.ms)
+
+    def final(self) -> ReleaseResult:
+        tracks = []
+        for t in self.identity.tracks:
+            r = self.results[t.position]
+            alts = [{"source": a.fetched.adapter, "quality": a.fetched.quality.value,
+                     "confidence": round(a.match.score, 3), "audio_path": str(a.fetched.path), "url": a.fetched.url}
+                    for a in self.accepted[t.position] if str(a.fetched.path) != r.audio_path]
+            r.alternatives = alts
+            tracks.append(r)
+        return ReleaseResult(self.identity.discogs_release_id, tracks, sorted(self.health.off))
+
+
+def research(url_or_id: str | int, levels: Iterable[int] = range(0, 6), refresh: bool = False, on_event=None, *,
+             registry: Registry | None = None, identity: ReleaseIdentity | None = None, discogs=None, store=None,
+             audio_dir: Path | None = None, run_id: str | None = None, review_threshold: float | None = None,
+             max_candidates: int = 3) -> ReleaseResult:
+    em = ev.Emitter(run_id, on_event)
+    em.emit(ev.RUN_STARTED, url=str(url_or_id), levels=list(levels))
+    t = em.timer()
+    if identity is None:
+        identity = identify(url_or_id, discogs)
+    em.emit(ev.RELEASE_IDENTIFIED, artist=identity.artist, title=identity.title, catno=identity.catno,
+            label=identity.label, year=identity.year, release_id=identity.discogs_release_id,
+            tracks=[t_.to_dict() for t_ in identity.tracks], track_count=len(identity.tracks), ms=t.ms)
+    run = Run(identity, registry or default_registry(), em, store=store, refresh=refresh, audio_dir=audio_dir,
+              review_threshold=review_threshold, max_candidates=max_candidates)
+    total = em.timer()
+    for level in sorted(set(levels)):
+        run.run_level(level)
+    result = run.final()
+    em.emit(ev.RUN_FINISHED, **result.counts(), ms=total.ms, adapters_off=result.adapters_off,
+            release_id=identity.discogs_release_id)
+    return result
