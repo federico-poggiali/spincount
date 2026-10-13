@@ -1,0 +1,1643 @@
+{
+ "collection": [
+  {
+   "artwork_url": "https://i1.sndcdn.com/artworks-000068095997-djzlmc-large.jpg",
+   "caption": null,
+   "commentable": true,
+   "comment_count": 5,
+   "created_at": "2014-01-16T18:36:23Z",
+   "description": "",
+   "downloadable": false,
+   "download_count": 0,
+   "duration": 360954,
+   "full_duration": 360940,
+   "embeddable_by": "all",
+   "genre": "Tech House / Deep House",
+   "has_downloads_left": false,
+   "id": 129848671,
+   "kind": "track",
+   "label_name": "Jekos Music",
+   "last_modified": "2017-07-06T17:54:03Z",
+   "license": "all-rights-reserved",
+   "likes_count": 48,
+   "permalink": "mr-jefferson-wasp-ghetto-flow",
+   "permalink_url": "https://soundcloud.com/mrjefferson/mr-jefferson-wasp-ghetto-flow",
+   "playback_count": 1613,
+   "public": true,
+   "publisher_metadata": null,
+   "purchase_title": null,
+   "purchase_url": null,
+   "release_date": null,
+   "reposts_count": 6,
+   "secret_token": null,
+   "sharing": "public",
+   "state": "finished",
+   "streamable": true,
+   "tag_list": "house music techno mr jefferson jekos new 2013 2014 good tech techhouse",
+   "title": "Mr Jefferson - WASP / Ghetto Flow / Mayhem Maker [WASP EP](Preview)[JEKOS Lab]",
+   "uri": "https://api.soundcloud.com/tracks/soundcloud%3Atracks%3A129848671",
+   "urn": "soundcloud:tracks:129848671",
+   "user_id": 5066593,
+   "visuals": null,
+   "waveform_url": "https://wave.sndcdn.com/KGfsry4tu0g4_m.json",
+   "display_date": "2014-01-16T18:36:23Z",
+   "media": {
+    "transcodings": [
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:129848671/f8cd5a2d-fa0e-4ff8-bb86-75e2cf997fb9/stream/hls",
+      "preset": "aac_160k",
+      "duration": 360954,
+      "snipped": false,
+      "format": {
+       "protocol": "hls",
+       "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+      },
+      "quality": "sq",
+      "is_legacy_transcoding": false
+     },
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:129848671/849b027a-7b1c-497c-bf68-28abceb78987/stream/hls",
+      "preset": "aac_96k",
+      "duration": 360954,
+      "snipped": false,
+      "format": {
+       "protocol": "hls",
+       "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+      },
+      "quality": "lq",
+      "is_legacy_transcoding": false
+     },
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:129848671/75c414b8-c8a1-46e1-86c3-f70005f3a39f/stream/hls",
+      "preset": "abr_sq",
+      "duration": 360954,
+      "snipped": false,
+      "format": {
+       "protocol": "hls",
+       "mime_type": "audio/mpegurl"
+      },
+      "quality": "sq",
+      "is_legacy_transcoding": false
+     },
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:129848671/9fe01f36-07d1-4ab5-a6b1-e2e9c48f3b60/stream/hls",
+      "preset": "mp3_0_0",
+      "duration": 360940,
+      "snipped": false,
+      "format": {
+       "protocol": "hls",
+       "mime_type": "audio/mpeg"
+      },
+      "quality": "sq",
+      "is_legacy_transcoding": true
+     },
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:129848671/9fe01f36-07d1-4ab5-a6b1-e2e9c48f3b60/stream/progressive",
+      "preset": "mp3_0_0",
+      "duration": 360940,
+      "snipped": false,
+      "format": {
+       "protocol": "progressive",
+       "mime_type": "audio/mpeg"
+      },
+      "quality": "sq",
+      "is_legacy_transcoding": true
+     }
+    ]
+   },
+   "station_urn": "soundcloud:system-playlists:track-stations:129848671",
+   "station_permalink": "track-stations:129848671",
+   "track_authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJnZW8iOiJOTCIsInN1YiI6IiIsInJpZCI6IjM1MDRhZTAwLTQyYTgtNDhkZC1iMDYzLWMzMDcwOGMzMjQxYyIsImlhdCI6MTc5MTkyNDA4M30.aGEqH0SC-idgViaJV1O_Sy67wCkVatkf8vMo_tYuN7U",
+   "monetization_model": "BLACKBOX",
+   "policy": "MONETIZE",
+   "user": {
+    "avatar_url": "https://i1.sndcdn.com/avatars-Hfivu3a6LcbmmycQ-dWUJtA-large.jpg",
+    "city": null,
+    "comments_count": 0,
+    "country_code": null,
+    "created_at": null,
+    "creator_subscriptions": [
+     {
+      "product": {
+       "id": "creator-pro-unlimited"
+      }
+     }
+    ],
+    "creator_subscription": {
+     "product": {
+      "id": "creator-pro-unlimited"
+     }
+    },
+    "description": "Booking & Info: hello@mrjeffersonlive.com\n\nChunky Drums Kung-Fu Master! waaaaa yaaaa! \ud83e\udd4b\n\nSpanish DJ/producer and music tech builder. Known for old school grooves packed with funky sounds \u2014 and for building AI-powered tools that producers actually use.\n\nHe has played some of the biggest Spanish and international venues including H\u00ef Ibiza, Eden Ibiza, Industrial Copera, and Lost Beach Club, sharing the booth with Claptone, Sant\u00e9, Sidney Charles, Metodi Hristov, Christoph, Alexander Kowalski, Axel Karakasis, Coyu, Edu Imbernon, Dosem, Gary Beck, Fer BR, Henry Saiz, Gon\u00e7alo, Wade, and many more.\n\nHis productions have earned support from Jamie Jones, Wade, Sidney Charles, Sant\u00e9, Eats Everything, Format:B, Green Velvet, Richie Hawtin, Umek, Stefano Noferini, Cristian Varela, Sam Paganini, Kerri Chandler, Solardo, Stacey Pullen, Cuartero, Chus + Ceballos, Roger Sanchez, David Herrero, Max Chapman, among others.\n\nBeyond the decks, he builds free tools for music producers:\n  \u25b8 AURA \u2014 AI mastering suite with stem separation, BPM/key detection & audio cleanup (aura-music-suite.vercel.app)\n  \u25b8 Stepista \u2014 AI-powered MIDI pattern generator VST3/AU plugin with 12\n  electronic music styles (stepista.vercel.app)\n\n\u25c9 Nervous  \n\u25c9 Roush  \n\u25c9 Madtech Records \n\u25c9 Cr2 Records \n\u25c9 Resonance Records \n\u25c9 Desert Hearts \n\u25c9 Criminal Hype \n\u25c9 Deeperfect \n\u25c9 Sanity \n\u25c9 InStereo Recordings \n\u25c9 Guesthouse \n\u25c9 Daylight Robbery \n\u25c9 Baumhaus \n\u25c9 UNDR THE RADR \n\u25c9 SetAbout \n\u25c9 Funk'n Deep Records \n\u25c9 Be One Records \n\u25c9 Witty Tunes \n\u25c9 Natura Viva \n\u25c9 Carpe Diem Musica \n\u25c9 Happy Records \n\u25c9 MuthaFunkerz",
+    "followers_count": 6100,
+    "followings_count": 526,
+    "first_name": "",
+    "full_name": "",
+    "groups_count": 0,
+    "id": 5066593,
+    "kind": "user",
+    "last_modified": "2026-04-03T09:29:38Z",
+    "last_name": "",
+    "likes_count": 973,
+    "playlist_likes_count": 147,
+    "permalink": "mrjefferson",
+    "permalink_url": "https://soundcloud.com/mrjefferson",
+    "playlist_count": 18,
+    "reposts_count": null,
+    "track_count": 82,
+    "uri": "https://api.soundcloud.com/users/soundcloud%3Ausers%3A5066593",
+    "urn": "soundcloud:users:5066593",
+    "username": "Mr Jefferson",
+    "verified": false,
+    "visuals": {
+     "urn": "soundcloud:users:5066593",
+     "enabled": true,
+     "visuals": [
+      {
+       "urn": "soundcloud:visuals:27919665",
+       "entry_time": 0,
+       "visual_url": "https://i1.sndcdn.com/visuals-000005066593-yjhJBG-original.jpg"
+      }
+     ],
+     "tracking": null
+    },
+    "badges": {
+     "pro": false,
+     "creator_mid_tier": false,
+     "pro_unlimited": true,
+     "verified": false
+    },
+    "station_urn": "soundcloud:system-playlists:artist-stations:5066593",
+    "station_permalink": "artist-stations:5066593",
+    "date_of_birth": null
+   }
+  },
+  {
+   "artwork_url": "https://i1.sndcdn.com/artworks-FDYZf8q22huhdmz9-Wyz8mA-large.jpg",
+   "caption": null,
+   "commentable": true,
+   "comment_count": 5,
+   "created_at": "2022-03-18T01:36:25Z",
+   "description": "The 25 Year Tribute Mix",
+   "downloadable": true,
+   "download_count": 68,
+   "duration": 344816,
+   "full_duration": 344816,
+   "embeddable_by": "all",
+   "genre": "TECHNO / ELECTRO",
+   "has_downloads_left": true,
+   "id": 1234335199,
+   "kind": "track",
+   "label_name": null,
+   "last_modified": "2022-03-19T04:39:10Z",
+   "license": "all-rights-reserved",
+   "likes_count": 55,
+   "permalink": "alarm-steampit-ep-jeff-mills-purpose-maker-frankie-bones-25-year-tribute-mix",
+   "permalink_url": "https://soundcloud.com/frankiebones/alarm-steampit-ep-jeff-mills-purpose-maker-frankie-bones-25-year-tribute-mix",
+   "playback_count": 1111,
+   "public": true,
+   "publisher_metadata": {
+    "id": 1234335199,
+    "urn": "soundcloud:tracks:1234335199",
+    "contains_music": true
+   },
+   "purchase_title": null,
+   "purchase_url": null,
+   "release_date": null,
+   "reposts_count": 7,
+   "secret_token": null,
+   "sharing": "public",
+   "state": "finished",
+   "streamable": true,
+   "tag_list": "",
+   "title": "ALARM / STEAMPIT EP / JEFF MILLS - PURPOSE MAKER / FRANKIE BONES 25 YEAR TRIBUTE MIX",
+   "uri": "https://api.soundcloud.com/tracks/soundcloud%3Atracks%3A1234335199",
+   "urn": "soundcloud:tracks:1234335199",
+   "user_id": 677761,
+   "visuals": null,
+   "waveform_url": "https://wave.sndcdn.com/5FLz5FBj738B_m.json",
+   "display_date": "2022-03-18T01:36:25Z",
+   "media": {
+    "transcodings": [
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1234335199/14812a8c-85db-40af-a7fa-940a1fbf86ad/stream/hls",
+      "preset": "aac_160k",
+      "duration": 344816,
+      "snipped": false,
+      "format": {
+       "protocol": "hls",
+       "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+      },
+      "quality": "sq",
+      "is_legacy_transcoding": false
+     },
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1234335199/af0bafe9-ba5f-4e9a-94d6-e6c68e208513/stream/hls",
+      "preset": "aac_96k",
+      "duration": 344816,
+      "snipped": false,
+      "format": {
+       "protocol": "hls",
+       "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+      },
+      "quality": "lq",
+      "is_legacy_transcoding": false
+     },
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1234335199/3743ec3c-1ed6-41ed-8f55-cf0da232e427/stream/hls",
+      "preset": "abr_sq",
+      "duration": 344816,
+      "snipped": false,
+      "format": {
+       "protocol": "hls",
+       "mime_type": "audio/mpegurl"
+      },
+      "quality": "sq",
+      "is_legacy_transcoding": false
+     },
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1234335199/53914b59-dae0-4c25-bb14-89fde587d658/stream/hls",
+      "preset": "mp3_0_1",
+      "duration": 344816,
+      "snipped": false,
+      "format": {
+       "protocol": "hls",
+       "mime_type": "audio/mpeg"
+      },
+      "quality": "sq",
+      "is_legacy_transcoding": true
+     },
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1234335199/53914b59-dae0-4c25-bb14-89fde587d658/stream/progressive",
+      "preset": "mp3_0_1",
+      "duration": 344816,
+      "snipped": false,
+      "format": {
+       "protocol": "progressive",
+       "mime_type": "audio/mpeg"
+      },
+      "quality": "sq",
+      "is_legacy_transcoding": true
+     }
+    ]
+   },
+   "station_urn": "soundcloud:system-playlists:track-stations:1234335199",
+   "station_permalink": "track-stations:1234335199",
+   "track_authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJnZW8iOiJOTCIsInN1YiI6IiIsInJpZCI6Ijc5ZTU4ZjAxLTAyMWItNDA2Zi05MWI4LTY1ZTA5YjAwNGM2NSIsImlhdCI6MTc5MTkyNDA4M30.tB9LtlNyjDz4XSxjs3AwwKccPMojPHoODUsX0fgu3fw",
+   "monetization_model": "BLACKBOX",
+   "policy": "MONETIZE",
+   "user": {
+    "avatar_url": "https://i1.sndcdn.com/avatars-BTquybVv76uZqkwp-jJARzQ-large.jpg",
+    "city": "NYC",
+    "comments_count": 0,
+    "country_code": "US",
+    "created_at": null,
+    "creator_subscriptions": [
+     {
+      "product": {
+       "id": "creator-pro-unlimited"
+      }
+     }
+    ],
+    "creator_subscription": {
+     "product": {
+      "id": "creator-pro-unlimited"
+     }
+    },
+    "description": "Frankie Bones: The Godfather of American Rave Culture\n\nFrankie Bones, born Frank Mitchell, is an American DJ and record producer whose career was central to the emergence of rave culture in the United States during the late 1980s and early 1990s. A Brooklyn native, Bones became known for connecting New York's underground dance-music traditions with the rapidly developing rave culture of the United Kingdom. Through his DJ sets, record labels, productions, and legendary Storm Rave parties, he helped establish the foundations of the American rave scene.\n\nHe is widely associated with the \"Godfather of American Rave Culture\" title and is particularly linked to the development and popularization of the PLUR philosophy\u2014Peace, Love, Unity, Respect\u2014which became one of the defining ideals of rave and electronic dance-music communities.\n\nEarly Life\nBrooklyn Roots\n\nFrank Mitchell was born in Brooklyn, New York, in 1966 and grew up during a period when disco, early hip-hop, funk, and emerging street culture were transforming New York's musical landscape.\n\nMusic was a major part of his childhood. His father, a rock-music enthusiast from the Woodstock generation, maintained a large record collection, while his parents were regulars in New York's nightlife. Radio stations such as KISS-FM exposed Mitchell to disco, electro, funk, and the developing sounds of hip-hop.\n\nHis first major connection to dance music came through Brooklyn's roller-disco culture. As a child, he frequented the Roll-A-Palace in Sheepshead Bay, where DJs provided the soundtrack for crowded skating sessions. The experience introduced him not only to dance music but also to the relationship between a DJ, a sound system, and a crowd.\n\nBy his teenage years, Mitchell was deeply involved in the street culture surrounding breakdancing, graffiti, and hip-hop. He also began experimenting with turntables and learning how to mix records. The death of his father shortly before Mitchell graduated high school had a profound effect on him, and he inherited his father's record collection, giving him an even deeper musical foundation.\n\nBecoming a DJ\n\nDuring the early 1980s, Mitchell began playing parties and clubs around Brooklyn and New Jersey. His sets drew from disco, funk, electro, hip-hop, and the emerging house sound. He developed his technique largely through practice and observation, learning how to manipulate records and build momentum on the dance floor.\n\nRather than treating genres as separate worlds, he increasingly combined them. Breakbeats, house rhythms, electro sounds, and harder-edged New York styles became components of a developing sound that would later become associated with his rave work.\n\nHis early experiences also connected him with DJs and producers who were becoming important figures in New York's underground dance scene. Among them was Tommy Musto, with whom Bones eventually formed the production partnership Musto & Bones.\n\nProduction and Bonesbreaks\n\nBy the late 1980s, Bones had moved beyond DJing into production. His early work included the Bonesbreaks series, which provided DJs with raw, sample-heavy breakbeats and rhythmic tools.\n\nBonesbreaks Volume 1 and Volume 2 became important underground releases and demonstrated Bones's interest in the kind of hard, percussive sound that would soon become fundamental to rave and techno.\n\nHe also worked with producers including Tommy Musto and Omar Santana and became involved with the New York house and techno community surrounding labels such as Nu Groove.\n\nIn 1988, Bones released Bonesbreaks Volume 1: Hard, Raw & Raunchy Beats for DJ's, helping establish his reputation as a producer as well as a DJ. His productions combined the rhythmic language of hip-hop and breakbeat music with the emerging electronic sounds of house and techno.\n\nDiscovering the British Rave Scene\n\nA defining moment in Bones's career came with his trips to the United Kingdom in the late 1980s.\n\nIn 1989, he traveled to Britain to perform for the rapidly expanding acid-house and techno scene. There he encountered a rave culture that was dramatically different from the club-centered nightlife he knew in New York.\n\nOne of the most important experiences was his appearance at the Energy rave at Raydon Airfield in Suffolk. The enormous event, staged in an aircraft hangar, attracted tens of thousands of people. Bones was struck by the scale of the gathering and by the sense of community among people from very different social and cultural backgrounds.\n\nThe experience convinced him that the rave model could work in the United States. Rather than simply importing British records, he wanted to recreate the atmosphere: enormous spaces, powerful sound systems, all-night dancing, and a sense that the crowd itself was part of the event.\n\nWhen Bones returned to New York, he began putting that idea into practice.\n\nStorm Rave\n\nThe result was Storm Rave.\n\nThe first Storm Rave was held on May 11, 1991, at a brickyard in Flatbush, Brooklyn. What began with a relatively small crowd grew into a series of increasingly ambitious underground events.\n\nStorm Rave parties moved through warehouses, industrial spaces, abandoned buildings, and other unconventional locations. The events were built around long, intense DJ sets and the increasingly hard and fast sounds of techno and rave music.\n\nBecause many of the parties were unauthorized, organizers frequently had to contend with police intervention, noise complaints, and other logistical problems. Locations could change at the last minute, and the underground nature of the events became part of their identity.\n\nAs word spread, Storm Rave became a major gathering point for New York's emerging rave community. Bones's parties helped demonstrate that American audiences could embrace the same large-scale, nontraditional dance culture that had developed in Britain.\n\nStorm Rave was more than a series of parties, however. It helped create a social environment in which DJs, producers, promoters, dancers, and fans could develop a shared identity around electronic music.\n\nPLUR: Peace, Love, Unity, Respect\n\nPerhaps Bones's most enduring cultural legacy is his association with PLUR.\n\nThe phrase developed within the New York rave community during the early 1990s. Adam X, Bones's brother, was involved in the early use of \"Peace Love Unity,\" while Bones helped turn those ideas into a broader philosophy for rave culture.\n\nThe fourth word\u2014\"Respect\"\u2014became particularly significant after an incident at a 1993 party known as Back to Basics in the Bronx. A fight broke out during Bones's set, prompting him to address the crowd from the stage and demand that people stop fighting and respect the community around them.\n\nFrom this culture emerged the familiar formulation:\n\nPeace. Love. Unity. Respect.\n\nPLUR became a shorthand for the social ideals that many ravers wanted their events to embody. Rather than simply being a slogan, it represented an attempt to make underground parties spaces where people from different backgrounds could dance together without violence, discrimination, or unnecessary conflict.\n\nThe philosophy eventually spread far beyond New York. It became associated with rave culture around the world and influenced everything from dance-floor etiquette to the tradition of exchanging kandi bracelets.\n\nBones has described PLUR as a kind of raver manifesto: a set of principles intended to preserve the communal spirit that made rave culture distinctive.\n\nRecord Labels and the New York Techno Underground\n\nBones's influence extended beyond the dance floor.\n\nHe founded Underworld Records in the late 1980s, using the label as an outlet for his own productions and music from the New York underground. The label became closely associated with the raw breakbeat and techno sounds developing around the city.\n\nBones was also involved with Groove Records, a Brooklyn record store that became an important meeting place for New York's emerging techno and rave community. His relationship with his brother Adam X and other figures in the scene helped create a network connecting DJs, producers, record collectors, and promoters.\n\nIn the 1990s, Bones and his collaborators were also involved in Sonic Groove, which became one of New York's best-known underground techno institutions. The label and its associated community helped introduce audiences to a new generation of American and international techno producers.\n\nMusical Style and Discography\n\nBones's productions have always reflected his eclectic background.\n\nHis music draws on the breakbeats and sampling techniques of hip-hop, the rhythmic foundations of house, the darker textures of techno, and the speed and intensity of British rave.\n\nAmong his best-known early releases are the Bonesbreaks records and the 1990 track \"Call It Techno.\" His collaborations with Adam X, including the Crossbones EP, further explored the increasingly aggressive sound of early-1990s techno.\n\nHis later catalog includes the album Technolo-G, released in 1998, as well as numerous DJ mixes, singles, EPs, reissues, and archival collections.\n\nThe Bonesbreaks concept has remained particularly important to his legacy. The series captured the raw, functional approach of early DJ-oriented production: records designed not merely to be listened to but to be manipulated, layered, mixed, and used to build energy on a dance floor.\n\nIn the 2020s, Bones continued revisiting his archive through digital releases and DJ mixes, allowing younger audiences to discover music originally created during the formative years of American rave culture.\n\nInfluence on American Rave Culture\n\nBones's importance is not limited to the records he produced.\n\nHis greatest contribution was cultural. He helped translate the British rave experience into a distinctly American context.\n\nThe American rave scene did not simply copy Britain. New York brought its own traditions\u2014hip-hop, disco, graffiti, breakdancing, house, techno, warehouse parties, and street culture. Bones understood how these elements could coexist and used them to build something new.\n\nHis Storm Rave events demonstrated that electronic music could function as the center of an entire underground community. His record labels and stores provided infrastructure for that community, while his DJ sets connected American audiences with rapidly evolving international sounds.\n\nHe also became an important mentor and collaborator within the New York techno scene, helping create opportunities for younger DJs and producers.\n\nLegacy\n\nFrankie Bones remains one of the key figures in the history of American electronic music.\n\nHis legacy rests on several interconnected achievements: helping introduce the British rave model to American audiences, developing the Storm Rave parties, producing influential early breakbeat and techno records, contributing to the growth of New York's underground techno infrastructure, and popularizing the communal philosophy associated with PLUR.\n\nHis story is ultimately about more than music. Bones came from the roller rinks, record stores, graffiti-covered streets, and underground clubs of New York and carried those experiences into the emerging international rave movement.\n\nThe result was a distinctly American interpretation of rave culture\u2014hard, energetic, rebellious, and deeply communal.\n\nFor that reason, Frankie Bones remains an important figure in the story of how rave culture crossed the Atlantic and became a lasting part of American electronic music.",
+    "followers_count": 19724,
+    "followings_count": 49,
+    "first_name": "Frank",
+    "full_name": "Frank Mitchell",
+    "groups_count": 0,
+    "id": 677761,
+    "kind": "user",
+    "last_modified": "2026-10-10T06:31:12Z",
+    "last_name": "Mitchell",
+    "likes_count": 20,
+    "playlist_likes_count": 2,
+    "permalink": "frankiebones",
+    "permalink_url": "https://soundcloud.com/frankiebones",
+    "playlist_count": 21,
+    "reposts_count": null,
+    "track_count": 490,
+    "uri": "https://api.soundcloud.com/users/soundcloud%3Ausers%3A677761",
+    "urn": "soundcloud:users:677761",
+    "username": "frankiebones",
+    "verified": true,
+    "visuals": {
+     "urn": "soundcloud:users:677761",
+     "enabled": true,
+     "visuals": [
+      {
+       "urn": "soundcloud:visuals:241170672",
+       "entry_time": 0,
+       "visual_url": "https://i1.sndcdn.com/visuals-7fLXVAz7GDbJLj4A-jju35w-original.jpg"
+      }
+     ],
+     "tracking": null
+    },
+    "badges": {
+     "pro": false,
+     "creator_mid_tier": false,
+     "pro_unlimited": true,
+     "verified": true
+    },
+    "station_urn": "soundcloud:system-playlists:artist-stations:677761",
+    "station_permalink": "artist-stations:677761",
+    "date_of_birth": null
+   }
+  },
+  {
+   "artwork_url": "https://i1.sndcdn.com/artworks-000097661682-hdu84w-large.jpg",
+   "caption": null,
+   "commentable": true,
+   "comment_count": 0,
+   "created_at": "2014-11-19T16:36:36Z",
+   "description": "This is the very first episode of the Maker/Mistaker Podcast! In this episode I talk with Gigi Young, a psychic intuitive that teaches and mentors others through a spiritual and cosmic perspective.\n\nI initially found her on YouTube talking about consciousness, spirituality, and extra terrestrials. The way she communicated esoteric ideas resonated nicely with where I\u2019m at in my path and I hired her for an intuitive coaching session a few weeks back. In that session she used her connections to her spirit guides to help me see my life\u2019s circumstances and struggles in a new light. She helped me gain clarity on my sense of purpose and provided a welcome perspective that fit with my newly expanded view of reality.\n\nIn this inaugural podcast episode, Gigi and I dive deep into mind-blowing and esoteric subject matter. We cover a lot of ground about finding and living your purpose, consciousness, spirituality, metaphysical subjects, starseeds, and ETs.\n\nEpisode Length: 92 minutes\nRecording Date: Aug 29, 2014\n\nEpisode Breakdown:\n04:18 psychic abilities, stereotypes, skepticism\n12:49 from atheist/skeptic to spiritual/occult\n15:00 studying metaphysics instead of partying\n20:00 finding your innate truth and purpose\n24:00 music taste, resonance, and frequency\n30:00 finding joy and thriving vs what feels good now\n34:00 finding your own voice, taking a media detox\n35:00 inspiration and our subconscious, not getting discouraged\n38:40 starseeds, cosmic spirituality, oversouls, past lives\n47:00 dimensions of consciousness\n51:00 lucid dreams, out of body experiences, astral projection\n57:00 thoughts, manifestation, imagination, law of attraction\n1:04:00 taking responsibility for yourself as a creator\n1:07:00 every relationship is a reflection of yourself\n1:10:30 astrology, birth charts, starseeds, your true nature\n1:16:54 finding your purpose, your authenticity\n1:19:00 selflessness vs selfishness, changing the world\n1:24:00 advice for creators, Gigi\u2019s future plans, living in flow\n1:26:30 masculinity, David Deida, the Way of the Superior Man\n1:31:00 closing thoughts\nLinks\nGigi\u2019s Website\nGigi\u2019s YouTube Channel\nReferences\nMiss Cleo\nDavid Deida\nShadow Work\nGet your own birth chart\nStarseed Hotline\nThe Secret\nWhat the Bleep do We Know\nMy post about The Way of the Superior Man\nMy post about working with Kelly La Sha\nMy post about my first out of body experience\nMy post about me possibly being a Starseed\nBooks\nDreams of Awakening\nSecret of the Soul\nThe Alchemy of Nine Dimensions\nThe Way of the Superior Man\nKelly La Sha",
+   "downloadable": true,
+   "download_count": 16,
+   "duration": 5543153,
+   "full_duration": 5543153,
+   "embeddable_by": "all",
+   "genre": "podcast",
+   "has_downloads_left": true,
+   "id": 177671206,
+   "kind": "track",
+   "label_name": null,
+   "last_modified": "2023-01-13T07:26:47Z",
+   "license": "all-rights-reserved",
+   "likes_count": 11,
+   "permalink": "gigi-young",
+   "permalink_url": "https://soundcloud.com/jeff_finley/gigi-young",
+   "playback_count": 326,
+   "public": true,
+   "publisher_metadata": null,
+   "purchase_title": null,
+   "purchase_url": null,
+   "release_date": "2014-08-30T00:00:00Z",
+   "reposts_count": 0,
+   "secret_token": null,
+   "sharing": "public",
+   "state": "finished",
+   "streamable": true,
+   "tag_list": "spirituality esoteric talk conversation interview inspiration \"personal development\" \"self improvement\" \"self help\" \"jeff finley\" meditation starseeds \"star seed\"",
+   "title": "Maker/Mistaker Podcast - Gigi Young: Finding your Purpose, Consciousness, Starseeds, and ETs (ep 01)",
+   "uri": "https://api.soundcloud.com/tracks/soundcloud%3Atracks%3A177671206",
+   "urn": "soundcloud:tracks:177671206",
+   "user_id": 2372801,
+   "visuals": null,
+   "waveform_url": "https://wave.sndcdn.com/lvOgtkrvLpU0_m.json",
+   "display_date": "2014-11-19T16:36:36Z",
+   "media": {
+    "transcodings": [
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:177671206/e9ce357b-adea-47f0-8324-16da313cae67/stream/hls",
+      "preset": "mp3_0_0",
+      "duration": 5543153,
+      "snipped": false,
+      "format": {
+       "protocol": "hls",
+       "mime_type": "audio/mpeg"
+      },
+      "quality": "sq",
+      "is_legacy_transcoding": true
+     },
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:177671206/e9ce357b-adea-47f0-8324-16da313cae67/stream/progressive",
+      "preset": "mp3_0_0",
+      "duration": 5543153,
+      "snipped": false,
+      "format": {
+       "protocol": "progressive",
+       "mime_type": "audio/mpeg"
+      },
+      "quality": "sq",
+      "is_legacy_transcoding": true
+     }
+    ]
+   },
+   "station_urn": "soundcloud:system-playlists:track-stations:177671206",
+   "station_permalink": "track-stations:177671206",
+   "track_authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJnZW8iOiJOTCIsInN1YiI6IiIsInJpZCI6IjE5MjFhYmU4LTY4NjUtNDY5Ny1hNjNlLTYxNjgxM2Y4NzVmYiIsImlhdCI6MTc5MTkyNDA4M30.yibhwWwWID56tQiBwLt4n5auLfiImEsZQ6ber2A6pAs",
+   "monetization_model": "BLACKBOX",
+   "policy": "MONETIZE",
+   "user": {
+    "avatar_url": "https://i1.sndcdn.com/avatars-000320926068-7y5ira-large.jpg",
+    "city": "Ohio",
+    "comments_count": 0,
+    "country_code": "US",
+    "created_at": null,
+    "creator_subscriptions": [
+     {
+      "product": {
+       "id": "free"
+      }
+     }
+    ],
+    "creator_subscription": {
+     "product": {
+      "id": "free"
+     }
+    },
+    "description": "Jeff Finley's current music project is Starbound Renegade. His influences are pop punk, emo, synthwave, retrowave, futuresynth, trap, funk, hip hop, and EDM.  Jeff's also a graphic designer, illustrator, author, and mystic. He's been making music since 2000 with BOXOMYLK, By Bread Alone, Parachute Journalists, and Campfire Conspiracy.",
+    "followers_count": 222,
+    "followings_count": 138,
+    "first_name": "Jeff",
+    "full_name": "Jeff Finley",
+    "groups_count": 0,
+    "id": 2372801,
+    "kind": "user",
+    "last_modified": "2024-01-13T07:26:45Z",
+    "last_name": "Finley",
+    "likes_count": 106,
+    "playlist_likes_count": 10,
+    "permalink": "jeff_finley",
+    "permalink_url": "https://soundcloud.com/jeff_finley",
+    "playlist_count": 23,
+    "reposts_count": null,
+    "track_count": 217,
+    "uri": "https://api.soundcloud.com/users/soundcloud%3Ausers%3A2372801",
+    "urn": "soundcloud:users:2372801",
+    "username": "Starbound Renegade",
+    "verified": false,
+    "visuals": {
+     "urn": "soundcloud:users:2372801",
+     "enabled": true,
+     "visuals": [
+      {
+       "urn": "soundcloud:visuals:45100124",
+       "entry_time": 0,
+       "visual_url": "https://i1.sndcdn.com/visuals-000002372801-KC7H3x-original.jpg"
+      }
+     ],
+     "tracking": null
+    },
+    "badges": {
+     "pro": false,
+     "creator_mid_tier": false,
+     "pro_unlimited": false,
+     "verified": false
+    },
+    "station_urn": "soundcloud:system-playlists:artist-stations:2372801",
+    "station_permalink": "artist-stations:2372801",
+    "date_of_birth": null
+   }
+  },
+  {
+   "artwork_url": null,
+   "caption": null,
+   "commentable": true,
+   "comment_count": 6,
+   "created_at": "2012-08-29T23:11:24Z",
+   "description": "A Small Preview my 3 of the four tracks I'm releasing as a free EP. The fourth track is a remix",
+   "downloadable": false,
+   "download_count": 0,
+   "duration": 48539,
+   "full_duration": 48539,
+   "embeddable_by": "all",
+   "genre": "Bass",
+   "has_downloads_left": false,
+   "id": 58041307,
+   "kind": "track",
+   "label_name": "",
+   "last_modified": "2012-09-03T02:24:59Z",
+   "license": "all-rights-reserved",
+   "likes_count": 2,
+   "permalink": "noise-maker-ep-preview",
+   "permalink_url": "https://soundcloud.com/hdami/noise-maker-ep-preview",
+   "playback_count": 59,
+   "public": true,
+   "publisher_metadata": null,
+   "purchase_title": null,
+   "purchase_url": null,
+   "release_date": null,
+   "reposts_count": 0,
+   "secret_token": null,
+   "sharing": "public",
+   "state": "finished",
+   "streamable": true,
+   "tag_list": "dubstep electrostep electro house hardhouse drumstep tp ragestep rage ra ragehouse",
+   "title": "Noise Maker EP Preview",
+   "uri": "https://api.soundcloud.com/tracks/soundcloud%3Atracks%3A58041307",
+   "urn": "soundcloud:tracks:58041307",
+   "user_id": 10204681,
+   "visuals": null,
+   "waveform_url": "https://wave.sndcdn.com/tC2suwrd2B6e_m.json",
+   "display_date": "2012-08-29T23:11:24Z",
+   "media": {
+    "transcodings": [
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:58041307/9e964ffc-ee95-4f26-820c-826636558c38/stream/hls",
+      "preset": "mp3_0_0",
+      "duration": 48539,
+      "snipped": false,
+      "format": {
+       "protocol": "hls",
+       "mime_type": "audio/mpeg"
+      },
+      "quality": "sq",
+      "is_legacy_transcoding": true
+     },
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:58041307/9e964ffc-ee95-4f26-820c-826636558c38/stream/progressive",
+      "preset": "mp3_0_0",
+      "duration": 48539,
+      "snipped": false,
+      "format": {
+       "protocol": "progressive",
+       "mime_type": "audio/mpeg"
+      },
+      "quality": "sq",
+      "is_legacy_transcoding": true
+     }
+    ]
+   },
+   "station_urn": "soundcloud:system-playlists:track-stations:58041307",
+   "station_permalink": "track-stations:58041307",
+   "track_authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJnZW8iOiJOTCIsInN1YiI6IiIsInJpZCI6IjYxNzE3NmE5LWM3YTMtNDQ2My1hNjAwLTkwMmU2MGI5OWI2ZCIsImlhdCI6MTc5MTkyNDA4M30.kH94vZ_rSxEqHFMr5UPyKQtksdNKj7MZwnBCF5aXQ54",
+   "monetization_model": "BLACKBOX",
+   "policy": "MONETIZE",
+   "user": {
+    "avatar_url": "https://i1.sndcdn.com/avatars-000036844610-n5c6j8-large.jpg",
+    "city": "HAMILTON TOWNSHIP",
+    "comments_count": 0,
+    "country_code": "US",
+    "created_at": null,
+    "creator_subscriptions": [
+     {
+      "product": {
+       "id": "free"
+      }
+     }
+    ],
+    "creator_subscription": {
+     "product": {
+      "id": "free"
+     }
+    },
+    "description": "Update\nOctober 17th 2024\n\nfound my passion for making music again now 35 with kids, i found my passion for creating music again, even though i don't have any of my vst from the original days, fuck it i'll make it work. it's gunna get weird.",
+    "followers_count": 42,
+    "followings_count": 163,
+    "first_name": "Mark",
+    "full_name": "Mark Gaydos",
+    "groups_count": 0,
+    "id": 10204681,
+    "kind": "user",
+    "last_modified": "2024-10-18T01:19:50Z",
+    "last_name": "Gaydos",
+    "likes_count": 6,
+    "playlist_likes_count": 0,
+    "permalink": "hdami",
+    "permalink_url": "https://soundcloud.com/hdami",
+    "playlist_count": 0,
+    "reposts_count": null,
+    "track_count": 10,
+    "uri": "https://api.soundcloud.com/users/soundcloud%3Ausers%3A10204681",
+    "urn": "soundcloud:users:10204681",
+    "username": "HDamI",
+    "verified": false,
+    "visuals": null,
+    "badges": {
+     "pro": false,
+     "creator_mid_tier": false,
+     "pro_unlimited": false,
+     "verified": false
+    },
+    "station_urn": "soundcloud:system-playlists:artist-stations:10204681",
+    "station_permalink": "artist-stations:10204681",
+    "date_of_birth": null
+   }
+  },
+  {
+   "artwork_url": "https://i1.sndcdn.com/artworks-y8LQyY8EpJVvjOQg-gLycmg-large.jpg",
+   "caption": null,
+   "commentable": true,
+   "comment_count": 0,
+   "created_at": "2024-12-27T00:33:52Z",
+   "description": "A high value conversation about Artificial Intelligence for business.",
+   "downloadable": false,
+   "download_count": 0,
+   "duration": 1087869,
+   "full_duration": 1087869,
+   "embeddable_by": "all",
+   "genre": "",
+   "has_downloads_left": false,
+   "id": 1995042259,
+   "kind": "track",
+   "label_name": null,
+   "last_modified": "2024-12-27T00:35:14Z",
+   "license": "all-rights-reserved",
+   "likes_count": 1,
+   "permalink": "purposemakerlabs-ai-dojo-ep-2",
+   "permalink_url": "https://soundcloud.com/purposemaker-labs/purposemakerlabs-ai-dojo-ep-2",
+   "playback_count": 22,
+   "public": true,
+   "publisher_metadata": {
+    "id": 1995042259,
+    "urn": "soundcloud:tracks:1995042259",
+    "contains_music": true
+   },
+   "purchase_title": null,
+   "purchase_url": null,
+   "release_date": null,
+   "reposts_count": 0,
+   "secret_token": null,
+   "sharing": "public",
+   "state": "finished",
+   "streamable": true,
+   "tag_list": "Other \"Artificial Intelligence\" Business Podcast",
+   "title": "PurposeMakerLabs AI DOJO EP 2",
+   "uri": "https://api.soundcloud.com/tracks/soundcloud%3Atracks%3A1995042259",
+   "urn": "soundcloud:tracks:1995042259",
+   "user_id": 1487109447,
+   "visuals": null,
+   "waveform_url": "https://wave.sndcdn.com/ulgyvoHLA2dO_m.json",
+   "display_date": "2024-12-27T00:33:52Z",
+   "media": {
+    "transcodings": [
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1995042259/0403dcef-1750-4085-a2b3-5a3172c0cbdc/stream/hls",
+      "preset": "mp3_1_0",
+      "duration": 1087869,
+      "snipped": false,
+      "format": {
+       "protocol": "hls",
+       "mime_type": "audio/mpeg"
+      },
+      "quality": "sq",
+      "is_legacy_transcoding": true
+     },
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1995042259/0403dcef-1750-4085-a2b3-5a3172c0cbdc/stream/progressive",
+      "preset": "mp3_1_0",
+      "duration": 1087869,
+      "snipped": false,
+      "format": {
+       "protocol": "progressive",
+       "mime_type": "audio/mpeg"
+      },
+      "quality": "sq",
+      "is_legacy_transcoding": true
+     }
+    ]
+   },
+   "station_urn": "soundcloud:system-playlists:track-stations:1995042259",
+   "station_permalink": "track-stations:1995042259",
+   "track_authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJnZW8iOiJOTCIsInN1YiI6IiIsInJpZCI6IiIsImlhdCI6MTc5MTkyNDA4M30.SiLbX18CIWfpOHbJUm3RFQmuvUkv4AhKA5VdvObly4U",
+   "monetization_model": "NOT_APPLICABLE",
+   "policy": "ALLOW",
+   "user": {
+    "avatar_url": "https://a1.sndcdn.com/images/default_avatar_large.png",
+    "city": null,
+    "comments_count": 0,
+    "country_code": null,
+    "created_at": null,
+    "creator_subscriptions": [
+     {
+      "product": {
+       "id": "free"
+      }
+     }
+    ],
+    "creator_subscription": {
+     "product": {
+      "id": "free"
+     }
+    },
+    "description": null,
+    "followers_count": 0,
+    "followings_count": 0,
+    "first_name": "Purposemaker",
+    "full_name": "Purposemaker Labs",
+    "groups_count": 0,
+    "id": 1487109447,
+    "kind": "user",
+    "last_modified": "2024-12-27T00:29:13Z",
+    "last_name": "Labs",
+    "likes_count": 1,
+    "playlist_likes_count": 0,
+    "permalink": "purposemaker-labs",
+    "permalink_url": "https://soundcloud.com/purposemaker-labs",
+    "playlist_count": 0,
+    "reposts_count": null,
+    "track_count": 3,
+    "uri": "https://api.soundcloud.com/users/soundcloud%3Ausers%3A1487109447",
+    "urn": "soundcloud:users:1487109447",
+    "username": "Purposemaker Labs",
+    "verified": false,
+    "visuals": null,
+    "badges": {
+     "pro": false,
+     "creator_mid_tier": false,
+     "pro_unlimited": false,
+     "verified": false
+    },
+    "station_urn": "soundcloud:system-playlists:artist-stations:1487109447",
+    "station_permalink": "artist-stations:1487109447",
+    "date_of_birth": null
+   }
+  },
+  {
+   "artwork_url": "https://i1.sndcdn.com/artworks-000114073318-1uakiw-large.jpg",
+   "caption": null,
+   "commentable": true,
+   "comment_count": 5,
+   "created_at": "2015-04-20T22:57:12Z",
+   "description": "A EP preview to Nightmare Maker. A collaboration between Fekix & Creepshow. ",
+   "downloadable": false,
+   "download_count": 0,
+   "duration": 102618,
+   "full_duration": 102618,
+   "embeddable_by": "all",
+   "genre": "drum and bass",
+   "has_downloads_left": false,
+   "id": 201774868,
+   "kind": "track",
+   "label_name": null,
+   "last_modified": "2015-04-20T23:25:26Z",
+   "license": "all-rights-reserved",
+   "likes_count": 7,
+   "permalink": "fekix-creepshow-nightmare-maker-ep-preview",
+   "permalink_url": "https://soundcloud.com/fekix-uk/fekix-creepshow-nightmare-maker-ep-preview",
+   "playback_count": 61,
+   "public": true,
+   "publisher_metadata": null,
+   "purchase_title": null,
+   "purchase_url": null,
+   "release_date": null,
+   "reposts_count": 0,
+   "secret_token": null,
+   "sharing": "public",
+   "state": "finished",
+   "streamable": true,
+   "tag_list": "House \"Acid House\" Glitch",
+   "title": "Fekix / Creepshow - Nightmare Maker EP Preview",
+   "uri": "https://api.soundcloud.com/tracks/soundcloud%3Atracks%3A201774868",
+   "urn": "soundcloud:tracks:201774868",
+   "user_id": 24850227,
+   "visuals": null,
+   "waveform_url": "https://wave.sndcdn.com/J6rlj3S4db7N_m.json",
+   "display_date": "2015-04-20T22:57:12Z",
+   "media": {
+    "transcodings": [
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:201774868/b4ec5b74-db0e-4be7-a788-d30d4c56fda4/stream/hls",
+      "preset": "mp3_0_0",
+      "duration": 102618,
+      "snipped": false,
+      "format": {
+       "protocol": "hls",
+       "mime_type": "audio/mpeg"
+      },
+      "quality": "sq",
+      "is_legacy_transcoding": true
+     },
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:201774868/b4ec5b74-db0e-4be7-a788-d30d4c56fda4/stream/progressive",
+      "preset": "mp3_0_0",
+      "duration": 102618,
+      "snipped": false,
+      "format": {
+       "protocol": "progressive",
+       "mime_type": "audio/mpeg"
+      },
+      "quality": "sq",
+      "is_legacy_transcoding": true
+     }
+    ]
+   },
+   "station_urn": "soundcloud:system-playlists:track-stations:201774868",
+   "station_permalink": "track-stations:201774868",
+   "track_authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJnZW8iOiJOTCIsInN1YiI6IiIsInJpZCI6ImRjMTIwZGQzLTRhMzgtNDUwYi1iNDNkLTliYWYwMWU5M2U2YyIsImlhdCI6MTc5MTkyNDA4M30.tGUla5HN7_i2wEJQIqzMrUoW2r8oiV0QXYINZQwjC_0",
+   "monetization_model": "BLACKBOX",
+   "policy": "MONETIZE",
+   "user": {
+    "avatar_url": "https://i1.sndcdn.com/avatars-ziIChqXzQWVez33I-bF4zUA-large.jpg",
+    "city": "Leeds",
+    "comments_count": 0,
+    "country_code": null,
+    "created_at": null,
+    "creator_subscriptions": [
+     {
+      "product": {
+       "id": "free"
+      }
+     }
+    ],
+    "creator_subscription": {
+     "product": {
+      "id": "free"
+     }
+    },
+    "description": "NEW ARTIST PROFILE - SUBVISIONS\n\nhttps://soundcloud.com/subvisions",
+    "followers_count": 812,
+    "followings_count": 1499,
+    "first_name": "Vincent",
+    "full_name": "Vincent Gallagher",
+    "groups_count": 0,
+    "id": 24850227,
+    "kind": "user",
+    "last_modified": "2022-10-03T22:38:57Z",
+    "last_name": "Gallagher",
+    "likes_count": 455,
+    "playlist_likes_count": 37,
+    "permalink": "fekix-uk",
+    "permalink_url": "https://soundcloud.com/fekix-uk",
+    "playlist_count": 6,
+    "reposts_count": null,
+    "track_count": 39,
+    "uri": "https://api.soundcloud.com/users/soundcloud%3Ausers%3A24850227",
+    "urn": "soundcloud:users:24850227",
+    "username": "Fekix",
+    "verified": false,
+    "visuals": {
+     "urn": "soundcloud:users:24850227",
+     "enabled": true,
+     "visuals": [
+      {
+       "urn": "soundcloud:visuals:144903654",
+       "entry_time": 0,
+       "visual_url": "https://i1.sndcdn.com/visuals-000024850227-aICMi9-original.jpg"
+      }
+     ],
+     "tracking": null
+    },
+    "badges": {
+     "pro": false,
+     "creator_mid_tier": false,
+     "pro_unlimited": false,
+     "verified": false
+    },
+    "station_urn": "soundcloud:system-playlists:artist-stations:24850227",
+    "station_permalink": "artist-stations:24850227",
+    "date_of_birth": null
+   }
+  },
+  {
+   "artwork_url": "https://i1.sndcdn.com/artworks-000045823034-ggf9x1-large.jpg",
+   "caption": null,
+   "commentable": true,
+   "comment_count": 25,
+   "created_at": "2013-04-16T15:12:18Z",
+   "description": "Early support from: Dave Clarke, Perc, Laurent Garnier, Truss, JD Twitch, Darko Esser, Paul Mac, Ancient Methods, Tessela, Samuli Kemppi, Clouds, Kr!z, Smear, Marcel Heese, Minimum Syndicat, Lee Holman + more \r\n\r\nVinyl/digital here: http://earwiggle.bandcamp.com/album/dez-williams-the-angel-maker-ep\r\nVideo edit of Underground Persistent here: www.youtube.com/watch?v=Fpo1BtxBRrE \r\n\r\nIt's with great pleasure that we offer up our next release from https://soundcloud.com/dez-williams. One of our favourite producers of recent years through releases on standout UK labels like SCSI-AV, Acruacree, Ai and many others, we had noticed an absence of new 12\"s since his storming doublepack on Patrick Pulsinger's Cheap imprint in 2008. So to put things right, here's an end to the Dez Williams vinyl drought - 4 tracks of bonafide Holyhead magic to rock the floor. \r\n\r\nStarting with the melting frequencies of 'Underground Persistent', acid is in control. Like an Emmanuel Top and Kosmik Messenger track if they'd ever collaborated, this combines swingy 808 drums and masterful Detroit strings to a searing acid-line that keeps going and going. Switching things into more straight-ahead acid territory on A2, 'Untitledacid 6' has pretty much one intention and that's to jack hard. Perhaps one of Dez's heaviest techno tracks to date, it's a perfect snapshot of many hedonistic nights spent at The Orbit throughout his formative techno years. \r\n\r\n'Freedom' on the flip is a dense techno workout that joins a strong looped vocal and distorted percussion to swamping sound fx, in a rough but funky way. This time an expert pad progression brings the track to an unexpected but fitting finale. Finally, and showing what a complete supremo he is where dark floor-friendly electro is concerned, Dez turns in a blistering cut of sci-fi electro with 'Courtesy Call'. We could have made a number of records with the amount of great electro tracks that Dez does, but in this case we just picked our favourite of the bunch. \r\n\r\nDigital mastering: Chris McCormack @ Blacklisted Mastering\r\nVinyl mastering: Lawrie @ Curved Pressings",
+   "downloadable": false,
+   "download_count": 0,
+   "duration": 440046,
+   "full_duration": 440099,
+   "embeddable_by": "all",
+   "genre": "",
+   "has_downloads_left": false,
+   "id": 88133795,
+   "kind": "track",
+   "label_name": "",
+   "last_modified": "2022-07-05T14:36:16Z",
+   "license": "all-rights-reserved",
+   "likes_count": 96,
+   "permalink": "dez-williams-the-angel-maker",
+   "permalink_url": "https://soundcloud.com/earwiggle/dez-williams-the-angel-maker",
+   "playback_count": 3710,
+   "public": true,
+   "publisher_metadata": null,
+   "purchase_title": null,
+   "purchase_url": null,
+   "release_date": null,
+   "reposts_count": 18,
+   "secret_token": null,
+   "sharing": "public",
+   "state": "finished",
+   "streamable": true,
+   "tag_list": "",
+   "title": "Dez Williams - The Angel Maker ep (preview)",
+   "uri": "https://api.soundcloud.com/tracks/soundcloud%3Atracks%3A88133795",
+   "urn": "soundcloud:tracks:88133795",
+   "user_id": 3591580,
+   "visuals": null,
+   "waveform_url": "https://wave.sndcdn.com/cxrhxxxi7hzB_m.json",
+   "display_date": "2013-04-16T15:12:18Z",
+   "media": {
+    "transcodings": [
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:88133795/92e4e43a-1e9b-4eb0-921b-ba04f57283be/stream/hls",
+      "preset": "aac_160k",
+      "duration": 440046,
+      "snipped": false,
+      "format": {
+       "protocol": "hls",
+       "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+      },
+      "quality": "sq",
+      "is_legacy_transcoding": false
+     },
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:88133795/1d7c2eab-0bcd-47d5-833a-8b3b16e0e948/stream/hls",
+      "preset": "aac_96k",
+      "duration": 440046,
+      "snipped": false,
+      "format": {
+       "protocol": "hls",
+       "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+      },
+      "quality": "lq",
+      "is_legacy_transcoding": false
+     },
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:88133795/849eb96e-3778-45c1-b4c8-0a9d5fb4f5b8/stream/hls",
+      "preset": "abr_sq",
+      "duration": 440046,
+      "snipped": false,
+      "format": {
+       "protocol": "hls",
+       "mime_type": "audio/mpegurl"
+      },
+      "quality": "sq",
+      "is_legacy_transcoding": false
+     },
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:88133795/dca3ff93-355c-466a-b98c-81d5e9f30ba6/stream/hls",
+      "preset": "mp3_0_0",
+      "duration": 440099,
+      "snipped": false,
+      "format": {
+       "protocol": "hls",
+       "mime_type": "audio/mpeg"
+      },
+      "quality": "sq",
+      "is_legacy_transcoding": true
+     },
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:88133795/dca3ff93-355c-466a-b98c-81d5e9f30ba6/stream/progressive",
+      "preset": "mp3_0_0",
+      "duration": 440099,
+      "snipped": false,
+      "format": {
+       "protocol": "progressive",
+       "mime_type": "audio/mpeg"
+      },
+      "quality": "sq",
+      "is_legacy_transcoding": true
+     }
+    ]
+   },
+   "station_urn": "soundcloud:system-playlists:track-stations:88133795",
+   "station_permalink": "track-stations:88133795",
+   "track_authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJnZW8iOiJOTCIsInN1YiI6IiIsInJpZCI6ImI0OTkxYjM4LTQzYzUtNDJlZS04MWJlLTEwYTQ4YWYyY2YwYiIsImlhdCI6MTc5MTkyNDA4M30.06VSgX6ESq6zrMQEYVkd6C3GLBpO4IhBpR6fV8zl46A",
+   "monetization_model": "BLACKBOX",
+   "policy": "MONETIZE",
+   "user": {
+    "avatar_url": "https://i1.sndcdn.com/avatars-RV5SrUlsyGnkxWUn-XsypgQ-large.jpg",
+    "city": null,
+    "comments_count": 0,
+    "country_code": null,
+    "created_at": null,
+    "creator_subscriptions": [
+     {
+      "product": {
+       "id": "creator-pro-unlimited"
+      }
+     }
+    ],
+    "creator_subscription": {
+     "product": {
+      "id": "creator-pro-unlimited"
+     }
+    },
+    "description": "",
+    "followers_count": 5751,
+    "followings_count": 79,
+    "first_name": "Earwiggle",
+    "full_name": "Earwiggle ...",
+    "groups_count": 0,
+    "id": 3591580,
+    "kind": "user",
+    "last_modified": "2026-08-07T19:22:36Z",
+    "last_name": "...",
+    "likes_count": 10,
+    "playlist_likes_count": 0,
+    "permalink": "earwiggle",
+    "permalink_url": "https://soundcloud.com/earwiggle",
+    "playlist_count": 22,
+    "reposts_count": null,
+    "track_count": 129,
+    "uri": "https://api.soundcloud.com/users/soundcloud%3Ausers%3A3591580",
+    "urn": "soundcloud:users:3591580",
+    "username": "earwiggle",
+    "verified": false,
+    "visuals": null,
+    "badges": {
+     "pro": false,
+     "creator_mid_tier": false,
+     "pro_unlimited": true,
+     "verified": false
+    },
+    "station_urn": "soundcloud:system-playlists:artist-stations:3591580",
+    "station_permalink": "artist-stations:3591580",
+    "date_of_birth": null
+   }
+  },
+  {
+   "artwork_url": "https://i1.sndcdn.com/artworks-000607010980-qlrrbv-large.jpg",
+   "caption": null,
+   "commentable": true,
+   "comment_count": 5,
+   "created_at": "2019-10-03T04:53:24Z",
+   "description": "https://soundcloud.com/themakerdub",
+   "downloadable": false,
+   "download_count": 0,
+   "duration": 363282,
+   "full_duration": 363345,
+   "embeddable_by": "all",
+   "genre": "DeepDubstep",
+   "has_downloads_left": false,
+   "id": 690336070,
+   "kind": "track",
+   "label_name": null,
+   "last_modified": "2019-10-03T14:14:59Z",
+   "license": "all-rights-reserved",
+   "likes_count": 63,
+   "permalink": "the-maker-shifting-gears-ep-preview-htrd014",
+   "permalink_url": "https://soundcloud.com/heavytrafficrecordings/the-maker-shifting-gears-ep-preview-htrd014",
+   "playback_count": 954,
+   "public": true,
+   "publisher_metadata": {
+    "id": 690336070,
+    "urn": "soundcloud:tracks:690336070",
+    "contains_music": true
+   },
+   "purchase_title": null,
+   "purchase_url": "https://fanlink.to/HTRD014",
+   "release_date": null,
+   "reposts_count": 7,
+   "secret_token": null,
+   "sharing": "public",
+   "state": "finished",
+   "streamable": true,
+   "tag_list": "\"deep dubstep\" dubstep bass",
+   "title": "The Maker - Shifting Gears EP Preview - HTRD014",
+   "uri": "https://api.soundcloud.com/tracks/soundcloud%3Atracks%3A690336070",
+   "urn": "soundcloud:tracks:690336070",
+   "user_id": 285868219,
+   "visuals": null,
+   "waveform_url": "https://wave.sndcdn.com/xWgcIPxFGX6a_m.json",
+   "display_date": "2019-10-03T04:53:24Z",
+   "media": {
+    "transcodings": [
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:690336070/bdf706ce-dc94-4730-8684-8437ca84621b/stream/hls",
+      "preset": "aac_160k",
+      "duration": 363282,
+      "snipped": false,
+      "format": {
+       "protocol": "hls",
+       "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+      },
+      "quality": "sq",
+      "is_legacy_transcoding": false
+     },
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:690336070/5f8fd6f4-d433-4d10-8fbc-a9b44d8456c8/stream/hls",
+      "preset": "aac_96k",
+      "duration": 363282,
+      "snipped": false,
+      "format": {
+       "protocol": "hls",
+       "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+      },
+      "quality": "lq",
+      "is_legacy_transcoding": false
+     },
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:690336070/2430552b-07a1-45ba-9330-ac05e70387f6/stream/hls",
+      "preset": "abr_sq",
+      "duration": 363282,
+      "snipped": false,
+      "format": {
+       "protocol": "hls",
+       "mime_type": "audio/mpegurl"
+      },
+      "quality": "sq",
+      "is_legacy_transcoding": false
+     },
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:690336070/80634587-3771-478b-b3d0-7ed6be36c798/stream/hls",
+      "preset": "mp3_0_0",
+      "duration": 363345,
+      "snipped": false,
+      "format": {
+       "protocol": "hls",
+       "mime_type": "audio/mpeg"
+      },
+      "quality": "sq",
+      "is_legacy_transcoding": true
+     },
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:690336070/80634587-3771-478b-b3d0-7ed6be36c798/stream/progressive",
+      "preset": "mp3_0_0",
+      "duration": 363345,
+      "snipped": false,
+      "format": {
+       "protocol": "progressive",
+       "mime_type": "audio/mpeg"
+      },
+      "quality": "sq",
+      "is_legacy_transcoding": true
+     }
+    ]
+   },
+   "station_urn": "soundcloud:system-playlists:track-stations:690336070",
+   "station_permalink": "track-stations:690336070",
+   "track_authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJnZW8iOiJOTCIsInN1YiI6IiIsInJpZCI6IjNmOTk0NDM2LTUwZmItNDA1Mi1hYjRjLTIxZWE5Zjk5M2VmZiIsImlhdCI6MTc5MTkyNDA4M30.7N0fxdKIntdmj-kaeNB-kpgmgpQtkbkda8CnKdzjdkw",
+   "monetization_model": "BLACKBOX",
+   "policy": "MONETIZE",
+   "user": {
+    "avatar_url": "https://i1.sndcdn.com/avatars-000632143155-ndem5y-large.jpg",
+    "city": null,
+    "comments_count": 0,
+    "country_code": null,
+    "created_at": null,
+    "creator_subscriptions": [
+     {
+      "product": {
+       "id": "creator-pro-unlimited"
+      }
+     }
+    ],
+    "creator_subscription": {
+     "product": {
+      "id": "creator-pro-unlimited"
+     }
+    },
+    "description": null,
+    "followers_count": 2537,
+    "followings_count": 623,
+    "first_name": "",
+    "full_name": "",
+    "groups_count": 0,
+    "id": 285868219,
+    "kind": "user",
+    "last_modified": "2026-03-06T16:01:19Z",
+    "last_name": "",
+    "likes_count": 337,
+    "playlist_likes_count": 36,
+    "permalink": "heavytrafficrecordings",
+    "permalink_url": "https://soundcloud.com/heavytrafficrecordings",
+    "playlist_count": 39,
+    "reposts_count": null,
+    "track_count": 755,
+    "uri": "https://api.soundcloud.com/users/soundcloud%3Ausers%3A285868219",
+    "urn": "soundcloud:users:285868219",
+    "username": "Heavy Traffic Recordings",
+    "verified": false,
+    "visuals": {
+     "urn": "soundcloud:users:285868219",
+     "enabled": true,
+     "visuals": [
+      {
+       "urn": "soundcloud:visuals:68831857",
+       "entry_time": 0,
+       "visual_url": "https://i1.sndcdn.com/visuals-000285868219-LTGS9l-original.jpg"
+      }
+     ],
+     "tracking": null
+    },
+    "badges": {
+     "pro": false,
+     "creator_mid_tier": false,
+     "pro_unlimited": true,
+     "verified": false
+    },
+    "station_urn": "soundcloud:system-playlists:artist-stations:285868219",
+    "station_permalink": "artist-stations:285868219",
+    "date_of_birth": null
+   }
+  },
+  {
+   "artwork_url": "https://i1.sndcdn.com/artworks-000506505138-e265nb-large.jpg",
+   "caption": null,
+   "commentable": true,
+   "comment_count": 0,
+   "created_at": "2019-03-19T17:13:15Z",
+   "description": "Welcome to the Purpose to Create Podcast with Natarsha Wright. A business podcast&nbsp; for photographers and creativepreneurs who want to level up as they pursue their purpose to create. Lean in as we connect, inspire, and impact you as you build and grow your business.&nbsp; In today's Season 1 preview I'm chatting with Rhea Whitney about Defining your photography style.  Sponsor Shout Out&nbsp;  I'm all for less work and more life. HoneyBook makes that possible for me through their proactive platform for creative small businesses to create, review, and manage\u2014all in one place.&nbsp;It seamlessly ties together CRM, workflow, agreements, and transactions. HoneyBook helps me spend less time behind the computer and more time doing more of what I love like photographing my awesome clients and creating content for the Purpose to Create Podcast.  Click here to receive 50% off your first year of HoneyBook and start doing more of what you love.  Disclaimer: This link contains an affiliate code. Resources and Show notes: Photobomb Academy Brand Resource Guide  Thank you for listening to the Purpose to Create Podcast. Share, like, comment, or review this episode. Check out the show notes at&nbsp;www.purposetocreatepodcast.com&nbsp;and connect with us online @purposetocreate.&nbsp;",
+   "downloadable": false,
+   "download_count": 0,
+   "duration": 563435,
+   "full_duration": 563435,
+   "embeddable_by": "all",
+   "genre": null,
+   "has_downloads_left": false,
+   "id": 592566396,
+   "kind": "track",
+   "label_name": null,
+   "last_modified": "2019-03-19T17:14:01Z",
+   "license": "all-rights-reserved",
+   "likes_count": 0,
+   "permalink": "s1-ep-preview-defining-your",
+   "permalink_url": "https://soundcloud.com/natarshawright/s1-ep-preview-defining-your",
+   "playback_count": 1,
+   "public": true,
+   "publisher_metadata": null,
+   "purchase_title": null,
+   "purchase_url": null,
+   "release_date": null,
+   "reposts_count": 0,
+   "secret_token": null,
+   "sharing": "public",
+   "state": "finished",
+   "streamable": true,
+   "tag_list": "\"Purpose to Create\" \"Purpose to Create Podcast\" \"Natarsha Wright Photography\"",
+   "title": "S1/EP Preview: Defining your Photography Style",
+   "uri": "https://api.soundcloud.com/tracks/soundcloud%3Atracks%3A592566396",
+   "urn": "soundcloud:tracks:592566396",
+   "user_id": 596449965,
+   "visuals": null,
+   "waveform_url": "https://wave.sndcdn.com/9jMnv02kk1gT_m.json",
+   "display_date": "2019-03-19T17:13:15Z",
+   "media": {
+    "transcodings": [
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:592566396/16c223b8-10aa-4723-aa5d-6db8d462c0fc/stream/hls",
+      "preset": "mp3_0_0",
+      "duration": 563435,
+      "snipped": false,
+      "format": {
+       "protocol": "hls",
+       "mime_type": "audio/mpeg"
+      },
+      "quality": "sq",
+      "is_legacy_transcoding": true
+     },
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:592566396/16c223b8-10aa-4723-aa5d-6db8d462c0fc/stream/progressive",
+      "preset": "mp3_0_0",
+      "duration": 563435,
+      "snipped": false,
+      "format": {
+       "protocol": "progressive",
+       "mime_type": "audio/mpeg"
+      },
+      "quality": "sq",
+      "is_legacy_transcoding": true
+     }
+    ]
+   },
+   "station_urn": "soundcloud:system-playlists:track-stations:592566396",
+   "station_permalink": "track-stations:592566396",
+   "track_authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJnZW8iOiJOTCIsInN1YiI6IiIsInJpZCI6IiIsImlhdCI6MTc5MTkyNDA4M30.SiLbX18CIWfpOHbJUm3RFQmuvUkv4AhKA5VdvObly4U",
+   "monetization_model": "NOT_APPLICABLE",
+   "policy": "ALLOW",
+   "user": {
+    "avatar_url": "https://i1.sndcdn.com/avatars-000589531995-r9v4lo-large.jpg",
+    "city": "",
+    "comments_count": 0,
+    "country_code": null,
+    "created_at": null,
+    "creator_subscriptions": [
+     {
+      "product": {
+       "id": "free"
+      }
+     }
+    ],
+    "creator_subscription": {
+     "product": {
+      "id": "free"
+     }
+    },
+    "description": "A small business inspiration podcast hosted by Natarsha Wright Photography serving photographers + creativepreneurs. Creating w. Intention X Hustle X Heart. \n\nThe Purpose to Create Podcast aims to connect, inspire, and impact creatives as they pursue their purpose to create. There's levels to being a creative and through intimate conversations about the journey + lessons + blessings, tools & resources you will be able to gain insight into the hustle x grit of creatives.",
+    "followers_count": 6,
+    "followings_count": 0,
+    "first_name": "",
+    "full_name": "",
+    "groups_count": 0,
+    "id": 596449965,
+    "kind": "user",
+    "last_modified": "2019-02-28T16:26:43Z",
+    "last_name": "",
+    "likes_count": 0,
+    "playlist_likes_count": 0,
+    "permalink": "natarshawright",
+    "permalink_url": "https://soundcloud.com/natarshawright",
+    "playlist_count": 0,
+    "reposts_count": null,
+    "track_count": 6,
+    "uri": "https://api.soundcloud.com/users/soundcloud%3Ausers%3A596449965",
+    "urn": "soundcloud:users:596449965",
+    "username": "Purpose to Create",
+    "verified": false,
+    "visuals": {
+     "urn": "soundcloud:users:596449965",
+     "enabled": true,
+     "visuals": [
+      {
+       "urn": "soundcloud:visuals:63533206",
+       "entry_time": 0,
+       "visual_url": "https://i1.sndcdn.com/visuals-000596449965-8k0Vba-original.jpg"
+      }
+     ],
+     "tracking": null
+    },
+    "badges": {
+     "pro": false,
+     "creator_mid_tier": false,
+     "pro_unlimited": false,
+     "verified": false
+    },
+    "station_urn": "soundcloud:system-playlists:artist-stations:596449965",
+    "station_permalink": "artist-stations:596449965",
+    "date_of_birth": null
+   }
+  },
+  {
+   "artwork_url": null,
+   "caption": null,
+   "commentable": true,
+   "comment_count": 0,
+   "created_at": "2025-12-23T02:12:12Z",
+   "description": "",
+   "downloadable": true,
+   "download_count": 0,
+   "duration": 1015780,
+   "full_duration": 1015771,
+   "embeddable_by": "all",
+   "genre": "Dj mix ",
+   "has_downloads_left": true,
+   "id": 2234838029,
+   "kind": "track",
+   "label_name": "",
+   "last_modified": "2025-12-23T02:12:12Z",
+   "license": "all-rights-reserved",
+   "likes_count": 1,
+   "permalink": "maccasio-landlord-ep-mixtape",
+   "permalink_url": "https://soundcloud.com/dj-maker-gh/maccasio-landlord-ep-mixtape",
+   "playback_count": 2,
+   "public": true,
+   "publisher_metadata": {
+    "id": 2234838029,
+    "urn": "soundcloud:tracks:2234838029",
+    "artist": "Dj maker Gh",
+    "explicit": false
+   },
+   "purchase_title": null,
+   "purchase_url": null,
+   "release_date": null,
+   "reposts_count": 0,
+   "secret_token": null,
+   "sharing": "public",
+   "state": "finished",
+   "streamable": true,
+   "tag_list": "",
+   "title": "Maccasio Landlord EP mixtape by Dj Maker #top10 #fyp copyright disclaimer_ promotional purpose only",
+   "uri": "https://api.soundcloud.com/tracks/soundcloud%3Atracks%3A2234838029",
+   "urn": "soundcloud:tracks:2234838029",
+   "user_id": 1575951180,
+   "visuals": null,
+   "waveform_url": "https://wave.sndcdn.com/VAVmY9uD3dfZ_m.json",
+   "display_date": "2025-12-23T02:12:12Z",
+   "media": {
+    "transcodings": [
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:2234838029/a9e1e749-e98a-4bf4-bd82-b1cd2a542178/stream/hls",
+      "preset": "aac_96k",
+      "duration": 1015780,
+      "snipped": false,
+      "format": {
+       "protocol": "hls",
+       "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+      },
+      "quality": "lq",
+      "is_legacy_transcoding": false
+     },
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:2234838029/b2f8c84e-5ea0-4357-954a-04d85d2fc757/stream/hls",
+      "preset": "abr_sq",
+      "duration": 1015780,
+      "snipped": false,
+      "format": {
+       "protocol": "hls",
+       "mime_type": "audio/mpegurl"
+      },
+      "quality": "sq",
+      "is_legacy_transcoding": false
+     },
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:2234838029/2f4e8ea9-48be-46dc-890f-26c88cfa3a74/stream/hls",
+      "preset": "mp3_1_0",
+      "duration": 1015771,
+      "snipped": false,
+      "format": {
+       "protocol": "hls",
+       "mime_type": "audio/mpeg"
+      },
+      "quality": "sq",
+      "is_legacy_transcoding": true
+     },
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:2234838029/2f4e8ea9-48be-46dc-890f-26c88cfa3a74/stream/progressive",
+      "preset": "mp3_1_0",
+      "duration": 1015771,
+      "snipped": false,
+      "format": {
+       "protocol": "progressive",
+       "mime_type": "audio/mpeg"
+      },
+      "quality": "sq",
+      "is_legacy_transcoding": true
+     }
+    ]
+   },
+   "station_urn": "soundcloud:system-playlists:track-stations:2234838029",
+   "station_permalink": "track-stations:2234838029",
+   "track_authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJnZW8iOiJOTCIsInN1YiI6IiIsInJpZCI6IjkyNGQwY2Q2LWZlYWQtNDM4ZS04ZDY5LWNhZWI0YTU2MTA0YiIsImlhdCI6MTc5MTkyNDA4M30.qAu005Yt3Z8JQ1g_GVDw_O95zAnQhh_WNp5XiawGMhw",
+   "monetization_model": "BLACKBOX",
+   "policy": "MONETIZE",
+   "user": {
+    "avatar_url": "https://a1.sndcdn.com/images/default_avatar_large.png",
+    "city": "Accra",
+    "comments_count": 0,
+    "country_code": "GH",
+    "created_at": null,
+    "creator_subscriptions": [
+     {
+      "product": {
+       "id": "free"
+      }
+     }
+    ],
+    "creator_subscription": {
+     "product": {
+      "id": "free"
+     }
+    },
+    "description": null,
+    "followers_count": 0,
+    "followings_count": 2,
+    "first_name": "Dj maker ",
+    "full_name": "Dj maker  Gh",
+    "groups_count": 0,
+    "id": 1575951180,
+    "kind": "user",
+    "last_modified": "2025-07-10T00:49:01Z",
+    "last_name": "Gh",
+    "likes_count": 2,
+    "playlist_likes_count": 0,
+    "permalink": "dj-maker-gh",
+    "permalink_url": "https://soundcloud.com/dj-maker-gh",
+    "playlist_count": 0,
+    "reposts_count": null,
+    "track_count": 1,
+    "uri": "https://api.soundcloud.com/users/soundcloud%3Ausers%3A1575951180",
+    "urn": "soundcloud:users:1575951180",
+    "username": "Dj maker Gh",
+    "verified": false,
+    "visuals": null,
+    "badges": {
+     "pro": false,
+     "creator_mid_tier": false,
+     "pro_unlimited": false,
+     "verified": false
+    },
+    "station_urn": "soundcloud:system-playlists:artist-stations:1575951180",
+    "station_permalink": "artist-stations:1575951180",
+    "date_of_birth": null
+   }
+  },
+  {
+   "artwork_url": "https://i1.sndcdn.com/artworks-000065733126-646tgi-large.jpg",
+   "caption": null,
+   "commentable": true,
+   "comment_count": 14,
+   "created_at": "2013-12-19T02:15:35Z",
+   "description": "all original no sample project has been reviled Awakening State Of Mind EP Album this is going to be an electronic / trance melodic beats and hyped beat project,sponsored featuring my homey DJ Arthy Beatz,be sure you follow his page,album drops on itunes 2014 jan,email for questions at stylezt2010@gmail.com\r\n\r\nItunes Album EP Link:\r\n\r\nhttps://itunes.apple.com/album/awakening-state-mind-ep-album/id815712044\r\n\r\nLink For Arthy Soundcloud Page:https://soundcloud.com/dj-arthy-on-the-beat\r\n",
+   "downloadable": false,
+   "download_count": 0,
+   "duration": 218690,
+   "full_duration": 218690,
+   "embeddable_by": "all",
+   "genre": "Electronic",
+   "has_downloads_left": false,
+   "id": 125515445,
+   "kind": "track",
+   "label_name": "",
+   "last_modified": "2016-10-10T21:32:43Z",
+   "license": "all-rights-reserved",
+   "likes_count": 32,
+   "permalink": "awakening-state-of-mind-ep",
+   "permalink_url": "https://soundcloud.com/stylez-t-diversebeatmaker/awakening-state-of-mind-ep",
+   "playback_count": 1036,
+   "public": true,
+   "publisher_metadata": null,
+   "purchase_title": null,
+   "purchase_url": null,
+   "release_date": null,
+   "reposts_count": 5,
+   "secret_token": null,
+   "sharing": "public",
+   "state": "finished",
+   "streamable": true,
+   "tag_list": "\"Awakening State Of Mind EP Album\" \"DJ Arthy On The Beat\" Electronic \"Trance / Hip-Hop\" Dipset Smooth Ambient \"Stylez-T Productions\" \"Itunes Exclusive\" Preview Only",
+   "title": "| Awakening State Of Mind EP Album | (Preview Tracks Only)Stylez-T.",
+   "uri": "https://api.soundcloud.com/tracks/soundcloud%3Atracks%3A125515445",
+   "urn": "soundcloud:tracks:125515445",
+   "user_id": 19547760,
+   "visuals": null,
+   "waveform_url": "https://wave.sndcdn.com/V6IehFSASYG1_m.json",
+   "display_date": "2013-12-19T02:15:35Z",
+   "media": {
+    "transcodings": [
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:125515445/a161d34b-aa00-4b5a-ab5e-2a96e6ff6191/stream/hls",
+      "preset": "mp3_0_0",
+      "duration": 218690,
+      "snipped": false,
+      "format": {
+       "protocol": "hls",
+       "mime_type": "audio/mpeg"
+      },
+      "quality": "sq",
+      "is_legacy_transcoding": true
+     },
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:125515445/a161d34b-aa00-4b5a-ab5e-2a96e6ff6191/stream/progressive",
+      "preset": "mp3_0_0",
+      "duration": 218690,
+      "snipped": false,
+      "format": {
+       "protocol": "progressive",
+       "mime_type": "audio/mpeg"
+      },
+      "quality": "sq",
+      "is_legacy_transcoding": true
+     }
+    ]
+   },
+   "station_urn": "soundcloud:system-playlists:track-stations:125515445",
+   "station_permalink": "track-stations:125515445",
+   "track_authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJnZW8iOiJOTCIsInN1YiI6IiIsInJpZCI6IiIsImlhdCI6MTc5MTkyNDA4M30.SiLbX18CIWfpOHbJUm3RFQmuvUkv4AhKA5VdvObly4U",
+   "monetization_model": "NOT_APPLICABLE",
+   "policy": "ALLOW",
+   "user": {
+    "avatar_url": "https://i1.sndcdn.com/avatars-000280966165-vi4mcs-large.jpg",
+    "city": "Bay Area CA",
+    "comments_count": 0,
+    "country_code": "US",
+    "created_at": null,
+    "creator_subscriptions": [
+     {
+      "product": {
+       "id": "free"
+      }
+     }
+    ],
+    "creator_subscription": {
+     "product": {
+      "id": "free"
+     }
+    },
+    "description": "Name is Stylez-T i enjoy sampling and creating music email me for serious inquiries business on lease or exclusive rights stylezt2016@gmail.com Thanks!\n\nfollow my fam Mean SK Page\nhttps://soundcloud.com/mean-sk\n\nAlso Follow My Bro KenTheGemini Page\nhttps://soundcloud.com/illemeatzroductions\n\nwww.youtube.com/user/StylezT10\n\nBandcamp Site Albums Link:\nStylez-t.bandcamp.com",
+    "followers_count": 2849,
+    "followings_count": 1850,
+    "first_name": "T",
+    "full_name": "T Richardson",
+    "groups_count": 0,
+    "id": 19547760,
+    "kind": "user",
+    "last_modified": "2026-03-14T03:06:28Z",
+    "last_name": "Richardson",
+    "likes_count": 1366,
+    "playlist_likes_count": 34,
+    "permalink": "stylez-t-diversebeatmaker",
+    "permalink_url": "https://soundcloud.com/stylez-t-diversebeatmaker",
+    "playlist_count": 2,
+    "reposts_count": null,
+    "track_count": 550,
+    "uri": "https://api.soundcloud.com/users/soundcloud%3Ausers%3A19547760",
+    "urn": "soundcloud:users:19547760",
+    "username": "Stylez-T The DiverseBeatMaker",
+    "verified": false,
+    "visuals": {
+     "urn": "soundcloud:users:19547760",
+     "enabled": true,
+     "visuals": [
+      {
+       "urn": "soundcloud:visuals:9709510",
+       "entry_time": 0,
+       "visual_url": "https://i1.sndcdn.com/visuals-000019547760-SVd67W-original.jpg"
+      }
+     ],
+     "tracking": null
+    },
+    "badges": {
+     "pro": false,
+     "creator_mid_tier": false,
+     "pro_unlimited": false,
+     "verified": false
+    },
+    "station_urn": "soundcloud:system-playlists:artist-stations:19547760",
+    "station_permalink": "artist-stations:19547760",
+    "date_of_birth": null
+   }
+  }
+ ],
+ "total_results": 11,
+ "query_urn": "soundcloud:search:3b01a16d1e234b04a23b990eb1d79851"
+}

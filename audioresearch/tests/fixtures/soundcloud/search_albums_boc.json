@@ -1,0 +1,1652 @@
+{
+ "collection": [
+  {
+   "artwork_url": "https://i1.sndcdn.com/artworks-fba646fe-b059-49f5-882c-d1a2c24a2003-0-large.jpg",
+   "created_at": "2023-02-07T03:54:31Z",
+   "description": null,
+   "duration": 4264333,
+   "embeddable_by": "all",
+   "genre": "Electronic",
+   "id": 1566800707,
+   "kind": "playlist",
+   "label_name": null,
+   "last_modified": "2023-02-07T03:54:31Z",
+   "license": "all-rights-reserved",
+   "likes_count": 2344,
+   "managed_by_feeds": true,
+   "permalink": "music-has-the-right-to-1",
+   "permalink_url": "https://soundcloud.com/boardsofcanada/sets/music-has-the-right-to-1",
+   "public": true,
+   "purchase_title": null,
+   "purchase_url": null,
+   "release_date": "1998-04-20T00:00:00Z",
+   "reposts_count": 77,
+   "secret_token": null,
+   "sharing": "public",
+   "tag_list": "",
+   "title": "Music Has The Right To Children",
+   "uri": "https://api.soundcloud.com/playlists/soundcloud%3Aplaylists%3A1566800707",
+   "user_id": 475471,
+   "set_type": "album",
+   "is_album": true,
+   "published_at": "1998-04-20T00:00:00Z",
+   "display_date": "1998-04-20T00:00:00Z",
+   "user": {
+    "avatar_url": "https://i1.sndcdn.com/avatars-6UaO1sdX19wHjhAz-DBQBkg-large.jpg",
+    "city": null,
+    "comments_count": 0,
+    "country_code": null,
+    "created_at": null,
+    "creator_subscriptions": [
+     {
+      "product": {
+       "id": "creator-pro-unlimited"
+      }
+     }
+    ],
+    "creator_subscription": {
+     "product": {
+      "id": "creator-pro-unlimited"
+     }
+    },
+    "description": "Boards of Canada is a Scottish electronic music duo comprised of brothers Mike Sandison (b. 1 June 1970) and Marcus Eoin (b. 21 July 1971). \r\n\r\nThey have released a number of works, most notably Music Has the Right to Children and Geogaddi, with little advertising and few interviews. Their sound has frequently made reference to sounds of the 1970s and the 1980s. It recalls, amongst other things, the warm, scratchy, artificial sounds of 1970s television, and indeed, band members Michael and Marcus admit to being inspired by the documentary films of the National Film Board of Canada, from which the group's name comes.",
+    "followers_count": 120086,
+    "followings_count": 0,
+    "first_name": "",
+    "full_name": "",
+    "groups_count": 0,
+    "id": 475471,
+    "kind": "user",
+    "last_modified": "2026-04-21T14:05:08Z",
+    "last_name": "",
+    "likes_count": 0,
+    "playlist_likes_count": 0,
+    "permalink": "boardsofcanada",
+    "permalink_url": "https://soundcloud.com/boardsofcanada",
+    "playlist_count": 11,
+    "reposts_count": null,
+    "track_count": 127,
+    "uri": "https://api.soundcloud.com/users/soundcloud%3Ausers%3A475471",
+    "urn": "soundcloud:users:475471",
+    "username": "Boards of Canada",
+    "verified": true,
+    "visuals": {
+     "urn": "soundcloud:users:475471",
+     "enabled": true,
+     "visuals": [
+      {
+       "urn": "soundcloud:visuals:264956484",
+       "entry_time": 0,
+       "visual_url": "https://i1.sndcdn.com/visuals-000000475471-sE0PsH-original.jpg"
+      }
+     ],
+     "tracking": null
+    },
+    "badges": {
+     "pro": false,
+     "creator_mid_tier": false,
+     "pro_unlimited": true,
+     "verified": true
+    },
+    "station_urn": "soundcloud:system-playlists:artist-stations:475471",
+    "station_permalink": "artist-stations:475471",
+    "date_of_birth": null
+   },
+   "tracks": [
+    {
+     "artwork_url": "https://i1.sndcdn.com/artworks-jfa3zzhtt0bl-0-large.png",
+     "caption": null,
+     "commentable": true,
+     "comment_count": 13,
+     "created_at": "2023-02-07T02:30:51Z",
+     "description": null,
+     "downloadable": false,
+     "download_count": 0,
+     "duration": 75649,
+     "full_duration": 75677,
+     "embeddable_by": "all",
+     "genre": "Electronic",
+     "has_downloads_left": false,
+     "id": 1441390735,
+     "kind": "track",
+     "label_name": "Warp Records",
+     "last_modified": "2026-08-10T14:58:49Z",
+     "license": "all-rights-reserved",
+     "likes_count": 2666,
+     "permalink": "wildlife-analysis",
+     "permalink_url": "https://soundcloud.com/boardsofcanada/wildlife-analysis",
+     "playback_count": 47404,
+     "public": true,
+     "publisher_metadata": {
+      "id": 1441390735,
+      "urn": "soundcloud:tracks:1441390735",
+      "artist": "Boards of Canada",
+      "album_title": "Music Has The Right To Children",
+      "contains_music": true,
+      "upc_or_ean": "0801061005535",
+      "isrc": "GBBPW9800010",
+      "explicit": false,
+      "p_line": "1998 Warp Records",
+      "p_line_for_display": "\u2117 1998 Warp Records",
+      "c_line": "1998 Warp Records",
+      "c_line_for_display": "\u00a9 1998 Warp Records",
+      "release_title": "Wildlife Analysis"
+     },
+     "purchase_title": null,
+     "purchase_url": null,
+     "release_date": "1998-04-20T00:00:00Z",
+     "reposts_count": 13,
+     "secret_token": null,
+     "sharing": "public",
+     "state": "finished",
+     "streamable": true,
+     "tag_list": "Alternative",
+     "title": "Wildlife Analysis",
+     "uri": "https://api.soundcloud.com/tracks/soundcloud%3Atracks%3A1441390735",
+     "urn": "soundcloud:tracks:1441390735",
+     "user_id": 475471,
+     "visuals": null,
+     "waveform_url": "https://wave.sndcdn.com/XoOdScp7Wzch_m.json",
+     "display_date": "1998-04-20T00:00:00Z",
+     "media": {
+      "transcodings": [
+       {
+        "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441390735/9ed55af0-b9ff-4ff2-8654-200c2ffb5430/stream/cbc-encrypted-hls",
+        "preset": "aac_160k",
+        "duration": 75649,
+        "snipped": false,
+        "format": {
+         "protocol": "cbc-encrypted-hls",
+         "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+        },
+        "quality": "sq",
+        "is_legacy_transcoding": false
+       },
+       {
+        "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441390735/9ed55af0-b9ff-4ff2-8654-200c2ffb5430/stream/ctr-encrypted-hls",
+        "preset": "aac_160k",
+        "duration": 75649,
+        "snipped": false,
+        "format": {
+         "protocol": "ctr-encrypted-hls",
+         "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+        },
+        "quality": "sq",
+        "is_legacy_transcoding": false
+       },
+       {
+        "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441390735/68770c9e-bbcd-4452-9de7-3aedc8e50aad/stream/cbc-encrypted-hls",
+        "preset": "aac_96k",
+        "duration": 75649,
+        "snipped": false,
+        "format": {
+         "protocol": "cbc-encrypted-hls",
+         "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+        },
+        "quality": "lq",
+        "is_legacy_transcoding": false
+       },
+       {
+        "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441390735/68770c9e-bbcd-4452-9de7-3aedc8e50aad/stream/ctr-encrypted-hls",
+        "preset": "aac_96k",
+        "duration": 75649,
+        "snipped": false,
+        "format": {
+         "protocol": "ctr-encrypted-hls",
+         "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+        },
+        "quality": "lq",
+        "is_legacy_transcoding": false
+       },
+       {
+        "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441390735/74465eda-8346-439c-bca3-02c9e7d96db5/stream/cbc-encrypted-hls",
+        "preset": "abr_sq",
+        "duration": 75649,
+        "snipped": false,
+        "format": {
+         "protocol": "cbc-encrypted-hls",
+         "mime_type": "audio/mpegurl"
+        },
+        "quality": "sq",
+        "is_legacy_transcoding": false
+       },
+       {
+        "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441390735/74465eda-8346-439c-bca3-02c9e7d96db5/stream/ctr-encrypted-hls",
+        "preset": "abr_sq",
+        "duration": 75649,
+        "snipped": false,
+        "format": {
+         "protocol": "ctr-encrypted-hls",
+         "mime_type": "audio/mpegurl"
+        },
+        "quality": "sq",
+        "is_legacy_transcoding": false
+       }
+      ]
+     },
+     "station_urn": "soundcloud:system-playlists:track-stations:1441390735",
+     "station_permalink": "track-stations:1441390735",
+     "track_authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJnZW8iOiJOTCIsInN1YiI6IiIsInJpZCI6IjcxODgzYTQzLTE3ZDEtNDhmOS1hNTAwLWVjZmI5N2Y2YTBhZiIsImlhdCI6MTc5MTkyNDA4NH0.F5kEYko8mhyrl_ynyNPlWc11ifb3AGhGvaArXieFAFk",
+     "monetization_model": "AD_SUPPORTED",
+     "policy": "MONETIZE",
+     "user": {
+      "avatar_url": "https://i1.sndcdn.com/avatars-6UaO1sdX19wHjhAz-DBQBkg-large.jpg",
+      "first_name": "",
+      "followers_count": 120086,
+      "full_name": "",
+      "id": 475471,
+      "kind": "user",
+      "last_modified": "2026-04-21T14:05:08Z",
+      "last_name": "",
+      "permalink": "boardsofcanada",
+      "permalink_url": "https://soundcloud.com/boardsofcanada",
+      "uri": "https://api.soundcloud.com/users/soundcloud%3Ausers%3A475471",
+      "urn": "soundcloud:users:475471",
+      "username": "Boards of Canada",
+      "verified": true,
+      "city": null,
+      "country_code": null,
+      "badges": {
+       "pro": false,
+       "creator_mid_tier": false,
+       "pro_unlimited": true,
+       "verified": true
+      },
+      "station_urn": "soundcloud:system-playlists:artist-stations:475471",
+      "station_permalink": "artist-stations:475471"
+     }
+    },
+    {
+     "artwork_url": "https://i1.sndcdn.com/artworks-cLyVPkri6HmF-0-large.png",
+     "caption": null,
+     "commentable": true,
+     "comment_count": 9,
+     "created_at": "2023-02-07T02:32:16Z",
+     "description": null,
+     "downloadable": false,
+     "download_count": 0,
+     "duration": 385543,
+     "full_duration": 385567,
+     "embeddable_by": "all",
+     "genre": "Electronic",
+     "has_downloads_left": false,
+     "id": 1441392235,
+     "kind": "track",
+     "label_name": "Warp Records",
+     "last_modified": "2026-08-10T15:02:45Z",
+     "license": "all-rights-reserved",
+     "likes_count": 1867,
+     "permalink": "an-eagle-in-your-mind",
+     "permalink_url": "https://soundcloud.com/boardsofcanada/an-eagle-in-your-mind",
+     "playback_count": 39635,
+     "public": true,
+     "publisher_metadata": {
+      "id": 1441392235,
+      "urn": "soundcloud:tracks:1441392235",
+      "artist": "Boards of Canada",
+      "album_title": "Music Has The Right To Children",
+      "contains_music": true,
+      "upc_or_ean": "0801061005535",
+      "isrc": "GBBPW9800011",
+      "explicit": false,
+      "p_line": "1998 Warp Records",
+      "p_line_for_display": "\u2117 1998 Warp Records",
+      "c_line": "1998 Warp Records",
+      "c_line_for_display": "\u00a9 1998 Warp Records",
+      "release_title": "An Eagle In Your Mind"
+     },
+     "purchase_title": null,
+     "purchase_url": null,
+     "release_date": "1998-04-20T00:00:00Z",
+     "reposts_count": 16,
+     "secret_token": null,
+     "sharing": "public",
+     "state": "finished",
+     "streamable": true,
+     "tag_list": "Alternative",
+     "title": "An Eagle In Your Mind",
+     "uri": "https://api.soundcloud.com/tracks/soundcloud%3Atracks%3A1441392235",
+     "urn": "soundcloud:tracks:1441392235",
+     "user_id": 475471,
+     "visuals": null,
+     "waveform_url": "https://wave.sndcdn.com/h2tiO4uCQh82_m.json",
+     "display_date": "1998-04-20T00:00:00Z",
+     "media": {
+      "transcodings": [
+       {
+        "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441392235/c54a2f26-0d97-4c9b-9743-5ab32e2bf0b7/stream/cbc-encrypted-hls",
+        "preset": "aac_160k",
+        "duration": 385543,
+        "snipped": false,
+        "format": {
+         "protocol": "cbc-encrypted-hls",
+         "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+        },
+        "quality": "sq",
+        "is_legacy_transcoding": false
+       },
+       {
+        "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441392235/c54a2f26-0d97-4c9b-9743-5ab32e2bf0b7/stream/ctr-encrypted-hls",
+        "preset": "aac_160k",
+        "duration": 385543,
+        "snipped": false,
+        "format": {
+         "protocol": "ctr-encrypted-hls",
+         "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+        },
+        "quality": "sq",
+        "is_legacy_transcoding": false
+       },
+       {
+        "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441392235/fbb1950f-2f7b-4531-9265-2024f64fbbca/stream/cbc-encrypted-hls",
+        "preset": "aac_96k",
+        "duration": 385543,
+        "snipped": false,
+        "format": {
+         "protocol": "cbc-encrypted-hls",
+         "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+        },
+        "quality": "lq",
+        "is_legacy_transcoding": false
+       },
+       {
+        "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441392235/fbb1950f-2f7b-4531-9265-2024f64fbbca/stream/ctr-encrypted-hls",
+        "preset": "aac_96k",
+        "duration": 385543,
+        "snipped": false,
+        "format": {
+         "protocol": "ctr-encrypted-hls",
+         "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+        },
+        "quality": "lq",
+        "is_legacy_transcoding": false
+       },
+       {
+        "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441392235/40190c22-1f39-47af-8782-f58325ab71d7/stream/cbc-encrypted-hls",
+        "preset": "abr_sq",
+        "duration": 385543,
+        "snipped": false,
+        "format": {
+         "protocol": "cbc-encrypted-hls",
+         "mime_type": "audio/mpegurl"
+        },
+        "quality": "sq",
+        "is_legacy_transcoding": false
+       },
+       {
+        "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441392235/40190c22-1f39-47af-8782-f58325ab71d7/stream/ctr-encrypted-hls",
+        "preset": "abr_sq",
+        "duration": 385543,
+        "snipped": false,
+        "format": {
+         "protocol": "ctr-encrypted-hls",
+         "mime_type": "audio/mpegurl"
+        },
+        "quality": "sq",
+        "is_legacy_transcoding": false
+       }
+      ]
+     },
+     "station_urn": "soundcloud:system-playlists:track-stations:1441392235",
+     "station_permalink": "track-stations:1441392235",
+     "track_authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJnZW8iOiJOTCIsInN1YiI6IiIsInJpZCI6IjI5YTY1YmQ0LTk0MzktNGMxYy1hOWRjLTRiMzQwNTBiZTcyNSIsImlhdCI6MTc5MTkyNDA4NH0.zYrVxAO2XHmUPoLezOnFXziYHX-8_ji2r2oh2v9WI7c",
+     "monetization_model": "AD_SUPPORTED",
+     "policy": "MONETIZE",
+     "user": {
+      "avatar_url": "https://i1.sndcdn.com/avatars-6UaO1sdX19wHjhAz-DBQBkg-large.jpg",
+      "first_name": "",
+      "followers_count": 120086,
+      "full_name": "",
+      "id": 475471,
+      "kind": "user",
+      "last_modified": "2026-04-21T14:05:08Z",
+      "last_name": "",
+      "permalink": "boardsofcanada",
+      "permalink_url": "https://soundcloud.com/boardsofcanada",
+      "uri": "https://api.soundcloud.com/users/soundcloud%3Ausers%3A475471",
+      "urn": "soundcloud:users:475471",
+      "username": "Boards of Canada",
+      "verified": true,
+      "city": null,
+      "country_code": null,
+      "badges": {
+       "pro": false,
+       "creator_mid_tier": false,
+       "pro_unlimited": true,
+       "verified": true
+      },
+      "station_urn": "soundcloud:system-playlists:artist-stations:475471",
+      "station_permalink": "artist-stations:475471"
+     }
+    },
+    {
+     "artwork_url": "https://i1.sndcdn.com/artworks-jKgxUDJpikOi-0-large.png",
+     "caption": null,
+     "commentable": true,
+     "comment_count": 10,
+     "created_at": "2023-02-07T02:32:52Z",
+     "description": null,
+     "downloadable": false,
+     "download_count": 0,
+     "duration": 105649,
+     "full_duration": 105665,
+     "embeddable_by": "all",
+     "genre": "Electronic",
+     "has_downloads_left": false,
+     "id": 1441392820,
+     "kind": "track",
+     "label_name": "Warp Records",
+     "last_modified": "2026-08-10T15:02:40Z",
+     "license": "all-rights-reserved",
+     "likes_count": 1389,
+     "permalink": "the-color-of-the-fire",
+     "permalink_url": "https://soundcloud.com/boardsofcanada/the-color-of-the-fire",
+     "playback_count": 27698,
+     "public": true,
+     "publisher_metadata": {
+      "id": 1441392820,
+      "urn": "soundcloud:tracks:1441392820",
+      "artist": "Boards of Canada",
+      "album_title": "Music Has The Right To Children",
+      "contains_music": true,
+      "upc_or_ean": "0801061005535",
+      "isrc": "GBBPW9800012",
+      "explicit": false,
+      "p_line": "1998 Warp Records",
+      "p_line_for_display": "\u2117 1998 Warp Records",
+      "c_line": "1998 Warp Records",
+      "c_line_for_display": "\u00a9 1998 Warp Records",
+      "release_title": "The Color Of The Fire"
+     },
+     "purchase_title": null,
+     "purchase_url": null,
+     "release_date": "1998-04-20T00:00:00Z",
+     "reposts_count": 13,
+     "secret_token": null,
+     "sharing": "public",
+     "state": "finished",
+     "streamable": true,
+     "tag_list": "Alternative",
+     "title": "The Color Of The Fire",
+     "uri": "https://api.soundcloud.com/tracks/soundcloud%3Atracks%3A1441392820",
+     "urn": "soundcloud:tracks:1441392820",
+     "user_id": 475471,
+     "visuals": null,
+     "waveform_url": "https://wave.sndcdn.com/8zbNiJjKX6tX_m.json",
+     "display_date": "1998-04-20T00:00:00Z",
+     "media": {
+      "transcodings": [
+       {
+        "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441392820/8d61f3c7-b111-41a7-93ca-f6cdf1035c9d/stream/cbc-encrypted-hls",
+        "preset": "aac_160k",
+        "duration": 105649,
+        "snipped": false,
+        "format": {
+         "protocol": "cbc-encrypted-hls",
+         "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+        },
+        "quality": "sq",
+        "is_legacy_transcoding": false
+       },
+       {
+        "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441392820/8d61f3c7-b111-41a7-93ca-f6cdf1035c9d/stream/ctr-encrypted-hls",
+        "preset": "aac_160k",
+        "duration": 105649,
+        "snipped": false,
+        "format": {
+         "protocol": "ctr-encrypted-hls",
+         "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+        },
+        "quality": "sq",
+        "is_legacy_transcoding": false
+       },
+       {
+        "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441392820/d2e3895e-c127-4e76-9aa6-ef1e14ef22bf/stream/cbc-encrypted-hls",
+        "preset": "aac_96k",
+        "duration": 105649,
+        "snipped": false,
+        "format": {
+         "protocol": "cbc-encrypted-hls",
+         "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+        },
+        "quality": "lq",
+        "is_legacy_transcoding": false
+       },
+       {
+        "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441392820/d2e3895e-c127-4e76-9aa6-ef1e14ef22bf/stream/ctr-encrypted-hls",
+        "preset": "aac_96k",
+        "duration": 105649,
+        "snipped": false,
+        "format": {
+         "protocol": "ctr-encrypted-hls",
+         "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+        },
+        "quality": "lq",
+        "is_legacy_transcoding": false
+       },
+       {
+        "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441392820/c33256cc-5494-48dd-b090-f3fe5ed888ae/stream/cbc-encrypted-hls",
+        "preset": "abr_sq",
+        "duration": 105649,
+        "snipped": false,
+        "format": {
+         "protocol": "cbc-encrypted-hls",
+         "mime_type": "audio/mpegurl"
+        },
+        "quality": "sq",
+        "is_legacy_transcoding": false
+       },
+       {
+        "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441392820/c33256cc-5494-48dd-b090-f3fe5ed888ae/stream/ctr-encrypted-hls",
+        "preset": "abr_sq",
+        "duration": 105649,
+        "snipped": false,
+        "format": {
+         "protocol": "ctr-encrypted-hls",
+         "mime_type": "audio/mpegurl"
+        },
+        "quality": "sq",
+        "is_legacy_transcoding": false
+       }
+      ]
+     },
+     "station_urn": "soundcloud:system-playlists:track-stations:1441392820",
+     "station_permalink": "track-stations:1441392820",
+     "track_authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJnZW8iOiJOTCIsInN1YiI6IiIsInJpZCI6ImY0MDFiMDUzLTBlNTctNDgzMi04NGM5LTM5YjJlNzczNmExNyIsImlhdCI6MTc5MTkyNDA4NH0.zgJQwSRPT2UP_leAwK5TWsw36osWii9chCTozvlxxCs",
+     "monetization_model": "AD_SUPPORTED",
+     "policy": "MONETIZE",
+     "user": {
+      "avatar_url": "https://i1.sndcdn.com/avatars-6UaO1sdX19wHjhAz-DBQBkg-large.jpg",
+      "first_name": "",
+      "followers_count": 120086,
+      "full_name": "",
+      "id": 475471,
+      "kind": "user",
+      "last_modified": "2026-04-21T14:05:08Z",
+      "last_name": "",
+      "permalink": "boardsofcanada",
+      "permalink_url": "https://soundcloud.com/boardsofcanada",
+      "uri": "https://api.soundcloud.com/users/soundcloud%3Ausers%3A475471",
+      "urn": "soundcloud:users:475471",
+      "username": "Boards of Canada",
+      "verified": true,
+      "city": null,
+      "country_code": null,
+      "badges": {
+       "pro": false,
+       "creator_mid_tier": false,
+       "pro_unlimited": true,
+       "verified": true
+      },
+      "station_urn": "soundcloud:system-playlists:artist-stations:475471",
+      "station_permalink": "artist-stations:475471"
+     }
+    },
+    {
+     "artwork_url": "https://i1.sndcdn.com/artworks-7feW9X0fqLBJ-0-large.png",
+     "caption": null,
+     "commentable": true,
+     "comment_count": 17,
+     "created_at": "2023-02-07T02:33:16Z",
+     "description": null,
+     "downloadable": false,
+     "download_count": 0,
+     "duration": 395503,
+     "full_duration": 395520,
+     "embeddable_by": "all",
+     "genre": "Electronic",
+     "has_downloads_left": false,
+     "id": 1441393255,
+     "kind": "track",
+     "label_name": "Warp Records",
+     "last_modified": "2026-08-10T14:52:54Z",
+     "license": "all-rights-reserved",
+     "likes_count": 1994,
+     "permalink": "telephasic-workshop",
+     "permalink_url": "https://soundcloud.com/boardsofcanada/telephasic-workshop",
+     "playback_count": 30542,
+     "public": true,
+     "publisher_metadata": {
+      "id": 1441393255,
+      "urn": "soundcloud:tracks:1441393255",
+      "artist": "Boards of Canada",
+      "album_title": "Music Has The Right To Children",
+      "contains_music": true,
+      "upc_or_ean": "0801061005535",
+      "isrc": "GBBPW9800013",
+      "explicit": false,
+      "p_line": "1998 Warp Records",
+      "p_line_for_display": "\u2117 1998 Warp Records",
+      "c_line": "1998 Warp Records",
+      "c_line_for_display": "\u00a9 1998 Warp Records",
+      "release_title": "Telephasic Workshop"
+     },
+     "purchase_title": null,
+     "purchase_url": null,
+     "release_date": "1998-04-20T00:00:00Z",
+     "reposts_count": 21,
+     "secret_token": null,
+     "sharing": "public",
+     "state": "finished",
+     "streamable": true,
+     "tag_list": "Alternative",
+     "title": "Telephasic Workshop",
+     "uri": "https://api.soundcloud.com/tracks/soundcloud%3Atracks%3A1441393255",
+     "urn": "soundcloud:tracks:1441393255",
+     "user_id": 475471,
+     "visuals": null,
+     "waveform_url": "https://wave.sndcdn.com/QfKVlokv6EYA_m.json",
+     "display_date": "1998-04-20T00:00:00Z",
+     "media": {
+      "transcodings": [
+       {
+        "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441393255/0e90646a-7fb5-4a6a-95e1-ee50c46d6679/stream/cbc-encrypted-hls",
+        "preset": "aac_160k",
+        "duration": 395503,
+        "snipped": false,
+        "format": {
+         "protocol": "cbc-encrypted-hls",
+         "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+        },
+        "quality": "sq",
+        "is_legacy_transcoding": false
+       },
+       {
+        "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441393255/0e90646a-7fb5-4a6a-95e1-ee50c46d6679/stream/ctr-encrypted-hls",
+        "preset": "aac_160k",
+        "duration": 395503,
+        "snipped": false,
+        "format": {
+         "protocol": "ctr-encrypted-hls",
+         "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+        },
+        "quality": "sq",
+        "is_legacy_transcoding": false
+       },
+       {
+        "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441393255/4c22ad80-ef93-4a2b-afcc-4a2782f12455/stream/cbc-encrypted-hls",
+        "preset": "aac_96k",
+        "duration": 395503,
+        "snipped": false,
+        "format": {
+         "protocol": "cbc-encrypted-hls",
+         "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+        },
+        "quality": "lq",
+        "is_legacy_transcoding": false
+       },
+       {
+        "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441393255/4c22ad80-ef93-4a2b-afcc-4a2782f12455/stream/ctr-encrypted-hls",
+        "preset": "aac_96k",
+        "duration": 395503,
+        "snipped": false,
+        "format": {
+         "protocol": "ctr-encrypted-hls",
+         "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+        },
+        "quality": "lq",
+        "is_legacy_transcoding": false
+       },
+       {
+        "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441393255/9a66e484-637f-463a-9d58-ed00547b5867/stream/cbc-encrypted-hls",
+        "preset": "abr_sq",
+        "duration": 395503,
+        "snipped": false,
+        "format": {
+         "protocol": "cbc-encrypted-hls",
+         "mime_type": "audio/mpegurl"
+        },
+        "quality": "sq",
+        "is_legacy_transcoding": false
+       },
+       {
+        "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441393255/9a66e484-637f-463a-9d58-ed00547b5867/stream/ctr-encrypted-hls",
+        "preset": "abr_sq",
+        "duration": 395503,
+        "snipped": false,
+        "format": {
+         "protocol": "ctr-encrypted-hls",
+         "mime_type": "audio/mpegurl"
+        },
+        "quality": "sq",
+        "is_legacy_transcoding": false
+       }
+      ]
+     },
+     "station_urn": "soundcloud:system-playlists:track-stations:1441393255",
+     "station_permalink": "track-stations:1441393255",
+     "track_authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJnZW8iOiJOTCIsInN1YiI6IiIsInJpZCI6ImY4MjJhNWFhLWE2YWQtNDA5OC05NGNhLWRjNzA4YzBhZDNmZSIsImlhdCI6MTc5MTkyNDA4NH0.7GQWIgte64JSBTCkKq_ZlAJ1FrYnCJUcRcWcLPMaZWA",
+     "monetization_model": "AD_SUPPORTED",
+     "policy": "MONETIZE",
+     "user": {
+      "avatar_url": "https://i1.sndcdn.com/avatars-6UaO1sdX19wHjhAz-DBQBkg-large.jpg",
+      "first_name": "",
+      "followers_count": 120086,
+      "full_name": "",
+      "id": 475471,
+      "kind": "user",
+      "last_modified": "2026-04-21T14:05:08Z",
+      "last_name": "",
+      "permalink": "boardsofcanada",
+      "permalink_url": "https://soundcloud.com/boardsofcanada",
+      "uri": "https://api.soundcloud.com/users/soundcloud%3Ausers%3A475471",
+      "urn": "soundcloud:users:475471",
+      "username": "Boards of Canada",
+      "verified": true,
+      "city": null,
+      "country_code": null,
+      "badges": {
+       "pro": false,
+       "creator_mid_tier": false,
+       "pro_unlimited": true,
+       "verified": true
+      },
+      "station_urn": "soundcloud:system-playlists:artist-stations:475471",
+      "station_permalink": "artist-stations:475471"
+     }
+    },
+    {
+     "artwork_url": "https://i1.sndcdn.com/artworks-pZeWILKIU2Jq-0-large.png",
+     "caption": null,
+     "commentable": true,
+     "comment_count": 5,
+     "created_at": "2023-02-07T02:31:37Z",
+     "description": null,
+     "downloadable": false,
+     "download_count": 0,
+     "duration": 110436,
+     "full_duration": 110446,
+     "embeddable_by": "all",
+     "genre": "Electronic",
+     "has_downloads_left": false,
+     "id": 1441391521,
+     "kind": "track",
+     "label_name": "Warp Records",
+     "last_modified": "2026-08-10T14:54:40Z",
+     "license": "all-rights-reserved",
+     "likes_count": 1278,
+     "permalink": "triangles-rhombuses",
+     "permalink_url": "https://soundcloud.com/boardsofcanada/triangles-rhombuses",
+     "playback_count": 19454,
+     "public": true,
+     "publisher_metadata": {
+      "id": 1441391521,
+      "urn": "soundcloud:tracks:1441391521",
+      "artist": "Boards of Canada",
+      "album_title": "Music Has The Right To Children",
+      "contains_music": true,
+      "upc_or_ean": "0801061005535",
+      "isrc": "GBBPW9800014",
+      "explicit": false,
+      "p_line": "1998 Warp Records",
+      "p_line_for_display": "\u2117 1998 Warp Records",
+      "c_line": "1998 Warp Records",
+      "c_line_for_display": "\u00a9 1998 Warp Records",
+      "release_title": "Triangles &  Rhombuses"
+     },
+     "purchase_title": null,
+     "purchase_url": null,
+     "release_date": "1998-04-20T00:00:00Z",
+     "reposts_count": 5,
+     "secret_token": null,
+     "sharing": "public",
+     "state": "finished",
+     "streamable": true,
+     "tag_list": "Alternative",
+     "title": "Triangles &  Rhombuses",
+     "uri": "https://api.soundcloud.com/tracks/soundcloud%3Atracks%3A1441391521",
+     "urn": "soundcloud:tracks:1441391521",
+     "user_id": 475471,
+     "visuals": null,
+     "waveform_url": "https://wave.sndcdn.com/ZpHgDwyTJkCB_m.json",
+     "display_date": "1998-04-20T00:00:00Z",
+     "media": {
+      "transcodings": [
+       {
+        "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441391521/70e0523f-c41c-4680-abb7-0c9171cd0c48/stream/cbc-encrypted-hls",
+        "preset": "aac_160k",
+        "duration": 110436,
+        "snipped": false,
+        "format": {
+         "protocol": "cbc-encrypted-hls",
+         "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+        },
+        "quality": "sq",
+        "is_legacy_transcoding": false
+       },
+       {
+        "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441391521/70e0523f-c41c-4680-abb7-0c9171cd0c48/stream/ctr-encrypted-hls",
+        "preset": "aac_160k",
+        "duration": 110436,
+        "snipped": false,
+        "format": {
+         "protocol": "ctr-encrypted-hls",
+         "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+        },
+        "quality": "sq",
+        "is_legacy_transcoding": false
+       },
+       {
+        "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441391521/bfbf3105-e9e2-4083-a77c-a04f58fc0173/stream/cbc-encrypted-hls",
+        "preset": "aac_96k",
+        "duration": 110436,
+        "snipped": false,
+        "format": {
+         "protocol": "cbc-encrypted-hls",
+         "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+        },
+        "quality": "lq",
+        "is_legacy_transcoding": false
+       },
+       {
+        "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441391521/bfbf3105-e9e2-4083-a77c-a04f58fc0173/stream/ctr-encrypted-hls",
+        "preset": "aac_96k",
+        "duration": 110436,
+        "snipped": false,
+        "format": {
+         "protocol": "ctr-encrypted-hls",
+         "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+        },
+        "quality": "lq",
+        "is_legacy_transcoding": false
+       },
+       {
+        "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441391521/c76c2607-3aa0-4add-88d8-571a55f7ae42/stream/cbc-encrypted-hls",
+        "preset": "abr_sq",
+        "duration": 110436,
+        "snipped": false,
+        "format": {
+         "protocol": "cbc-encrypted-hls",
+         "mime_type": "audio/mpegurl"
+        },
+        "quality": "sq",
+        "is_legacy_transcoding": false
+       },
+       {
+        "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441391521/c76c2607-3aa0-4add-88d8-571a55f7ae42/stream/ctr-encrypted-hls",
+        "preset": "abr_sq",
+        "duration": 110436,
+        "snipped": false,
+        "format": {
+         "protocol": "ctr-encrypted-hls",
+         "mime_type": "audio/mpegurl"
+        },
+        "quality": "sq",
+        "is_legacy_transcoding": false
+       }
+      ]
+     },
+     "station_urn": "soundcloud:system-playlists:track-stations:1441391521",
+     "station_permalink": "track-stations:1441391521",
+     "track_authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJnZW8iOiJOTCIsInN1YiI6IiIsInJpZCI6IjFjMDU4MDM1LTFiYzAtNDBiNS1hMTFlLTEwMDZmMTk0MzM3NyIsImlhdCI6MTc5MTkyNDA4NH0.jvUt44aQOB9ZCKS5KM1HkOHRUw5RoMK5sV-jsyj55_o",
+     "monetization_model": "AD_SUPPORTED",
+     "policy": "MONETIZE",
+     "user": {
+      "avatar_url": "https://i1.sndcdn.com/avatars-6UaO1sdX19wHjhAz-DBQBkg-large.jpg",
+      "first_name": "",
+      "followers_count": 120086,
+      "full_name": "",
+      "id": 475471,
+      "kind": "user",
+      "last_modified": "2026-04-21T14:05:08Z",
+      "last_name": "",
+      "permalink": "boardsofcanada",
+      "permalink_url": "https://soundcloud.com/boardsofcanada",
+      "uri": "https://api.soundcloud.com/users/soundcloud%3Ausers%3A475471",
+      "urn": "soundcloud:users:475471",
+      "username": "Boards of Canada",
+      "verified": true,
+      "city": null,
+      "country_code": null,
+      "badges": {
+       "pro": false,
+       "creator_mid_tier": false,
+       "pro_unlimited": true,
+       "verified": true
+      },
+      "station_urn": "soundcloud:system-playlists:artist-stations:475471",
+      "station_permalink": "artist-stations:475471"
+     }
+    },
+    {
+     "id": 1441394089,
+     "kind": "track",
+     "monetization_model": "AD_SUPPORTED",
+     "policy": "MONETIZE"
+    },
+    {
+     "id": 1441391404,
+     "kind": "track",
+     "monetization_model": "AD_SUPPORTED",
+     "policy": "MONETIZE"
+    },
+    {
+     "id": 1441394584,
+     "kind": "track",
+     "monetization_model": "AD_SUPPORTED",
+     "policy": "MONETIZE"
+    },
+    {
+     "id": 1441394452,
+     "kind": "track",
+     "monetization_model": "AD_SUPPORTED",
+     "policy": "MONETIZE"
+    },
+    {
+     "id": 1441376377,
+     "kind": "track",
+     "monetization_model": "AD_SUPPORTED",
+     "policy": "MONETIZE"
+    },
+    {
+     "id": 1441392589,
+     "kind": "track",
+     "monetization_model": "AD_SUPPORTED",
+     "policy": "MONETIZE"
+    },
+    {
+     "id": 1441391734,
+     "kind": "track",
+     "monetization_model": "AD_SUPPORTED",
+     "policy": "MONETIZE"
+    },
+    {
+     "id": 521824980,
+     "kind": "track",
+     "monetization_model": "AD_SUPPORTED",
+     "policy": "MONETIZE"
+    },
+    {
+     "id": 1441394725,
+     "kind": "track",
+     "monetization_model": "AD_SUPPORTED",
+     "policy": "MONETIZE"
+    },
+    {
+     "id": 1441392787,
+     "kind": "track",
+     "monetization_model": "AD_SUPPORTED",
+     "policy": "MONETIZE"
+    },
+    {
+     "id": 1441392925,
+     "kind": "track",
+     "monetization_model": "AD_SUPPORTED",
+     "policy": "MONETIZE"
+    },
+    {
+     "id": 1441391041,
+     "kind": "track",
+     "monetization_model": "AD_SUPPORTED",
+     "policy": "MONETIZE"
+    },
+    {
+     "id": 298021510,
+     "kind": "track",
+     "monetization_model": "AD_SUPPORTED",
+     "policy": "MONETIZE"
+    }
+   ],
+   "track_count": 18
+  },
+  {
+   "artwork_url": null,
+   "created_at": "2025-03-15T18:04:43Z",
+   "description": null,
+   "duration": 526341,
+   "embeddable_by": "all",
+   "genre": "Elektro",
+   "id": 1986038232,
+   "kind": "playlist",
+   "label_name": null,
+   "last_modified": "2025-03-15T18:04:43Z",
+   "license": "all-rights-reserved",
+   "likes_count": 0,
+   "managed_by_feeds": false,
+   "permalink": "music-has-the-right-to-children-boards-of-canada-inspired-album",
+   "permalink_url": "https://soundcloud.com/evelyn-death/sets/music-has-the-right-to-children-boards-of-canada-inspired-album",
+   "public": true,
+   "purchase_title": null,
+   "purchase_url": null,
+   "release_date": "2025-03-15T00:00:00Z",
+   "reposts_count": 0,
+   "secret_token": null,
+   "sharing": "public",
+   "tag_list": "",
+   "title": "music has the right to children boards of canada inspired album",
+   "uri": "https://api.soundcloud.com/playlists/soundcloud%3Aplaylists%3A1986038232",
+   "user_id": 1516599096,
+   "set_type": "album",
+   "is_album": true,
+   "published_at": "2025-03-15T18:04:43Z",
+   "display_date": "2025-03-15T18:04:43Z",
+   "user": {
+    "avatar_url": "https://a1.sndcdn.com/images/default_avatar_large.png",
+    "city": null,
+    "comments_count": 0,
+    "country_code": null,
+    "created_at": null,
+    "creator_subscriptions": [
+     {
+      "product": {
+       "id": "free"
+      }
+     }
+    ],
+    "creator_subscription": {
+     "product": {
+      "id": "free"
+     }
+    },
+    "description": null,
+    "followers_count": 1,
+    "followings_count": 0,
+    "first_name": "evelyn",
+    "full_name": "evelyn death",
+    "groups_count": 0,
+    "id": 1516599096,
+    "kind": "user",
+    "last_modified": "2025-03-06T03:12:50Z",
+    "last_name": "death",
+    "likes_count": 0,
+    "playlist_likes_count": 0,
+    "permalink": "evelyn-death",
+    "permalink_url": "https://soundcloud.com/evelyn-death",
+    "playlist_count": 2,
+    "reposts_count": null,
+    "track_count": 16,
+    "uri": "https://api.soundcloud.com/users/soundcloud%3Ausers%3A1516599096",
+    "urn": "soundcloud:users:1516599096",
+    "username": "evelyn death",
+    "verified": false,
+    "visuals": null,
+    "badges": {
+     "pro": false,
+     "creator_mid_tier": false,
+     "pro_unlimited": false,
+     "verified": false
+    },
+    "station_urn": "soundcloud:system-playlists:artist-stations:1516599096",
+    "station_permalink": "artist-stations:1516599096",
+    "date_of_birth": null
+   },
+   "tracks": [
+    {
+     "artwork_url": null,
+     "caption": null,
+     "commentable": true,
+     "comment_count": 0,
+     "created_at": "2025-03-15T18:04:43Z",
+     "description": "",
+     "downloadable": false,
+     "download_count": 0,
+     "duration": 76561,
+     "full_duration": 76565,
+     "embeddable_by": "all",
+     "genre": "Electronic",
+     "has_downloads_left": false,
+     "id": 2055152368,
+     "kind": "track",
+     "label_name": "",
+     "last_modified": "2025-03-15T18:04:43Z",
+     "license": "all-rights-reserved",
+     "likes_count": 0,
+     "permalink": "sadsh",
+     "permalink_url": "https://soundcloud.com/evelyn-death/sadsh",
+     "playback_count": 12,
+     "public": true,
+     "publisher_metadata": {
+      "id": 2055152368,
+      "urn": "soundcloud:tracks:2055152368",
+      "artist": "evelyn death",
+      "publisher": "",
+      "explicit": false
+     },
+     "purchase_title": null,
+     "purchase_url": null,
+     "release_date": null,
+     "reposts_count": 0,
+     "secret_token": null,
+     "sharing": "public",
+     "state": "finished",
+     "streamable": true,
+     "tag_list": "",
+     "title": "sadsh",
+     "uri": "https://api.soundcloud.com/tracks/soundcloud%3Atracks%3A2055152368",
+     "urn": "soundcloud:tracks:2055152368",
+     "user_id": 1516599096,
+     "visuals": null,
+     "waveform_url": "https://wave.sndcdn.com/roQekDschjyq_m.json",
+     "display_date": "2025-03-15T18:04:43Z",
+     "media": {
+      "transcodings": [
+       {
+        "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:2055152368/3805d964-feb2-43bb-ae48-66f044695352/stream/hls",
+        "preset": "aac_160k",
+        "duration": 76561,
+        "snipped": false,
+        "format": {
+         "protocol": "hls",
+         "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+        },
+        "quality": "sq",
+        "is_legacy_transcoding": false
+       },
+       {
+        "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:2055152368/492e786d-2266-4851-920c-86362f1d7951/stream/hls",
+        "preset": "aac_96k",
+        "duration": 76561,
+        "snipped": false,
+        "format": {
+         "protocol": "hls",
+         "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+        },
+        "quality": "lq",
+        "is_legacy_transcoding": false
+       },
+       {
+        "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:2055152368/305d6e63-d449-4493-be16-bcec790c034a/stream/hls",
+        "preset": "abr_sq",
+        "duration": 76561,
+        "snipped": false,
+        "format": {
+         "protocol": "hls",
+         "mime_type": "audio/mpegurl"
+        },
+        "quality": "sq",
+        "is_legacy_transcoding": false
+       },
+       {
+        "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:2055152368/7f3729a8-c8af-44e6-829b-d952e18aea7d/stream/hls",
+        "preset": "mp3_1_0",
+        "duration": 76565,
+        "snipped": false,
+        "format": {
+         "protocol": "hls",
+         "mime_type": "audio/mpeg"
+        },
+        "quality": "sq",
+        "is_legacy_transcoding": true
+       },
+       {
+        "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:2055152368/7f3729a8-c8af-44e6-829b-d952e18aea7d/stream/progressive",
+        "preset": "mp3_1_0",
+        "duration": 76565,
+        "snipped": false,
+        "format": {
+         "protocol": "progressive",
+         "mime_type": "audio/mpeg"
+        },
+        "quality": "sq",
+        "is_legacy_transcoding": true
+       }
+      ]
+     },
+     "station_urn": "soundcloud:system-playlists:track-stations:2055152368",
+     "station_permalink": "track-stations:2055152368",
+     "track_authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJnZW8iOiJOTCIsInN1YiI6IiIsInJpZCI6ImFiNTUwYzY0LWFiNjMtNDgxMS1hMmRmLWIwOWYxMjM2YmU0YiIsImlhdCI6MTc5MTkyNDA4NH0.xOCUR4mPHVDZLbzIzlYjB-U7KRHQAhyCCAOwwv7mN8w",
+     "monetization_model": "BLACKBOX",
+     "policy": "MONETIZE",
+     "user": {
+      "avatar_url": "https://a1.sndcdn.com/images/default_avatar_large.png",
+      "first_name": "evelyn",
+      "followers_count": 1,
+      "full_name": "evelyn death",
+      "id": 1516599096,
+      "kind": "user",
+      "last_modified": "2025-03-06T03:12:50Z",
+      "last_name": "death",
+      "permalink": "evelyn-death",
+      "permalink_url": "https://soundcloud.com/evelyn-death",
+      "uri": "https://api.soundcloud.com/users/soundcloud%3Ausers%3A1516599096",
+      "urn": "soundcloud:users:1516599096",
+      "username": "evelyn death",
+      "verified": false,
+      "city": null,
+      "country_code": null,
+      "badges": {
+       "pro": false,
+       "creator_mid_tier": false,
+       "pro_unlimited": false,
+       "verified": false
+      },
+      "station_urn": "soundcloud:system-playlists:artist-stations:1516599096",
+      "station_permalink": "artist-stations:1516599096"
+     }
+    },
+    {
+     "artwork_url": null,
+     "caption": null,
+     "commentable": true,
+     "comment_count": 0,
+     "created_at": "2025-03-15T18:04:43Z",
+     "description": "",
+     "downloadable": false,
+     "download_count": 0,
+     "duration": 143487,
+     "full_duration": 143491,
+     "embeddable_by": "all",
+     "genre": "Electronic",
+     "has_downloads_left": false,
+     "id": 2055152364,
+     "kind": "track",
+     "label_name": "",
+     "last_modified": "2025-03-15T18:04:43Z",
+     "license": "all-rights-reserved",
+     "likes_count": 0,
+     "permalink": "teikno",
+     "permalink_url": "https://soundcloud.com/evelyn-death/teikno",
+     "playback_count": 15,
+     "public": true,
+     "publisher_metadata": {
+      "id": 2055152364,
+      "urn": "soundcloud:tracks:2055152364",
+      "artist": "evelyn death",
+      "publisher": "",
+      "explicit": false
+     },
+     "purchase_title": null,
+     "purchase_url": null,
+     "release_date": null,
+     "reposts_count": 0,
+     "secret_token": null,
+     "sharing": "public",
+     "state": "finished",
+     "streamable": true,
+     "tag_list": "",
+     "title": "teikno",
+     "uri": "https://api.soundcloud.com/tracks/soundcloud%3Atracks%3A2055152364",
+     "urn": "soundcloud:tracks:2055152364",
+     "user_id": 1516599096,
+     "visuals": null,
+     "waveform_url": "https://wave.sndcdn.com/eV6MzRuG7KA3_m.json",
+     "display_date": "2025-03-15T18:04:43Z",
+     "media": {
+      "transcodings": [
+       {
+        "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:2055152364/9fad2f2f-42fe-438a-b79b-260e24a8a162/stream/hls",
+        "preset": "aac_160k",
+        "duration": 143487,
+        "snipped": false,
+        "format": {
+         "protocol": "hls",
+         "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+        },
+        "quality": "sq",
+        "is_legacy_transcoding": false
+       },
+       {
+        "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:2055152364/8dc32e15-9ff6-4994-8552-f4b2350e646f/stream/hls",
+        "preset": "aac_96k",
+        "duration": 143487,
+        "snipped": false,
+        "format": {
+         "protocol": "hls",
+         "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+        },
+        "quality": "lq",
+        "is_legacy_transcoding": false
+       },
+       {
+        "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:2055152364/0dc4aed7-7005-420b-b0ad-d53811480723/stream/hls",
+        "preset": "abr_sq",
+        "duration": 143487,
+        "snipped": false,
+        "format": {
+         "protocol": "hls",
+         "mime_type": "audio/mpegurl"
+        },
+        "quality": "sq",
+        "is_legacy_transcoding": false
+       },
+       {
+        "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:2055152364/ee7a72e4-8937-4d65-b211-ad53753a0335/stream/hls",
+        "preset": "mp3_1_0",
+        "duration": 143491,
+        "snipped": false,
+        "format": {
+         "protocol": "hls",
+         "mime_type": "audio/mpeg"
+        },
+        "quality": "sq",
+        "is_legacy_transcoding": true
+       },
+       {
+        "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:2055152364/ee7a72e4-8937-4d65-b211-ad53753a0335/stream/progressive",
+        "preset": "mp3_1_0",
+        "duration": 143491,
+        "snipped": false,
+        "format": {
+         "protocol": "progressive",
+         "mime_type": "audio/mpeg"
+        },
+        "quality": "sq",
+        "is_legacy_transcoding": true
+       }
+      ]
+     },
+     "station_urn": "soundcloud:system-playlists:track-stations:2055152364",
+     "station_permalink": "track-stations:2055152364",
+     "track_authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJnZW8iOiJOTCIsInN1YiI6IiIsInJpZCI6Ijc0MTIzNzIzLWQ2M2QtNGY4NC1iYWNhLTA2MWE2YWZlYmVjMiIsImlhdCI6MTc5MTkyNDA4NH0.5piNqVvJ6axjyDpa-hDDoQc8gBbzcsGpT4WjmT6euH8",
+     "monetization_model": "BLACKBOX",
+     "policy": "MONETIZE",
+     "user": {
+      "avatar_url": "https://a1.sndcdn.com/images/default_avatar_large.png",
+      "first_name": "evelyn",
+      "followers_count": 1,
+      "full_name": "evelyn death",
+      "id": 1516599096,
+      "kind": "user",
+      "last_modified": "2025-03-06T03:12:50Z",
+      "last_name": "death",
+      "permalink": "evelyn-death",
+      "permalink_url": "https://soundcloud.com/evelyn-death",
+      "uri": "https://api.soundcloud.com/users/soundcloud%3Ausers%3A1516599096",
+      "urn": "soundcloud:users:1516599096",
+      "username": "evelyn death",
+      "verified": false,
+      "city": null,
+      "country_code": null,
+      "badges": {
+       "pro": false,
+       "creator_mid_tier": false,
+       "pro_unlimited": false,
+       "verified": false
+      },
+      "station_urn": "soundcloud:system-playlists:artist-stations:1516599096",
+      "station_permalink": "artist-stations:1516599096"
+     }
+    },
+    {
+     "artwork_url": null,
+     "caption": null,
+     "commentable": true,
+     "comment_count": 0,
+     "created_at": "2025-03-15T18:04:43Z",
+     "description": "",
+     "downloadable": false,
+     "download_count": 0,
+     "duration": 124470,
+     "full_duration": 124473,
+     "embeddable_by": "all",
+     "genre": "Electronic",
+     "has_downloads_left": false,
+     "id": 2055152360,
+     "kind": "track",
+     "label_name": "",
+     "last_modified": "2025-03-15T18:04:43Z",
+     "license": "all-rights-reserved",
+     "likes_count": 0,
+     "permalink": "tekk-trash",
+     "permalink_url": "https://soundcloud.com/evelyn-death/tekk-trash",
+     "playback_count": 12,
+     "public": true,
+     "publisher_metadata": {
+      "id": 2055152360,
+      "urn": "soundcloud:tracks:2055152360",
+      "artist": "evelyn death",
+      "publisher": "",
+      "explicit": false
+     },
+     "purchase_title": null,
+     "purchase_url": null,
+     "release_date": null,
+     "reposts_count": 0,
+     "secret_token": null,
+     "sharing": "public",
+     "state": "finished",
+     "streamable": true,
+     "tag_list": "",
+     "title": "tekk trash",
+     "uri": "https://api.soundcloud.com/tracks/soundcloud%3Atracks%3A2055152360",
+     "urn": "soundcloud:tracks:2055152360",
+     "user_id": 1516599096,
+     "visuals": null,
+     "waveform_url": "https://wave.sndcdn.com/C7W3iytpg7fd_m.json",
+     "display_date": "2025-03-15T18:04:43Z",
+     "media": {
+      "transcodings": [
+       {
+        "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:2055152360/f856d311-286a-4dbe-85aa-3377da68c672/stream/hls",
+        "preset": "aac_160k",
+        "duration": 124470,
+        "snipped": false,
+        "format": {
+         "protocol": "hls",
+         "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+        },
+        "quality": "sq",
+        "is_legacy_transcoding": false
+       },
+       {
+        "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:2055152360/d9340170-16fc-4723-82f8-a254301eae2e/stream/hls",
+        "preset": "aac_96k",
+        "duration": 124470,
+        "snipped": false,
+        "format": {
+         "protocol": "hls",
+         "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+        },
+        "quality": "lq",
+        "is_legacy_transcoding": false
+       },
+       {
+        "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:2055152360/f2340ea5-ac9f-4c1f-9807-b1e7bac0f735/stream/hls",
+        "preset": "abr_sq",
+        "duration": 124470,
+        "snipped": false,
+        "format": {
+         "protocol": "hls",
+         "mime_type": "audio/mpegurl"
+        },
+        "quality": "sq",
+        "is_legacy_transcoding": false
+       },
+       {
+        "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:2055152360/a1e67c08-fef9-4a58-a208-31e4ac3b7533/stream/hls",
+        "preset": "mp3_1_0",
+        "duration": 124473,
+        "snipped": false,
+        "format": {
+         "protocol": "hls",
+         "mime_type": "audio/mpeg"
+        },
+        "quality": "sq",
+        "is_legacy_transcoding": true
+       },
+       {
+        "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:2055152360/a1e67c08-fef9-4a58-a208-31e4ac3b7533/stream/progressive",
+        "preset": "mp3_1_0",
+        "duration": 124473,
+        "snipped": false,
+        "format": {
+         "protocol": "progressive",
+         "mime_type": "audio/mpeg"
+        },
+        "quality": "sq",
+        "is_legacy_transcoding": true
+       }
+      ]
+     },
+     "station_urn": "soundcloud:system-playlists:track-stations:2055152360",
+     "station_permalink": "track-stations:2055152360",
+     "track_authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJnZW8iOiJOTCIsInN1YiI6IiIsInJpZCI6IjNhZGMzOWYxLTJkNTYtNGQzYS1iZTBiLTQwMzM0ODVjMzUzYSIsImlhdCI6MTc5MTkyNDA4NH0.PT3oaKoDWe6iuXYo7VWTiahWmKAtWTMNUDcw-6xy-Go",
+     "monetization_model": "BLACKBOX",
+     "policy": "MONETIZE",
+     "user": {
+      "avatar_url": "https://a1.sndcdn.com/images/default_avatar_large.png",
+      "first_name": "evelyn",
+      "followers_count": 1,
+      "full_name": "evelyn death",
+      "id": 1516599096,
+      "kind": "user",
+      "last_modified": "2025-03-06T03:12:50Z",
+      "last_name": "death",
+      "permalink": "evelyn-death",
+      "permalink_url": "https://soundcloud.com/evelyn-death",
+      "uri": "https://api.soundcloud.com/users/soundcloud%3Ausers%3A1516599096",
+      "urn": "soundcloud:users:1516599096",
+      "username": "evelyn death",
+      "verified": false,
+      "city": null,
+      "country_code": null,
+      "badges": {
+       "pro": false,
+       "creator_mid_tier": false,
+       "pro_unlimited": false,
+       "verified": false
+      },
+      "station_urn": "soundcloud:system-playlists:artist-stations:1516599096",
+      "station_permalink": "artist-stations:1516599096"
+     }
+    },
+    {
+     "artwork_url": null,
+     "caption": null,
+     "commentable": true,
+     "comment_count": 0,
+     "created_at": "2025-03-15T18:04:43Z",
+     "description": "",
+     "downloadable": false,
+     "download_count": 0,
+     "duration": 181809,
+     "full_duration": 181812,
+     "embeddable_by": "all",
+     "genre": "Electronic",
+     "has_downloads_left": false,
+     "id": 2055152356,
+     "kind": "track",
+     "label_name": "",
+     "last_modified": "2025-03-15T18:04:43Z",
+     "license": "all-rights-reserved",
+     "likes_count": 0,
+     "permalink": "teknofjjjhk_2",
+     "permalink_url": "https://soundcloud.com/evelyn-death/teknofjjjhk_2",
+     "playback_count": 5,
+     "public": true,
+     "publisher_metadata": {
+      "id": 2055152356,
+      "urn": "soundcloud:tracks:2055152356",
+      "artist": "evelyn death",
+      "publisher": "",
+      "explicit": false
+     },
+     "purchase_title": null,
+     "purchase_url": null,
+     "release_date": null,
+     "reposts_count": 0,
+     "secret_token": null,
+     "sharing": "public",
+     "state": "finished",
+     "streamable": true,
+     "tag_list": "",
+     "title": "teknofjjjhk_2",
+     "uri": "https://api.soundcloud.com/tracks/soundcloud%3Atracks%3A2055152356",
+     "urn": "soundcloud:tracks:2055152356",
+     "user_id": 1516599096,
+     "visuals": null,
+     "waveform_url": "https://wave.sndcdn.com/KlqyyyOefSTp_m.json",
+     "display_date": "2025-03-15T18:04:43Z",
+     "media": {
+      "transcodings": [
+       {
+        "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:2055152356/d06658c1-1c61-4dc4-983b-58ec84038747/stream/hls",
+        "preset": "aac_160k",
+        "duration": 181809,
+        "snipped": false,
+        "format": {
+         "protocol": "hls",
+         "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+        },
+        "quality": "sq",
+        "is_legacy_transcoding": false
+       },
+       {
+        "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:2055152356/842b3969-5393-47e6-90b7-1e5a30bc997d/stream/hls",
+        "preset": "aac_96k",
+        "duration": 181809,
+        "snipped": false,
+        "format": {
+         "protocol": "hls",
+         "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+        },
+        "quality": "lq",
+        "is_legacy_transcoding": false
+       },
+       {
+        "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:2055152356/d63e57cf-57c6-4db3-9ad3-39156b528157/stream/hls",
+        "preset": "abr_sq",
+        "duration": 181809,
+        "snipped": false,
+        "format": {
+         "protocol": "hls",
+         "mime_type": "audio/mpegurl"
+        },
+        "quality": "sq",
+        "is_legacy_transcoding": false
+       },
+       {
+        "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:2055152356/ffb78680-b99a-4157-aa1e-edd83014b48a/stream/hls",
+        "preset": "mp3_1_0",
+        "duration": 181812,
+        "snipped": false,
+        "format": {
+         "protocol": "hls",
+         "mime_type": "audio/mpeg"
+        },
+        "quality": "sq",
+        "is_legacy_transcoding": true
+       },
+       {
+        "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:2055152356/ffb78680-b99a-4157-aa1e-edd83014b48a/stream/progressive",
+        "preset": "mp3_1_0",
+        "duration": 181812,
+        "snipped": false,
+        "format": {
+         "protocol": "progressive",
+         "mime_type": "audio/mpeg"
+        },
+        "quality": "sq",
+        "is_legacy_transcoding": true
+       }
+      ]
+     },
+     "station_urn": "soundcloud:system-playlists:track-stations:2055152356",
+     "station_permalink": "track-stations:2055152356",
+     "track_authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJnZW8iOiJOTCIsInN1YiI6IiIsInJpZCI6IjBiMWQ3YTNlLWRhZDgtNGY5YS1iOGYwLTc3MGU3NDEwNWI5YyIsImlhdCI6MTc5MTkyNDA4NH0.r6rQHGZ-wk8w0QoLL6ZtV40DZQ91jzOcMZLtdjxQ778",
+     "monetization_model": "BLACKBOX",
+     "policy": "MONETIZE",
+     "user": {
+      "avatar_url": "https://a1.sndcdn.com/images/default_avatar_large.png",
+      "first_name": "evelyn",
+      "followers_count": 1,
+      "full_name": "evelyn death",
+      "id": 1516599096,
+      "kind": "user",
+      "last_modified": "2025-03-06T03:12:50Z",
+      "last_name": "death",
+      "permalink": "evelyn-death",
+      "permalink_url": "https://soundcloud.com/evelyn-death",
+      "uri": "https://api.soundcloud.com/users/soundcloud%3Ausers%3A1516599096",
+      "urn": "soundcloud:users:1516599096",
+      "username": "evelyn death",
+      "verified": false,
+      "city": null,
+      "country_code": null,
+      "badges": {
+       "pro": false,
+       "creator_mid_tier": false,
+       "pro_unlimited": false,
+       "verified": false
+      },
+      "station_urn": "soundcloud:system-playlists:artist-stations:1516599096",
+      "station_permalink": "artist-stations:1516599096"
+     }
+    }
+   ],
+   "track_count": 4
+  }
+ ],
+ "total_results": 3,
+ "query_urn": "soundcloud:search:1ed240da2cc24b52b2c39290e2cccd54"
+}

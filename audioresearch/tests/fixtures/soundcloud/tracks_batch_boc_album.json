@@ -1,0 +1,2936 @@
+[
+ {
+  "artwork_url": "https://i1.sndcdn.com/artworks-PMbFHCseZ2u2-0-large.png",
+  "caption": null,
+  "commentable": true,
+  "comment_count": 49,
+  "created_at": "2023-02-07T01:59:51Z",
+  "description": null,
+  "downloadable": false,
+  "download_count": 0,
+  "duration": 149103,
+  "full_duration": 149107,
+  "embeddable_by": "all",
+  "genre": "Electronic",
+  "has_downloads_left": false,
+  "id": 1441376377,
+  "kind": "track",
+  "label_name": "Warp Records",
+  "last_modified": "2026-08-10T15:30:24Z",
+  "license": "all-rights-reserved",
+  "likes_count": 7501,
+  "permalink": "roygbiv",
+  "permalink_url": "https://soundcloud.com/boardsofcanada/roygbiv",
+  "playback_count": 112208,
+  "public": true,
+  "publisher_metadata": {
+   "id": 1441376377,
+   "urn": "soundcloud:tracks:1441376377",
+   "artist": "Boards of Canada",
+   "album_title": "Music Has The Right To Children",
+   "contains_music": true,
+   "upc_or_ean": "0801061005535",
+   "isrc": "GBBPW9800019",
+   "explicit": false,
+   "p_line": "1998 Warp Records",
+   "p_line_for_display": "\u2117 1998 Warp Records",
+   "c_line": "1998 Warp Records",
+   "c_line_for_display": "\u00a9 1998 Warp Records",
+   "release_title": "Roygbiv"
+  },
+  "purchase_title": null,
+  "purchase_url": null,
+  "release_date": "1998-04-20T00:00:00Z",
+  "reposts_count": 84,
+  "secret_token": null,
+  "sharing": "public",
+  "state": "finished",
+  "streamable": true,
+  "tag_list": "Alternative",
+  "title": "Roygbiv",
+  "uri": "https://api.soundcloud.com/tracks/soundcloud%3Atracks%3A1441376377",
+  "urn": "soundcloud:tracks:1441376377",
+  "user_id": 475471,
+  "visuals": null,
+  "waveform_url": "https://wave.sndcdn.com/UW3Gt9Ypebbs_m.json",
+  "display_date": "1998-04-20T00:00:00Z",
+  "media": {
+   "transcodings": [
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441376377/106db693-6040-44a1-91f7-b4787cc1b7f2/stream/cbc-encrypted-hls",
+     "preset": "aac_160k",
+     "duration": 149103,
+     "snipped": false,
+     "format": {
+      "protocol": "cbc-encrypted-hls",
+      "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+     },
+     "quality": "sq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441376377/106db693-6040-44a1-91f7-b4787cc1b7f2/stream/ctr-encrypted-hls",
+     "preset": "aac_160k",
+     "duration": 149103,
+     "snipped": false,
+     "format": {
+      "protocol": "ctr-encrypted-hls",
+      "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+     },
+     "quality": "sq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441376377/7afddc9f-72a2-46b9-a7e6-34c9f427123e/stream/cbc-encrypted-hls",
+     "preset": "aac_96k",
+     "duration": 149103,
+     "snipped": false,
+     "format": {
+      "protocol": "cbc-encrypted-hls",
+      "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+     },
+     "quality": "lq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441376377/7afddc9f-72a2-46b9-a7e6-34c9f427123e/stream/ctr-encrypted-hls",
+     "preset": "aac_96k",
+     "duration": 149103,
+     "snipped": false,
+     "format": {
+      "protocol": "ctr-encrypted-hls",
+      "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+     },
+     "quality": "lq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441376377/9285b66e-9f66-4694-bbcf-21912a8e1821/stream/cbc-encrypted-hls",
+     "preset": "abr_sq",
+     "duration": 149103,
+     "snipped": false,
+     "format": {
+      "protocol": "cbc-encrypted-hls",
+      "mime_type": "audio/mpegurl"
+     },
+     "quality": "sq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441376377/9285b66e-9f66-4694-bbcf-21912a8e1821/stream/ctr-encrypted-hls",
+     "preset": "abr_sq",
+     "duration": 149103,
+     "snipped": false,
+     "format": {
+      "protocol": "ctr-encrypted-hls",
+      "mime_type": "audio/mpegurl"
+     },
+     "quality": "sq",
+     "is_legacy_transcoding": false
+    }
+   ]
+  },
+  "station_urn": "soundcloud:system-playlists:track-stations:1441376377",
+  "station_permalink": "track-stations:1441376377",
+  "track_authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJnZW8iOiJOTCIsInN1YiI6IiIsInJpZCI6ImY3ZTI2OTc0LWFmZDAtNDExOC05NmZjLTk0OWY4MjM4YjYyNCIsImlhdCI6MTc5MTkyNDA5MH0.-PnnVlQHLKY90Tztqk-w9qYXr9h6TRjRvZKr8sY50VU",
+  "monetization_model": "AD_SUPPORTED",
+  "policy": "MONETIZE",
+  "user": {
+   "avatar_url": "https://i1.sndcdn.com/avatars-6UaO1sdX19wHjhAz-DBQBkg-large.jpg",
+   "first_name": "",
+   "followers_count": 120086,
+   "full_name": "",
+   "id": 475471,
+   "kind": "user",
+   "last_modified": "2026-04-21T14:05:08Z",
+   "last_name": "",
+   "permalink": "boardsofcanada",
+   "permalink_url": "https://soundcloud.com/boardsofcanada",
+   "uri": "https://api.soundcloud.com/users/soundcloud%3Ausers%3A475471",
+   "urn": "soundcloud:users:475471",
+   "username": "Boards of Canada",
+   "verified": true,
+   "city": null,
+   "country_code": null,
+   "badges": {
+    "pro": false,
+    "creator_mid_tier": false,
+    "pro_unlimited": true,
+    "verified": true
+   },
+   "station_urn": "soundcloud:system-playlists:artist-stations:475471",
+   "station_permalink": "artist-stations:475471"
+  }
+ },
+ {
+  "artwork_url": "https://i1.sndcdn.com/artworks-7feW9X0fqLBJ-0-large.png",
+  "caption": null,
+  "commentable": true,
+  "comment_count": 17,
+  "created_at": "2023-02-07T02:33:16Z",
+  "description": null,
+  "downloadable": false,
+  "download_count": 0,
+  "duration": 395503,
+  "full_duration": 395520,
+  "embeddable_by": "all",
+  "genre": "Electronic",
+  "has_downloads_left": false,
+  "id": 1441393255,
+  "kind": "track",
+  "label_name": "Warp Records",
+  "last_modified": "2026-08-10T14:52:54Z",
+  "license": "all-rights-reserved",
+  "likes_count": 1994,
+  "permalink": "telephasic-workshop",
+  "permalink_url": "https://soundcloud.com/boardsofcanada/telephasic-workshop",
+  "playback_count": 30542,
+  "public": true,
+  "publisher_metadata": {
+   "id": 1441393255,
+   "urn": "soundcloud:tracks:1441393255",
+   "artist": "Boards of Canada",
+   "album_title": "Music Has The Right To Children",
+   "contains_music": true,
+   "upc_or_ean": "0801061005535",
+   "isrc": "GBBPW9800013",
+   "explicit": false,
+   "p_line": "1998 Warp Records",
+   "p_line_for_display": "\u2117 1998 Warp Records",
+   "c_line": "1998 Warp Records",
+   "c_line_for_display": "\u00a9 1998 Warp Records",
+   "release_title": "Telephasic Workshop"
+  },
+  "purchase_title": null,
+  "purchase_url": null,
+  "release_date": "1998-04-20T00:00:00Z",
+  "reposts_count": 21,
+  "secret_token": null,
+  "sharing": "public",
+  "state": "finished",
+  "streamable": true,
+  "tag_list": "Alternative",
+  "title": "Telephasic Workshop",
+  "uri": "https://api.soundcloud.com/tracks/soundcloud%3Atracks%3A1441393255",
+  "urn": "soundcloud:tracks:1441393255",
+  "user_id": 475471,
+  "visuals": null,
+  "waveform_url": "https://wave.sndcdn.com/QfKVlokv6EYA_m.json",
+  "display_date": "1998-04-20T00:00:00Z",
+  "media": {
+   "transcodings": [
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441393255/0e90646a-7fb5-4a6a-95e1-ee50c46d6679/stream/cbc-encrypted-hls",
+     "preset": "aac_160k",
+     "duration": 395503,
+     "snipped": false,
+     "format": {
+      "protocol": "cbc-encrypted-hls",
+      "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+     },
+     "quality": "sq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441393255/0e90646a-7fb5-4a6a-95e1-ee50c46d6679/stream/ctr-encrypted-hls",
+     "preset": "aac_160k",
+     "duration": 395503,
+     "snipped": false,
+     "format": {
+      "protocol": "ctr-encrypted-hls",
+      "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+     },
+     "quality": "sq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441393255/4c22ad80-ef93-4a2b-afcc-4a2782f12455/stream/cbc-encrypted-hls",
+     "preset": "aac_96k",
+     "duration": 395503,
+     "snipped": false,
+     "format": {
+      "protocol": "cbc-encrypted-hls",
+      "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+     },
+     "quality": "lq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441393255/4c22ad80-ef93-4a2b-afcc-4a2782f12455/stream/ctr-encrypted-hls",
+     "preset": "aac_96k",
+     "duration": 395503,
+     "snipped": false,
+     "format": {
+      "protocol": "ctr-encrypted-hls",
+      "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+     },
+     "quality": "lq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441393255/9a66e484-637f-463a-9d58-ed00547b5867/stream/cbc-encrypted-hls",
+     "preset": "abr_sq",
+     "duration": 395503,
+     "snipped": false,
+     "format": {
+      "protocol": "cbc-encrypted-hls",
+      "mime_type": "audio/mpegurl"
+     },
+     "quality": "sq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441393255/9a66e484-637f-463a-9d58-ed00547b5867/stream/ctr-encrypted-hls",
+     "preset": "abr_sq",
+     "duration": 395503,
+     "snipped": false,
+     "format": {
+      "protocol": "ctr-encrypted-hls",
+      "mime_type": "audio/mpegurl"
+     },
+     "quality": "sq",
+     "is_legacy_transcoding": false
+    }
+   ]
+  },
+  "station_urn": "soundcloud:system-playlists:track-stations:1441393255",
+  "station_permalink": "track-stations:1441393255",
+  "track_authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJnZW8iOiJOTCIsInN1YiI6IiIsInJpZCI6ImY4MjJhNWFhLWE2YWQtNDA5OC05NGNhLWRjNzA4YzBhZDNmZSIsImlhdCI6MTc5MTkyNDA5MH0.6NC9sEce9gLmbkXqqDV13od1ayT3cOf3UGkyloTZEgQ",
+  "monetization_model": "AD_SUPPORTED",
+  "policy": "MONETIZE",
+  "user": {
+   "avatar_url": "https://i1.sndcdn.com/avatars-6UaO1sdX19wHjhAz-DBQBkg-large.jpg",
+   "first_name": "",
+   "followers_count": 120086,
+   "full_name": "",
+   "id": 475471,
+   "kind": "user",
+   "last_modified": "2026-04-21T14:05:08Z",
+   "last_name": "",
+   "permalink": "boardsofcanada",
+   "permalink_url": "https://soundcloud.com/boardsofcanada",
+   "uri": "https://api.soundcloud.com/users/soundcloud%3Ausers%3A475471",
+   "urn": "soundcloud:users:475471",
+   "username": "Boards of Canada",
+   "verified": true,
+   "city": null,
+   "country_code": null,
+   "badges": {
+    "pro": false,
+    "creator_mid_tier": false,
+    "pro_unlimited": true,
+    "verified": true
+   },
+   "station_urn": "soundcloud:system-playlists:artist-stations:475471",
+   "station_permalink": "artist-stations:475471"
+  }
+ },
+ {
+  "artwork_url": "https://i1.sndcdn.com/artworks-GHXMJrWzQefL-0-large.png",
+  "caption": null,
+  "commentable": true,
+  "comment_count": 14,
+  "created_at": "2023-02-07T02:34:06Z",
+  "description": null,
+  "downloadable": false,
+  "download_count": 0,
+  "duration": 348369,
+  "full_duration": 348395,
+  "embeddable_by": "all",
+  "genre": "Electronic",
+  "has_downloads_left": false,
+  "id": 1441394089,
+  "kind": "track",
+  "label_name": "Warp Records",
+  "last_modified": "2026-08-10T15:00:04Z",
+  "license": "all-rights-reserved",
+  "likes_count": 1841,
+  "permalink": "sixtyten",
+  "permalink_url": "https://soundcloud.com/boardsofcanada/sixtyten",
+  "playback_count": 29511,
+  "public": true,
+  "publisher_metadata": {
+   "id": 1441394089,
+   "urn": "soundcloud:tracks:1441394089",
+   "artist": "Boards of Canada",
+   "album_title": "Music Has The Right To Children",
+   "contains_music": true,
+   "upc_or_ean": "0801061005535",
+   "isrc": "GBBPW9800015",
+   "explicit": false,
+   "p_line": "1998 Warp Records",
+   "p_line_for_display": "\u2117 1998 Warp Records",
+   "c_line": "1998 Warp Records",
+   "c_line_for_display": "\u00a9 1998 Warp Records",
+   "release_title": "Sixtyten"
+  },
+  "purchase_title": null,
+  "purchase_url": null,
+  "release_date": "1998-04-20T00:00:00Z",
+  "reposts_count": 21,
+  "secret_token": null,
+  "sharing": "public",
+  "state": "finished",
+  "streamable": true,
+  "tag_list": "Alternative",
+  "title": "Sixtyten",
+  "uri": "https://api.soundcloud.com/tracks/soundcloud%3Atracks%3A1441394089",
+  "urn": "soundcloud:tracks:1441394089",
+  "user_id": 475471,
+  "visuals": null,
+  "waveform_url": "https://wave.sndcdn.com/2SZHA06vqmYu_m.json",
+  "display_date": "1998-04-20T00:00:00Z",
+  "media": {
+   "transcodings": [
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441394089/7788b0f8-20e2-4c10-b6f8-c39afd07ea0c/stream/cbc-encrypted-hls",
+     "preset": "aac_160k",
+     "duration": 348369,
+     "snipped": false,
+     "format": {
+      "protocol": "cbc-encrypted-hls",
+      "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+     },
+     "quality": "sq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441394089/7788b0f8-20e2-4c10-b6f8-c39afd07ea0c/stream/ctr-encrypted-hls",
+     "preset": "aac_160k",
+     "duration": 348369,
+     "snipped": false,
+     "format": {
+      "protocol": "ctr-encrypted-hls",
+      "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+     },
+     "quality": "sq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441394089/e7a31096-b45a-4d75-a7bd-d25626779da5/stream/cbc-encrypted-hls",
+     "preset": "aac_96k",
+     "duration": 348369,
+     "snipped": false,
+     "format": {
+      "protocol": "cbc-encrypted-hls",
+      "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+     },
+     "quality": "lq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441394089/e7a31096-b45a-4d75-a7bd-d25626779da5/stream/ctr-encrypted-hls",
+     "preset": "aac_96k",
+     "duration": 348369,
+     "snipped": false,
+     "format": {
+      "protocol": "ctr-encrypted-hls",
+      "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+     },
+     "quality": "lq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441394089/45a1ac7a-211a-493d-82fd-db594d48837e/stream/cbc-encrypted-hls",
+     "preset": "abr_sq",
+     "duration": 348369,
+     "snipped": false,
+     "format": {
+      "protocol": "cbc-encrypted-hls",
+      "mime_type": "audio/mpegurl"
+     },
+     "quality": "sq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441394089/45a1ac7a-211a-493d-82fd-db594d48837e/stream/ctr-encrypted-hls",
+     "preset": "abr_sq",
+     "duration": 348369,
+     "snipped": false,
+     "format": {
+      "protocol": "ctr-encrypted-hls",
+      "mime_type": "audio/mpegurl"
+     },
+     "quality": "sq",
+     "is_legacy_transcoding": false
+    }
+   ]
+  },
+  "station_urn": "soundcloud:system-playlists:track-stations:1441394089",
+  "station_permalink": "track-stations:1441394089",
+  "track_authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJnZW8iOiJOTCIsInN1YiI6IiIsInJpZCI6ImE5NGU0Mzk1LTEwYTUtNGI1Zi05NjI4LWQzMWJmNjViYmUyZiIsImlhdCI6MTc5MTkyNDA5MH0.CoAARTh7GEzDdS6QSWi7x6VQ9GrWCmi1M5cAxwGouhk",
+  "monetization_model": "AD_SUPPORTED",
+  "policy": "MONETIZE",
+  "user": {
+   "avatar_url": "https://i1.sndcdn.com/avatars-6UaO1sdX19wHjhAz-DBQBkg-large.jpg",
+   "first_name": "",
+   "followers_count": 120086,
+   "full_name": "",
+   "id": 475471,
+   "kind": "user",
+   "last_modified": "2026-04-21T14:05:08Z",
+   "last_name": "",
+   "permalink": "boardsofcanada",
+   "permalink_url": "https://soundcloud.com/boardsofcanada",
+   "uri": "https://api.soundcloud.com/users/soundcloud%3Ausers%3A475471",
+   "urn": "soundcloud:users:475471",
+   "username": "Boards of Canada",
+   "verified": true,
+   "city": null,
+   "country_code": null,
+   "badges": {
+    "pro": false,
+    "creator_mid_tier": false,
+    "pro_unlimited": true,
+    "verified": true
+   },
+   "station_urn": "soundcloud:system-playlists:artist-stations:475471",
+   "station_permalink": "artist-stations:475471"
+  }
+ },
+ {
+  "artwork_url": "https://i1.sndcdn.com/artworks-jfa3zzhtt0bl-0-large.png",
+  "caption": null,
+  "commentable": true,
+  "comment_count": 13,
+  "created_at": "2023-02-07T02:30:51Z",
+  "description": null,
+  "downloadable": false,
+  "download_count": 0,
+  "duration": 75649,
+  "full_duration": 75677,
+  "embeddable_by": "all",
+  "genre": "Electronic",
+  "has_downloads_left": false,
+  "id": 1441390735,
+  "kind": "track",
+  "label_name": "Warp Records",
+  "last_modified": "2026-08-10T14:58:49Z",
+  "license": "all-rights-reserved",
+  "likes_count": 2666,
+  "permalink": "wildlife-analysis",
+  "permalink_url": "https://soundcloud.com/boardsofcanada/wildlife-analysis",
+  "playback_count": 47404,
+  "public": true,
+  "publisher_metadata": {
+   "id": 1441390735,
+   "urn": "soundcloud:tracks:1441390735",
+   "artist": "Boards of Canada",
+   "album_title": "Music Has The Right To Children",
+   "contains_music": true,
+   "upc_or_ean": "0801061005535",
+   "isrc": "GBBPW9800010",
+   "explicit": false,
+   "p_line": "1998 Warp Records",
+   "p_line_for_display": "\u2117 1998 Warp Records",
+   "c_line": "1998 Warp Records",
+   "c_line_for_display": "\u00a9 1998 Warp Records",
+   "release_title": "Wildlife Analysis"
+  },
+  "purchase_title": null,
+  "purchase_url": null,
+  "release_date": "1998-04-20T00:00:00Z",
+  "reposts_count": 13,
+  "secret_token": null,
+  "sharing": "public",
+  "state": "finished",
+  "streamable": true,
+  "tag_list": "Alternative",
+  "title": "Wildlife Analysis",
+  "uri": "https://api.soundcloud.com/tracks/soundcloud%3Atracks%3A1441390735",
+  "urn": "soundcloud:tracks:1441390735",
+  "user_id": 475471,
+  "visuals": null,
+  "waveform_url": "https://wave.sndcdn.com/XoOdScp7Wzch_m.json",
+  "display_date": "1998-04-20T00:00:00Z",
+  "media": {
+   "transcodings": [
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441390735/9ed55af0-b9ff-4ff2-8654-200c2ffb5430/stream/cbc-encrypted-hls",
+     "preset": "aac_160k",
+     "duration": 75649,
+     "snipped": false,
+     "format": {
+      "protocol": "cbc-encrypted-hls",
+      "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+     },
+     "quality": "sq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441390735/9ed55af0-b9ff-4ff2-8654-200c2ffb5430/stream/ctr-encrypted-hls",
+     "preset": "aac_160k",
+     "duration": 75649,
+     "snipped": false,
+     "format": {
+      "protocol": "ctr-encrypted-hls",
+      "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+     },
+     "quality": "sq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441390735/68770c9e-bbcd-4452-9de7-3aedc8e50aad/stream/cbc-encrypted-hls",
+     "preset": "aac_96k",
+     "duration": 75649,
+     "snipped": false,
+     "format": {
+      "protocol": "cbc-encrypted-hls",
+      "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+     },
+     "quality": "lq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441390735/68770c9e-bbcd-4452-9de7-3aedc8e50aad/stream/ctr-encrypted-hls",
+     "preset": "aac_96k",
+     "duration": 75649,
+     "snipped": false,
+     "format": {
+      "protocol": "ctr-encrypted-hls",
+      "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+     },
+     "quality": "lq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441390735/74465eda-8346-439c-bca3-02c9e7d96db5/stream/cbc-encrypted-hls",
+     "preset": "abr_sq",
+     "duration": 75649,
+     "snipped": false,
+     "format": {
+      "protocol": "cbc-encrypted-hls",
+      "mime_type": "audio/mpegurl"
+     },
+     "quality": "sq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441390735/74465eda-8346-439c-bca3-02c9e7d96db5/stream/ctr-encrypted-hls",
+     "preset": "abr_sq",
+     "duration": 75649,
+     "snipped": false,
+     "format": {
+      "protocol": "ctr-encrypted-hls",
+      "mime_type": "audio/mpegurl"
+     },
+     "quality": "sq",
+     "is_legacy_transcoding": false
+    }
+   ]
+  },
+  "station_urn": "soundcloud:system-playlists:track-stations:1441390735",
+  "station_permalink": "track-stations:1441390735",
+  "track_authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJnZW8iOiJOTCIsInN1YiI6IiIsInJpZCI6IjcxODgzYTQzLTE3ZDEtNDhmOS1hNTAwLWVjZmI5N2Y2YTBhZiIsImlhdCI6MTc5MTkyNDA5MH0.LHfsDzzRDOEGgf09c7nnKfzNgMtUB1KW4L7NT2fMfKg",
+  "monetization_model": "AD_SUPPORTED",
+  "policy": "MONETIZE",
+  "user": {
+   "avatar_url": "https://i1.sndcdn.com/avatars-6UaO1sdX19wHjhAz-DBQBkg-large.jpg",
+   "first_name": "",
+   "followers_count": 120086,
+   "full_name": "",
+   "id": 475471,
+   "kind": "user",
+   "last_modified": "2026-04-21T14:05:08Z",
+   "last_name": "",
+   "permalink": "boardsofcanada",
+   "permalink_url": "https://soundcloud.com/boardsofcanada",
+   "uri": "https://api.soundcloud.com/users/soundcloud%3Ausers%3A475471",
+   "urn": "soundcloud:users:475471",
+   "username": "Boards of Canada",
+   "verified": true,
+   "city": null,
+   "country_code": null,
+   "badges": {
+    "pro": false,
+    "creator_mid_tier": false,
+    "pro_unlimited": true,
+    "verified": true
+   },
+   "station_urn": "soundcloud:system-playlists:artist-stations:475471",
+   "station_permalink": "artist-stations:475471"
+  }
+ },
+ {
+  "artwork_url": "https://i1.sndcdn.com/artworks-pZeWILKIU2Jq-0-large.png",
+  "caption": null,
+  "commentable": true,
+  "comment_count": 5,
+  "created_at": "2023-02-07T02:31:37Z",
+  "description": null,
+  "downloadable": false,
+  "download_count": 0,
+  "duration": 110436,
+  "full_duration": 110446,
+  "embeddable_by": "all",
+  "genre": "Electronic",
+  "has_downloads_left": false,
+  "id": 1441391521,
+  "kind": "track",
+  "label_name": "Warp Records",
+  "last_modified": "2026-08-10T14:54:40Z",
+  "license": "all-rights-reserved",
+  "likes_count": 1278,
+  "permalink": "triangles-rhombuses",
+  "permalink_url": "https://soundcloud.com/boardsofcanada/triangles-rhombuses",
+  "playback_count": 19454,
+  "public": true,
+  "publisher_metadata": {
+   "id": 1441391521,
+   "urn": "soundcloud:tracks:1441391521",
+   "artist": "Boards of Canada",
+   "album_title": "Music Has The Right To Children",
+   "contains_music": true,
+   "upc_or_ean": "0801061005535",
+   "isrc": "GBBPW9800014",
+   "explicit": false,
+   "p_line": "1998 Warp Records",
+   "p_line_for_display": "\u2117 1998 Warp Records",
+   "c_line": "1998 Warp Records",
+   "c_line_for_display": "\u00a9 1998 Warp Records",
+   "release_title": "Triangles &  Rhombuses"
+  },
+  "purchase_title": null,
+  "purchase_url": null,
+  "release_date": "1998-04-20T00:00:00Z",
+  "reposts_count": 5,
+  "secret_token": null,
+  "sharing": "public",
+  "state": "finished",
+  "streamable": true,
+  "tag_list": "Alternative",
+  "title": "Triangles &  Rhombuses",
+  "uri": "https://api.soundcloud.com/tracks/soundcloud%3Atracks%3A1441391521",
+  "urn": "soundcloud:tracks:1441391521",
+  "user_id": 475471,
+  "visuals": null,
+  "waveform_url": "https://wave.sndcdn.com/ZpHgDwyTJkCB_m.json",
+  "display_date": "1998-04-20T00:00:00Z",
+  "media": {
+   "transcodings": [
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441391521/70e0523f-c41c-4680-abb7-0c9171cd0c48/stream/cbc-encrypted-hls",
+     "preset": "aac_160k",
+     "duration": 110436,
+     "snipped": false,
+     "format": {
+      "protocol": "cbc-encrypted-hls",
+      "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+     },
+     "quality": "sq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441391521/70e0523f-c41c-4680-abb7-0c9171cd0c48/stream/ctr-encrypted-hls",
+     "preset": "aac_160k",
+     "duration": 110436,
+     "snipped": false,
+     "format": {
+      "protocol": "ctr-encrypted-hls",
+      "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+     },
+     "quality": "sq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441391521/bfbf3105-e9e2-4083-a77c-a04f58fc0173/stream/cbc-encrypted-hls",
+     "preset": "aac_96k",
+     "duration": 110436,
+     "snipped": false,
+     "format": {
+      "protocol": "cbc-encrypted-hls",
+      "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+     },
+     "quality": "lq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441391521/bfbf3105-e9e2-4083-a77c-a04f58fc0173/stream/ctr-encrypted-hls",
+     "preset": "aac_96k",
+     "duration": 110436,
+     "snipped": false,
+     "format": {
+      "protocol": "ctr-encrypted-hls",
+      "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+     },
+     "quality": "lq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441391521/c76c2607-3aa0-4add-88d8-571a55f7ae42/stream/cbc-encrypted-hls",
+     "preset": "abr_sq",
+     "duration": 110436,
+     "snipped": false,
+     "format": {
+      "protocol": "cbc-encrypted-hls",
+      "mime_type": "audio/mpegurl"
+     },
+     "quality": "sq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441391521/c76c2607-3aa0-4add-88d8-571a55f7ae42/stream/ctr-encrypted-hls",
+     "preset": "abr_sq",
+     "duration": 110436,
+     "snipped": false,
+     "format": {
+      "protocol": "ctr-encrypted-hls",
+      "mime_type": "audio/mpegurl"
+     },
+     "quality": "sq",
+     "is_legacy_transcoding": false
+    }
+   ]
+  },
+  "station_urn": "soundcloud:system-playlists:track-stations:1441391521",
+  "station_permalink": "track-stations:1441391521",
+  "track_authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJnZW8iOiJOTCIsInN1YiI6IiIsInJpZCI6IjFjMDU4MDM1LTFiYzAtNDBiNS1hMTFlLTEwMDZmMTk0MzM3NyIsImlhdCI6MTc5MTkyNDA5MH0.vL2TQt8Hcaq6nOPYL6YKqzBUN7TPfeB6W-uIfCXlWHQ",
+  "monetization_model": "AD_SUPPORTED",
+  "policy": "MONETIZE",
+  "user": {
+   "avatar_url": "https://i1.sndcdn.com/avatars-6UaO1sdX19wHjhAz-DBQBkg-large.jpg",
+   "first_name": "",
+   "followers_count": 120086,
+   "full_name": "",
+   "id": 475471,
+   "kind": "user",
+   "last_modified": "2026-04-21T14:05:08Z",
+   "last_name": "",
+   "permalink": "boardsofcanada",
+   "permalink_url": "https://soundcloud.com/boardsofcanada",
+   "uri": "https://api.soundcloud.com/users/soundcloud%3Ausers%3A475471",
+   "urn": "soundcloud:users:475471",
+   "username": "Boards of Canada",
+   "verified": true,
+   "city": null,
+   "country_code": null,
+   "badges": {
+    "pro": false,
+    "creator_mid_tier": false,
+    "pro_unlimited": true,
+    "verified": true
+   },
+   "station_urn": "soundcloud:system-playlists:artist-stations:475471",
+   "station_permalink": "artist-stations:475471"
+  }
+ },
+ {
+  "artwork_url": "https://i1.sndcdn.com/artworks-OVbkF3MZy0Nn-0-large.png",
+  "caption": null,
+  "commentable": true,
+  "comment_count": 2,
+  "created_at": "2023-02-07T02:34:26Z",
+  "description": null,
+  "downloadable": false,
+  "download_count": 0,
+  "duration": 95996,
+  "full_duration": 96000,
+  "embeddable_by": "all",
+  "genre": "Electronic",
+  "has_downloads_left": false,
+  "id": 1441394452,
+  "kind": "track",
+  "label_name": "Warp Records",
+  "last_modified": "2026-08-10T14:59:51Z",
+  "license": "all-rights-reserved",
+  "likes_count": 922,
+  "permalink": "bocuma",
+  "permalink_url": "https://soundcloud.com/boardsofcanada/bocuma",
+  "playback_count": 19732,
+  "public": true,
+  "publisher_metadata": {
+   "id": 1441394452,
+   "urn": "soundcloud:tracks:1441394452",
+   "artist": "Boards of Canada",
+   "album_title": "Music Has The Right To Children",
+   "contains_music": true,
+   "upc_or_ean": "0801061005535",
+   "isrc": "GBBPW9800018",
+   "explicit": false,
+   "p_line": "1998 Warp Records",
+   "p_line_for_display": "\u2117 1998 Warp Records",
+   "c_line": "1998 Warp Records",
+   "c_line_for_display": "\u00a9 1998 Warp Records",
+   "release_title": "Bocuma"
+  },
+  "purchase_title": null,
+  "purchase_url": null,
+  "release_date": "1998-04-20T00:00:00Z",
+  "reposts_count": 6,
+  "secret_token": null,
+  "sharing": "public",
+  "state": "finished",
+  "streamable": true,
+  "tag_list": "Alternative",
+  "title": "Bocuma",
+  "uri": "https://api.soundcloud.com/tracks/soundcloud%3Atracks%3A1441394452",
+  "urn": "soundcloud:tracks:1441394452",
+  "user_id": 475471,
+  "visuals": null,
+  "waveform_url": "https://wave.sndcdn.com/keDffI9evzCF_m.json",
+  "display_date": "1998-04-20T00:00:00Z",
+  "media": {
+   "transcodings": [
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441394452/1e3db0ad-6905-4cb6-8334-20494d7080c6/stream/cbc-encrypted-hls",
+     "preset": "aac_160k",
+     "duration": 95996,
+     "snipped": false,
+     "format": {
+      "protocol": "cbc-encrypted-hls",
+      "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+     },
+     "quality": "sq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441394452/1e3db0ad-6905-4cb6-8334-20494d7080c6/stream/ctr-encrypted-hls",
+     "preset": "aac_160k",
+     "duration": 95996,
+     "snipped": false,
+     "format": {
+      "protocol": "ctr-encrypted-hls",
+      "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+     },
+     "quality": "sq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441394452/0081e100-ea02-44f5-8b97-d88e0b018ad2/stream/cbc-encrypted-hls",
+     "preset": "aac_96k",
+     "duration": 95996,
+     "snipped": false,
+     "format": {
+      "protocol": "cbc-encrypted-hls",
+      "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+     },
+     "quality": "lq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441394452/0081e100-ea02-44f5-8b97-d88e0b018ad2/stream/ctr-encrypted-hls",
+     "preset": "aac_96k",
+     "duration": 95996,
+     "snipped": false,
+     "format": {
+      "protocol": "ctr-encrypted-hls",
+      "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+     },
+     "quality": "lq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441394452/5072237b-d9ee-4852-8599-d8498cacb396/stream/cbc-encrypted-hls",
+     "preset": "abr_sq",
+     "duration": 95996,
+     "snipped": false,
+     "format": {
+      "protocol": "cbc-encrypted-hls",
+      "mime_type": "audio/mpegurl"
+     },
+     "quality": "sq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441394452/5072237b-d9ee-4852-8599-d8498cacb396/stream/ctr-encrypted-hls",
+     "preset": "abr_sq",
+     "duration": 95996,
+     "snipped": false,
+     "format": {
+      "protocol": "ctr-encrypted-hls",
+      "mime_type": "audio/mpegurl"
+     },
+     "quality": "sq",
+     "is_legacy_transcoding": false
+    }
+   ]
+  },
+  "station_urn": "soundcloud:system-playlists:track-stations:1441394452",
+  "station_permalink": "track-stations:1441394452",
+  "track_authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJnZW8iOiJOTCIsInN1YiI6IiIsInJpZCI6Ijk0Yzg4MWNkLTZlNTEtNDk3OS1iZmM3LWVkNDBiNzVjMTg5NiIsImlhdCI6MTc5MTkyNDA5MH0.he1Fu57BzGwiXWQeagS_YqEqY2ELC6fEWhb3rmCNd2U",
+  "monetization_model": "AD_SUPPORTED",
+  "policy": "MONETIZE",
+  "user": {
+   "avatar_url": "https://i1.sndcdn.com/avatars-6UaO1sdX19wHjhAz-DBQBkg-large.jpg",
+   "first_name": "",
+   "followers_count": 120086,
+   "full_name": "",
+   "id": 475471,
+   "kind": "user",
+   "last_modified": "2026-04-21T14:05:08Z",
+   "last_name": "",
+   "permalink": "boardsofcanada",
+   "permalink_url": "https://soundcloud.com/boardsofcanada",
+   "uri": "https://api.soundcloud.com/users/soundcloud%3Ausers%3A475471",
+   "urn": "soundcloud:users:475471",
+   "username": "Boards of Canada",
+   "verified": true,
+   "city": null,
+   "country_code": null,
+   "badges": {
+    "pro": false,
+    "creator_mid_tier": false,
+    "pro_unlimited": true,
+    "verified": true
+   },
+   "station_urn": "soundcloud:system-playlists:artist-stations:475471",
+   "station_permalink": "artist-stations:475471"
+  }
+ },
+ {
+  "artwork_url": "https://i1.sndcdn.com/artworks-No1pp91Htfhw-0-large.png",
+  "caption": null,
+  "commentable": true,
+  "comment_count": 3,
+  "created_at": "2023-02-07T02:34:33Z",
+  "description": null,
+  "downloadable": false,
+  "download_count": 0,
+  "duration": 59316,
+  "full_duration": 59324,
+  "embeddable_by": "all",
+  "genre": "Electronic",
+  "has_downloads_left": false,
+  "id": 1441394584,
+  "kind": "track",
+  "label_name": "Warp Records",
+  "last_modified": "2026-08-10T14:52:53Z",
+  "license": "all-rights-reserved",
+  "likes_count": 1192,
+  "permalink": "kaini-industries",
+  "permalink_url": "https://soundcloud.com/boardsofcanada/kaini-industries",
+  "playback_count": 20721,
+  "public": true,
+  "publisher_metadata": {
+   "id": 1441394584,
+   "urn": "soundcloud:tracks:1441394584",
+   "artist": "Boards of Canada",
+   "album_title": "Music Has The Right To Children",
+   "contains_music": true,
+   "upc_or_ean": "0801061005535",
+   "isrc": "GBBPW9800017",
+   "explicit": false,
+   "p_line": "1998 Warp Records",
+   "p_line_for_display": "\u2117 1998 Warp Records",
+   "c_line": "1998 Warp Records",
+   "c_line_for_display": "\u00a9 1998 Warp Records",
+   "release_title": "Kaini Industries"
+  },
+  "purchase_title": null,
+  "purchase_url": null,
+  "release_date": "1998-04-20T00:00:00Z",
+  "reposts_count": 6,
+  "secret_token": null,
+  "sharing": "public",
+  "state": "finished",
+  "streamable": true,
+  "tag_list": "Alternative",
+  "title": "Kaini Industries",
+  "uri": "https://api.soundcloud.com/tracks/soundcloud%3Atracks%3A1441394584",
+  "urn": "soundcloud:tracks:1441394584",
+  "user_id": 475471,
+  "visuals": null,
+  "waveform_url": "https://wave.sndcdn.com/zQAZVVZwMeoP_m.json",
+  "display_date": "1998-04-20T00:00:00Z",
+  "media": {
+   "transcodings": [
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441394584/7b535ccf-8cd3-43f6-821b-c7bcb3693c63/stream/cbc-encrypted-hls",
+     "preset": "aac_160k",
+     "duration": 59316,
+     "snipped": false,
+     "format": {
+      "protocol": "cbc-encrypted-hls",
+      "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+     },
+     "quality": "sq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441394584/7b535ccf-8cd3-43f6-821b-c7bcb3693c63/stream/ctr-encrypted-hls",
+     "preset": "aac_160k",
+     "duration": 59316,
+     "snipped": false,
+     "format": {
+      "protocol": "ctr-encrypted-hls",
+      "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+     },
+     "quality": "sq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441394584/c500162b-b44c-48e9-94d4-d79c9ada42bc/stream/cbc-encrypted-hls",
+     "preset": "aac_96k",
+     "duration": 59316,
+     "snipped": false,
+     "format": {
+      "protocol": "cbc-encrypted-hls",
+      "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+     },
+     "quality": "lq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441394584/c500162b-b44c-48e9-94d4-d79c9ada42bc/stream/ctr-encrypted-hls",
+     "preset": "aac_96k",
+     "duration": 59316,
+     "snipped": false,
+     "format": {
+      "protocol": "ctr-encrypted-hls",
+      "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+     },
+     "quality": "lq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441394584/b46b3381-2b85-4eff-a1ef-ff3fe3d76d4a/stream/cbc-encrypted-hls",
+     "preset": "abr_sq",
+     "duration": 59316,
+     "snipped": false,
+     "format": {
+      "protocol": "cbc-encrypted-hls",
+      "mime_type": "audio/mpegurl"
+     },
+     "quality": "sq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441394584/b46b3381-2b85-4eff-a1ef-ff3fe3d76d4a/stream/ctr-encrypted-hls",
+     "preset": "abr_sq",
+     "duration": 59316,
+     "snipped": false,
+     "format": {
+      "protocol": "ctr-encrypted-hls",
+      "mime_type": "audio/mpegurl"
+     },
+     "quality": "sq",
+     "is_legacy_transcoding": false
+    }
+   ]
+  },
+  "station_urn": "soundcloud:system-playlists:track-stations:1441394584",
+  "station_permalink": "track-stations:1441394584",
+  "track_authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJnZW8iOiJOTCIsInN1YiI6IiIsInJpZCI6ImQ5OTFkMTliLTQ3NTUtNGRjZi04MzE3LTA0YTNkY2NhZDVlMyIsImlhdCI6MTc5MTkyNDA5MH0.OXyGJwVqX3QMe6DdeA7WVy99_1odLWEJvUzyIapvGEw",
+  "monetization_model": "AD_SUPPORTED",
+  "policy": "MONETIZE",
+  "user": {
+   "avatar_url": "https://i1.sndcdn.com/avatars-6UaO1sdX19wHjhAz-DBQBkg-large.jpg",
+   "first_name": "",
+   "followers_count": 120086,
+   "full_name": "",
+   "id": 475471,
+   "kind": "user",
+   "last_modified": "2026-04-21T14:05:08Z",
+   "last_name": "",
+   "permalink": "boardsofcanada",
+   "permalink_url": "https://soundcloud.com/boardsofcanada",
+   "uri": "https://api.soundcloud.com/users/soundcloud%3Ausers%3A475471",
+   "urn": "soundcloud:users:475471",
+   "username": "Boards of Canada",
+   "verified": true,
+   "city": null,
+   "country_code": null,
+   "badges": {
+    "pro": false,
+    "creator_mid_tier": false,
+    "pro_unlimited": true,
+    "verified": true
+   },
+   "station_urn": "soundcloud:system-playlists:artist-stations:475471",
+   "station_permalink": "artist-stations:475471"
+  }
+ },
+ {
+  "artwork_url": "https://i1.sndcdn.com/artworks-cLyVPkri6HmF-0-large.png",
+  "caption": null,
+  "commentable": true,
+  "comment_count": 9,
+  "created_at": "2023-02-07T02:32:16Z",
+  "description": null,
+  "downloadable": false,
+  "download_count": 0,
+  "duration": 385543,
+  "full_duration": 385567,
+  "embeddable_by": "all",
+  "genre": "Electronic",
+  "has_downloads_left": false,
+  "id": 1441392235,
+  "kind": "track",
+  "label_name": "Warp Records",
+  "last_modified": "2026-08-10T15:02:45Z",
+  "license": "all-rights-reserved",
+  "likes_count": 1867,
+  "permalink": "an-eagle-in-your-mind",
+  "permalink_url": "https://soundcloud.com/boardsofcanada/an-eagle-in-your-mind",
+  "playback_count": 39635,
+  "public": true,
+  "publisher_metadata": {
+   "id": 1441392235,
+   "urn": "soundcloud:tracks:1441392235",
+   "artist": "Boards of Canada",
+   "album_title": "Music Has The Right To Children",
+   "contains_music": true,
+   "upc_or_ean": "0801061005535",
+   "isrc": "GBBPW9800011",
+   "explicit": false,
+   "p_line": "1998 Warp Records",
+   "p_line_for_display": "\u2117 1998 Warp Records",
+   "c_line": "1998 Warp Records",
+   "c_line_for_display": "\u00a9 1998 Warp Records",
+   "release_title": "An Eagle In Your Mind"
+  },
+  "purchase_title": null,
+  "purchase_url": null,
+  "release_date": "1998-04-20T00:00:00Z",
+  "reposts_count": 16,
+  "secret_token": null,
+  "sharing": "public",
+  "state": "finished",
+  "streamable": true,
+  "tag_list": "Alternative",
+  "title": "An Eagle In Your Mind",
+  "uri": "https://api.soundcloud.com/tracks/soundcloud%3Atracks%3A1441392235",
+  "urn": "soundcloud:tracks:1441392235",
+  "user_id": 475471,
+  "visuals": null,
+  "waveform_url": "https://wave.sndcdn.com/h2tiO4uCQh82_m.json",
+  "display_date": "1998-04-20T00:00:00Z",
+  "media": {
+   "transcodings": [
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441392235/c54a2f26-0d97-4c9b-9743-5ab32e2bf0b7/stream/cbc-encrypted-hls",
+     "preset": "aac_160k",
+     "duration": 385543,
+     "snipped": false,
+     "format": {
+      "protocol": "cbc-encrypted-hls",
+      "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+     },
+     "quality": "sq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441392235/c54a2f26-0d97-4c9b-9743-5ab32e2bf0b7/stream/ctr-encrypted-hls",
+     "preset": "aac_160k",
+     "duration": 385543,
+     "snipped": false,
+     "format": {
+      "protocol": "ctr-encrypted-hls",
+      "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+     },
+     "quality": "sq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441392235/fbb1950f-2f7b-4531-9265-2024f64fbbca/stream/cbc-encrypted-hls",
+     "preset": "aac_96k",
+     "duration": 385543,
+     "snipped": false,
+     "format": {
+      "protocol": "cbc-encrypted-hls",
+      "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+     },
+     "quality": "lq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441392235/fbb1950f-2f7b-4531-9265-2024f64fbbca/stream/ctr-encrypted-hls",
+     "preset": "aac_96k",
+     "duration": 385543,
+     "snipped": false,
+     "format": {
+      "protocol": "ctr-encrypted-hls",
+      "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+     },
+     "quality": "lq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441392235/40190c22-1f39-47af-8782-f58325ab71d7/stream/cbc-encrypted-hls",
+     "preset": "abr_sq",
+     "duration": 385543,
+     "snipped": false,
+     "format": {
+      "protocol": "cbc-encrypted-hls",
+      "mime_type": "audio/mpegurl"
+     },
+     "quality": "sq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441392235/40190c22-1f39-47af-8782-f58325ab71d7/stream/ctr-encrypted-hls",
+     "preset": "abr_sq",
+     "duration": 385543,
+     "snipped": false,
+     "format": {
+      "protocol": "ctr-encrypted-hls",
+      "mime_type": "audio/mpegurl"
+     },
+     "quality": "sq",
+     "is_legacy_transcoding": false
+    }
+   ]
+  },
+  "station_urn": "soundcloud:system-playlists:track-stations:1441392235",
+  "station_permalink": "track-stations:1441392235",
+  "track_authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJnZW8iOiJOTCIsInN1YiI6IiIsInJpZCI6IjI5YTY1YmQ0LTk0MzktNGMxYy1hOWRjLTRiMzQwNTBiZTcyNSIsImlhdCI6MTc5MTkyNDA5MH0.qptSBtBm-lmVbHg5Jp_fDleqZTMUbrDccgq8KLARl38",
+  "monetization_model": "AD_SUPPORTED",
+  "policy": "MONETIZE",
+  "user": {
+   "avatar_url": "https://i1.sndcdn.com/avatars-6UaO1sdX19wHjhAz-DBQBkg-large.jpg",
+   "first_name": "",
+   "followers_count": 120086,
+   "full_name": "",
+   "id": 475471,
+   "kind": "user",
+   "last_modified": "2026-04-21T14:05:08Z",
+   "last_name": "",
+   "permalink": "boardsofcanada",
+   "permalink_url": "https://soundcloud.com/boardsofcanada",
+   "uri": "https://api.soundcloud.com/users/soundcloud%3Ausers%3A475471",
+   "urn": "soundcloud:users:475471",
+   "username": "Boards of Canada",
+   "verified": true,
+   "city": null,
+   "country_code": null,
+   "badges": {
+    "pro": false,
+    "creator_mid_tier": false,
+    "pro_unlimited": true,
+    "verified": true
+   },
+   "station_urn": "soundcloud:system-playlists:artist-stations:475471",
+   "station_permalink": "artist-stations:475471"
+  }
+ },
+ {
+  "artwork_url": "https://i1.sndcdn.com/artworks-6unevOf0RCBM-0-large.png",
+  "caption": null,
+  "commentable": true,
+  "comment_count": 74,
+  "created_at": "2023-02-07T02:31:48Z",
+  "description": null,
+  "downloadable": false,
+  "download_count": 0,
+  "duration": 358103,
+  "full_duration": 358113,
+  "embeddable_by": "all",
+  "genre": "Electronic",
+  "has_downloads_left": false,
+  "id": 1441391734,
+  "kind": "track",
+  "label_name": "Warp Records",
+  "last_modified": "2026-08-10T14:53:33Z",
+  "license": "all-rights-reserved",
+  "likes_count": 3843,
+  "permalink": "aquarius",
+  "permalink_url": "https://soundcloud.com/boardsofcanada/aquarius",
+  "playback_count": 66557,
+  "public": true,
+  "publisher_metadata": {
+   "id": 1441391734,
+   "urn": "soundcloud:tracks:1441391734",
+   "artist": "Boards of Canada",
+   "album_title": "Music Has The Right To Children",
+   "contains_music": true,
+   "upc_or_ean": "0801061005535",
+   "isrc": "GBBPW9800021",
+   "explicit": false,
+   "p_line": "1998 Warp Records",
+   "p_line_for_display": "\u2117 1998 Warp Records",
+   "c_line": "1998 Warp Records",
+   "c_line_for_display": "\u00a9 1998 Warp Records",
+   "release_title": "Aquarius"
+  },
+  "purchase_title": null,
+  "purchase_url": null,
+  "release_date": "1998-04-20T00:00:00Z",
+  "reposts_count": 71,
+  "secret_token": null,
+  "sharing": "public",
+  "state": "finished",
+  "streamable": true,
+  "tag_list": "Alternative",
+  "title": "Aquarius",
+  "uri": "https://api.soundcloud.com/tracks/soundcloud%3Atracks%3A1441391734",
+  "urn": "soundcloud:tracks:1441391734",
+  "user_id": 475471,
+  "visuals": null,
+  "waveform_url": "https://wave.sndcdn.com/VD3aGL5hi6dV_m.json",
+  "display_date": "1998-04-20T00:00:00Z",
+  "media": {
+   "transcodings": [
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441391734/98fa5743-0021-4d78-b31d-804c65481b44/stream/cbc-encrypted-hls",
+     "preset": "aac_160k",
+     "duration": 358103,
+     "snipped": false,
+     "format": {
+      "protocol": "cbc-encrypted-hls",
+      "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+     },
+     "quality": "sq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441391734/98fa5743-0021-4d78-b31d-804c65481b44/stream/ctr-encrypted-hls",
+     "preset": "aac_160k",
+     "duration": 358103,
+     "snipped": false,
+     "format": {
+      "protocol": "ctr-encrypted-hls",
+      "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+     },
+     "quality": "sq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441391734/963042a3-4889-4c34-9e9a-b6a6913c7274/stream/cbc-encrypted-hls",
+     "preset": "aac_96k",
+     "duration": 358103,
+     "snipped": false,
+     "format": {
+      "protocol": "cbc-encrypted-hls",
+      "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+     },
+     "quality": "lq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441391734/963042a3-4889-4c34-9e9a-b6a6913c7274/stream/ctr-encrypted-hls",
+     "preset": "aac_96k",
+     "duration": 358103,
+     "snipped": false,
+     "format": {
+      "protocol": "ctr-encrypted-hls",
+      "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+     },
+     "quality": "lq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441391734/f90834c6-f71b-445b-9956-c50cebc02acb/stream/cbc-encrypted-hls",
+     "preset": "abr_sq",
+     "duration": 358103,
+     "snipped": false,
+     "format": {
+      "protocol": "cbc-encrypted-hls",
+      "mime_type": "audio/mpegurl"
+     },
+     "quality": "sq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441391734/f90834c6-f71b-445b-9956-c50cebc02acb/stream/ctr-encrypted-hls",
+     "preset": "abr_sq",
+     "duration": 358103,
+     "snipped": false,
+     "format": {
+      "protocol": "ctr-encrypted-hls",
+      "mime_type": "audio/mpegurl"
+     },
+     "quality": "sq",
+     "is_legacy_transcoding": false
+    }
+   ]
+  },
+  "station_urn": "soundcloud:system-playlists:track-stations:1441391734",
+  "station_permalink": "track-stations:1441391734",
+  "track_authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJnZW8iOiJOTCIsInN1YiI6IiIsInJpZCI6IjBmZTU2Njk3LThkMjgtNGQ2Mi1iYzc0LTVhMDdlZjY0ZDdlMyIsImlhdCI6MTc5MTkyNDA5MH0.bt60VC9owYkSff_RhlmfVnM0GnWFPfna4XKVWPVESXc",
+  "monetization_model": "AD_SUPPORTED",
+  "policy": "MONETIZE",
+  "user": {
+   "avatar_url": "https://i1.sndcdn.com/avatars-6UaO1sdX19wHjhAz-DBQBkg-large.jpg",
+   "first_name": "",
+   "followers_count": 120086,
+   "full_name": "",
+   "id": 475471,
+   "kind": "user",
+   "last_modified": "2026-04-21T14:05:08Z",
+   "last_name": "",
+   "permalink": "boardsofcanada",
+   "permalink_url": "https://soundcloud.com/boardsofcanada",
+   "uri": "https://api.soundcloud.com/users/soundcloud%3Ausers%3A475471",
+   "urn": "soundcloud:users:475471",
+   "username": "Boards of Canada",
+   "verified": true,
+   "city": null,
+   "country_code": null,
+   "badges": {
+    "pro": false,
+    "creator_mid_tier": false,
+    "pro_unlimited": true,
+    "verified": true
+   },
+   "station_urn": "soundcloud:system-playlists:artist-stations:475471",
+   "station_permalink": "artist-stations:475471"
+  }
+ },
+ {
+  "artwork_url": "https://i1.sndcdn.com/artworks-HSHDvFBBjB2z-0-large.png",
+  "caption": null,
+  "commentable": true,
+  "comment_count": 67,
+  "created_at": "2018-10-29T21:51:50Z",
+  "description": null,
+  "downloadable": false,
+  "download_count": 0,
+  "duration": 91729,
+  "full_duration": 91742,
+  "embeddable_by": "all",
+  "genre": "Electronic",
+  "has_downloads_left": false,
+  "id": 521824980,
+  "kind": "track",
+  "label_name": "Warp Records",
+  "last_modified": "2026-08-10T15:09:19Z",
+  "license": "all-rights-reserved",
+  "likes_count": 6727,
+  "permalink": "olson",
+  "permalink_url": "https://soundcloud.com/boardsofcanada/olson",
+  "playback_count": 146573,
+  "public": true,
+  "publisher_metadata": {
+   "id": 521824980,
+   "urn": "soundcloud:tracks:521824980",
+   "artist": "Boards of Canada",
+   "album_title": "Music Has The Right To Children",
+   "contains_music": true,
+   "upc_or_ean": "0801061005535",
+   "isrc": "GBBPW9800022",
+   "explicit": false,
+   "p_line": "1998 Warp Records",
+   "p_line_for_display": "\u2117 1998 Warp Records",
+   "c_line": "1998 Warp Records",
+   "c_line_for_display": "\u00a9 1998 Warp Records",
+   "release_title": "Olson"
+  },
+  "purchase_title": null,
+  "purchase_url": null,
+  "release_date": "1998-04-20T00:00:00Z",
+  "reposts_count": 77,
+  "secret_token": null,
+  "sharing": "public",
+  "state": "finished",
+  "streamable": true,
+  "tag_list": "Alternative",
+  "title": "Olson",
+  "uri": "https://api.soundcloud.com/tracks/soundcloud%3Atracks%3A521824980",
+  "urn": "soundcloud:tracks:521824980",
+  "user_id": 475471,
+  "visuals": null,
+  "waveform_url": "https://wave.sndcdn.com/khyA6UP7EqUW_m.json",
+  "display_date": "1998-04-20T00:00:00Z",
+  "media": {
+   "transcodings": [
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:521824980/7c6bf01d-c3a5-44b8-beea-a75e0bcbd105/stream/cbc-encrypted-hls",
+     "preset": "aac_160k",
+     "duration": 91729,
+     "snipped": false,
+     "format": {
+      "protocol": "cbc-encrypted-hls",
+      "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+     },
+     "quality": "sq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:521824980/7c6bf01d-c3a5-44b8-beea-a75e0bcbd105/stream/ctr-encrypted-hls",
+     "preset": "aac_160k",
+     "duration": 91729,
+     "snipped": false,
+     "format": {
+      "protocol": "ctr-encrypted-hls",
+      "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+     },
+     "quality": "sq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:521824980/1ed2a41c-c409-4313-aa5c-4a4d1dec2252/stream/cbc-encrypted-hls",
+     "preset": "aac_96k",
+     "duration": 91729,
+     "snipped": false,
+     "format": {
+      "protocol": "cbc-encrypted-hls",
+      "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+     },
+     "quality": "lq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:521824980/1ed2a41c-c409-4313-aa5c-4a4d1dec2252/stream/ctr-encrypted-hls",
+     "preset": "aac_96k",
+     "duration": 91729,
+     "snipped": false,
+     "format": {
+      "protocol": "ctr-encrypted-hls",
+      "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+     },
+     "quality": "lq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:521824980/0432cab5-7a0b-4d24-83dd-86998a7bc74b/stream/cbc-encrypted-hls",
+     "preset": "abr_sq",
+     "duration": 91729,
+     "snipped": false,
+     "format": {
+      "protocol": "cbc-encrypted-hls",
+      "mime_type": "audio/mpegurl"
+     },
+     "quality": "sq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:521824980/0432cab5-7a0b-4d24-83dd-86998a7bc74b/stream/ctr-encrypted-hls",
+     "preset": "abr_sq",
+     "duration": 91729,
+     "snipped": false,
+     "format": {
+      "protocol": "ctr-encrypted-hls",
+      "mime_type": "audio/mpegurl"
+     },
+     "quality": "sq",
+     "is_legacy_transcoding": false
+    }
+   ]
+  },
+  "station_urn": "soundcloud:system-playlists:track-stations:521824980",
+  "station_permalink": "track-stations:521824980",
+  "track_authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJnZW8iOiJOTCIsInN1YiI6IiIsInJpZCI6IjExMmE4YTZkLWRiZjEtNDQ2Ni1iOTlkLTQ5M2JhNDc5MTZiOCIsImlhdCI6MTc5MTkyNDA5MH0.1IVBpc43zXZMAhHvAoMqT9EO9Ia8e0hCjjqCnEmPCQ0",
+  "monetization_model": "AD_SUPPORTED",
+  "policy": "MONETIZE",
+  "user": {
+   "avatar_url": "https://i1.sndcdn.com/avatars-6UaO1sdX19wHjhAz-DBQBkg-large.jpg",
+   "first_name": "",
+   "followers_count": 120086,
+   "full_name": "",
+   "id": 475471,
+   "kind": "user",
+   "last_modified": "2026-04-21T14:05:08Z",
+   "last_name": "",
+   "permalink": "boardsofcanada",
+   "permalink_url": "https://soundcloud.com/boardsofcanada",
+   "uri": "https://api.soundcloud.com/users/soundcloud%3Ausers%3A475471",
+   "urn": "soundcloud:users:475471",
+   "username": "Boards of Canada",
+   "verified": true,
+   "city": null,
+   "country_code": null,
+   "badges": {
+    "pro": false,
+    "creator_mid_tier": false,
+    "pro_unlimited": true,
+    "verified": true
+   },
+   "station_urn": "soundcloud:system-playlists:artist-stations:475471",
+   "station_permalink": "artist-stations:475471"
+  }
+ },
+ {
+  "artwork_url": "https://i1.sndcdn.com/artworks-rE8Vqsxmb75a-0-large.png",
+  "caption": null,
+  "commentable": true,
+  "comment_count": 11,
+  "created_at": "2023-02-07T02:32:38Z",
+  "description": null,
+  "downloadable": false,
+  "download_count": 0,
+  "duration": 399516,
+  "full_duration": 399543,
+  "embeddable_by": "all",
+  "genre": "Electronic",
+  "has_downloads_left": false,
+  "id": 1441392589,
+  "kind": "track",
+  "label_name": "Warp Records",
+  "last_modified": "2026-08-10T15:03:33Z",
+  "license": "all-rights-reserved",
+  "likes_count": 1931,
+  "permalink": "rue-the-whirl",
+  "permalink_url": "https://soundcloud.com/boardsofcanada/rue-the-whirl",
+  "playback_count": 32104,
+  "public": true,
+  "publisher_metadata": {
+   "id": 1441392589,
+   "urn": "soundcloud:tracks:1441392589",
+   "artist": "Boards of Canada",
+   "album_title": "Music Has The Right To Children",
+   "contains_music": true,
+   "upc_or_ean": "0801061005535",
+   "isrc": "GBBPW9800020",
+   "explicit": false,
+   "p_line": "1998 Warp Records",
+   "p_line_for_display": "\u2117 1998 Warp Records",
+   "c_line": "1998 Warp Records",
+   "c_line_for_display": "\u00a9 1998 Warp Records",
+   "release_title": "Rue The Whirl"
+  },
+  "purchase_title": null,
+  "purchase_url": null,
+  "release_date": "1998-04-20T00:00:00Z",
+  "reposts_count": 24,
+  "secret_token": null,
+  "sharing": "public",
+  "state": "finished",
+  "streamable": true,
+  "tag_list": "Alternative",
+  "title": "Rue The Whirl",
+  "uri": "https://api.soundcloud.com/tracks/soundcloud%3Atracks%3A1441392589",
+  "urn": "soundcloud:tracks:1441392589",
+  "user_id": 475471,
+  "visuals": null,
+  "waveform_url": "https://wave.sndcdn.com/JdYEf8xIYDDs_m.json",
+  "display_date": "1998-04-20T00:00:00Z",
+  "media": {
+   "transcodings": [
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441392589/5b3f5ac5-d959-4f71-85b8-33e2f7c8f827/stream/cbc-encrypted-hls",
+     "preset": "aac_160k",
+     "duration": 399516,
+     "snipped": false,
+     "format": {
+      "protocol": "cbc-encrypted-hls",
+      "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+     },
+     "quality": "sq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441392589/5b3f5ac5-d959-4f71-85b8-33e2f7c8f827/stream/ctr-encrypted-hls",
+     "preset": "aac_160k",
+     "duration": 399516,
+     "snipped": false,
+     "format": {
+      "protocol": "ctr-encrypted-hls",
+      "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+     },
+     "quality": "sq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441392589/dbc499b1-c11c-46eb-ab34-96ab09ef94e2/stream/cbc-encrypted-hls",
+     "preset": "aac_96k",
+     "duration": 399516,
+     "snipped": false,
+     "format": {
+      "protocol": "cbc-encrypted-hls",
+      "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+     },
+     "quality": "lq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441392589/dbc499b1-c11c-46eb-ab34-96ab09ef94e2/stream/ctr-encrypted-hls",
+     "preset": "aac_96k",
+     "duration": 399516,
+     "snipped": false,
+     "format": {
+      "protocol": "ctr-encrypted-hls",
+      "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+     },
+     "quality": "lq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441392589/b6216ee6-cc4d-45bd-8921-bb306ab6c3b4/stream/cbc-encrypted-hls",
+     "preset": "abr_sq",
+     "duration": 399516,
+     "snipped": false,
+     "format": {
+      "protocol": "cbc-encrypted-hls",
+      "mime_type": "audio/mpegurl"
+     },
+     "quality": "sq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441392589/b6216ee6-cc4d-45bd-8921-bb306ab6c3b4/stream/ctr-encrypted-hls",
+     "preset": "abr_sq",
+     "duration": 399516,
+     "snipped": false,
+     "format": {
+      "protocol": "ctr-encrypted-hls",
+      "mime_type": "audio/mpegurl"
+     },
+     "quality": "sq",
+     "is_legacy_transcoding": false
+    }
+   ]
+  },
+  "station_urn": "soundcloud:system-playlists:track-stations:1441392589",
+  "station_permalink": "track-stations:1441392589",
+  "track_authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJnZW8iOiJOTCIsInN1YiI6IiIsInJpZCI6IjY4ZTU5YjRmLTI3YzctNDQyYS05MzJmLTc1NDA4NzY3YmE2ZCIsImlhdCI6MTc5MTkyNDA5MH0.uTo6jhT6lPaH_b9LBPxobL5RifYRBC9Kf8D_owlf7bE",
+  "monetization_model": "AD_SUPPORTED",
+  "policy": "MONETIZE",
+  "user": {
+   "avatar_url": "https://i1.sndcdn.com/avatars-6UaO1sdX19wHjhAz-DBQBkg-large.jpg",
+   "first_name": "",
+   "followers_count": 120086,
+   "full_name": "",
+   "id": 475471,
+   "kind": "user",
+   "last_modified": "2026-04-21T14:05:08Z",
+   "last_name": "",
+   "permalink": "boardsofcanada",
+   "permalink_url": "https://soundcloud.com/boardsofcanada",
+   "uri": "https://api.soundcloud.com/users/soundcloud%3Ausers%3A475471",
+   "urn": "soundcloud:users:475471",
+   "username": "Boards of Canada",
+   "verified": true,
+   "city": null,
+   "country_code": null,
+   "badges": {
+    "pro": false,
+    "creator_mid_tier": false,
+    "pro_unlimited": true,
+    "verified": true
+   },
+   "station_urn": "soundcloud:system-playlists:artist-stations:475471",
+   "station_permalink": "artist-stations:475471"
+  }
+ },
+ {
+  "artwork_url": "https://i1.sndcdn.com/artworks-SwpDOaw9OfKj-0-large.png",
+  "caption": null,
+  "commentable": true,
+  "comment_count": 5,
+  "created_at": "2023-02-07T02:34:40Z",
+  "description": null,
+  "downloadable": false,
+  "download_count": 0,
+  "duration": 367743,
+  "full_duration": 367752,
+  "embeddable_by": "all",
+  "genre": "Electronic",
+  "has_downloads_left": false,
+  "id": 1441394725,
+  "kind": "track",
+  "label_name": "Warp Records",
+  "last_modified": "2026-08-10T15:05:24Z",
+  "license": "all-rights-reserved",
+  "likes_count": 1505,
+  "permalink": "pete-standing-alone",
+  "permalink_url": "https://soundcloud.com/boardsofcanada/pete-standing-alone",
+  "playback_count": 22718,
+  "public": true,
+  "publisher_metadata": {
+   "id": 1441394725,
+   "urn": "soundcloud:tracks:1441394725",
+   "artist": "Boards of Canada",
+   "album_title": "Music Has The Right To Children",
+   "contains_music": true,
+   "upc_or_ean": "0801061005535",
+   "isrc": "GBBPW9800023",
+   "explicit": false,
+   "p_line": "1998 Warp Records",
+   "p_line_for_display": "\u2117 1998 Warp Records",
+   "c_line": "1998 Warp Records",
+   "c_line_for_display": "\u00a9 1998 Warp Records",
+   "release_title": "Pete Standing Alone"
+  },
+  "purchase_title": null,
+  "purchase_url": null,
+  "release_date": "1998-04-20T00:00:00Z",
+  "reposts_count": 16,
+  "secret_token": null,
+  "sharing": "public",
+  "state": "finished",
+  "streamable": true,
+  "tag_list": "Alternative",
+  "title": "Pete Standing Alone",
+  "uri": "https://api.soundcloud.com/tracks/soundcloud%3Atracks%3A1441394725",
+  "urn": "soundcloud:tracks:1441394725",
+  "user_id": 475471,
+  "visuals": null,
+  "waveform_url": "https://wave.sndcdn.com/YsZCXxbLbDIl_m.json",
+  "display_date": "1998-04-20T00:00:00Z",
+  "media": {
+   "transcodings": [
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441394725/28300601-135e-42d2-9287-2d0dceb45e62/stream/cbc-encrypted-hls",
+     "preset": "aac_160k",
+     "duration": 367743,
+     "snipped": false,
+     "format": {
+      "protocol": "cbc-encrypted-hls",
+      "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+     },
+     "quality": "sq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441394725/28300601-135e-42d2-9287-2d0dceb45e62/stream/ctr-encrypted-hls",
+     "preset": "aac_160k",
+     "duration": 367743,
+     "snipped": false,
+     "format": {
+      "protocol": "ctr-encrypted-hls",
+      "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+     },
+     "quality": "sq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441394725/033c6606-4903-4829-aa48-76c730f2127c/stream/cbc-encrypted-hls",
+     "preset": "aac_96k",
+     "duration": 367743,
+     "snipped": false,
+     "format": {
+      "protocol": "cbc-encrypted-hls",
+      "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+     },
+     "quality": "lq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441394725/033c6606-4903-4829-aa48-76c730f2127c/stream/ctr-encrypted-hls",
+     "preset": "aac_96k",
+     "duration": 367743,
+     "snipped": false,
+     "format": {
+      "protocol": "ctr-encrypted-hls",
+      "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+     },
+     "quality": "lq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441394725/bc091787-07a5-46f2-acc5-a774cc9f7212/stream/cbc-encrypted-hls",
+     "preset": "abr_sq",
+     "duration": 367743,
+     "snipped": false,
+     "format": {
+      "protocol": "cbc-encrypted-hls",
+      "mime_type": "audio/mpegurl"
+     },
+     "quality": "sq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441394725/bc091787-07a5-46f2-acc5-a774cc9f7212/stream/ctr-encrypted-hls",
+     "preset": "abr_sq",
+     "duration": 367743,
+     "snipped": false,
+     "format": {
+      "protocol": "ctr-encrypted-hls",
+      "mime_type": "audio/mpegurl"
+     },
+     "quality": "sq",
+     "is_legacy_transcoding": false
+    }
+   ]
+  },
+  "station_urn": "soundcloud:system-playlists:track-stations:1441394725",
+  "station_permalink": "track-stations:1441394725",
+  "track_authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJnZW8iOiJOTCIsInN1YiI6IiIsInJpZCI6IjkwMmYxZTZjLTJlMzItNDU5OS1hYzc3LTA2ZDg4ZmZmNTJlOCIsImlhdCI6MTc5MTkyNDA5MH0.1VZbBsiwRRBp3BbxJXAJhLYL4bKGuFSfOW713YB-s88",
+  "monetization_model": "AD_SUPPORTED",
+  "policy": "MONETIZE",
+  "user": {
+   "avatar_url": "https://i1.sndcdn.com/avatars-6UaO1sdX19wHjhAz-DBQBkg-large.jpg",
+   "first_name": "",
+   "followers_count": 120086,
+   "full_name": "",
+   "id": 475471,
+   "kind": "user",
+   "last_modified": "2026-04-21T14:05:08Z",
+   "last_name": "",
+   "permalink": "boardsofcanada",
+   "permalink_url": "https://soundcloud.com/boardsofcanada",
+   "uri": "https://api.soundcloud.com/users/soundcloud%3Ausers%3A475471",
+   "urn": "soundcloud:users:475471",
+   "username": "Boards of Canada",
+   "verified": true,
+   "city": null,
+   "country_code": null,
+   "badges": {
+    "pro": false,
+    "creator_mid_tier": false,
+    "pro_unlimited": true,
+    "verified": true
+   },
+   "station_urn": "soundcloud:system-playlists:artist-stations:475471",
+   "station_permalink": "artist-stations:475471"
+  }
+ },
+ {
+  "artwork_url": "https://i1.sndcdn.com/artworks-xlCnpKp30IrV-0-large.png",
+  "caption": null,
+  "commentable": true,
+  "comment_count": 6,
+  "created_at": "2023-02-07T02:31:09Z",
+  "description": null,
+  "downloadable": false,
+  "download_count": 0,
+  "duration": 85076,
+  "full_duration": 85081,
+  "embeddable_by": "all",
+  "genre": "Electronic",
+  "has_downloads_left": false,
+  "id": 1441391041,
+  "kind": "track",
+  "label_name": "Warp Records",
+  "last_modified": "2026-08-10T15:09:17Z",
+  "license": "all-rights-reserved",
+  "likes_count": 1255,
+  "permalink": "one-very-important-thought",
+  "permalink_url": "https://soundcloud.com/boardsofcanada/one-very-important-thought",
+  "playback_count": 16392,
+  "public": true,
+  "publisher_metadata": {
+   "id": 1441391041,
+   "urn": "soundcloud:tracks:1441391041",
+   "artist": "Boards of Canada",
+   "album_title": "Music Has The Right To Children",
+   "contains_music": true,
+   "upc_or_ean": "0801061005535",
+   "isrc": "GBBPW9800026",
+   "explicit": false,
+   "p_line": "1998 Warp Records",
+   "p_line_for_display": "\u2117 1998 Warp Records",
+   "c_line": "1998 Warp Records",
+   "c_line_for_display": "\u00a9 1998 Warp Records",
+   "release_title": "One Very Important Thought"
+  },
+  "purchase_title": null,
+  "purchase_url": null,
+  "release_date": "1998-04-20T00:00:00Z",
+  "reposts_count": 19,
+  "secret_token": null,
+  "sharing": "public",
+  "state": "finished",
+  "streamable": true,
+  "tag_list": "Alternative",
+  "title": "One Very Important Thought",
+  "uri": "https://api.soundcloud.com/tracks/soundcloud%3Atracks%3A1441391041",
+  "urn": "soundcloud:tracks:1441391041",
+  "user_id": 475471,
+  "visuals": null,
+  "waveform_url": "https://wave.sndcdn.com/HMiwOwRePkcz_m.json",
+  "display_date": "1998-04-20T00:00:00Z",
+  "media": {
+   "transcodings": [
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441391041/bc9c92d2-c450-4962-ba5d-faf00a9dc649/stream/cbc-encrypted-hls",
+     "preset": "aac_160k",
+     "duration": 85076,
+     "snipped": false,
+     "format": {
+      "protocol": "cbc-encrypted-hls",
+      "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+     },
+     "quality": "sq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441391041/bc9c92d2-c450-4962-ba5d-faf00a9dc649/stream/ctr-encrypted-hls",
+     "preset": "aac_160k",
+     "duration": 85076,
+     "snipped": false,
+     "format": {
+      "protocol": "ctr-encrypted-hls",
+      "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+     },
+     "quality": "sq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441391041/75701233-73d0-4a7f-98ce-cea09b8c63c9/stream/cbc-encrypted-hls",
+     "preset": "aac_96k",
+     "duration": 85076,
+     "snipped": false,
+     "format": {
+      "protocol": "cbc-encrypted-hls",
+      "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+     },
+     "quality": "lq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441391041/75701233-73d0-4a7f-98ce-cea09b8c63c9/stream/ctr-encrypted-hls",
+     "preset": "aac_96k",
+     "duration": 85076,
+     "snipped": false,
+     "format": {
+      "protocol": "ctr-encrypted-hls",
+      "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+     },
+     "quality": "lq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441391041/1c45ed31-f113-4887-913c-5a4057b4fe4b/stream/cbc-encrypted-hls",
+     "preset": "abr_sq",
+     "duration": 85076,
+     "snipped": false,
+     "format": {
+      "protocol": "cbc-encrypted-hls",
+      "mime_type": "audio/mpegurl"
+     },
+     "quality": "sq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441391041/1c45ed31-f113-4887-913c-5a4057b4fe4b/stream/ctr-encrypted-hls",
+     "preset": "abr_sq",
+     "duration": 85076,
+     "snipped": false,
+     "format": {
+      "protocol": "ctr-encrypted-hls",
+      "mime_type": "audio/mpegurl"
+     },
+     "quality": "sq",
+     "is_legacy_transcoding": false
+    }
+   ]
+  },
+  "station_urn": "soundcloud:system-playlists:track-stations:1441391041",
+  "station_permalink": "track-stations:1441391041",
+  "track_authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJnZW8iOiJOTCIsInN1YiI6IiIsInJpZCI6ImZiOGZlZjIxLWE5Y2YtNDQ0OC1iZmZkLWI3ODY3Nzk0ZjgwZCIsImlhdCI6MTc5MTkyNDA5MH0.K8XfksLpYs4sphaJkAZ0XcaaFojBCqFg_2Y7wLXj0KE",
+  "monetization_model": "AD_SUPPORTED",
+  "policy": "MONETIZE",
+  "user": {
+   "avatar_url": "https://i1.sndcdn.com/avatars-6UaO1sdX19wHjhAz-DBQBkg-large.jpg",
+   "first_name": "",
+   "followers_count": 120086,
+   "full_name": "",
+   "id": 475471,
+   "kind": "user",
+   "last_modified": "2026-04-21T14:05:08Z",
+   "last_name": "",
+   "permalink": "boardsofcanada",
+   "permalink_url": "https://soundcloud.com/boardsofcanada",
+   "uri": "https://api.soundcloud.com/users/soundcloud%3Ausers%3A475471",
+   "urn": "soundcloud:users:475471",
+   "username": "Boards of Canada",
+   "verified": true,
+   "city": null,
+   "country_code": null,
+   "badges": {
+    "pro": false,
+    "creator_mid_tier": false,
+    "pro_unlimited": true,
+    "verified": true
+   },
+   "station_urn": "soundcloud:system-playlists:artist-stations:475471",
+   "station_permalink": "artist-stations:475471"
+  }
+ },
+ {
+  "artwork_url": "https://i1.sndcdn.com/artworks-jKgxUDJpikOi-0-large.png",
+  "caption": null,
+  "commentable": true,
+  "comment_count": 10,
+  "created_at": "2023-02-07T02:32:52Z",
+  "description": null,
+  "downloadable": false,
+  "download_count": 0,
+  "duration": 105649,
+  "full_duration": 105665,
+  "embeddable_by": "all",
+  "genre": "Electronic",
+  "has_downloads_left": false,
+  "id": 1441392820,
+  "kind": "track",
+  "label_name": "Warp Records",
+  "last_modified": "2026-08-10T15:02:40Z",
+  "license": "all-rights-reserved",
+  "likes_count": 1389,
+  "permalink": "the-color-of-the-fire",
+  "permalink_url": "https://soundcloud.com/boardsofcanada/the-color-of-the-fire",
+  "playback_count": 27698,
+  "public": true,
+  "publisher_metadata": {
+   "id": 1441392820,
+   "urn": "soundcloud:tracks:1441392820",
+   "artist": "Boards of Canada",
+   "album_title": "Music Has The Right To Children",
+   "contains_music": true,
+   "upc_or_ean": "0801061005535",
+   "isrc": "GBBPW9800012",
+   "explicit": false,
+   "p_line": "1998 Warp Records",
+   "p_line_for_display": "\u2117 1998 Warp Records",
+   "c_line": "1998 Warp Records",
+   "c_line_for_display": "\u00a9 1998 Warp Records",
+   "release_title": "The Color Of The Fire"
+  },
+  "purchase_title": null,
+  "purchase_url": null,
+  "release_date": "1998-04-20T00:00:00Z",
+  "reposts_count": 13,
+  "secret_token": null,
+  "sharing": "public",
+  "state": "finished",
+  "streamable": true,
+  "tag_list": "Alternative",
+  "title": "The Color Of The Fire",
+  "uri": "https://api.soundcloud.com/tracks/soundcloud%3Atracks%3A1441392820",
+  "urn": "soundcloud:tracks:1441392820",
+  "user_id": 475471,
+  "visuals": null,
+  "waveform_url": "https://wave.sndcdn.com/8zbNiJjKX6tX_m.json",
+  "display_date": "1998-04-20T00:00:00Z",
+  "media": {
+   "transcodings": [
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441392820/8d61f3c7-b111-41a7-93ca-f6cdf1035c9d/stream/cbc-encrypted-hls",
+     "preset": "aac_160k",
+     "duration": 105649,
+     "snipped": false,
+     "format": {
+      "protocol": "cbc-encrypted-hls",
+      "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+     },
+     "quality": "sq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441392820/8d61f3c7-b111-41a7-93ca-f6cdf1035c9d/stream/ctr-encrypted-hls",
+     "preset": "aac_160k",
+     "duration": 105649,
+     "snipped": false,
+     "format": {
+      "protocol": "ctr-encrypted-hls",
+      "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+     },
+     "quality": "sq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441392820/d2e3895e-c127-4e76-9aa6-ef1e14ef22bf/stream/cbc-encrypted-hls",
+     "preset": "aac_96k",
+     "duration": 105649,
+     "snipped": false,
+     "format": {
+      "protocol": "cbc-encrypted-hls",
+      "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+     },
+     "quality": "lq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441392820/d2e3895e-c127-4e76-9aa6-ef1e14ef22bf/stream/ctr-encrypted-hls",
+     "preset": "aac_96k",
+     "duration": 105649,
+     "snipped": false,
+     "format": {
+      "protocol": "ctr-encrypted-hls",
+      "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+     },
+     "quality": "lq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441392820/c33256cc-5494-48dd-b090-f3fe5ed888ae/stream/cbc-encrypted-hls",
+     "preset": "abr_sq",
+     "duration": 105649,
+     "snipped": false,
+     "format": {
+      "protocol": "cbc-encrypted-hls",
+      "mime_type": "audio/mpegurl"
+     },
+     "quality": "sq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441392820/c33256cc-5494-48dd-b090-f3fe5ed888ae/stream/ctr-encrypted-hls",
+     "preset": "abr_sq",
+     "duration": 105649,
+     "snipped": false,
+     "format": {
+      "protocol": "ctr-encrypted-hls",
+      "mime_type": "audio/mpegurl"
+     },
+     "quality": "sq",
+     "is_legacy_transcoding": false
+    }
+   ]
+  },
+  "station_urn": "soundcloud:system-playlists:track-stations:1441392820",
+  "station_permalink": "track-stations:1441392820",
+  "track_authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJnZW8iOiJOTCIsInN1YiI6IiIsInJpZCI6ImY0MDFiMDUzLTBlNTctNDgzMi04NGM5LTM5YjJlNzczNmExNyIsImlhdCI6MTc5MTkyNDA5MH0.o7sikuRs7JSBp5o6A3MGc0sSgXYtiNdCEV1SoXg0-uk",
+  "monetization_model": "AD_SUPPORTED",
+  "policy": "MONETIZE",
+  "user": {
+   "avatar_url": "https://i1.sndcdn.com/avatars-6UaO1sdX19wHjhAz-DBQBkg-large.jpg",
+   "first_name": "",
+   "followers_count": 120086,
+   "full_name": "",
+   "id": 475471,
+   "kind": "user",
+   "last_modified": "2026-04-21T14:05:08Z",
+   "last_name": "",
+   "permalink": "boardsofcanada",
+   "permalink_url": "https://soundcloud.com/boardsofcanada",
+   "uri": "https://api.soundcloud.com/users/soundcloud%3Ausers%3A475471",
+   "urn": "soundcloud:users:475471",
+   "username": "Boards of Canada",
+   "verified": true,
+   "city": null,
+   "country_code": null,
+   "badges": {
+    "pro": false,
+    "creator_mid_tier": false,
+    "pro_unlimited": true,
+    "verified": true
+   },
+   "station_urn": "soundcloud:system-playlists:artist-stations:475471",
+   "station_permalink": "artist-stations:475471"
+  }
+ },
+ {
+  "artwork_url": "https://i1.sndcdn.com/artworks-gkKQDNDF0jYA-0-large.png",
+  "caption": null,
+  "commentable": true,
+  "comment_count": 2,
+  "created_at": "2023-02-07T02:32:50Z",
+  "description": null,
+  "downloadable": false,
+  "download_count": 0,
+  "duration": 187343,
+  "full_duration": 187350,
+  "embeddable_by": "all",
+  "genre": "Electronic",
+  "has_downloads_left": false,
+  "id": 1441392787,
+  "kind": "track",
+  "label_name": "Warp Records",
+  "last_modified": "2026-08-10T15:09:37Z",
+  "license": "all-rights-reserved",
+  "likes_count": 1397,
+  "permalink": "smokes-quantity",
+  "permalink_url": "https://soundcloud.com/boardsofcanada/smokes-quantity",
+  "playback_count": 18923,
+  "public": true,
+  "publisher_metadata": {
+   "id": 1441392787,
+   "urn": "soundcloud:tracks:1441392787",
+   "artist": "Boards of Canada",
+   "album_title": "Music Has The Right To Children",
+   "contains_music": true,
+   "upc_or_ean": "0801061005535",
+   "isrc": "GBBPW9800024",
+   "explicit": false,
+   "p_line": "1998 Warp Records",
+   "p_line_for_display": "\u2117 1998 Warp Records",
+   "c_line": "1998 Warp Records",
+   "c_line_for_display": "\u00a9 1998 Warp Records",
+   "release_title": "Smokes Quantity"
+  },
+  "purchase_title": null,
+  "purchase_url": null,
+  "release_date": "1998-04-20T00:00:00Z",
+  "reposts_count": 11,
+  "secret_token": null,
+  "sharing": "public",
+  "state": "finished",
+  "streamable": true,
+  "tag_list": "Alternative",
+  "title": "Smokes Quantity",
+  "uri": "https://api.soundcloud.com/tracks/soundcloud%3Atracks%3A1441392787",
+  "urn": "soundcloud:tracks:1441392787",
+  "user_id": 475471,
+  "visuals": null,
+  "waveform_url": "https://wave.sndcdn.com/eK6sssUHbZ4g_m.json",
+  "display_date": "1998-04-20T00:00:00Z",
+  "media": {
+   "transcodings": [
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441392787/08b33310-54f0-4495-bca7-c385c3bd18dc/stream/cbc-encrypted-hls",
+     "preset": "aac_160k",
+     "duration": 187343,
+     "snipped": false,
+     "format": {
+      "protocol": "cbc-encrypted-hls",
+      "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+     },
+     "quality": "sq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441392787/08b33310-54f0-4495-bca7-c385c3bd18dc/stream/ctr-encrypted-hls",
+     "preset": "aac_160k",
+     "duration": 187343,
+     "snipped": false,
+     "format": {
+      "protocol": "ctr-encrypted-hls",
+      "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+     },
+     "quality": "sq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441392787/c5e3a3a3-1911-4cff-930e-f90dab109ae9/stream/cbc-encrypted-hls",
+     "preset": "aac_96k",
+     "duration": 187343,
+     "snipped": false,
+     "format": {
+      "protocol": "cbc-encrypted-hls",
+      "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+     },
+     "quality": "lq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441392787/c5e3a3a3-1911-4cff-930e-f90dab109ae9/stream/ctr-encrypted-hls",
+     "preset": "aac_96k",
+     "duration": 187343,
+     "snipped": false,
+     "format": {
+      "protocol": "ctr-encrypted-hls",
+      "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+     },
+     "quality": "lq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441392787/1eeaffff-9973-4302-a549-94d6c92b07a0/stream/cbc-encrypted-hls",
+     "preset": "abr_sq",
+     "duration": 187343,
+     "snipped": false,
+     "format": {
+      "protocol": "cbc-encrypted-hls",
+      "mime_type": "audio/mpegurl"
+     },
+     "quality": "sq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441392787/1eeaffff-9973-4302-a549-94d6c92b07a0/stream/ctr-encrypted-hls",
+     "preset": "abr_sq",
+     "duration": 187343,
+     "snipped": false,
+     "format": {
+      "protocol": "ctr-encrypted-hls",
+      "mime_type": "audio/mpegurl"
+     },
+     "quality": "sq",
+     "is_legacy_transcoding": false
+    }
+   ]
+  },
+  "station_urn": "soundcloud:system-playlists:track-stations:1441392787",
+  "station_permalink": "track-stations:1441392787",
+  "track_authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJnZW8iOiJOTCIsInN1YiI6IiIsInJpZCI6IjM2N2MyY2UzLTFmY2EtNDkzNC1hN2VlLTFlN2UyMGM1YjQxOSIsImlhdCI6MTc5MTkyNDA5MH0.wy-mJYcrPlfAzGQYxPqS4_vs3GcHHt43Ncqx907W-mw",
+  "monetization_model": "AD_SUPPORTED",
+  "policy": "MONETIZE",
+  "user": {
+   "avatar_url": "https://i1.sndcdn.com/avatars-6UaO1sdX19wHjhAz-DBQBkg-large.jpg",
+   "first_name": "",
+   "followers_count": 120086,
+   "full_name": "",
+   "id": 475471,
+   "kind": "user",
+   "last_modified": "2026-04-21T14:05:08Z",
+   "last_name": "",
+   "permalink": "boardsofcanada",
+   "permalink_url": "https://soundcloud.com/boardsofcanada",
+   "uri": "https://api.soundcloud.com/users/soundcloud%3Ausers%3A475471",
+   "urn": "soundcloud:users:475471",
+   "username": "Boards of Canada",
+   "verified": true,
+   "city": null,
+   "country_code": null,
+   "badges": {
+    "pro": false,
+    "creator_mid_tier": false,
+    "pro_unlimited": true,
+    "verified": true
+   },
+   "station_urn": "soundcloud:system-playlists:artist-stations:475471",
+   "station_permalink": "artist-stations:475471"
+  }
+ },
+ {
+  "artwork_url": "https://i1.sndcdn.com/artworks-baMD2k52kqPT-0-large.png",
+  "caption": null,
+  "commentable": true,
+  "comment_count": 4,
+  "created_at": "2023-02-07T02:32:57Z",
+  "description": null,
+  "downloadable": false,
+  "download_count": 0,
+  "duration": 265049,
+  "full_duration": 265064,
+  "embeddable_by": "all",
+  "genre": "Electronic",
+  "has_downloads_left": false,
+  "id": 1441392925,
+  "kind": "track",
+  "label_name": "Warp Records",
+  "last_modified": "2026-08-10T15:41:50Z",
+  "license": "all-rights-reserved",
+  "likes_count": 1204,
+  "permalink": "open-the-light",
+  "permalink_url": "https://soundcloud.com/boardsofcanada/open-the-light",
+  "playback_count": 16147,
+  "public": true,
+  "publisher_metadata": {
+   "id": 1441392925,
+   "urn": "soundcloud:tracks:1441392925",
+   "artist": "Boards of Canada",
+   "album_title": "Music Has The Right To Children",
+   "contains_music": true,
+   "upc_or_ean": "0801061005535",
+   "isrc": "GBBPW9800025",
+   "explicit": false,
+   "p_line": "1998 Warp Records",
+   "p_line_for_display": "\u2117 1998 Warp Records",
+   "c_line": "1998 Warp Records",
+   "c_line_for_display": "\u00a9 1998 Warp Records",
+   "release_title": "Open The Light"
+  },
+  "purchase_title": null,
+  "purchase_url": null,
+  "release_date": "1998-04-20T00:00:00Z",
+  "reposts_count": 7,
+  "secret_token": null,
+  "sharing": "public",
+  "state": "finished",
+  "streamable": true,
+  "tag_list": "Alternative",
+  "title": "Open The Light",
+  "uri": "https://api.soundcloud.com/tracks/soundcloud%3Atracks%3A1441392925",
+  "urn": "soundcloud:tracks:1441392925",
+  "user_id": 475471,
+  "visuals": null,
+  "waveform_url": "https://wave.sndcdn.com/MEWK7suM3bJf_m.json",
+  "display_date": "1998-04-20T00:00:00Z",
+  "media": {
+   "transcodings": [
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441392925/ff518c62-3311-4f3c-bd7a-1a48c4a995fa/stream/cbc-encrypted-hls",
+     "preset": "aac_160k",
+     "duration": 265049,
+     "snipped": false,
+     "format": {
+      "protocol": "cbc-encrypted-hls",
+      "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+     },
+     "quality": "sq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441392925/ff518c62-3311-4f3c-bd7a-1a48c4a995fa/stream/ctr-encrypted-hls",
+     "preset": "aac_160k",
+     "duration": 265049,
+     "snipped": false,
+     "format": {
+      "protocol": "ctr-encrypted-hls",
+      "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+     },
+     "quality": "sq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441392925/d3306fd4-40db-41bb-bffb-65b83a61d752/stream/cbc-encrypted-hls",
+     "preset": "aac_96k",
+     "duration": 265049,
+     "snipped": false,
+     "format": {
+      "protocol": "cbc-encrypted-hls",
+      "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+     },
+     "quality": "lq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441392925/d3306fd4-40db-41bb-bffb-65b83a61d752/stream/ctr-encrypted-hls",
+     "preset": "aac_96k",
+     "duration": 265049,
+     "snipped": false,
+     "format": {
+      "protocol": "ctr-encrypted-hls",
+      "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+     },
+     "quality": "lq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441392925/030add5e-c351-4f13-8b91-053e17b60334/stream/cbc-encrypted-hls",
+     "preset": "abr_sq",
+     "duration": 265049,
+     "snipped": false,
+     "format": {
+      "protocol": "cbc-encrypted-hls",
+      "mime_type": "audio/mpegurl"
+     },
+     "quality": "sq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441392925/030add5e-c351-4f13-8b91-053e17b60334/stream/ctr-encrypted-hls",
+     "preset": "abr_sq",
+     "duration": 265049,
+     "snipped": false,
+     "format": {
+      "protocol": "ctr-encrypted-hls",
+      "mime_type": "audio/mpegurl"
+     },
+     "quality": "sq",
+     "is_legacy_transcoding": false
+    }
+   ]
+  },
+  "station_urn": "soundcloud:system-playlists:track-stations:1441392925",
+  "station_permalink": "track-stations:1441392925",
+  "track_authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJnZW8iOiJOTCIsInN1YiI6IiIsInJpZCI6ImM1NzI3YTQ5LWNhMTYtNGM3OS1hNmI1LWQ1OGQ4YjI2MjVkZiIsImlhdCI6MTc5MTkyNDA5MH0.eLidZLH_QfiIOT1LUdNSeskvGQW1PikyxA0YQv4PLhU",
+  "monetization_model": "AD_SUPPORTED",
+  "policy": "MONETIZE",
+  "user": {
+   "avatar_url": "https://i1.sndcdn.com/avatars-6UaO1sdX19wHjhAz-DBQBkg-large.jpg",
+   "first_name": "",
+   "followers_count": 120086,
+   "full_name": "",
+   "id": 475471,
+   "kind": "user",
+   "last_modified": "2026-04-21T14:05:08Z",
+   "last_name": "",
+   "permalink": "boardsofcanada",
+   "permalink_url": "https://soundcloud.com/boardsofcanada",
+   "uri": "https://api.soundcloud.com/users/soundcloud%3Ausers%3A475471",
+   "urn": "soundcloud:users:475471",
+   "username": "Boards of Canada",
+   "verified": true,
+   "city": null,
+   "country_code": null,
+   "badges": {
+    "pro": false,
+    "creator_mid_tier": false,
+    "pro_unlimited": true,
+    "verified": true
+   },
+   "station_urn": "soundcloud:system-playlists:artist-stations:475471",
+   "station_permalink": "artist-stations:475471"
+  }
+ },
+ {
+  "artwork_url": "https://i1.sndcdn.com/artworks-u5fx8OMK5aLK-0-large.png",
+  "caption": null,
+  "commentable": true,
+  "comment_count": 11,
+  "created_at": "2023-02-07T02:31:30Z",
+  "description": null,
+  "downloadable": false,
+  "download_count": 0,
+  "duration": 307903,
+  "full_duration": 307931,
+  "embeddable_by": "all",
+  "genre": "Electronic",
+  "has_downloads_left": false,
+  "id": 1441391404,
+  "kind": "track",
+  "label_name": "Warp Records",
+  "last_modified": "2026-08-10T15:05:59Z",
+  "license": "all-rights-reserved",
+  "likes_count": 2771,
+  "permalink": "turquoise-hexagon-sun",
+  "permalink_url": "https://soundcloud.com/boardsofcanada/turquoise-hexagon-sun",
+  "playback_count": 41987,
+  "public": true,
+  "publisher_metadata": {
+   "id": 1441391404,
+   "urn": "soundcloud:tracks:1441391404",
+   "artist": "Boards of Canada",
+   "album_title": "Music Has The Right To Children",
+   "contains_music": true,
+   "upc_or_ean": "0801061005535",
+   "isrc": "GBBPW9800016",
+   "explicit": false,
+   "p_line": "1998 Warp Records",
+   "p_line_for_display": "\u2117 1998 Warp Records",
+   "c_line": "1998 Warp Records",
+   "c_line_for_display": "\u00a9 1998 Warp Records",
+   "release_title": "Turquoise Hexagon Sun"
+  },
+  "purchase_title": null,
+  "purchase_url": null,
+  "release_date": "1998-04-20T00:00:00Z",
+  "reposts_count": 29,
+  "secret_token": null,
+  "sharing": "public",
+  "state": "finished",
+  "streamable": true,
+  "tag_list": "Alternative",
+  "title": "Turquoise Hexagon Sun",
+  "uri": "https://api.soundcloud.com/tracks/soundcloud%3Atracks%3A1441391404",
+  "urn": "soundcloud:tracks:1441391404",
+  "user_id": 475471,
+  "visuals": null,
+  "waveform_url": "https://wave.sndcdn.com/pU4QeGfVpkju_m.json",
+  "display_date": "1998-04-20T00:00:00Z",
+  "media": {
+   "transcodings": [
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441391404/0d62b21e-6378-405a-8066-c14b24189dd7/stream/cbc-encrypted-hls",
+     "preset": "aac_160k",
+     "duration": 307903,
+     "snipped": false,
+     "format": {
+      "protocol": "cbc-encrypted-hls",
+      "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+     },
+     "quality": "sq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441391404/0d62b21e-6378-405a-8066-c14b24189dd7/stream/ctr-encrypted-hls",
+     "preset": "aac_160k",
+     "duration": 307903,
+     "snipped": false,
+     "format": {
+      "protocol": "ctr-encrypted-hls",
+      "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+     },
+     "quality": "sq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441391404/d46ac3e0-ba1b-46fd-a0b8-2c2f6123cc2e/stream/cbc-encrypted-hls",
+     "preset": "aac_96k",
+     "duration": 307903,
+     "snipped": false,
+     "format": {
+      "protocol": "cbc-encrypted-hls",
+      "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+     },
+     "quality": "lq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441391404/d46ac3e0-ba1b-46fd-a0b8-2c2f6123cc2e/stream/ctr-encrypted-hls",
+     "preset": "aac_96k",
+     "duration": 307903,
+     "snipped": false,
+     "format": {
+      "protocol": "ctr-encrypted-hls",
+      "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+     },
+     "quality": "lq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441391404/de6e20d6-ba34-432e-b3f3-468e68765936/stream/cbc-encrypted-hls",
+     "preset": "abr_sq",
+     "duration": 307903,
+     "snipped": false,
+     "format": {
+      "protocol": "cbc-encrypted-hls",
+      "mime_type": "audio/mpegurl"
+     },
+     "quality": "sq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1441391404/de6e20d6-ba34-432e-b3f3-468e68765936/stream/ctr-encrypted-hls",
+     "preset": "abr_sq",
+     "duration": 307903,
+     "snipped": false,
+     "format": {
+      "protocol": "ctr-encrypted-hls",
+      "mime_type": "audio/mpegurl"
+     },
+     "quality": "sq",
+     "is_legacy_transcoding": false
+    }
+   ]
+  },
+  "station_urn": "soundcloud:system-playlists:track-stations:1441391404",
+  "station_permalink": "track-stations:1441391404",
+  "track_authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJnZW8iOiJOTCIsInN1YiI6IiIsInJpZCI6Ijc2NGNkMDdkLTA5YTctNDdiMS04YWFhLTkyN2ZkY2E3ZTZjZiIsImlhdCI6MTc5MTkyNDA5MH0.qRwZ2vrfjLr-VSv3ioEORUsRo2hIWJ7oOocvABIjyYY",
+  "monetization_model": "AD_SUPPORTED",
+  "policy": "MONETIZE",
+  "user": {
+   "avatar_url": "https://i1.sndcdn.com/avatars-6UaO1sdX19wHjhAz-DBQBkg-large.jpg",
+   "first_name": "",
+   "followers_count": 120086,
+   "full_name": "",
+   "id": 475471,
+   "kind": "user",
+   "last_modified": "2026-04-21T14:05:08Z",
+   "last_name": "",
+   "permalink": "boardsofcanada",
+   "permalink_url": "https://soundcloud.com/boardsofcanada",
+   "uri": "https://api.soundcloud.com/users/soundcloud%3Ausers%3A475471",
+   "urn": "soundcloud:users:475471",
+   "username": "Boards of Canada",
+   "verified": true,
+   "city": null,
+   "country_code": null,
+   "badges": {
+    "pro": false,
+    "creator_mid_tier": false,
+    "pro_unlimited": true,
+    "verified": true
+   },
+   "station_urn": "soundcloud:system-playlists:artist-stations:475471",
+   "station_permalink": "artist-stations:475471"
+  }
+ },
+ {
+  "artwork_url": "https://i1.sndcdn.com/artworks-2ElJaZELndAk-0-large.png",
+  "caption": null,
+  "commentable": true,
+  "comment_count": 23,
+  "created_at": "2016-12-15T13:15:46Z",
+  "description": null,
+  "downloadable": false,
+  "download_count": 0,
+  "duration": 476049,
+  "full_duration": 476056,
+  "embeddable_by": "all",
+  "genre": "Electronic",
+  "has_downloads_left": false,
+  "id": 298021510,
+  "kind": "track",
+  "label_name": "Warp Records",
+  "last_modified": "2026-08-10T15:37:55Z",
+  "license": "all-rights-reserved",
+  "likes_count": 2434,
+  "permalink": "happy-cycling",
+  "permalink_url": "https://soundcloud.com/boardsofcanada/happy-cycling",
+  "playback_count": 58974,
+  "public": true,
+  "publisher_metadata": {
+   "id": 298021510,
+   "urn": "soundcloud:tracks:298021510",
+   "artist": "Boards of Canada",
+   "album_title": "Music Has The Right To Children",
+   "contains_music": true,
+   "upc_or_ean": "0801061005535",
+   "isrc": "GBBPW9800078",
+   "explicit": false,
+   "p_line": "1998 Warp Records",
+   "p_line_for_display": "\u2117 1998 Warp Records",
+   "c_line": "1998 Warp Records",
+   "c_line_for_display": "\u00a9 1998 Warp Records",
+   "release_title": "Happy Cycling"
+  },
+  "purchase_title": null,
+  "purchase_url": null,
+  "release_date": "1998-04-20T00:00:00Z",
+  "reposts_count": 43,
+  "secret_token": null,
+  "sharing": "public",
+  "state": "finished",
+  "streamable": true,
+  "tag_list": "Alternative",
+  "title": "Happy Cycling",
+  "uri": "https://api.soundcloud.com/tracks/soundcloud%3Atracks%3A298021510",
+  "urn": "soundcloud:tracks:298021510",
+  "user_id": 475471,
+  "visuals": null,
+  "waveform_url": "https://wave.sndcdn.com/UeieB0MlmTin_m.json",
+  "display_date": "1998-04-20T00:00:00Z",
+  "media": {
+   "transcodings": [
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:298021510/a4ef7758-195f-4903-854c-f93a5e8c80a7/stream/cbc-encrypted-hls",
+     "preset": "aac_160k",
+     "duration": 476049,
+     "snipped": false,
+     "format": {
+      "protocol": "cbc-encrypted-hls",
+      "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+     },
+     "quality": "sq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:298021510/a4ef7758-195f-4903-854c-f93a5e8c80a7/stream/ctr-encrypted-hls",
+     "preset": "aac_160k",
+     "duration": 476049,
+     "snipped": false,
+     "format": {
+      "protocol": "ctr-encrypted-hls",
+      "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+     },
+     "quality": "sq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:298021510/94358c0c-23ec-4224-8fe9-55065871cb5c/stream/cbc-encrypted-hls",
+     "preset": "aac_96k",
+     "duration": 476049,
+     "snipped": false,
+     "format": {
+      "protocol": "cbc-encrypted-hls",
+      "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+     },
+     "quality": "lq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:298021510/94358c0c-23ec-4224-8fe9-55065871cb5c/stream/ctr-encrypted-hls",
+     "preset": "aac_96k",
+     "duration": 476049,
+     "snipped": false,
+     "format": {
+      "protocol": "ctr-encrypted-hls",
+      "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+     },
+     "quality": "lq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:298021510/16561f46-42bc-4c84-8e72-09154c892f38/stream/cbc-encrypted-hls",
+     "preset": "abr_sq",
+     "duration": 476049,
+     "snipped": false,
+     "format": {
+      "protocol": "cbc-encrypted-hls",
+      "mime_type": "audio/mpegurl"
+     },
+     "quality": "sq",
+     "is_legacy_transcoding": false
+    },
+    {
+     "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:298021510/16561f46-42bc-4c84-8e72-09154c892f38/stream/ctr-encrypted-hls",
+     "preset": "abr_sq",
+     "duration": 476049,
+     "snipped": false,
+     "format": {
+      "protocol": "ctr-encrypted-hls",
+      "mime_type": "audio/mpegurl"
+     },
+     "quality": "sq",
+     "is_legacy_transcoding": false
+    }
+   ]
+  },
+  "station_urn": "soundcloud:system-playlists:track-stations:298021510",
+  "station_permalink": "track-stations:298021510",
+  "track_authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJnZW8iOiJOTCIsInN1YiI6IiIsInJpZCI6ImI0NTY4Yjg2LWRhNDItNDJkMC1hYTZlLWM4ZWJhZWE4NjlhYyIsImlhdCI6MTc5MTkyNDA5MH0.KtZvRhtU1uOfeaFi51VUf1jY9lkiiSvqaY7gKKZHaJ4",
+  "monetization_model": "AD_SUPPORTED",
+  "policy": "MONETIZE",
+  "user": {
+   "avatar_url": "https://i1.sndcdn.com/avatars-6UaO1sdX19wHjhAz-DBQBkg-large.jpg",
+   "first_name": "",
+   "followers_count": 120086,
+   "full_name": "",
+   "id": 475471,
+   "kind": "user",
+   "last_modified": "2026-04-21T14:05:08Z",
+   "last_name": "",
+   "permalink": "boardsofcanada",
+   "permalink_url": "https://soundcloud.com/boardsofcanada",
+   "uri": "https://api.soundcloud.com/users/soundcloud%3Ausers%3A475471",
+   "urn": "soundcloud:users:475471",
+   "username": "Boards of Canada",
+   "verified": true,
+   "city": null,
+   "country_code": null,
+   "badges": {
+    "pro": false,
+    "creator_mid_tier": false,
+    "pro_unlimited": true,
+    "verified": true
+   },
+   "station_urn": "soundcloud:system-playlists:artist-stations:475471",
+   "station_permalink": "artist-stations:475471"
+  }
+ }
+]

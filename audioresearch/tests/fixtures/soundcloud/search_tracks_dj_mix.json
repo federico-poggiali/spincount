@@ -1,0 +1,1783 @@
+{
+ "collection": [
+  {
+   "artwork_url": "https://i1.sndcdn.com/artworks-Y6O58C5QiXk4HaBk-5tsSnQ-large.png",
+   "caption": null,
+   "commentable": true,
+   "comment_count": 7,
+   "created_at": "2021-03-26T08:18:27Z",
+   "description": "The Essential Mix is a weekly radio show on BBC Radio 1 currently broadcast between 0:00 - 2:00 AM UK time on Saturday morning. Originally broadcast on 30 October 1993, the Essential Mix features contemporary DJs and music producers of electronic dance music. The show has been presented since its inception by Pete Tong and features an uninterrupted two-hour mix from a different artist each week, overlaid with occasional continuity announcements delivered by Tong. With a broadcast run in excess of 25 years, the Essential Mix is one of the longest-running programmes in the current BBC Radio 1 schedule, and is one of very few Radio 1 shows which is not broadcast live.",
+   "downloadable": false,
+   "download_count": 0,
+   "duration": 7201278,
+   "full_duration": 7201280,
+   "embeddable_by": "all",
+   "genre": "Electronic",
+   "has_downloads_left": false,
+   "id": 1016640733,
+   "kind": "track",
+   "label_name": null,
+   "last_modified": "2023-02-12T20:25:11Z",
+   "license": "all-rights-reserved",
+   "likes_count": 374,
+   "permalink": "essential-mix-2018-10-29-jeff",
+   "permalink_url": "https://soundcloud.com/iridiumdj/essential-mix-2018-10-29-jeff",
+   "playback_count": 6998,
+   "public": true,
+   "publisher_metadata": {
+    "id": 1016640733,
+    "urn": "soundcloud:tracks:1016640733",
+    "artist": "Jeff Mills",
+    "album_title": "Essential Mix-SAT-10-29",
+    "contains_music": true
+   },
+   "purchase_title": null,
+   "purchase_url": null,
+   "release_date": null,
+   "reposts_count": 5,
+   "secret_token": null,
+   "sharing": "public",
+   "state": "finished",
+   "streamable": true,
+   "tag_list": "House Dance Trance Techno Progressive",
+   "title": "Essential Mix 2018-10-29 - Jeff Mills (Classics Set of 1998)",
+   "uri": "https://api.soundcloud.com/tracks/soundcloud%3Atracks%3A1016640733",
+   "urn": "soundcloud:tracks:1016640733",
+   "user_id": 1678386,
+   "visuals": null,
+   "waveform_url": "https://wave.sndcdn.com/0skGeOspotwh_m.json",
+   "display_date": "2021-03-26T08:18:27Z",
+   "media": {
+    "transcodings": [
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1016640733/5b9f5e28-035e-4fce-90c1-1ad9a1e2d916/stream/hls",
+      "preset": "aac_160k",
+      "duration": 7201278,
+      "snipped": false,
+      "format": {
+       "protocol": "hls",
+       "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+      },
+      "quality": "sq",
+      "is_legacy_transcoding": false
+     },
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1016640733/9850bce9-1f68-41ab-8c18-345eda57421f/stream/hls",
+      "preset": "aac_96k",
+      "duration": 7201278,
+      "snipped": false,
+      "format": {
+       "protocol": "hls",
+       "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+      },
+      "quality": "lq",
+      "is_legacy_transcoding": false
+     },
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1016640733/d0c0d646-f278-4aee-abff-38004f9319bb/stream/hls",
+      "preset": "abr_sq",
+      "duration": 7201278,
+      "snipped": false,
+      "format": {
+       "protocol": "hls",
+       "mime_type": "audio/mpegurl"
+      },
+      "quality": "sq",
+      "is_legacy_transcoding": false
+     }
+    ]
+   },
+   "station_urn": "soundcloud:system-playlists:track-stations:1016640733",
+   "station_permalink": "track-stations:1016640733",
+   "track_authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJnZW8iOiJOTCIsInN1YiI6IiIsInJpZCI6IjNhMjRiNjA0LTQ1ZTYtNGQ4ZS05NzhjLTA1ZTA5YWFhNDdmMyIsImlhdCI6MTc5MTkyNDA4M30.7q-K64uxEpuyDgkbefz_ATP5rAsn4edDGlc_tZnvZMw",
+   "monetization_model": "BLACKBOX",
+   "policy": "MONETIZE",
+   "user": {
+    "avatar_url": "https://i1.sndcdn.com/avatars-sExyl6ei4wTQERkf-siiUTw-large.jpg",
+    "city": null,
+    "comments_count": 0,
+    "country_code": null,
+    "created_at": null,
+    "creator_subscriptions": [
+     {
+      "product": {
+       "id": "creator-pro-unlimited"
+      }
+     }
+    ],
+    "creator_subscription": {
+     "product": {
+      "id": "creator-pro-unlimited"
+     }
+    },
+    "description": "Iridium DJ: Early Hardstyle DJ since 2005 - Building up an archive with only the best Early Hardstyle tracks!\n\nMike Air: House & Trance DJ since 2006 - Building up an archive with only the best House and Trance tracks!\n\nClassic Event Archive - Collecting livesets since 2000! What started as a hobby for the love of electronic music in the 90's, turned a couple of years ago into a NON-PROFITABLE project to provide you with the best classic sets in order for you to relive those good old days! \n\nFor clarification: \n\nTHIS COLLECTION IS NOT AVAILABLE FOR DOWNLOAD BECAUSE I DO NOT OWN ANY OF THE RIGHTS OF THESE ALBUMS OR SETS! ALL RIGHTS GO TO THEIR RESPECTIVE OWNERS! IF YOU OWN A MIX OR SET THAT YOU WANT TO BE REMOVED, PLEASE SEND ME A MESSAGE AND I'LL DELETE IT! \n\n!!ZERO PROFIT IS BEING MADE!!\n\n!!NO COPYRIGHT INFRINGEMENT INTENDED!!",
+    "followers_count": 14230,
+    "followings_count": 463,
+    "first_name": "",
+    "full_name": "",
+    "groups_count": 0,
+    "id": 1678386,
+    "kind": "user",
+    "last_modified": "2026-10-05T08:10:45Z",
+    "last_name": "",
+    "likes_count": 888,
+    "playlist_likes_count": 437,
+    "permalink": "iridiumdj",
+    "permalink_url": "https://soundcloud.com/iridiumdj",
+    "playlist_count": 447,
+    "reposts_count": null,
+    "track_count": 6585,
+    "uri": "https://api.soundcloud.com/users/soundcloud%3Ausers%3A1678386",
+    "urn": "soundcloud:users:1678386",
+    "username": "Iridium DJ // Classic Event Archive",
+    "verified": false,
+    "visuals": {
+     "urn": "soundcloud:users:1678386",
+     "enabled": true,
+     "visuals": [
+      {
+       "urn": "soundcloud:visuals:260545845",
+       "entry_time": 0,
+       "visual_url": "https://i1.sndcdn.com/visuals-000001678386-DUONT0-original.jpg",
+       "link": "https://www.instagram.com/iridiumdjnl/"
+      }
+     ],
+     "tracking": null
+    },
+    "badges": {
+     "pro": false,
+     "creator_mid_tier": false,
+     "pro_unlimited": true,
+     "verified": false
+    },
+    "station_urn": "soundcloud:system-playlists:artist-stations:1678386",
+    "station_permalink": "artist-stations:1678386",
+    "date_of_birth": null
+   }
+  },
+  {
+   "artwork_url": "https://i1.sndcdn.com/artworks-z2JoevBjqco1NVtE-T2YjPg-large.jpg",
+   "caption": null,
+   "commentable": true,
+   "comment_count": 14,
+   "created_at": "2026-05-19T15:40:15Z",
+   "description": "",
+   "downloadable": true,
+   "download_count": 59,
+   "duration": 210047,
+   "full_duration": 210001,
+   "embeddable_by": "me",
+   "genre": "Techno",
+   "has_downloads_left": true,
+   "id": 2323725548,
+   "kind": "track",
+   "label_name": "",
+   "last_modified": "2026-05-19T15:40:15Z",
+   "license": "all-rights-reserved",
+   "likes_count": 2387,
+   "permalink": "jeff-mills-berlin-mills-mix",
+   "permalink_url": "https://soundcloud.com/andrewsoka/jeff-mills-berlin-mills-mix",
+   "playback_count": 47909,
+   "public": true,
+   "publisher_metadata": {
+    "id": 2323725548,
+    "urn": "soundcloud:tracks:2323725548",
+    "publisher": "",
+    "explicit": false,
+    "p_line": "",
+    "p_line_for_display": "\u2117 "
+   },
+   "purchase_title": null,
+   "purchase_url": null,
+   "release_date": null,
+   "reposts_count": 31,
+   "secret_token": null,
+   "sharing": "public",
+   "state": "finished",
+   "streamable": true,
+   "tag_list": "",
+   "title": "Jeff Mills - Berlin (Mills Mix)",
+   "uri": "https://api.soundcloud.com/tracks/soundcloud%3Atracks%3A2323725548",
+   "urn": "soundcloud:tracks:2323725548",
+   "user_id": 132567722,
+   "visuals": null,
+   "waveform_url": "https://wave.sndcdn.com/1M1lLAzqzoAG_m.json",
+   "display_date": "2026-05-19T15:40:15Z",
+   "media": {
+    "transcodings": [
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:2323725548/38616d78-6ad2-4b2b-ad58-33a6d6b21d20/stream/hls",
+      "preset": "aac_96k",
+      "duration": 210047,
+      "snipped": false,
+      "format": {
+       "protocol": "hls",
+       "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+      },
+      "quality": "lq",
+      "is_legacy_transcoding": false
+     },
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:2323725548/08ccbda0-cd62-4c8b-bc7c-080d7b05612b/stream/hls",
+      "preset": "abr_sq",
+      "duration": 210047,
+      "snipped": false,
+      "format": {
+       "protocol": "hls",
+       "mime_type": "audio/mpegurl"
+      },
+      "quality": "sq",
+      "is_legacy_transcoding": false
+     }
+    ]
+   },
+   "station_urn": "soundcloud:system-playlists:track-stations:2323725548",
+   "station_permalink": "track-stations:2323725548",
+   "track_authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJnZW8iOiJOTCIsInN1YiI6IiIsInJpZCI6IjE5NzU4Njk0LTIxMGQtNGExMC05MmJkLWM4NjhmMTE5ZmIyYSIsImlhdCI6MTc5MTkyNDA4M30.tF-_5qbzupiCWWyPFLt_LJFBwsilmOZJqfKx313unnM",
+   "monetization_model": "BLACKBOX",
+   "policy": "MONETIZE",
+   "user": {
+    "avatar_url": "https://i1.sndcdn.com/avatars-kgZh8GAghdL41heZ-Qhjtdg-large.jpg",
+    "city": "Chicago",
+    "comments_count": 0,
+    "country_code": null,
+    "created_at": null,
+    "creator_subscriptions": [
+     {
+      "product": {
+       "id": "free"
+      }
+     }
+    ],
+    "creator_subscription": {
+     "product": {
+      "id": "free"
+     }
+    },
+    "description": "",
+    "followers_count": 29,
+    "followings_count": 13,
+    "first_name": "andrew",
+    "full_name": "andrew soka",
+    "groups_count": 0,
+    "id": 132567722,
+    "kind": "user",
+    "last_modified": "2026-05-05T21:55:57Z",
+    "last_name": "soka",
+    "likes_count": 94,
+    "playlist_likes_count": 1,
+    "permalink": "andrewsoka",
+    "permalink_url": "https://soundcloud.com/andrewsoka",
+    "playlist_count": 0,
+    "reposts_count": null,
+    "track_count": 1,
+    "uri": "https://api.soundcloud.com/users/soundcloud%3Ausers%3A132567722",
+    "urn": "soundcloud:users:132567722",
+    "username": "SupremeSoka",
+    "verified": false,
+    "visuals": null,
+    "badges": {
+     "pro": false,
+     "creator_mid_tier": false,
+     "pro_unlimited": false,
+     "verified": false
+    },
+    "station_urn": "soundcloud:system-playlists:artist-stations:132567722",
+    "station_permalink": "artist-stations:132567722",
+    "date_of_birth": null
+   }
+  },
+  {
+   "artwork_url": "https://i1.sndcdn.com/artworks-JGgBBdeQuUYyom90-6LfLtA-large.png",
+   "caption": null,
+   "commentable": true,
+   "comment_count": 0,
+   "created_at": "2021-02-09T17:37:46Z",
+   "description": "The Essential Mix is a weekly radio show on BBC Radio 1 currently broadcast between 0:00 - 2:00 AM UK time on Saturday morning. Originally broadcast on 30 October 1993, the Essential Mix features contemporary DJs and music producers of electronic dance music. The show has been presented since its inception by Pete Tong and features an uninterrupted two-hour mix from a different artist each week, overlaid with occasional continuity announcements delivered by Tong. With a broadcast run in excess of 25 years, the Essential Mix is one of the longest-running programmes in the current BBC Radio 1 schedule, and is one of very few Radio 1 shows which is not broadcast live.",
+   "downloadable": false,
+   "download_count": 0,
+   "duration": 7103837,
+   "full_duration": 7103817,
+   "embeddable_by": "all",
+   "genre": "Electronic",
+   "has_downloads_left": false,
+   "id": 982172926,
+   "kind": "track",
+   "label_name": null,
+   "last_modified": "2023-02-12T20:26:30Z",
+   "license": "all-rights-reserved",
+   "likes_count": 37,
+   "permalink": "261-essential-mix-1998-06-07",
+   "permalink_url": "https://soundcloud.com/iridiumdj/261-essential-mix-1998-06-07",
+   "playback_count": 718,
+   "public": true,
+   "publisher_metadata": {
+    "id": 982172926,
+    "urn": "soundcloud:tracks:982172926",
+    "artist": "Jeff Mills",
+    "album_title": "BBC Radio 1 Broadcast",
+    "contains_music": true
+   },
+   "purchase_title": null,
+   "purchase_url": null,
+   "release_date": null,
+   "reposts_count": 0,
+   "secret_token": null,
+   "sharing": "public",
+   "state": "finished",
+   "streamable": true,
+   "tag_list": "House Trance Dance Techno Progressive",
+   "title": "Essential Mix 1998-06-07 - Jeff Mills",
+   "uri": "https://api.soundcloud.com/tracks/soundcloud%3Atracks%3A982172926",
+   "urn": "soundcloud:tracks:982172926",
+   "user_id": 1678386,
+   "visuals": null,
+   "waveform_url": "https://wave.sndcdn.com/eIfjiVezcItp_m.json",
+   "display_date": "2021-02-09T17:37:46Z",
+   "media": {
+    "transcodings": [
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:982172926/55dbad66-fb6f-44ac-8c7c-842b950831be/stream/hls",
+      "preset": "aac_160k",
+      "duration": 7103837,
+      "snipped": false,
+      "format": {
+       "protocol": "hls",
+       "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+      },
+      "quality": "sq",
+      "is_legacy_transcoding": false
+     },
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:982172926/459806f4-029c-4331-85a6-2eb2f2b7ed56/stream/hls",
+      "preset": "aac_96k",
+      "duration": 7103837,
+      "snipped": false,
+      "format": {
+       "protocol": "hls",
+       "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+      },
+      "quality": "lq",
+      "is_legacy_transcoding": false
+     },
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:982172926/be0d08af-37ed-4ccd-aebd-e9a6b52682b0/stream/hls",
+      "preset": "abr_sq",
+      "duration": 7103837,
+      "snipped": false,
+      "format": {
+       "protocol": "hls",
+       "mime_type": "audio/mpegurl"
+      },
+      "quality": "sq",
+      "is_legacy_transcoding": false
+     }
+    ]
+   },
+   "station_urn": "soundcloud:system-playlists:track-stations:982172926",
+   "station_permalink": "track-stations:982172926",
+   "track_authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJnZW8iOiJOTCIsInN1YiI6IiIsInJpZCI6ImU1ZDA0NGFhLTBkM2UtNGI0MC05NzQ3LTcyYWY5OTRiNDMyMyIsImlhdCI6MTc5MTkyNDA4M30.ouCfZbNG22qVP_G_B8MkhbxjzwD7E0vVWT06UNiIEkk",
+   "monetization_model": "BLACKBOX",
+   "policy": "MONETIZE",
+   "user": {
+    "avatar_url": "https://i1.sndcdn.com/avatars-sExyl6ei4wTQERkf-siiUTw-large.jpg",
+    "city": null,
+    "comments_count": 0,
+    "country_code": null,
+    "created_at": null,
+    "creator_subscriptions": [
+     {
+      "product": {
+       "id": "creator-pro-unlimited"
+      }
+     }
+    ],
+    "creator_subscription": {
+     "product": {
+      "id": "creator-pro-unlimited"
+     }
+    },
+    "description": "Iridium DJ: Early Hardstyle DJ since 2005 - Building up an archive with only the best Early Hardstyle tracks!\n\nMike Air: House & Trance DJ since 2006 - Building up an archive with only the best House and Trance tracks!\n\nClassic Event Archive - Collecting livesets since 2000! What started as a hobby for the love of electronic music in the 90's, turned a couple of years ago into a NON-PROFITABLE project to provide you with the best classic sets in order for you to relive those good old days! \n\nFor clarification: \n\nTHIS COLLECTION IS NOT AVAILABLE FOR DOWNLOAD BECAUSE I DO NOT OWN ANY OF THE RIGHTS OF THESE ALBUMS OR SETS! ALL RIGHTS GO TO THEIR RESPECTIVE OWNERS! IF YOU OWN A MIX OR SET THAT YOU WANT TO BE REMOVED, PLEASE SEND ME A MESSAGE AND I'LL DELETE IT! \n\n!!ZERO PROFIT IS BEING MADE!!\n\n!!NO COPYRIGHT INFRINGEMENT INTENDED!!",
+    "followers_count": 14230,
+    "followings_count": 463,
+    "first_name": "",
+    "full_name": "",
+    "groups_count": 0,
+    "id": 1678386,
+    "kind": "user",
+    "last_modified": "2026-10-05T08:10:45Z",
+    "last_name": "",
+    "likes_count": 888,
+    "playlist_likes_count": 437,
+    "permalink": "iridiumdj",
+    "permalink_url": "https://soundcloud.com/iridiumdj",
+    "playlist_count": 447,
+    "reposts_count": null,
+    "track_count": 6585,
+    "uri": "https://api.soundcloud.com/users/soundcloud%3Ausers%3A1678386",
+    "urn": "soundcloud:users:1678386",
+    "username": "Iridium DJ // Classic Event Archive",
+    "verified": false,
+    "visuals": {
+     "urn": "soundcloud:users:1678386",
+     "enabled": true,
+     "visuals": [
+      {
+       "urn": "soundcloud:visuals:260545845",
+       "entry_time": 0,
+       "visual_url": "https://i1.sndcdn.com/visuals-000001678386-DUONT0-original.jpg",
+       "link": "https://www.instagram.com/iridiumdjnl/"
+      }
+     ],
+     "tracking": null
+    },
+    "badges": {
+     "pro": false,
+     "creator_mid_tier": false,
+     "pro_unlimited": true,
+     "verified": false
+    },
+    "station_urn": "soundcloud:system-playlists:artist-stations:1678386",
+    "station_permalink": "artist-stations:1678386",
+    "date_of_birth": null
+   }
+  },
+  {
+   "artwork_url": "https://i1.sndcdn.com/artworks-J7BkG6k9X1aym5Sw-18W6XA-large.png",
+   "caption": null,
+   "commentable": true,
+   "comment_count": 7,
+   "created_at": "2021-02-22T05:44:32Z",
+   "description": "The Essential Mix is a weekly radio show on BBC Radio 1 currently broadcast between 0:00 - 2:00 AM UK time on Saturday morning. Originally broadcast on 30 October 1993, the Essential Mix features contemporary DJs and music producers of electronic dance music. The show has been presented since its inception by Pete Tong and features an uninterrupted two-hour mix from a different artist each week, overlaid with occasional continuity announcements delivered by Tong. With a broadcast run in excess of 25 years, the Essential Mix is one of the longest-running programmes in the current BBC Radio 1 schedule, and is one of very few Radio 1 shows which is not broadcast live.",
+   "downloadable": false,
+   "download_count": 0,
+   "duration": 7204513,
+   "full_duration": 7204493,
+   "embeddable_by": "all",
+   "genre": "Electronic",
+   "has_downloads_left": false,
+   "id": 990354400,
+   "kind": "track",
+   "label_name": null,
+   "last_modified": "2023-02-12T20:26:10Z",
+   "license": "all-rights-reserved",
+   "likes_count": 125,
+   "permalink": "essential-mix-2003-05-25-dj",
+   "permalink_url": "https://soundcloud.com/iridiumdj/essential-mix-2003-05-25-dj",
+   "playback_count": 2818,
+   "public": true,
+   "publisher_metadata": {
+    "id": 990354400,
+    "urn": "soundcloud:tracks:990354400",
+    "artist": "Jeff_Mills_And_DJ_Marky",
+    "album_title": "Homelands Essential Mix",
+    "contains_music": true
+   },
+   "purchase_title": null,
+   "purchase_url": null,
+   "release_date": null,
+   "reposts_count": 5,
+   "secret_token": null,
+   "sharing": "public",
+   "state": "finished",
+   "streamable": true,
+   "tag_list": "House Dance Trance Techno Progressive",
+   "title": "Essential Mix 2003-05-25 - DJ Marky & Jeff Mills @ Homelands",
+   "uri": "https://api.soundcloud.com/tracks/soundcloud%3Atracks%3A990354400",
+   "urn": "soundcloud:tracks:990354400",
+   "user_id": 1678386,
+   "visuals": null,
+   "waveform_url": "https://wave.sndcdn.com/FoQzBZ5eN0sr_m.json",
+   "display_date": "2021-02-22T05:44:32Z",
+   "media": {
+    "transcodings": [
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:990354400/30f44501-2e3b-4638-a357-db706974e2da/stream/hls",
+      "preset": "aac_160k",
+      "duration": 7204513,
+      "snipped": false,
+      "format": {
+       "protocol": "hls",
+       "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+      },
+      "quality": "sq",
+      "is_legacy_transcoding": false
+     },
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:990354400/64ee619b-3729-47fb-bb0f-33c9dd3056bc/stream/hls",
+      "preset": "aac_96k",
+      "duration": 7204513,
+      "snipped": false,
+      "format": {
+       "protocol": "hls",
+       "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+      },
+      "quality": "lq",
+      "is_legacy_transcoding": false
+     },
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:990354400/c294e496-a12f-489a-9377-6e486bc96095/stream/hls",
+      "preset": "abr_sq",
+      "duration": 7204513,
+      "snipped": false,
+      "format": {
+       "protocol": "hls",
+       "mime_type": "audio/mpegurl"
+      },
+      "quality": "sq",
+      "is_legacy_transcoding": false
+     }
+    ]
+   },
+   "station_urn": "soundcloud:system-playlists:track-stations:990354400",
+   "station_permalink": "track-stations:990354400",
+   "track_authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJnZW8iOiJOTCIsInN1YiI6IiIsInJpZCI6ImQ3MDY0MTdkLWM3NmYtNDk5YS1hMDMzLTUxMzg4ZGU4NWVkOSIsImlhdCI6MTc5MTkyNDA4M30.NysE0cn1xkCiQfskc6MfVPXE5FZvOXinn8WsyZjP86o",
+   "monetization_model": "BLACKBOX",
+   "policy": "MONETIZE",
+   "user": {
+    "avatar_url": "https://i1.sndcdn.com/avatars-sExyl6ei4wTQERkf-siiUTw-large.jpg",
+    "city": null,
+    "comments_count": 0,
+    "country_code": null,
+    "created_at": null,
+    "creator_subscriptions": [
+     {
+      "product": {
+       "id": "creator-pro-unlimited"
+      }
+     }
+    ],
+    "creator_subscription": {
+     "product": {
+      "id": "creator-pro-unlimited"
+     }
+    },
+    "description": "Iridium DJ: Early Hardstyle DJ since 2005 - Building up an archive with only the best Early Hardstyle tracks!\n\nMike Air: House & Trance DJ since 2006 - Building up an archive with only the best House and Trance tracks!\n\nClassic Event Archive - Collecting livesets since 2000! What started as a hobby for the love of electronic music in the 90's, turned a couple of years ago into a NON-PROFITABLE project to provide you with the best classic sets in order for you to relive those good old days! \n\nFor clarification: \n\nTHIS COLLECTION IS NOT AVAILABLE FOR DOWNLOAD BECAUSE I DO NOT OWN ANY OF THE RIGHTS OF THESE ALBUMS OR SETS! ALL RIGHTS GO TO THEIR RESPECTIVE OWNERS! IF YOU OWN A MIX OR SET THAT YOU WANT TO BE REMOVED, PLEASE SEND ME A MESSAGE AND I'LL DELETE IT! \n\n!!ZERO PROFIT IS BEING MADE!!\n\n!!NO COPYRIGHT INFRINGEMENT INTENDED!!",
+    "followers_count": 14230,
+    "followings_count": 463,
+    "first_name": "",
+    "full_name": "",
+    "groups_count": 0,
+    "id": 1678386,
+    "kind": "user",
+    "last_modified": "2026-10-05T08:10:45Z",
+    "last_name": "",
+    "likes_count": 888,
+    "playlist_likes_count": 437,
+    "permalink": "iridiumdj",
+    "permalink_url": "https://soundcloud.com/iridiumdj",
+    "playlist_count": 447,
+    "reposts_count": null,
+    "track_count": 6585,
+    "uri": "https://api.soundcloud.com/users/soundcloud%3Ausers%3A1678386",
+    "urn": "soundcloud:users:1678386",
+    "username": "Iridium DJ // Classic Event Archive",
+    "verified": false,
+    "visuals": {
+     "urn": "soundcloud:users:1678386",
+     "enabled": true,
+     "visuals": [
+      {
+       "urn": "soundcloud:visuals:260545845",
+       "entry_time": 0,
+       "visual_url": "https://i1.sndcdn.com/visuals-000001678386-DUONT0-original.jpg",
+       "link": "https://www.instagram.com/iridiumdjnl/"
+      }
+     ],
+     "tracking": null
+    },
+    "badges": {
+     "pro": false,
+     "creator_mid_tier": false,
+     "pro_unlimited": true,
+     "verified": false
+    },
+    "station_urn": "soundcloud:system-playlists:artist-stations:1678386",
+    "station_permalink": "artist-stations:1678386",
+    "date_of_birth": null
+   }
+  },
+  {
+   "artwork_url": "https://i1.sndcdn.com/artworks-XTjZjLySuW59Ujy3-7XJ6Ng-large.jpg",
+   "caption": null,
+   "commentable": true,
+   "comment_count": 3,
+   "created_at": "2026-09-12T21:07:36Z",
+   "description": "\nthis ctrlz experience DJ mix opens with about 7 minutes of custom 909 drum programming played live on my Roland DJ-505 before dropping into Adam Ten\u2019s \u201cI Never Knew\u201d and seeing where things go. house, garage, reggae, latin influences, bass, and familiar songs in unexpected places. multi-genre mixing with room to play and make mistakes.\n\nfeaturing \u201cI Never Knew,\u201d \u201cPumped Up Kicks,\u201d \u201cTouch It,\u201d \u201cEyes on Fire\u201d (Michael Bibi Remix), \u201cFuneral\u201d (Motiv FLIP), \u201cBusiness of War\u201d (pupajim remix), and Prospa\u2019s \u201cDon\u2019t Stop\u201d x \u201cAyo Technology.\u201d\nctrlz experience is a Denver, Colorado DJ and electronic music producer exploring psychedelic sounds, playful transitions, and connection through music.\ncover art blends my mixer (Roland DJ 505) with a sunset photo my mom took in Gold Hill, Nevada \u2764\ufe0f\n#ctrlzexperience\nwhere it is okay to make mistakes.\n\nmusic + bookings: https://ctrlzexperience.com\nctrlzexperience@gmail.com",
+   "downloadable": false,
+   "download_count": 0,
+   "duration": 1277016,
+   "full_duration": 1276970,
+   "embeddable_by": "all",
+   "genre": "House",
+   "has_downloads_left": false,
+   "id": 2399424852,
+   "kind": "track",
+   "label_name": "",
+   "last_modified": "2026-09-12T21:07:36Z",
+   "license": "all-rights-reserved",
+   "likes_count": 2,
+   "permalink": "jeff-mills-inspired-live-909",
+   "permalink_url": "https://soundcloud.com/ctrlzexperience/jeff-mills-inspired-live-909",
+   "playback_count": 4,
+   "public": true,
+   "publisher_metadata": {
+    "id": 2399424852,
+    "urn": "soundcloud:tracks:2399424852",
+    "artist": "ctrlz_experience",
+    "explicit": false
+   },
+   "purchase_title": null,
+   "purchase_url": null,
+   "release_date": null,
+   "reposts_count": 0,
+   "secret_token": null,
+   "sharing": "public",
+   "state": "finished",
+   "streamable": true,
+   "tag_list": "909 ctrlzexperience 505 roland505 roland909 djmix livemix spirituality",
+   "title": "Jeff Mills Inspired Live 909 DJ Mix",
+   "uri": "https://api.soundcloud.com/tracks/soundcloud%3Atracks%3A2399424852",
+   "urn": "soundcloud:tracks:2399424852",
+   "user_id": 768379261,
+   "visuals": null,
+   "waveform_url": "https://wave.sndcdn.com/iqmWHedL4BFE_m.json",
+   "display_date": "2026-09-12T21:07:36Z",
+   "media": {
+    "transcodings": [
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:2399424852/239cff82-25c2-42ec-9529-0c61c286fbcf/stream/hls",
+      "preset": "aac_160k",
+      "duration": 1277016,
+      "snipped": false,
+      "format": {
+       "protocol": "hls",
+       "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+      },
+      "quality": "sq",
+      "is_legacy_transcoding": false
+     },
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:2399424852/b03e48f3-833d-4c67-a2d1-abd1483579b0/stream/hls",
+      "preset": "aac_96k",
+      "duration": 1277016,
+      "snipped": false,
+      "format": {
+       "protocol": "hls",
+       "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+      },
+      "quality": "lq",
+      "is_legacy_transcoding": false
+     },
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:2399424852/470a0b6d-8dc3-44b9-b8d6-a76d80e62d6e/stream/hls",
+      "preset": "abr_sq",
+      "duration": 1277016,
+      "snipped": false,
+      "format": {
+       "protocol": "hls",
+       "mime_type": "audio/mpegurl"
+      },
+      "quality": "sq",
+      "is_legacy_transcoding": false
+     }
+    ]
+   },
+   "station_urn": "soundcloud:system-playlists:track-stations:2399424852",
+   "station_permalink": "track-stations:2399424852",
+   "track_authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJnZW8iOiJOTCIsInN1YiI6IiIsInJpZCI6IjI3Yzk4NzY3LTExNjMtNDJhZi1hNzFlLWM4OWM5NWYyNzdjMyIsImlhdCI6MTc5MTkyNDA4M30.S4XiAEtsjp8z5JAct3fr_mlMeqUUub8hpTYOZr50dDc",
+   "monetization_model": "BLACKBOX",
+   "policy": "MONETIZE",
+   "user": {
+    "avatar_url": "https://i1.sndcdn.com/avatars-LaWnI6RSEqVpdtK3-ysyv9w-large.jpg",
+    "city": "Colorado",
+    "comments_count": 0,
+    "country_code": "US",
+    "created_at": null,
+    "creator_subscriptions": [
+     {
+      "product": {
+       "id": "creator-pro-unlimited"
+      }
+     }
+    ],
+    "creator_subscription": {
+     "product": {
+      "id": "creator-pro-unlimited"
+     }
+    },
+    "description": "welcome to the ctrlz experience, where it is okay to make mistakes.\nctrlz experience is a Denver-based Colorado DJ, electronic music producer, KGNU 88.5 community radio DJ and dance floor curator. genre-bending sets move through house, deep house, bass, reggae, dub, indie dance and psychedelic electronic music.\n\nfrom Colorado ski resorts and apr\u00e8s parties to festivals, outdoor pop-ups, renegade parties, sunrise sets and sunset sets, ctrlz experience creates welcoming spaces for movement, freedom and connection. \n\nperformances include Eldora, Vail and Crested Butte, with 2026 opening sets for Big Sis, Mah Ze Tar and Justin Jay.\n\nlet yourself relax and feel the omnipresent love and benevolence surrounding you.\n\nit is your nature to be alive, aware, conscious, accepting, happy, harmless, infinite, whole and free.\n\nlet the music reveal\u2014or remind you of\u2014your true nature. if you get confused, relax and listen to the music play.\n\nyou are invited to embrace whatever arises and hold it in loving awareness, without judgment or attachment to the outcome.\nmay rhythm and dance continue to reawaken the innate joy, peace and freedom within all of us and all life.\n\n\ud83c\udf9b\ufe0f booking: ctrlzexperience@gmail.com\n\ud83c\udf10 website: https://ctrlzexperience.com\n\ud83d\udcf8 instagram: https://www.instagram.com/ctrlz_experience/\n\ud83c\udfb5 tiktok: https://www.tiktok.com/@ctrlzexperience\n\ud83d\udcfa youtube: https://www.youtube.com/@ctrlz-experience",
+    "followers_count": 118,
+    "followings_count": 328,
+    "first_name": "ctrlz",
+    "full_name": "ctrlz experience",
+    "groups_count": 0,
+    "id": 768379261,
+    "kind": "user",
+    "last_modified": "2026-10-03T04:55:43Z",
+    "last_name": "experience",
+    "likes_count": 1097,
+    "playlist_likes_count": 77,
+    "permalink": "ctrlzexperience",
+    "permalink_url": "https://soundcloud.com/ctrlzexperience",
+    "playlist_count": 67,
+    "reposts_count": null,
+    "track_count": 71,
+    "uri": "https://api.soundcloud.com/users/soundcloud%3Ausers%3A768379261",
+    "urn": "soundcloud:users:768379261",
+    "username": "ctrlz experience",
+    "verified": false,
+    "visuals": {
+     "urn": "soundcloud:users:768379261",
+     "enabled": true,
+     "visuals": [
+      {
+       "urn": "soundcloud:visuals:255780816",
+       "entry_time": 0,
+       "visual_url": "https://i1.sndcdn.com/visuals-000768379261-SAmLkW-original.jpg",
+       "link": "https://ctrlzexperience.com"
+      }
+     ],
+     "tracking": null
+    },
+    "badges": {
+     "pro": false,
+     "creator_mid_tier": false,
+     "pro_unlimited": true,
+     "verified": false
+    },
+    "station_urn": "soundcloud:system-playlists:artist-stations:768379261",
+    "station_permalink": "artist-stations:768379261",
+    "date_of_birth": null
+   }
+  },
+  {
+   "artwork_url": "https://i1.sndcdn.com/artworks-ST2lQxPdIoMvXgHH-JJzsug-large.png",
+   "caption": null,
+   "commentable": true,
+   "comment_count": 6,
+   "created_at": "2021-02-25T19:21:14Z",
+   "description": "The Essential Mix is a weekly radio show on BBC Radio 1 currently broadcast between 0:00 - 2:00 AM UK time on Saturday morning. Originally broadcast on 30 October 1993, the Essential Mix features contemporary DJs and music producers of electronic dance music. The show has been presented since its inception by Pete Tong and features an uninterrupted two-hour mix from a different artist each week, overlaid with occasional continuity announcements delivered by Tong. With a broadcast run in excess of 25 years, the Essential Mix is one of the longest-running programmes in the current BBC Radio 1 schedule, and is one of very few Radio 1 shows which is not broadcast live.",
+   "downloadable": false,
+   "download_count": 0,
+   "duration": 7314574,
+   "full_duration": 7314573,
+   "embeddable_by": "all",
+   "genre": "Electronic",
+   "has_downloads_left": false,
+   "id": 993090877,
+   "kind": "track",
+   "label_name": null,
+   "last_modified": "2023-02-12T20:26:00Z",
+   "license": "all-rights-reserved",
+   "likes_count": 46,
+   "permalink": "essential-mix-2006-07-09-slam",
+   "permalink_url": "https://soundcloud.com/iridiumdj/essential-mix-2006-07-09-slam",
+   "playback_count": 756,
+   "public": true,
+   "publisher_metadata": {
+    "id": 993090877,
+    "urn": "soundcloud:tracks:993090877",
+    "contains_music": true
+   },
+   "purchase_title": null,
+   "purchase_url": null,
+   "release_date": null,
+   "reposts_count": 2,
+   "secret_token": null,
+   "sharing": "public",
+   "state": "finished",
+   "streamable": true,
+   "tag_list": "House Dance Trance Techno Progressive",
+   "title": "Essential Mix 2006-07-09 - Slam & Jeff Mills",
+   "uri": "https://api.soundcloud.com/tracks/soundcloud%3Atracks%3A993090877",
+   "urn": "soundcloud:tracks:993090877",
+   "user_id": 1678386,
+   "visuals": null,
+   "waveform_url": "https://wave.sndcdn.com/YUaT60imR9zR_m.json",
+   "display_date": "2021-02-25T19:21:14Z",
+   "media": {
+    "transcodings": [
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:993090877/2e0676f3-f059-4c86-bb07-96c85c07d065/stream/hls",
+      "preset": "aac_160k",
+      "duration": 7314574,
+      "snipped": false,
+      "format": {
+       "protocol": "hls",
+       "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+      },
+      "quality": "sq",
+      "is_legacy_transcoding": false
+     },
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:993090877/d17aba69-b44b-4921-b519-074ab1cfba3d/stream/hls",
+      "preset": "aac_96k",
+      "duration": 7314574,
+      "snipped": false,
+      "format": {
+       "protocol": "hls",
+       "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+      },
+      "quality": "lq",
+      "is_legacy_transcoding": false
+     },
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:993090877/51f87a97-d1b6-4131-92fa-eb20f7d63e12/stream/hls",
+      "preset": "abr_sq",
+      "duration": 7314574,
+      "snipped": false,
+      "format": {
+       "protocol": "hls",
+       "mime_type": "audio/mpegurl"
+      },
+      "quality": "sq",
+      "is_legacy_transcoding": false
+     }
+    ]
+   },
+   "station_urn": "soundcloud:system-playlists:track-stations:993090877",
+   "station_permalink": "track-stations:993090877",
+   "track_authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJnZW8iOiJOTCIsInN1YiI6IiIsInJpZCI6IjczNzQxMWIzLWFkYzItNDg3MS1hNmU2LThhMWE2NTI1ZTk5ZSIsImlhdCI6MTc5MTkyNDA4M30.3r6zP-WCbYmMUTDrARnb2Hd9WjzGw6ikCBOa12CGeXU",
+   "monetization_model": "BLACKBOX",
+   "policy": "MONETIZE",
+   "user": {
+    "avatar_url": "https://i1.sndcdn.com/avatars-sExyl6ei4wTQERkf-siiUTw-large.jpg",
+    "city": null,
+    "comments_count": 0,
+    "country_code": null,
+    "created_at": null,
+    "creator_subscriptions": [
+     {
+      "product": {
+       "id": "creator-pro-unlimited"
+      }
+     }
+    ],
+    "creator_subscription": {
+     "product": {
+      "id": "creator-pro-unlimited"
+     }
+    },
+    "description": "Iridium DJ: Early Hardstyle DJ since 2005 - Building up an archive with only the best Early Hardstyle tracks!\n\nMike Air: House & Trance DJ since 2006 - Building up an archive with only the best House and Trance tracks!\n\nClassic Event Archive - Collecting livesets since 2000! What started as a hobby for the love of electronic music in the 90's, turned a couple of years ago into a NON-PROFITABLE project to provide you with the best classic sets in order for you to relive those good old days! \n\nFor clarification: \n\nTHIS COLLECTION IS NOT AVAILABLE FOR DOWNLOAD BECAUSE I DO NOT OWN ANY OF THE RIGHTS OF THESE ALBUMS OR SETS! ALL RIGHTS GO TO THEIR RESPECTIVE OWNERS! IF YOU OWN A MIX OR SET THAT YOU WANT TO BE REMOVED, PLEASE SEND ME A MESSAGE AND I'LL DELETE IT! \n\n!!ZERO PROFIT IS BEING MADE!!\n\n!!NO COPYRIGHT INFRINGEMENT INTENDED!!",
+    "followers_count": 14230,
+    "followings_count": 463,
+    "first_name": "",
+    "full_name": "",
+    "groups_count": 0,
+    "id": 1678386,
+    "kind": "user",
+    "last_modified": "2026-10-05T08:10:45Z",
+    "last_name": "",
+    "likes_count": 888,
+    "playlist_likes_count": 437,
+    "permalink": "iridiumdj",
+    "permalink_url": "https://soundcloud.com/iridiumdj",
+    "playlist_count": 447,
+    "reposts_count": null,
+    "track_count": 6585,
+    "uri": "https://api.soundcloud.com/users/soundcloud%3Ausers%3A1678386",
+    "urn": "soundcloud:users:1678386",
+    "username": "Iridium DJ // Classic Event Archive",
+    "verified": false,
+    "visuals": {
+     "urn": "soundcloud:users:1678386",
+     "enabled": true,
+     "visuals": [
+      {
+       "urn": "soundcloud:visuals:260545845",
+       "entry_time": 0,
+       "visual_url": "https://i1.sndcdn.com/visuals-000001678386-DUONT0-original.jpg",
+       "link": "https://www.instagram.com/iridiumdjnl/"
+      }
+     ],
+     "tracking": null
+    },
+    "badges": {
+     "pro": false,
+     "creator_mid_tier": false,
+     "pro_unlimited": true,
+     "verified": false
+    },
+    "station_urn": "soundcloud:system-playlists:artist-stations:1678386",
+    "station_permalink": "artist-stations:1678386",
+    "date_of_birth": null
+   }
+  },
+  {
+   "artwork_url": "https://i1.sndcdn.com/artworks-ineMJbpMDXNp1D2s-3hduIw-large.jpg",
+   "caption": null,
+   "commentable": true,
+   "comment_count": 0,
+   "created_at": "2023-08-11T03:59:08Z",
+   "description": "1. Jeff Mills - Utopia 1:09\n2. Jeff Mills - The Extremist (Retro Mix) 1:40\n3. Surgeon - Magneze 1:47\n4. Joey Beltram - The Start It Up 1:26\n5. Millsart \u2013 Step To Enchantment (Stringent) 1:42\n6. Jeff Mills \u2013 Life Cycle 2:19\n7. Jeff Mills - The Bells 1:04\n8. DJ Funk \u2013 Work That Body 1:07\n9. DJ Funk \u2013 Run (U.K.) 2:55\n10. Joe T. Vannelli \u2013 Play With The Voice In USA (Joey Beltram Remix)1:08\n11. Wicked Wipe - Rock Da House (Ian Pooley Mix)2:07\n12. Jeff Mills \u2013 i9 2:25\n13. Jeff Mills \u2013 Change Of Life 2:39\n14. Circuit Breaker - Overkill 1:21\n15. iO \u2013 Eternal Sun 1:25\n16. Joey Beltram \u2013 Game Form (Robert Armani Remix)1:00\n17. Club MCM \u2013 Club MCM (K.A. Happy Mix) 1:56\n18. Jeff Mills - Ax-009 1:18\n19. Surgeon - Move 1:59\n20. Traxmen - Wet Floor 0:40\n21. Jeff Mills - Detached 1:13\n22. Claude Young - Nocturnal 0:55\n23. The Advent - Bad Boy 3:11\n24. DJ Skull - Head Basher 1:27\n25. Rhythim Is Rhythim - Strings Of Life 3:24\n26. Jeff Mills - Loop 3 0:55\n27. Jeff Mills - The Fear As We Know It 2:00\n28. Ken Ishii - Extra (Luke Slater Mix) 1:51\n29. Damon Wild - Avion 3:11\n30. X-102 - Intro (X-102)1:22\n31. Jeff Mills - Humana 1:11\n32. H&M - Suspense 0:34\n33. The Shadow - The Other Side 0:47\n34. Dan Morgan \u2013 Flowerchild 1:09\n35. Hell & Jonzon - Bazetoya 2:53\n36. Jeff Mills - Casa 3:57\n37. Jeff Mills - Life Cycle 1:27\n38. Millsart - Step To Enchantment 2:30",
+   "downloadable": false,
+   "download_count": 2,
+   "duration": 3818207,
+   "full_duration": 3818188,
+   "embeddable_by": "all",
+   "genre": "Techno",
+   "has_downloads_left": false,
+   "id": 1590118159,
+   "kind": "track",
+   "label_name": null,
+   "last_modified": "2025-10-26T01:16:07Z",
+   "license": "all-rights-reserved",
+   "likes_count": 161,
+   "permalink": "jeff-mills-mix-up-vol-2-live-the-liquid-room-tokyo-japan",
+   "permalink_url": "https://soundcloud.com/djimpz/jeff-mills-mix-up-vol-2-live-the-liquid-room-tokyo-japan",
+   "playback_count": 2358,
+   "public": true,
+   "publisher_metadata": {
+    "id": 1590118159,
+    "urn": "soundcloud:tracks:1590118159",
+    "artist": "DJ Vance M",
+    "contains_music": true
+   },
+   "purchase_title": null,
+   "purchase_url": null,
+   "release_date": null,
+   "reposts_count": 3,
+   "secret_token": null,
+   "sharing": "public",
+   "state": "finished",
+   "streamable": true,
+   "tag_list": "Techno",
+   "title": "Mix-Up Vol. 2 Featuring Jeff Mills - Live Mix At Liquid Room, Tokyo Japan",
+   "uri": "https://api.soundcloud.com/tracks/soundcloud%3Atracks%3A1590118159",
+   "urn": "soundcloud:tracks:1590118159",
+   "user_id": 1245383422,
+   "visuals": null,
+   "waveform_url": "https://wave.sndcdn.com/mhbCNkokKGL7_m.json",
+   "display_date": "2023-08-11T03:59:08Z",
+   "media": {
+    "transcodings": [
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1590118159/9f92d026-d121-4afa-b04a-fb7c2c6a45bc/stream/hls",
+      "preset": "aac_96k",
+      "duration": 3818207,
+      "snipped": false,
+      "format": {
+       "protocol": "hls",
+       "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+      },
+      "quality": "lq",
+      "is_legacy_transcoding": false
+     },
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1590118159/3378dd52-f2f2-46f1-a80c-7256096557a1/stream/hls",
+      "preset": "abr_sq",
+      "duration": 3818207,
+      "snipped": false,
+      "format": {
+       "protocol": "hls",
+       "mime_type": "audio/mpegurl"
+      },
+      "quality": "sq",
+      "is_legacy_transcoding": false
+     }
+    ]
+   },
+   "station_urn": "soundcloud:system-playlists:track-stations:1590118159",
+   "station_permalink": "track-stations:1590118159",
+   "track_authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJnZW8iOiJOTCIsInN1YiI6IiIsInJpZCI6Ijg1OGJhZTViLWY1NmMtNDU4Yi1hNDU0LTNlMzkzMjllZDY3NyIsImlhdCI6MTc5MTkyNDA4M30.pgQgwr-I8adW_74brjAvhBSfZTFd9fCoh9zUFJvoPxI",
+   "monetization_model": "BLACKBOX",
+   "policy": "MONETIZE",
+   "user": {
+    "avatar_url": "https://i1.sndcdn.com/avatars-001253642908-z0qa0v-large.jpg",
+    "city": "Toronto",
+    "comments_count": 0,
+    "country_code": "CA",
+    "created_at": null,
+    "creator_subscriptions": [
+     {
+      "product": {
+       "id": "free"
+      }
+     }
+    ],
+    "creator_subscription": {
+     "product": {
+      "id": "free"
+     }
+    },
+    "description": "My Facebook Page \nhttp://facebook.com/vance.maynard.3/\n\nDetroit Techno Militia\nhttp://detroittechnomilitia.com\n\nPlayy\nhttp://playy.co.uk/\n\nTresor Berlin\nhttps://tresorberlin.com/\n\nTechno Club\nhttp://techno-club.net\n\nI have been a music artist for more than 20 years. I play Classic Techno & Classic House.  I been listening to House & Techno for over 30 years. I am the Co-Founder of the music label Garbage Game Music. I have lived with my Mom for over the past 40 years. I lived in Anguilla in the west indies for 2 years from 97-99. I also worked at What We Do In Anguilla, Zellers, Loblaws, Bata, Youth Canada & Food Basics in Toronto. I like Dance music the most but I listen to everything. Soul music is my second favourite & Hip Hop music is my Third. My favourite Artist is Space Djz. My favourite MMA fighter is GSP. My favourite sports player is Lebron James, and my favourite wrestler is Kenny Omega. I also listen to radio shows like, Run it Red, Materia Music Radio, Tronic Radio, Whitenoise, Drumcode Radio, CLR, Brave Radio, Defected Radio, Future Disco, Listen To House Music Podcast, 4th To the Floor, Big Love, Circoloco, Deepinside, Deeper Shades of House, Urbana Radio, Release Yourself, Trucast, Behind The Decks, Arise Radio. I watch tv like the supernatural, x-factor, Y&R, and Bold & The Beautiful. I love watching pro wrestling like WWE, Impact, MLW, Memphis Wrestling, AEW, ROH, and New Japan Pro Wrestling. I watch sports like boxing, car racing, MMA, curling, baseball, golf, soccer, football, hockey, and tennis. My favourite movies are Star Trek, Law Biding Citizen, Star Wars, and Expendables 2.",
+    "followers_count": 54,
+    "followings_count": 100,
+    "first_name": "Vance",
+    "full_name": "Vance Maynard",
+    "groups_count": 0,
+    "id": 1245383422,
+    "kind": "user",
+    "last_modified": "2026-01-26T21:22:46Z",
+    "last_name": "Maynard",
+    "likes_count": 1737,
+    "playlist_likes_count": 2,
+    "permalink": "djimpz",
+    "permalink_url": "https://soundcloud.com/djimpz",
+    "playlist_count": 0,
+    "reposts_count": null,
+    "track_count": 1,
+    "uri": "https://api.soundcloud.com/users/soundcloud%3Ausers%3A1245383422",
+    "urn": "soundcloud:users:1245383422",
+    "username": "Vance Maynard (Impz)",
+    "verified": false,
+    "visuals": null,
+    "badges": {
+     "pro": false,
+     "creator_mid_tier": false,
+     "pro_unlimited": false,
+     "verified": false
+    },
+    "station_urn": "soundcloud:system-playlists:artist-stations:1245383422",
+    "station_permalink": "artist-stations:1245383422",
+    "date_of_birth": null
+   }
+  },
+  {
+   "artwork_url": "https://i1.sndcdn.com/artworks-rWOiMyseIjBPMseX-qadXGQ-large.png",
+   "caption": null,
+   "commentable": true,
+   "comment_count": 15,
+   "created_at": "2026-04-07T17:15:31Z",
+   "description": "",
+   "downloadable": false,
+   "download_count": 0,
+   "duration": 243437,
+   "full_duration": 243435,
+   "embeddable_by": "all",
+   "genre": "House",
+   "has_downloads_left": false,
+   "id": 2298283991,
+   "kind": "track",
+   "label_name": "",
+   "last_modified": "2026-04-07T17:15:31Z",
+   "license": "cc-by-nc-sa",
+   "likes_count": 1740,
+   "permalink": "sperminator-uptempo-best-part",
+   "permalink_url": "https://soundcloud.com/misxv/sperminator-uptempo-best-part",
+   "playback_count": 47244,
+   "public": true,
+   "publisher_metadata": {
+    "id": 2298283991,
+    "urn": "soundcloud:tracks:2298283991",
+    "artist": "sperminator, jeff mills, misha,",
+    "explicit": false
+   },
+   "purchase_title": null,
+   "purchase_url": null,
+   "release_date": null,
+   "reposts_count": 22,
+   "secret_token": null,
+   "sharing": "public",
+   "state": "finished",
+   "streamable": true,
+   "tag_list": "\"#jeff mills\" detroit remaster mix sperminator uptempo \"hard house\" \"detroit house\"",
+   "title": "sperminator - uptempo (best part looped) (beefed up mix like Jeff Mills in 94)",
+   "uri": "https://api.soundcloud.com/tracks/soundcloud%3Atracks%3A2298283991",
+   "urn": "soundcloud:tracks:2298283991",
+   "user_id": 335128963,
+   "visuals": null,
+   "waveform_url": "https://wave.sndcdn.com/lrJ7HLu5BMfs_m.json",
+   "display_date": "2026-04-07T17:15:31Z",
+   "media": {
+    "transcodings": [
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:2298283991/4ae3cc15-0ff5-4b9b-9e83-8fd34b43e83c/stream/hls",
+      "preset": "aac_160k",
+      "duration": 243437,
+      "snipped": false,
+      "format": {
+       "protocol": "hls",
+       "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+      },
+      "quality": "sq",
+      "is_legacy_transcoding": false
+     },
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:2298283991/69bc7558-5840-4cf9-9054-97f0f9fd9466/stream/hls",
+      "preset": "aac_96k",
+      "duration": 243437,
+      "snipped": false,
+      "format": {
+       "protocol": "hls",
+       "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+      },
+      "quality": "lq",
+      "is_legacy_transcoding": false
+     },
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:2298283991/7203c9f8-7029-49ea-9c7f-786fca0039b6/stream/hls",
+      "preset": "abr_sq",
+      "duration": 243437,
+      "snipped": false,
+      "format": {
+       "protocol": "hls",
+       "mime_type": "audio/mpegurl"
+      },
+      "quality": "sq",
+      "is_legacy_transcoding": false
+     }
+    ]
+   },
+   "station_urn": "soundcloud:system-playlists:track-stations:2298283991",
+   "station_permalink": "track-stations:2298283991",
+   "track_authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJnZW8iOiJOTCIsInN1YiI6IiIsInJpZCI6IjA2MDU3ZmFiLTUwMDMtNDJlOC04NTgwLTU2NTQ5ZmRiOGIyNCIsImlhdCI6MTc5MTkyNDA4M30.xu_qYtWz9GScliNsN1v-uYgpl011sFcwTvK-R1CIb5A",
+   "monetization_model": "BLACKBOX",
+   "policy": "MONETIZE",
+   "user": {
+    "avatar_url": "https://i1.sndcdn.com/avatars-tiohXgd1EPoaJlBw-fUkODQ-large.jpg",
+    "city": null,
+    "comments_count": 0,
+    "country_code": null,
+    "created_at": null,
+    "creator_subscriptions": [
+     {
+      "product": {
+       "id": "free"
+      }
+     }
+    ],
+    "creator_subscription": {
+     "product": {
+      "id": "free"
+     }
+    },
+    "description": "Reuse, produce, adapt.",
+    "followers_count": 129,
+    "followings_count": 348,
+    "first_name": "",
+    "full_name": "",
+    "groups_count": 0,
+    "id": 335128963,
+    "kind": "user",
+    "last_modified": "2026-04-07T17:22:41Z",
+    "last_name": "",
+    "likes_count": 2052,
+    "playlist_likes_count": 68,
+    "permalink": "misxv",
+    "permalink_url": "https://soundcloud.com/misxv",
+    "playlist_count": 16,
+    "reposts_count": null,
+    "track_count": 40,
+    "uri": "https://api.soundcloud.com/users/soundcloud%3Ausers%3A335128963",
+    "urn": "soundcloud:users:335128963",
+    "username": "MISXV",
+    "verified": false,
+    "visuals": {
+     "urn": "soundcloud:users:335128963",
+     "enabled": true,
+     "visuals": [
+      {
+       "urn": "soundcloud:visuals:185438916",
+       "entry_time": 0,
+       "visual_url": "https://i1.sndcdn.com/visuals-000335128963-bW5WM3-original.jpg"
+      }
+     ],
+     "tracking": null
+    },
+    "badges": {
+     "pro": false,
+     "creator_mid_tier": false,
+     "pro_unlimited": false,
+     "verified": false
+    },
+    "station_urn": "soundcloud:system-playlists:artist-stations:335128963",
+    "station_permalink": "artist-stations:335128963",
+    "date_of_birth": null
+   }
+  },
+  {
+   "artwork_url": "https://i1.sndcdn.com/artworks-000003454474-chbs0j-large.jpg",
+   "caption": null,
+   "commentable": true,
+   "comment_count": 50,
+   "created_at": "2010-12-06T22:26:32Z",
+   "description": "Pow Wow Records - PW 484",
+   "downloadable": false,
+   "download_count": 1,
+   "duration": 288450,
+   "full_duration": 288631,
+   "embeddable_by": "all",
+   "genre": "Techno",
+   "has_downloads_left": false,
+   "id": 7767394,
+   "kind": "track",
+   "label_name": "",
+   "last_modified": "2026-06-13T09:57:05Z",
+   "license": "all-rights-reserved",
+   "likes_count": 5568,
+   "permalink": "jeff-mills-late-night-mills-mix",
+   "permalink_url": "https://soundcloud.com/tonaljedi/jeff-mills-late-night-mills-mix",
+   "playback_count": 157964,
+   "public": true,
+   "publisher_metadata": null,
+   "purchase_title": null,
+   "purchase_url": null,
+   "release_date": null,
+   "reposts_count": 322,
+   "secret_token": null,
+   "sharing": "public",
+   "state": "finished",
+   "streamable": true,
+   "tag_list": "latenight jeffmills jeff mills axis",
+   "title": "Jeff Mills - Late Night (Mills Mix)",
+   "uri": "https://api.soundcloud.com/tracks/soundcloud%3Atracks%3A7767394",
+   "urn": "soundcloud:tracks:7767394",
+   "user_id": 1331300,
+   "visuals": null,
+   "waveform_url": "https://wave.sndcdn.com/Mmzg67nvdnSu_m.json",
+   "display_date": "2010-12-06T22:26:32Z",
+   "media": {
+    "transcodings": [
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:7767394/2d13f3a6-54d2-4dce-bea4-487533235dd7/stream/hls",
+      "preset": "aac_160k",
+      "duration": 288450,
+      "snipped": false,
+      "format": {
+       "protocol": "hls",
+       "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+      },
+      "quality": "sq",
+      "is_legacy_transcoding": false
+     },
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:7767394/0d567bb9-c7ce-4f4b-9f20-35188bcaffde/stream/hls",
+      "preset": "aac_96k",
+      "duration": 288450,
+      "snipped": false,
+      "format": {
+       "protocol": "hls",
+       "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+      },
+      "quality": "lq",
+      "is_legacy_transcoding": false
+     },
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:7767394/7b569ea3-ee87-40c4-9087-66d59cfa58b1/stream/hls",
+      "preset": "abr_sq",
+      "duration": 288450,
+      "snipped": false,
+      "format": {
+       "protocol": "hls",
+       "mime_type": "audio/mpegurl"
+      },
+      "quality": "sq",
+      "is_legacy_transcoding": false
+     }
+    ]
+   },
+   "station_urn": "soundcloud:system-playlists:track-stations:7767394",
+   "station_permalink": "track-stations:7767394",
+   "track_authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJnZW8iOiJOTCIsInN1YiI6IiIsInJpZCI6ImE1NWE0YzNhLTFkZmUtNDZiMC1hMWU4LTBkNjlkOWJhZDRkMSIsImlhdCI6MTc5MTkyNDA4M30.yJmZk9Dvz58B23JwFFrlrt92uzd0Y5qcC8uAdx3_JPk",
+   "monetization_model": "BLACKBOX",
+   "policy": "MONETIZE",
+   "user": {
+    "avatar_url": "https://i1.sndcdn.com/avatars-000002061967-754r3s-large.jpg",
+    "city": "Z\u00fcrich",
+    "comments_count": 0,
+    "country_code": "CH",
+    "created_at": null,
+    "creator_subscriptions": [
+     {
+      "product": {
+       "id": "creator-pro-unlimited"
+      }
+     }
+    ],
+    "creator_subscription": {
+     "product": {
+      "id": "creator-pro-unlimited"
+     }
+    },
+    "description": "I'm uploading the old stuff that got me into electronic music many years ago...\r\n",
+    "followers_count": 1020,
+    "followings_count": 149,
+    "first_name": "",
+    "full_name": "",
+    "groups_count": 0,
+    "id": 1331300,
+    "kind": "user",
+    "last_modified": "2026-01-09T14:22:02Z",
+    "last_name": "",
+    "likes_count": 299,
+    "playlist_likes_count": 12,
+    "permalink": "tonaljedi",
+    "permalink_url": "https://soundcloud.com/tonaljedi",
+    "playlist_count": 0,
+    "reposts_count": null,
+    "track_count": 57,
+    "uri": "https://api.soundcloud.com/users/soundcloud%3Ausers%3A1331300",
+    "urn": "soundcloud:users:1331300",
+    "username": "tonaljedi",
+    "verified": false,
+    "visuals": {
+     "urn": "soundcloud:users:1331300",
+     "enabled": true,
+     "visuals": [
+      {
+       "urn": "soundcloud:visuals:257606007",
+       "entry_time": 0,
+       "visual_url": "https://i1.sndcdn.com/visuals-000001331300-1V7qI1-original.jpg"
+      }
+     ],
+     "tracking": null
+    },
+    "badges": {
+     "pro": false,
+     "creator_mid_tier": false,
+     "pro_unlimited": true,
+     "verified": false
+    },
+    "station_urn": "soundcloud:system-playlists:artist-stations:1331300",
+    "station_permalink": "artist-stations:1331300",
+    "date_of_birth": null
+   }
+  },
+  {
+   "artwork_url": null,
+   "caption": null,
+   "commentable": true,
+   "comment_count": 1,
+   "created_at": "2025-09-13T21:31:45Z",
+   "description": "",
+   "downloadable": false,
+   "download_count": 0,
+   "duration": 3682188,
+   "full_duration": 3682168,
+   "embeddable_by": "all",
+   "genre": "",
+   "has_downloads_left": false,
+   "id": 2170100553,
+   "kind": "track",
+   "label_name": null,
+   "last_modified": "2025-09-13T21:33:25Z",
+   "license": "all-rights-reserved",
+   "likes_count": 5,
+   "permalink": "techno-old-school-dj-mix-1991",
+   "permalink_url": "https://soundcloud.com/user-379693241-533798548/techno-old-school-dj-mix-1991",
+   "playback_count": 77,
+   "public": true,
+   "publisher_metadata": null,
+   "purchase_title": null,
+   "purchase_url": null,
+   "release_date": null,
+   "reposts_count": 1,
+   "secret_token": null,
+   "sharing": "public",
+   "state": "finished",
+   "streamable": true,
+   "tag_list": "",
+   "title": "Techno  Old-School  DJ Mix  1991 To 1999  Tribute Mix To Jeff Mills Legendary Mix",
+   "uri": "https://api.soundcloud.com/tracks/soundcloud%3Atracks%3A2170100553",
+   "urn": "soundcloud:tracks:2170100553",
+   "user_id": 1028394931,
+   "visuals": null,
+   "waveform_url": "https://wave.sndcdn.com/akLCpiccVdax_m.json",
+   "display_date": "2025-09-13T21:31:45Z",
+   "media": {
+    "transcodings": [
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:2170100553/d5a76f12-2328-4f3c-861f-088b8ef720fd/stream/hls",
+      "preset": "aac_160k",
+      "duration": 3682188,
+      "snipped": false,
+      "format": {
+       "protocol": "hls",
+       "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+      },
+      "quality": "sq",
+      "is_legacy_transcoding": false
+     },
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:2170100553/be3eeb5b-d601-431b-8c3f-94f1e5a48e97/stream/hls",
+      "preset": "aac_96k",
+      "duration": 3682188,
+      "snipped": false,
+      "format": {
+       "protocol": "hls",
+       "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+      },
+      "quality": "lq",
+      "is_legacy_transcoding": false
+     },
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:2170100553/b8d9c5e9-7bef-48cd-bc51-c129d0c66e03/stream/hls",
+      "preset": "abr_sq",
+      "duration": 3682188,
+      "snipped": false,
+      "format": {
+       "protocol": "hls",
+       "mime_type": "audio/mpegurl"
+      },
+      "quality": "sq",
+      "is_legacy_transcoding": false
+     }
+    ]
+   },
+   "station_urn": "soundcloud:system-playlists:track-stations:2170100553",
+   "station_permalink": "track-stations:2170100553",
+   "track_authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJnZW8iOiJOTCIsInN1YiI6IiIsInJpZCI6IjAyMzRhY2NhLTNiNDgtNDlmYy05ZmM5LWM4YjU2ZjJkYmNkZCIsImlhdCI6MTc5MTkyNDA4M30.uS6gT7jvUfRy_bxaiGE0ie4pyyZkyEuVkGtd0qKGbAU",
+   "monetization_model": "BLACKBOX",
+   "policy": "MONETIZE",
+   "user": {
+    "avatar_url": "https://i1.sndcdn.com/avatars-d8NhY4IszuyVPGod-OPv26w-large.jpg",
+    "city": null,
+    "comments_count": 0,
+    "country_code": null,
+    "created_at": null,
+    "creator_subscriptions": [
+     {
+      "product": {
+       "id": "creator-pro-unlimited"
+      }
+     }
+    ],
+    "creator_subscription": {
+     "product": {
+      "id": "creator-pro-unlimited"
+     }
+    },
+    "description": "",
+    "followers_count": 3855,
+    "followings_count": 906,
+    "first_name": "",
+    "full_name": "",
+    "groups_count": 0,
+    "id": 1028394931,
+    "kind": "user",
+    "last_modified": "2022-08-29T15:57:55Z",
+    "last_name": "",
+    "likes_count": 7515,
+    "playlist_likes_count": 1,
+    "permalink": "user-379693241-533798548",
+    "permalink_url": "https://soundcloud.com/user-379693241-533798548",
+    "playlist_count": 6,
+    "reposts_count": null,
+    "track_count": 19140,
+    "uri": "https://api.soundcloud.com/users/soundcloud%3Ausers%3A1028394931",
+    "urn": "soundcloud:users:1028394931",
+    "username": "Andreas W",
+    "verified": false,
+    "visuals": {
+     "urn": "soundcloud:users:1028394931",
+     "enabled": true,
+     "visuals": [
+      {
+       "urn": "soundcloud:visuals:152337873",
+       "entry_time": 0,
+       "visual_url": "https://i1.sndcdn.com/visuals-Zz1eJUV3Yfg8MGt1-Y10rzQ-original.jpg"
+      }
+     ],
+     "tracking": null
+    },
+    "badges": {
+     "pro": false,
+     "creator_mid_tier": false,
+     "pro_unlimited": true,
+     "verified": false
+    },
+    "station_urn": "soundcloud:system-playlists:artist-stations:1028394931",
+    "station_permalink": "artist-stations:1028394931",
+    "date_of_birth": null
+   }
+  },
+  {
+   "artwork_url": "https://i1.sndcdn.com/artworks-000186620556-mhd0z7-large.jpg",
+   "caption": null,
+   "commentable": true,
+   "comment_count": 829,
+   "created_at": "2016-10-04T20:35:58Z",
+   "description": "Buy us a coffee to support the page: www.buymeacoffee.com/theclassicmixcdseries\nFacebook: www.facebook.com/theclassicmixcdseries\nInstagram: www.instagram.com/theclassicmixcdseries\n\n---\n\nMassive shout out to Scott from Tillicoultry in Scotland for the share on this one. Epic recommendations mate!",
+   "downloadable": false,
+   "download_count": 0,
+   "duration": 4027213,
+   "full_duration": 4027597,
+   "embeddable_by": "all",
+   "genre": "",
+   "has_downloads_left": false,
+   "id": 286056165,
+   "kind": "track",
+   "label_name": null,
+   "last_modified": "2024-05-24T18:41:08Z",
+   "license": "all-rights-reserved",
+   "likes_count": 26424,
+   "permalink": "jeff-mills-live-at-the-liquid-room-tokyo",
+   "permalink_url": "https://soundcloud.com/theclassicmixcdseries/jeff-mills-live-at-the-liquid-room-tokyo",
+   "playback_count": 456927,
+   "public": true,
+   "publisher_metadata": {
+    "id": 286056165,
+    "urn": "soundcloud:tracks:286056165",
+    "artist": "Jeff Mills",
+    "album_title": "MIX-UP VOL.2 Live at The Liquid Room - Tokyo"
+   },
+   "purchase_title": "Buy on Discogs",
+   "purchase_url": "https://www.discogs.com/sell/release/9459?ev=rb",
+   "release_date": null,
+   "reposts_count": 894,
+   "secret_token": null,
+   "sharing": "public",
+   "state": "finished",
+   "streamable": true,
+   "tag_list": "\"Jeff Mills\" React \"The Classic Mix CD Series\" Surgeon \"Joey Beltram\" \"DJ Funk\" \"Joe T.Vannelli\" \"Wicked Wipe\" \"Circuit Breaker\" \"Claude Young\" \"The Advert\" \"Ken Ishii\" \"The Shadow\" \"Ken Morgan\" \"Hell & Jonzon\" Millsart \"Damon Wild\"",
+   "title": "259 - Jeff Mills \u200e\u2013 Live At The Liquid Room - Tokyo (1996)",
+   "uri": "https://api.soundcloud.com/tracks/soundcloud%3Atracks%3A286056165",
+   "urn": "soundcloud:tracks:286056165",
+   "user_id": 70548,
+   "visuals": null,
+   "waveform_url": "https://wave.sndcdn.com/QhSBXTwk4Owf_m.json",
+   "display_date": "2016-10-04T20:35:58Z",
+   "media": {
+    "transcodings": [
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:286056165/3adcac7e-d4a9-45fe-b456-e9a4819b7f69/stream/hls",
+      "preset": "aac_96k",
+      "duration": 4027213,
+      "snipped": false,
+      "format": {
+       "protocol": "hls",
+       "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+      },
+      "quality": "lq",
+      "is_legacy_transcoding": false
+     },
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:286056165/63a48ea0-cbfa-4f10-8f07-d2a6b5773139/stream/hls",
+      "preset": "abr_sq",
+      "duration": 4027213,
+      "snipped": false,
+      "format": {
+       "protocol": "hls",
+       "mime_type": "audio/mpegurl"
+      },
+      "quality": "sq",
+      "is_legacy_transcoding": false
+     }
+    ]
+   },
+   "station_urn": "soundcloud:system-playlists:track-stations:286056165",
+   "station_permalink": "track-stations:286056165",
+   "track_authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJnZW8iOiJOTCIsInN1YiI6IiIsInJpZCI6IjYyNzNjYTRjLTIwNzQtNDA2Ni04MjBlLWY4OGQ3NjFiYTY0OCIsImlhdCI6MTc5MTkyNDA4M30.CB8-C0qP0wJPo8lttZkWgwQZvYDiov9674dAlGPpTsU",
+   "monetization_model": "BLACKBOX",
+   "policy": "MONETIZE",
+   "user": {
+    "avatar_url": "https://i1.sndcdn.com/avatars-gzy4jjOD3zOzojKR-4GDXmQ-large.jpg",
+    "city": "",
+    "comments_count": 0,
+    "country_code": null,
+    "created_at": null,
+    "creator_subscriptions": [
+     {
+      "product": {
+       "id": "creator-pro-unlimited"
+      }
+     }
+    ],
+    "creator_subscription": {
+     "product": {
+      "id": "creator-pro-unlimited"
+     }
+    },
+    "description": "Hey, Gareth here, I'm a graphic designer (www.acid.works) born from the clubs, parties, and labels in the late 90s. Back then, mix CDs were the holy grail of both design and music. I loved them.\n\nBut I wasn't the only one, mix cds were the soundtracks of our nights, our days, our afterparties and lives, for everyone. Yet in today's internet age, the art form has been lost (or just changed) to 2-3 hour online mixes and streaming videos, which just don't create the same magic your CD collection did. Just 60 minutes of music and incredible artwork.\n\nThe Classic Mix CD Series celebrates these discs, their soundtrack, their box art and your memories. We hope you enjoy it.\n\n---\n\nAlso, we try to help you find and buy them again by sharing Discogs links on all featured CDs and or direct links to labels where possible.\n\n* We fully support labels and artists. If any disc creates a copyrighting issue let me know and it will be immediately removed. \n\n---\n\nAbout Gareth:\nDigital creative type, gamer, music lover and occasional DJ. Currently living between Dubai & Seoul after setting sail from Sunderland in 2010. As a young designer, club and music culture was the driving force for his work, producing artwork for local club nights and record labels in the North East of England. In particular, DJ mix cds and their packaging were always his 'holy grail of design', especially those from Renaissance, Global Underground and Good Looking Records. It's a pleasure to share these discs back with people and they still influence our tastes to this day. \n\nFor any CD recommendations, bookings, mixes or feedback you can catch me as @asapgareth on Instagram. Or you can check our my design work at www.acid.works",
+    "followers_count": 52290,
+    "followings_count": 563,
+    "first_name": "Hosted by Gareth / acid.works",
+    "full_name": "Hosted by Gareth / acid.works",
+    "groups_count": 0,
+    "id": 70548,
+    "kind": "user",
+    "last_modified": "2026-04-25T05:25:18Z",
+    "last_name": "",
+    "likes_count": 1298,
+    "playlist_likes_count": 35,
+    "permalink": "theclassicmixcdseries",
+    "permalink_url": "https://soundcloud.com/theclassicmixcdseries",
+    "playlist_count": 11,
+    "reposts_count": null,
+    "track_count": 897,
+    "uri": "https://api.soundcloud.com/users/soundcloud%3Ausers%3A70548",
+    "urn": "soundcloud:users:70548",
+    "username": "The Classic Mix CD Series",
+    "verified": false,
+    "visuals": {
+     "urn": "soundcloud:users:70548",
+     "enabled": true,
+     "visuals": [
+      {
+       "urn": "soundcloud:visuals:92904507",
+       "entry_time": 0,
+       "visual_url": "https://i1.sndcdn.com/visuals-000000070548-HBN20T-original.jpg"
+      }
+     ],
+     "tracking": null
+    },
+    "badges": {
+     "pro": false,
+     "creator_mid_tier": false,
+     "pro_unlimited": true,
+     "verified": false
+    },
+    "station_urn": "soundcloud:system-playlists:artist-stations:70548",
+    "station_permalink": "artist-stations:70548",
+    "date_of_birth": null
+   }
+  },
+  {
+   "artwork_url": "https://i1.sndcdn.com/artworks-H8XnsUHHFLhKf7Dl-9SlYJA-large.jpg",
+   "caption": null,
+   "commentable": true,
+   "comment_count": 0,
+   "created_at": "2023-05-18T16:52:31Z",
+   "description": "Tony Allen & Jeff Mills \n\nPrelude\nHowls\nOpen Paths\nNG Theme\nStasis (Calm Before The Storm)\nOn The Run\nThe Seed\nTA-Storm\nThe Birds Rejoice\nPhunkhysteria\nThe Sun Returns\nLocked And Loaded\t\nAltitudes\n\n\nVJ MIX DOWNLOAD\n\nhttps://www.dropbox.com/s/n55rxdrq2v6dbf0/Dj%20Vertigo%20Thursday%20Things%20With%20Tony%20Allen%20%26%20Jeff%20Mills.mkv?dl=1",
+   "downloadable": true,
+   "download_count": 2,
+   "duration": 3823038,
+   "full_duration": 3823020,
+   "embeddable_by": "all",
+   "genre": "Good Stuff",
+   "has_downloads_left": true,
+   "id": 1517059594,
+   "kind": "track",
+   "label_name": null,
+   "last_modified": "2023-05-24T13:58:56Z",
+   "license": "all-rights-reserved",
+   "likes_count": 3,
+   "permalink": "thursday-things-with-tony-allen-jeff-mills",
+   "permalink_url": "https://soundcloud.com/djvertigofin/thursday-things-with-tony-allen-jeff-mills",
+   "playback_count": 103,
+   "public": true,
+   "publisher_metadata": {
+    "id": 1517059594,
+    "urn": "soundcloud:tracks:1517059594",
+    "contains_music": true
+   },
+   "purchase_title": null,
+   "purchase_url": null,
+   "release_date": null,
+   "reposts_count": 0,
+   "secret_token": null,
+   "sharing": "public",
+   "state": "finished",
+   "streamable": true,
+   "tag_list": "",
+   "title": "Dj Vertigo Thursday Things With Tony Allen & Jeff Mills Twitch Live 180523 (DL LINK FOR VJ MIX)",
+   "uri": "https://api.soundcloud.com/tracks/soundcloud%3Atracks%3A1517059594",
+   "urn": "soundcloud:tracks:1517059594",
+   "user_id": 4113393,
+   "visuals": null,
+   "waveform_url": "https://wave.sndcdn.com/gWK8lOdMlU30_m.json",
+   "display_date": "2023-05-18T16:52:31Z",
+   "media": {
+    "transcodings": [
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1517059594/4e686197-421b-4a55-8582-bd78ae5b0e8c/stream/hls",
+      "preset": "aac_160k",
+      "duration": 3823038,
+      "snipped": false,
+      "format": {
+       "protocol": "hls",
+       "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+      },
+      "quality": "sq",
+      "is_legacy_transcoding": false
+     },
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1517059594/50fe426c-deca-45aa-b38e-be28ec2b7231/stream/hls",
+      "preset": "aac_96k",
+      "duration": 3823038,
+      "snipped": false,
+      "format": {
+       "protocol": "hls",
+       "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+      },
+      "quality": "lq",
+      "is_legacy_transcoding": false
+     },
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1517059594/f14ec3f3-7b3e-4d3d-a9a9-3e0b928e7f0b/stream/hls",
+      "preset": "abr_sq",
+      "duration": 3823038,
+      "snipped": false,
+      "format": {
+       "protocol": "hls",
+       "mime_type": "audio/mpegurl"
+      },
+      "quality": "sq",
+      "is_legacy_transcoding": false
+     }
+    ]
+   },
+   "station_urn": "soundcloud:system-playlists:track-stations:1517059594",
+   "station_permalink": "track-stations:1517059594",
+   "track_authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJnZW8iOiJOTCIsInN1YiI6IiIsInJpZCI6ImZhMzkzZDQ4LTVmZTAtNGJkZS1hNThkLTNkYmY3OTY2MDNlYyIsImlhdCI6MTc5MTkyNDA4M30.YUi5yuTSqlM1W8Nx2LTjNx8ONsPqOUC2ykK7WENx5Mc",
+   "monetization_model": "BLACKBOX",
+   "policy": "MONETIZE",
+   "user": {
+    "avatar_url": "https://i1.sndcdn.com/avatars-000012596251-wwd3cz-large.jpg",
+    "city": null,
+    "comments_count": 0,
+    "country_code": null,
+    "created_at": null,
+    "creator_subscriptions": [
+     {
+      "product": {
+       "id": "creator-pro-unlimited"
+      }
+     }
+    ],
+    "creator_subscription": {
+     "product": {
+      "id": "creator-pro-unlimited"
+     }
+    },
+    "description": "Passionate vinyl collector & Dj...",
+    "followers_count": 187,
+    "followings_count": 239,
+    "first_name": "",
+    "full_name": "",
+    "groups_count": 0,
+    "id": 4113393,
+    "kind": "user",
+    "last_modified": "2025-06-07T13:00:30Z",
+    "last_name": "",
+    "likes_count": 21,
+    "playlist_likes_count": 2,
+    "permalink": "djvertigofin",
+    "permalink_url": "https://soundcloud.com/djvertigofin",
+    "playlist_count": 0,
+    "reposts_count": null,
+    "track_count": 446,
+    "uri": "https://api.soundcloud.com/users/soundcloud%3Ausers%3A4113393",
+    "urn": "soundcloud:users:4113393",
+    "username": "Dj Vertigo",
+    "verified": false,
+    "visuals": {
+     "urn": "soundcloud:users:4113393",
+     "enabled": true,
+     "visuals": [
+      {
+       "urn": "soundcloud:visuals:200115513",
+       "entry_time": 0,
+       "visual_url": "https://i1.sndcdn.com/visuals-000004113393-kNhfxE-original.jpg"
+      }
+     ],
+     "tracking": null
+    },
+    "badges": {
+     "pro": false,
+     "creator_mid_tier": false,
+     "pro_unlimited": true,
+     "verified": false
+    },
+    "station_urn": "soundcloud:system-playlists:artist-stations:4113393",
+    "station_permalink": "artist-stations:4113393",
+    "date_of_birth": null
+   }
+  }
+ ],
+ "total_results": 1926,
+ "next_href": "https://api-v2.soundcloud.com/search/tracks?query_urn=soundcloud%3Asearch%3A681902dce2294faeb50eee11ffe7941c&limit=12&offset=12&q=Jeff%20Mills%20DJ%20mix",
+ "query_urn": "soundcloud:search:681902dce2294faeb50eee11ffe7941c"
+}

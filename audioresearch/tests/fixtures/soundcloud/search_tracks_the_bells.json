@@ -1,0 +1,1814 @@
+{
+ "collection": [
+  {
+   "artwork_url": "https://i1.sndcdn.com/artworks-aWmhWqxBzIde-0-large.jpg",
+   "caption": null,
+   "commentable": true,
+   "comment_count": 25,
+   "created_at": "2025-05-20T22:20:42Z",
+   "description": null,
+   "downloadable": false,
+   "download_count": 0,
+   "duration": 289227,
+   "full_duration": 289228,
+   "embeddable_by": "all",
+   "genre": "Dance",
+   "has_downloads_left": false,
+   "id": 2099333871,
+   "kind": "track",
+   "label_name": "EAMS",
+   "last_modified": "2026-01-30T02:40:02Z",
+   "license": "all-rights-reserved",
+   "likes_count": 8664,
+   "permalink": "the-bells",
+   "permalink_url": "https://soundcloud.com/jeffmills-scmusic/the-bells",
+   "playback_count": 232346,
+   "public": true,
+   "publisher_metadata": {
+    "id": 2099333871,
+    "urn": "soundcloud:tracks:2099333871",
+    "artist": "Jeff Mills",
+    "album_title": "The Bells",
+    "contains_music": true,
+    "upc_or_ean": "3614979161937",
+    "isrc": "FRX201785612",
+    "explicit": false,
+    "p_line": "2006 Metrophon Music Spain S.L.",
+    "p_line_for_display": "\u2117 2006 Metrophon Music Spain S.L.",
+    "c_line": "2006 Metrophon Music Spain S.L.",
+    "c_line_for_display": "\u00a9 2006 Metrophon Music Spain S.L.",
+    "writer_composer": "Jeff Mills",
+    "release_title": "The Bells"
+   },
+   "purchase_title": null,
+   "purchase_url": null,
+   "release_date": "2017-11-27T00:00:00Z",
+   "reposts_count": 87,
+   "secret_token": null,
+   "sharing": "public",
+   "state": "finished",
+   "streamable": true,
+   "tag_list": "",
+   "title": "The Bells",
+   "uri": "https://api.soundcloud.com/tracks/soundcloud%3Atracks%3A2099333871",
+   "urn": "soundcloud:tracks:2099333871",
+   "user_id": 1556027592,
+   "visuals": null,
+   "waveform_url": "https://wave.sndcdn.com/emF5yomW5aID_m.json",
+   "display_date": "2017-11-27T00:00:00Z",
+   "media": {
+    "transcodings": [
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:2099333871/7790e931-5fea-42b9-9bc0-734a3baff6a8/stream/cbc-encrypted-hls",
+      "preset": "aac_160k",
+      "duration": 289227,
+      "snipped": false,
+      "format": {
+       "protocol": "cbc-encrypted-hls",
+       "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+      },
+      "quality": "sq",
+      "is_legacy_transcoding": false
+     },
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:2099333871/7790e931-5fea-42b9-9bc0-734a3baff6a8/stream/ctr-encrypted-hls",
+      "preset": "aac_160k",
+      "duration": 289227,
+      "snipped": false,
+      "format": {
+       "protocol": "ctr-encrypted-hls",
+       "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+      },
+      "quality": "sq",
+      "is_legacy_transcoding": false
+     },
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:2099333871/ef60a591-6fed-44e7-8582-cbe308c0a81f/stream/cbc-encrypted-hls",
+      "preset": "aac_96k",
+      "duration": 289227,
+      "snipped": false,
+      "format": {
+       "protocol": "cbc-encrypted-hls",
+       "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+      },
+      "quality": "lq",
+      "is_legacy_transcoding": false
+     },
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:2099333871/ef60a591-6fed-44e7-8582-cbe308c0a81f/stream/ctr-encrypted-hls",
+      "preset": "aac_96k",
+      "duration": 289227,
+      "snipped": false,
+      "format": {
+       "protocol": "ctr-encrypted-hls",
+       "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+      },
+      "quality": "lq",
+      "is_legacy_transcoding": false
+     },
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:2099333871/85f37c6d-c2b4-41d1-b851-9d28a6c8c552/stream/cbc-encrypted-hls",
+      "preset": "abr_sq",
+      "duration": 289227,
+      "snipped": false,
+      "format": {
+       "protocol": "cbc-encrypted-hls",
+       "mime_type": "audio/mpegurl"
+      },
+      "quality": "sq",
+      "is_legacy_transcoding": false
+     },
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:2099333871/85f37c6d-c2b4-41d1-b851-9d28a6c8c552/stream/ctr-encrypted-hls",
+      "preset": "abr_sq",
+      "duration": 289227,
+      "snipped": false,
+      "format": {
+       "protocol": "ctr-encrypted-hls",
+       "mime_type": "audio/mpegurl"
+      },
+      "quality": "sq",
+      "is_legacy_transcoding": false
+     }
+    ]
+   },
+   "station_urn": "soundcloud:system-playlists:track-stations:2099333871",
+   "station_permalink": "track-stations:2099333871",
+   "track_authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJnZW8iOiJOTCIsInN1YiI6IiIsInJpZCI6IjdjNTAzMjNlLThjMTctNDQ3ZS1hMGU2LWNiZjFmYzA0YjQ4ZSIsImlhdCI6MTc5MTkyNDA4M30.dWqHRQXNQGWGghWh8GTEKPk62EjHvA3nrxSq8AuB43g",
+   "monetization_model": "AD_SUPPORTED",
+   "policy": "MONETIZE",
+   "user": {
+    "avatar_url": "https://a1.sndcdn.com/images/default_avatar_large.png",
+    "city": null,
+    "comments_count": 0,
+    "country_code": null,
+    "created_at": null,
+    "creator_subscriptions": [
+     {
+      "product": {
+       "id": "free"
+      }
+     }
+    ],
+    "creator_subscription": {
+     "product": {
+      "id": "free"
+     }
+    },
+    "description": null,
+    "followers_count": 990,
+    "followings_count": 0,
+    "first_name": "",
+    "full_name": "",
+    "groups_count": 0,
+    "id": 1556027592,
+    "kind": "user",
+    "last_modified": "2026-01-13T16:23:07Z",
+    "last_name": "",
+    "likes_count": 0,
+    "playlist_likes_count": 0,
+    "permalink": "jeffmills-scmusic",
+    "permalink_url": "https://soundcloud.com/jeffmills-scmusic",
+    "playlist_count": 0,
+    "reposts_count": null,
+    "track_count": 1,
+    "uri": "https://api.soundcloud.com/users/soundcloud%3Ausers%3A1556027592",
+    "urn": "soundcloud:users:1556027592",
+    "username": "Jeff Mills",
+    "verified": false,
+    "visuals": null,
+    "badges": {
+     "pro": false,
+     "creator_mid_tier": false,
+     "pro_unlimited": false,
+     "verified": false
+    },
+    "station_urn": "soundcloud:system-playlists:artist-stations:1556027592",
+    "station_permalink": "artist-stations:1556027592",
+    "date_of_birth": null
+   }
+  },
+  {
+   "artwork_url": null,
+   "caption": null,
+   "commentable": true,
+   "comment_count": 318,
+   "created_at": "2011-06-22T18:04:20Z",
+   "description": "",
+   "downloadable": false,
+   "download_count": 0,
+   "duration": 290632,
+   "full_duration": 290748,
+   "embeddable_by": "all",
+   "genre": "",
+   "has_downloads_left": false,
+   "id": 17648797,
+   "kind": "track",
+   "label_name": "",
+   "last_modified": "2022-05-03T07:18:05Z",
+   "license": "all-rights-reserved",
+   "likes_count": 58926,
+   "permalink": "jeff-mills-the-bells",
+   "permalink_url": "https://soundcloud.com/vincentimes/jeff-mills-the-bells",
+   "playback_count": 2085031,
+   "public": true,
+   "publisher_metadata": null,
+   "purchase_title": null,
+   "purchase_url": null,
+   "release_date": null,
+   "reposts_count": 3177,
+   "secret_token": null,
+   "sharing": "public",
+   "state": "finished",
+   "streamable": true,
+   "tag_list": "",
+   "title": "Jeff mills - the bells",
+   "uri": "https://api.soundcloud.com/tracks/soundcloud%3Atracks%3A17648797",
+   "urn": "soundcloud:tracks:17648797",
+   "user_id": 1698140,
+   "visuals": null,
+   "waveform_url": "https://wave.sndcdn.com/D2vp7GY3qSxB_m.json",
+   "display_date": "2011-06-22T18:04:20Z",
+   "media": {
+    "transcodings": [
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:17648797/d6bd9261-cc69-45c9-aea8-64d397a0aa78/stream/hls",
+      "preset": "aac_96k",
+      "duration": 290632,
+      "snipped": false,
+      "format": {
+       "protocol": "hls",
+       "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+      },
+      "quality": "lq",
+      "is_legacy_transcoding": false
+     },
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:17648797/61a2de7b-7c51-46e0-afc0-5e432e329919/stream/hls",
+      "preset": "abr_sq",
+      "duration": 290632,
+      "snipped": false,
+      "format": {
+       "protocol": "hls",
+       "mime_type": "audio/mpegurl"
+      },
+      "quality": "sq",
+      "is_legacy_transcoding": false
+     }
+    ]
+   },
+   "station_urn": "soundcloud:system-playlists:track-stations:17648797",
+   "station_permalink": "track-stations:17648797",
+   "track_authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJnZW8iOiJOTCIsInN1YiI6IiIsInJpZCI6Ijg4ZGRkMmE5LTI5ZGQtNDMyNy05NjViLTBkOTdiNWRlYmFjMSIsImlhdCI6MTc5MTkyNDA4M30.MxlSOSV4SRTLlDVs-tR3A-VgNVA7iXYG82le7_ruBww",
+   "monetization_model": "BLACKBOX",
+   "policy": "MONETIZE",
+   "user": {
+    "avatar_url": "https://a1.sndcdn.com/images/default_avatar_large.png",
+    "city": null,
+    "comments_count": 0,
+    "country_code": null,
+    "created_at": null,
+    "creator_subscriptions": [
+     {
+      "product": {
+       "id": "free"
+      }
+     }
+    ],
+    "creator_subscription": {
+     "product": {
+      "id": "free"
+     }
+    },
+    "description": null,
+    "followers_count": 847,
+    "followings_count": 1,
+    "first_name": "vincent",
+    "full_name": "vincent castel",
+    "groups_count": 0,
+    "id": 1698140,
+    "kind": "user",
+    "last_modified": "2016-03-07T17:24:24Z",
+    "last_name": "castel",
+    "likes_count": 1,
+    "playlist_likes_count": 0,
+    "permalink": "vincentimes",
+    "permalink_url": "https://soundcloud.com/vincentimes",
+    "playlist_count": 1,
+    "reposts_count": null,
+    "track_count": 14,
+    "uri": "https://api.soundcloud.com/users/soundcloud%3Ausers%3A1698140",
+    "urn": "soundcloud:users:1698140",
+    "username": "vincentimes",
+    "verified": false,
+    "visuals": null,
+    "badges": {
+     "pro": false,
+     "creator_mid_tier": false,
+     "pro_unlimited": false,
+     "verified": false
+    },
+    "station_urn": "soundcloud:system-playlists:artist-stations:1698140",
+    "station_permalink": "artist-stations:1698140",
+    "date_of_birth": null
+   }
+  },
+  {
+   "artwork_url": "https://i1.sndcdn.com/artworks-000148228773-z3m79x-large.jpg",
+   "caption": null,
+   "commentable": true,
+   "comment_count": 27,
+   "created_at": "2016-02-22T23:21:52Z",
+   "description": "",
+   "downloadable": false,
+   "download_count": 0,
+   "duration": 289378,
+   "full_duration": 289385,
+   "embeddable_by": "all",
+   "genre": "House",
+   "has_downloads_left": false,
+   "id": 248409995,
+   "kind": "track",
+   "label_name": null,
+   "last_modified": "2016-02-22T23:21:53Z",
+   "license": "all-rights-reserved",
+   "likes_count": 4993,
+   "permalink": "jeff-mills-the-bells-1",
+   "permalink_url": "https://soundcloud.com/collinou1/jeff-mills-the-bells-1",
+   "playback_count": 216780,
+   "public": true,
+   "publisher_metadata": null,
+   "purchase_title": null,
+   "purchase_url": null,
+   "release_date": null,
+   "reposts_count": 154,
+   "secret_token": null,
+   "sharing": "public",
+   "state": "finished",
+   "streamable": true,
+   "tag_list": "Techno",
+   "title": "Jeff Mills - The Bells",
+   "uri": "https://api.soundcloud.com/tracks/soundcloud%3Atracks%3A248409995",
+   "urn": "soundcloud:tracks:248409995",
+   "user_id": 207825539,
+   "visuals": null,
+   "waveform_url": "https://wave.sndcdn.com/lQMRHtvdewDa_m.json",
+   "display_date": "2016-02-22T23:21:52Z",
+   "media": {
+    "transcodings": [
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:248409995/aba947d2-5152-4090-9c45-e065ddca61a7/stream/hls",
+      "preset": "aac_96k",
+      "duration": 289378,
+      "snipped": false,
+      "format": {
+       "protocol": "hls",
+       "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+      },
+      "quality": "lq",
+      "is_legacy_transcoding": false
+     },
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:248409995/aef24e38-569d-48d4-8ba2-e18fe0201313/stream/hls",
+      "preset": "abr_sq",
+      "duration": 289378,
+      "snipped": false,
+      "format": {
+       "protocol": "hls",
+       "mime_type": "audio/mpegurl"
+      },
+      "quality": "sq",
+      "is_legacy_transcoding": false
+     }
+    ]
+   },
+   "station_urn": "soundcloud:system-playlists:track-stations:248409995",
+   "station_permalink": "track-stations:248409995",
+   "track_authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJnZW8iOiJOTCIsInN1YiI6IiIsInJpZCI6IjVmN2NmOGVjLThlN2QtNGZkOC1hMjhjLTE4NGRiMjMwMTUzYSIsImlhdCI6MTc5MTkyNDA4M30.ilDsqqJgEwKvmAPzFHLJVc2b5py5JhE7ks6ftub3-9s",
+   "monetization_model": "BLACKBOX",
+   "policy": "MONETIZE",
+   "user": {
+    "avatar_url": "https://i1.sndcdn.com/avatars-000207020781-qi5jrw-large.jpg",
+    "city": null,
+    "comments_count": 0,
+    "country_code": null,
+    "created_at": null,
+    "creator_subscriptions": [
+     {
+      "product": {
+       "id": "free"
+      }
+     }
+    ],
+    "creator_subscription": {
+     "product": {
+      "id": "free"
+     }
+    },
+    "description": null,
+    "followers_count": 192,
+    "followings_count": 26,
+    "first_name": "hugo",
+    "full_name": "hugo Collin",
+    "groups_count": 0,
+    "id": 207825539,
+    "kind": "user",
+    "last_modified": "2018-10-12T10:48:50Z",
+    "last_name": "Collin",
+    "likes_count": 11,
+    "playlist_likes_count": 0,
+    "permalink": "collinou1",
+    "permalink_url": "https://soundcloud.com/collinou1",
+    "playlist_count": 1,
+    "reposts_count": null,
+    "track_count": 20,
+    "uri": "https://api.soundcloud.com/users/soundcloud%3Ausers%3A207825539",
+    "urn": "soundcloud:users:207825539",
+    "username": "Collinou",
+    "verified": false,
+    "visuals": {
+     "urn": "soundcloud:users:207825539",
+     "enabled": true,
+     "visuals": [
+      {
+       "urn": "soundcloud:visuals:7288700",
+       "entry_time": 0,
+       "visual_url": "https://i1.sndcdn.com/visuals-000207825539-GiPuCn-original.jpg"
+      }
+     ],
+     "tracking": null
+    },
+    "badges": {
+     "pro": false,
+     "creator_mid_tier": false,
+     "pro_unlimited": false,
+     "verified": false
+    },
+    "station_urn": "soundcloud:system-playlists:artist-stations:207825539",
+    "station_permalink": "artist-stations:207825539",
+    "date_of_birth": null
+   }
+  },
+  {
+   "artwork_url": "https://i1.sndcdn.com/artworks-TMS4TwjhhLld9v4P-H2r2Gw-large.jpg",
+   "caption": null,
+   "commentable": true,
+   "comment_count": 31,
+   "created_at": "2025-08-19T11:21:33Z",
+   "description": "[FREE DL]",
+   "downloadable": true,
+   "download_count": 433,
+   "duration": 232174,
+   "full_duration": 232176,
+   "embeddable_by": "all",
+   "genre": "",
+   "has_downloads_left": true,
+   "id": 2155652106,
+   "kind": "track",
+   "label_name": null,
+   "last_modified": "2025-09-10T08:09:34Z",
+   "license": "all-rights-reserved",
+   "likes_count": 2008,
+   "permalink": "jeff-mills-the-bells-n1k-1",
+   "permalink_url": "https://soundcloud.com/n1k17/jeff-mills-the-bells-n1k-1",
+   "playback_count": 41125,
+   "public": true,
+   "publisher_metadata": {
+    "id": 2155652106,
+    "urn": "soundcloud:tracks:2155652106"
+   },
+   "purchase_title": null,
+   "purchase_url": null,
+   "release_date": null,
+   "reposts_count": 44,
+   "secret_token": null,
+   "sharing": "public",
+   "state": "finished",
+   "streamable": true,
+   "tag_list": "",
+   "title": "JEFF MILLS - THE BELLS (N1K EDIT)",
+   "uri": "https://api.soundcloud.com/tracks/soundcloud%3Atracks%3A2155652106",
+   "urn": "soundcloud:tracks:2155652106",
+   "user_id": 797184241,
+   "visuals": null,
+   "waveform_url": "https://wave.sndcdn.com/iuAipiMODdmi_m.json",
+   "display_date": "2025-08-19T12:00:05Z",
+   "media": {
+    "transcodings": [
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:2155652106/13707d41-6cbc-4b24-96f6-08147938db9d/stream/hls",
+      "preset": "aac_160k",
+      "duration": 232174,
+      "snipped": false,
+      "format": {
+       "protocol": "hls",
+       "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+      },
+      "quality": "sq",
+      "is_legacy_transcoding": false
+     },
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:2155652106/0fc2bb8e-bbc8-4a0e-85e8-9914a52113c5/stream/hls",
+      "preset": "aac_96k",
+      "duration": 232174,
+      "snipped": false,
+      "format": {
+       "protocol": "hls",
+       "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+      },
+      "quality": "lq",
+      "is_legacy_transcoding": false
+     },
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:2155652106/569bdaa0-064a-479c-bee5-ac920f5c2cad/stream/hls",
+      "preset": "abr_sq",
+      "duration": 232174,
+      "snipped": false,
+      "format": {
+       "protocol": "hls",
+       "mime_type": "audio/mpegurl"
+      },
+      "quality": "sq",
+      "is_legacy_transcoding": false
+     }
+    ]
+   },
+   "station_urn": "soundcloud:system-playlists:track-stations:2155652106",
+   "station_permalink": "track-stations:2155652106",
+   "track_authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJnZW8iOiJOTCIsInN1YiI6IiIsInJpZCI6IjUyM2ZkODczLTAwMDQtNDBmNi05MDllLWQwYWFkZjk1MTdjMCIsImlhdCI6MTc5MTkyNDA4M30.IKiStE_mGStmfVSW3_H62yBW6vcgtkVAixpdcmd_z-w",
+   "monetization_model": "BLACKBOX",
+   "policy": "MONETIZE",
+   "user": {
+    "avatar_url": "https://i1.sndcdn.com/avatars-fpyKv6Go4lTblayt-qje1cg-large.jpg",
+    "city": null,
+    "comments_count": 0,
+    "country_code": null,
+    "created_at": null,
+    "creator_subscriptions": [
+     {
+      "product": {
+       "id": "creator-pro-unlimited"
+      }
+     }
+    ],
+    "creator_subscription": {
+     "product": {
+      "id": "creator-pro-unlimited"
+     }
+    },
+    "description": "\ud83c\udff4\u200d\u2620\ufe0fSOUND DESIGNER/DJ/PRODUCER\ud83c\udff4\u200d\u2620\ufe0f",
+    "followers_count": 1248,
+    "followings_count": 97,
+    "first_name": "N\u03371\u0337k\u0337",
+    "full_name": "N\u03371\u0337k\u0337",
+    "groups_count": 0,
+    "id": 797184241,
+    "kind": "user",
+    "last_modified": "2026-09-13T14:16:17Z",
+    "last_name": "",
+    "likes_count": 3804,
+    "playlist_likes_count": 4,
+    "permalink": "n1k17",
+    "permalink_url": "https://soundcloud.com/n1k17",
+    "playlist_count": 7,
+    "reposts_count": null,
+    "track_count": 40,
+    "uri": "https://api.soundcloud.com/users/soundcloud%3Ausers%3A797184241",
+    "urn": "soundcloud:users:797184241",
+    "username": "N1K",
+    "verified": false,
+    "visuals": {
+     "urn": "soundcloud:users:797184241",
+     "enabled": true,
+     "visuals": [
+      {
+       "urn": "soundcloud:visuals:268168659",
+       "entry_time": 0,
+       "visual_url": "https://i1.sndcdn.com/visuals-v8nj0ixjDe0TUk7E-GuOI0g-original.jpg"
+      }
+     ],
+     "tracking": null
+    },
+    "badges": {
+     "pro": false,
+     "creator_mid_tier": false,
+     "pro_unlimited": true,
+     "verified": false
+    },
+    "station_urn": "soundcloud:system-playlists:artist-stations:797184241",
+    "station_permalink": "artist-stations:797184241",
+    "date_of_birth": null
+   }
+  },
+  {
+   "artwork_url": "https://i1.sndcdn.com/artworks-MXHcuRFk18E4K5WP-dJvNOQ-large.jpg",
+   "caption": null,
+   "commentable": true,
+   "comment_count": 32,
+   "created_at": "2025-03-28T21:00:58Z",
+   "description": "Jeff Mills The Bells (Schranz Rework)\n165 bpm\nMaster - Moses",
+   "downloadable": false,
+   "download_count": 954,
+   "duration": 302591,
+   "full_duration": 302576,
+   "embeddable_by": "all",
+   "genre": "Schranz",
+   "has_downloads_left": false,
+   "id": 2065765092,
+   "kind": "track",
+   "label_name": "",
+   "last_modified": "2026-04-27T22:36:29Z",
+   "license": "all-rights-reserved",
+   "likes_count": 3553,
+   "permalink": "moses-jeff-mills-the-bells",
+   "permalink_url": "https://soundcloud.com/moses-763590752/moses-jeff-mills-the-bells",
+   "playback_count": 76552,
+   "public": true,
+   "publisher_metadata": {
+    "id": 2065765092,
+    "urn": "soundcloud:tracks:2065765092",
+    "artist": "MOSES, JEFF MILLS",
+    "explicit": false
+   },
+   "purchase_title": "Free DL",
+   "purchase_url": "https://hypeddit.com/moses-jeff-mills",
+   "release_date": "2025-03-28T00:00:00Z",
+   "reposts_count": 77,
+   "secret_token": null,
+   "sharing": "public",
+   "state": "finished",
+   "streamable": true,
+   "tag_list": "Schranz \"Hard Techno\" \"Jeff Mills\" Rework Remix",
+   "title": "MOSES - JEFF MILLS THE BELLS [SCHRANZ REWORK]",
+   "uri": "https://api.soundcloud.com/tracks/soundcloud%3Atracks%3A2065765092",
+   "urn": "soundcloud:tracks:2065765092",
+   "user_id": 1508734244,
+   "visuals": {
+    "urn": "soundcloud:tracks:2065765092",
+    "enabled": true,
+    "visuals": [
+     {
+      "urn": "soundcloud:visuals:240604788",
+      "entry_time": 0,
+      "visual_url": "https://soundcloud-images.s3.amazonaws.com/visuals-e1XzCFOpRxkij8Uf-hiv2rA-original.png"
+     }
+    ],
+    "tracking": null
+   },
+   "waveform_url": "https://wave.sndcdn.com/xTwizUcctf88_m.json",
+   "display_date": "2025-04-23T11:22:03Z",
+   "media": {
+    "transcodings": [
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:2065765092/955303ae-9cb5-42ee-85c4-3a41dad9c2d7/stream/hls",
+      "preset": "aac_160k",
+      "duration": 302591,
+      "snipped": false,
+      "format": {
+       "protocol": "hls",
+       "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+      },
+      "quality": "sq",
+      "is_legacy_transcoding": false
+     },
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:2065765092/26eac6c3-2b8d-4941-b832-bda146d81a8a/stream/hls",
+      "preset": "aac_96k",
+      "duration": 302591,
+      "snipped": false,
+      "format": {
+       "protocol": "hls",
+       "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+      },
+      "quality": "lq",
+      "is_legacy_transcoding": false
+     },
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:2065765092/93b293f5-4bee-4280-bbb6-0520b2cfb8d7/stream/hls",
+      "preset": "abr_sq",
+      "duration": 302591,
+      "snipped": false,
+      "format": {
+       "protocol": "hls",
+       "mime_type": "audio/mpegurl"
+      },
+      "quality": "sq",
+      "is_legacy_transcoding": false
+     }
+    ]
+   },
+   "station_urn": "soundcloud:system-playlists:track-stations:2065765092",
+   "station_permalink": "track-stations:2065765092",
+   "track_authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJnZW8iOiJOTCIsInN1YiI6IiIsInJpZCI6IjY3ZjQzNWY2LTQ0NWEtNGY3Ny04ODJhLTRiYzUwMTJhZDA4NiIsImlhdCI6MTc5MTkyNDA4M30.mpqnicU03Ur-RkqPBijrMcxuKnU0j71Vho_8kko0e64",
+   "monetization_model": "BLACKBOX",
+   "policy": "MONETIZE",
+   "user": {
+    "avatar_url": "https://i1.sndcdn.com/avatars-Avfv8NjNW39CUFzV-aH6Kyw-large.jpg",
+    "city": "Glasgow",
+    "comments_count": 0,
+    "country_code": null,
+    "created_at": null,
+    "creator_subscriptions": [
+     {
+      "product": {
+       "id": "creator-pro-unlimited"
+      }
+     }
+    ],
+    "creator_subscription": {
+     "product": {
+      "id": "creator-pro-unlimited"
+     }
+    },
+    "description": "Schranz \ud83d\udef8",
+    "followers_count": 460,
+    "followings_count": 311,
+    "first_name": "Jamie",
+    "full_name": "Jamie Moses",
+    "groups_count": 0,
+    "id": 1508734244,
+    "kind": "user",
+    "last_modified": "2026-09-16T08:37:59Z",
+    "last_name": "Moses",
+    "likes_count": 441,
+    "playlist_likes_count": 27,
+    "permalink": "moses-763590752",
+    "permalink_url": "https://soundcloud.com/moses-763590752",
+    "playlist_count": 2,
+    "reposts_count": null,
+    "track_count": 14,
+    "uri": "https://api.soundcloud.com/users/soundcloud%3Ausers%3A1508734244",
+    "urn": "soundcloud:users:1508734244",
+    "username": "MOSES",
+    "verified": false,
+    "visuals": {
+     "urn": "soundcloud:users:1508734244",
+     "enabled": true,
+     "visuals": [
+      {
+       "urn": "soundcloud:visuals:269729934",
+       "entry_time": 0,
+       "visual_url": "https://i1.sndcdn.com/visuals-001508734244-w13SWx-original.jpg",
+       "link": "https://moses03.bandcamp.com/track/whispers-in-the-shadows"
+      }
+     ],
+     "tracking": null
+    },
+    "badges": {
+     "pro": false,
+     "creator_mid_tier": false,
+     "pro_unlimited": true,
+     "verified": false
+    },
+    "station_urn": "soundcloud:system-playlists:artist-stations:1508734244",
+    "station_permalink": "artist-stations:1508734244",
+    "date_of_birth": null
+   }
+  },
+  {
+   "artwork_url": "https://i1.sndcdn.com/artworks-000315303099-ahvqop-large.jpg",
+   "caption": null,
+   "commentable": true,
+   "comment_count": 9,
+   "created_at": "2018-03-12T20:01:43Z",
+   "description": "",
+   "downloadable": false,
+   "download_count": 0,
+   "duration": 289227,
+   "full_duration": 289280,
+   "embeddable_by": "all",
+   "genre": "",
+   "has_downloads_left": false,
+   "id": 412674591,
+   "kind": "track",
+   "label_name": null,
+   "last_modified": "2021-01-01T19:34:59Z",
+   "license": "all-rights-reserved",
+   "likes_count": 1402,
+   "permalink": "jeff-mills-the-bells",
+   "permalink_url": "https://soundcloud.com/fernando-moreira-831823277/jeff-mills-the-bells",
+   "playback_count": 50157,
+   "public": true,
+   "publisher_metadata": {
+    "id": 412674591,
+    "urn": "soundcloud:tracks:412674591",
+    "artist": "TheYn0T"
+   },
+   "purchase_title": null,
+   "purchase_url": null,
+   "release_date": null,
+   "reposts_count": 21,
+   "secret_token": null,
+   "sharing": "public",
+   "state": "finished",
+   "streamable": true,
+   "tag_list": "",
+   "title": "Jeff Mills - The Bells",
+   "uri": "https://api.soundcloud.com/tracks/soundcloud%3Atracks%3A412674591",
+   "urn": "soundcloud:tracks:412674591",
+   "user_id": 323426651,
+   "visuals": null,
+   "waveform_url": "https://wave.sndcdn.com/gJHk7Kw2Lum4_m.json",
+   "display_date": "2021-01-01T19:34:59Z",
+   "media": {
+    "transcodings": [
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:412674591/106e29ef-841d-4e6c-8e6b-4f263dc82094/stream/hls",
+      "preset": "aac_96k",
+      "duration": 289227,
+      "snipped": false,
+      "format": {
+       "protocol": "hls",
+       "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+      },
+      "quality": "lq",
+      "is_legacy_transcoding": false
+     },
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:412674591/9da5257a-2b16-4e64-9ad5-3cb49a05f379/stream/hls",
+      "preset": "abr_sq",
+      "duration": 289227,
+      "snipped": false,
+      "format": {
+       "protocol": "hls",
+       "mime_type": "audio/mpegurl"
+      },
+      "quality": "sq",
+      "is_legacy_transcoding": false
+     }
+    ]
+   },
+   "station_urn": "soundcloud:system-playlists:track-stations:412674591",
+   "station_permalink": "track-stations:412674591",
+   "track_authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJnZW8iOiJOTCIsInN1YiI6IiIsInJpZCI6IjZmYWY2NmQwLTk5OWEtNDMwZC05NjZmLTI2NmQ3ZjY0YzIzMyIsImlhdCI6MTc5MTkyNDA4M30.BK3K3v6NQNo07zLGDDw6sJmLvraCDbYxz0-zN2t7iks",
+   "monetization_model": "BLACKBOX",
+   "policy": "MONETIZE",
+   "user": {
+    "avatar_url": "https://i1.sndcdn.com/avatars-000327065820-syj4ig-large.jpg",
+    "city": null,
+    "comments_count": 0,
+    "country_code": null,
+    "created_at": null,
+    "creator_subscriptions": [
+     {
+      "product": {
+       "id": "free"
+      }
+     }
+    ],
+    "creator_subscription": {
+     "product": {
+      "id": "free"
+     }
+    },
+    "description": null,
+    "followers_count": 67,
+    "followings_count": 1,
+    "first_name": "Fernando",
+    "full_name": "Fernando Moreira",
+    "groups_count": 0,
+    "id": 323426651,
+    "kind": "user",
+    "last_modified": "2017-08-01T02:02:43Z",
+    "last_name": "Moreira",
+    "likes_count": 0,
+    "playlist_likes_count": 1,
+    "permalink": "fernando-moreira-831823277",
+    "permalink_url": "https://soundcloud.com/fernando-moreira-831823277",
+    "playlist_count": 0,
+    "reposts_count": null,
+    "track_count": 4,
+    "uri": "https://api.soundcloud.com/users/soundcloud%3Ausers%3A323426651",
+    "urn": "soundcloud:users:323426651",
+    "username": "Fernando Moreira",
+    "verified": false,
+    "visuals": {
+     "urn": "soundcloud:users:323426651",
+     "enabled": true,
+     "visuals": [
+      {
+       "urn": "soundcloud:visuals:228215499",
+       "entry_time": 0,
+       "visual_url": "https://i1.sndcdn.com/visuals-000323426651-iTMxTh-original.jpg"
+      }
+     ],
+     "tracking": null
+    },
+    "badges": {
+     "pro": false,
+     "creator_mid_tier": false,
+     "pro_unlimited": false,
+     "verified": false
+    },
+    "station_urn": "soundcloud:system-playlists:artist-stations:323426651",
+    "station_permalink": "artist-stations:323426651",
+    "date_of_birth": null
+   }
+  },
+  {
+   "artwork_url": "https://i1.sndcdn.com/artworks-yOfJxFMWCKO3zLwv-ACBZLA-large.jpg",
+   "caption": null,
+   "commentable": true,
+   "comment_count": 9,
+   "created_at": "2023-07-19T20:06:40Z",
+   "description": "",
+   "downloadable": true,
+   "download_count": 340,
+   "duration": 249762,
+   "full_duration": 249757,
+   "embeddable_by": "all",
+   "genre": "Techno",
+   "has_downloads_left": true,
+   "id": 1569520333,
+   "kind": "track",
+   "label_name": null,
+   "last_modified": "2023-08-03T12:49:31Z",
+   "license": "all-rights-reserved",
+   "likes_count": 1351,
+   "permalink": "the-bells-jeff-mills-schranz-mix",
+   "permalink_url": "https://soundcloud.com/joms-god/the-bells-jeff-mills-schranz-mix",
+   "playback_count": 37901,
+   "public": true,
+   "publisher_metadata": {
+    "id": 1569520333,
+    "urn": "soundcloud:tracks:1569520333",
+    "contains_music": true
+   },
+   "purchase_title": null,
+   "purchase_url": null,
+   "release_date": null,
+   "reposts_count": 19,
+   "secret_token": null,
+   "sharing": "public",
+   "state": "finished",
+   "streamable": true,
+   "tag_list": "",
+   "title": "The Bells-Jeff Mills (Schranz Mix)",
+   "uri": "https://api.soundcloud.com/tracks/soundcloud%3Atracks%3A1569520333",
+   "urn": "soundcloud:tracks:1569520333",
+   "user_id": 1277752177,
+   "visuals": null,
+   "waveform_url": "https://wave.sndcdn.com/NlnfJtWEewZa_m.json",
+   "display_date": "2023-07-19T20:06:40Z",
+   "media": {
+    "transcodings": [
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1569520333/dcb26372-3fc9-47fa-abab-9030cfa82925/stream/hls",
+      "preset": "aac_160k",
+      "duration": 249762,
+      "snipped": false,
+      "format": {
+       "protocol": "hls",
+       "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+      },
+      "quality": "sq",
+      "is_legacy_transcoding": false
+     },
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1569520333/92c2f040-1f91-4fc1-b1c8-d0760a5d55f8/stream/hls",
+      "preset": "aac_96k",
+      "duration": 249762,
+      "snipped": false,
+      "format": {
+       "protocol": "hls",
+       "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+      },
+      "quality": "lq",
+      "is_legacy_transcoding": false
+     },
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:1569520333/b73751fc-47fc-472b-8e15-3a14418f2691/stream/hls",
+      "preset": "abr_sq",
+      "duration": 249762,
+      "snipped": false,
+      "format": {
+       "protocol": "hls",
+       "mime_type": "audio/mpegurl"
+      },
+      "quality": "sq",
+      "is_legacy_transcoding": false
+     }
+    ]
+   },
+   "station_urn": "soundcloud:system-playlists:track-stations:1569520333",
+   "station_permalink": "track-stations:1569520333",
+   "track_authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJnZW8iOiJOTCIsInN1YiI6IiIsInJpZCI6ImI3ZTA1MmFkLTE1OTYtNDQ4ZC1hNjE5LTJkZjI3MzRiMTgyOCIsImlhdCI6MTc5MTkyNDA4M30.XW7Kk8dWiQv-8xOw9taSd6DYk-TmlR1kUaTVogjSi1g",
+   "monetization_model": "BLACKBOX",
+   "policy": "MONETIZE",
+   "user": {
+    "avatar_url": "https://i1.sndcdn.com/avatars-9Wu2aaASdhBguNRY-NeNBfg-large.jpg",
+    "city": null,
+    "comments_count": 0,
+    "country_code": null,
+    "created_at": null,
+    "creator_subscriptions": [
+     {
+      "product": {
+       "id": "creator-pro-unlimited"
+      }
+     }
+    ],
+    "creator_subscription": {
+     "product": {
+      "id": "creator-pro-unlimited"
+     }
+    },
+    "description": "",
+    "followers_count": 57,
+    "followings_count": 64,
+    "first_name": "",
+    "full_name": "",
+    "groups_count": 0,
+    "id": 1277752177,
+    "kind": "user",
+    "last_modified": "2023-11-02T00:25:25Z",
+    "last_name": "",
+    "likes_count": 101,
+    "playlist_likes_count": 2,
+    "permalink": "joms-god",
+    "permalink_url": "https://soundcloud.com/joms-god",
+    "playlist_count": 1,
+    "reposts_count": null,
+    "track_count": 7,
+    "uri": "https://api.soundcloud.com/users/soundcloud%3Ausers%3A1277752177",
+    "urn": "soundcloud:users:1277752177",
+    "username": "J\u00f8msG\u00f8d",
+    "verified": false,
+    "visuals": {
+     "urn": "soundcloud:users:1277752177",
+     "enabled": true,
+     "visuals": [
+      {
+       "urn": "soundcloud:visuals:204138345",
+       "entry_time": 0,
+       "visual_url": "https://i1.sndcdn.com/visuals-gTJYZozMff3ByliA-clTZYg-original.jpg"
+      }
+     ],
+     "tracking": null
+    },
+    "badges": {
+     "pro": false,
+     "creator_mid_tier": false,
+     "pro_unlimited": true,
+     "verified": false
+    },
+    "station_urn": "soundcloud:system-playlists:artist-stations:1277752177",
+    "station_permalink": "artist-stations:1277752177",
+    "date_of_birth": null
+   }
+  },
+  {
+   "artwork_url": "https://i1.sndcdn.com/artworks-mmBXr3eHv3Q8H9fZ-2P3mPw-large.jpg",
+   "caption": null,
+   "commentable": true,
+   "comment_count": 0,
+   "created_at": "2026-10-06T12:06:33Z",
+   "description": "Jeff Mills - The Bells (Original Mix)\n[2025 Remastered by Curve Pusher]\n\nOriginal released in 1996 on Purpose Maker.",
+   "downloadable": true,
+   "download_count": 2,
+   "duration": 291003,
+   "full_duration": 290956,
+   "embeddable_by": "all",
+   "genre": "Techno",
+   "has_downloads_left": true,
+   "id": 2414058555,
+   "kind": "track",
+   "label_name": "",
+   "last_modified": "2026-10-06T12:06:33Z",
+   "license": "all-rights-reserved",
+   "likes_count": 22,
+   "permalink": "the-bells-remastered-2025",
+   "permalink_url": "https://soundcloud.com/charlotte_newman/the-bells-remastered-2025",
+   "playback_count": 285,
+   "public": true,
+   "publisher_metadata": {
+    "id": 2414058555,
+    "urn": "soundcloud:tracks:2414058555",
+    "artist": "Jeff Mills",
+    "explicit": false
+   },
+   "purchase_title": null,
+   "purchase_url": null,
+   "release_date": null,
+   "reposts_count": 0,
+   "secret_token": null,
+   "sharing": "public",
+   "state": "finished",
+   "streamable": true,
+   "tag_list": "",
+   "title": "The Bells [Remastered 2025]",
+   "uri": "https://api.soundcloud.com/tracks/soundcloud%3Atracks%3A2414058555",
+   "urn": "soundcloud:tracks:2414058555",
+   "user_id": 33477851,
+   "visuals": null,
+   "waveform_url": "https://wave.sndcdn.com/8zwpa7j3eaRe_m.json",
+   "display_date": "2026-10-06T12:06:33Z",
+   "media": {
+    "transcodings": [
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:2414058555/061e29a9-d030-4161-bd4a-23b9ddbe8f12/stream/hls",
+      "preset": "aac_160k",
+      "duration": 291003,
+      "snipped": false,
+      "format": {
+       "protocol": "hls",
+       "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+      },
+      "quality": "sq",
+      "is_legacy_transcoding": false
+     },
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:2414058555/f3da6c44-472d-46af-a0a7-1559fad42d16/stream/hls",
+      "preset": "aac_96k",
+      "duration": 291003,
+      "snipped": false,
+      "format": {
+       "protocol": "hls",
+       "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+      },
+      "quality": "lq",
+      "is_legacy_transcoding": false
+     },
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:2414058555/fa79f8dd-9032-4a87-bd8d-6ec3faf2232b/stream/hls",
+      "preset": "abr_sq",
+      "duration": 291003,
+      "snipped": false,
+      "format": {
+       "protocol": "hls",
+       "mime_type": "audio/mpegurl"
+      },
+      "quality": "sq",
+      "is_legacy_transcoding": false
+     }
+    ]
+   },
+   "station_urn": "soundcloud:system-playlists:track-stations:2414058555",
+   "station_permalink": "track-stations:2414058555",
+   "track_authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJnZW8iOiJOTCIsInN1YiI6IiIsInJpZCI6ImNmMzU3YzljLTUzOGItNDVlYy1hOWViLThmYzliNDRlZWRkNyIsImlhdCI6MTc5MTkyNDA4M30.Fs0DRTLBXWqiHSxdIeRoj3geoxnIImAWZIgvK1TQSuU",
+   "monetization_model": "BLACKBOX",
+   "policy": "MONETIZE",
+   "user": {
+    "avatar_url": "https://i1.sndcdn.com/avatars-KPoosifLkOYcRBYj-hccEQA-large.jpg",
+    "city": null,
+    "comments_count": 0,
+    "country_code": null,
+    "created_at": null,
+    "creator_subscriptions": [
+     {
+      "product": {
+       "id": "creator-pro-unlimited"
+      }
+     }
+    ],
+    "creator_subscription": {
+     "product": {
+      "id": "creator-pro-unlimited"
+     }
+    },
+    "description": "Booking : renaud@swarm-mgmt.com",
+    "followers_count": 711,
+    "followings_count": 515,
+    "first_name": "Charlotte",
+    "full_name": "Charlotte Newman",
+    "groups_count": 0,
+    "id": 33477851,
+    "kind": "user",
+    "last_modified": "2026-10-08T08:11:44Z",
+    "last_name": "Newman",
+    "likes_count": 1015,
+    "playlist_likes_count": 12,
+    "permalink": "charlotte_newman",
+    "permalink_url": "https://soundcloud.com/charlotte_newman",
+    "playlist_count": 9,
+    "reposts_count": null,
+    "track_count": 10,
+    "uri": "https://api.soundcloud.com/users/soundcloud%3Ausers%3A33477851",
+    "urn": "soundcloud:users:33477851",
+    "username": "Charlotte Newman",
+    "verified": false,
+    "visuals": null,
+    "badges": {
+     "pro": false,
+     "creator_mid_tier": false,
+     "pro_unlimited": true,
+     "verified": false
+    },
+    "station_urn": "soundcloud:system-playlists:artist-stations:33477851",
+    "station_permalink": "artist-stations:33477851",
+    "date_of_birth": null
+   }
+  },
+  {
+   "artwork_url": "https://i1.sndcdn.com/artworks-000056564028-ufarc2-large.jpg",
+   "caption": null,
+   "commentable": true,
+   "comment_count": 64,
+   "created_at": "2012-12-27T18:14:07Z",
+   "description": "FREE DOWNLOAD: https://pumpyoursound.com/f/pys/jeff-mills-the-jingle-bells-iban-zero-remix/164342\n\nFollow me:\n\nINSTAGRAM: https://www.instagram.com/ibanzero \nFACEBOOK: https://www.facebook.com/ibanzero \nYOUTUBE: https://www.youtube.com/ibanzero\nWEBSITE: https://www.ibanzero.com\n\nContact & Booking:\n\ninfo@ibanzero.com",
+   "downloadable": false,
+   "download_count": 2138,
+   "duration": 370150,
+   "full_duration": 370189,
+   "embeddable_by": "all",
+   "genre": "Techno",
+   "has_downloads_left": false,
+   "id": 72743071,
+   "kind": "track",
+   "label_name": "",
+   "last_modified": "2023-11-17T16:15:08Z",
+   "license": "all-rights-reserved",
+   "likes_count": 5076,
+   "permalink": "voltereta",
+   "permalink_url": "https://soundcloud.com/ibanzero/voltereta",
+   "playback_count": 99505,
+   "public": true,
+   "publisher_metadata": {
+    "id": 72743071,
+    "urn": "soundcloud:tracks:72743071"
+   },
+   "purchase_title": "Free download!",
+   "purchase_url": "https://pumpyoursound.com/f/iban-zero/jeff-mills-the-jingle-bells-iban-zero-remix/164342",
+   "release_date": null,
+   "reposts_count": 215,
+   "secret_token": null,
+   "sharing": "public",
+   "state": "finished",
+   "streamable": true,
+   "tag_list": "jeff mills the jingle bells iban zero remix voltereta navide\u00f1o navidad villancico keko beatriders beat riders ivan techno",
+   "title": "Jeff Mills - The Jingle Bells (Iban Zero Remix)",
+   "uri": "https://api.soundcloud.com/tracks/soundcloud%3Atracks%3A72743071",
+   "urn": "soundcloud:tracks:72743071",
+   "user_id": 3259632,
+   "visuals": null,
+   "waveform_url": "https://wave.sndcdn.com/sMvizFZ4bLTX_m.json",
+   "display_date": "2012-12-27T18:14:07Z",
+   "media": {
+    "transcodings": [
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:72743071/307368fe-0396-40b1-ac04-1bedb4f7211b/stream/hls",
+      "preset": "aac_160k",
+      "duration": 370150,
+      "snipped": false,
+      "format": {
+       "protocol": "hls",
+       "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+      },
+      "quality": "sq",
+      "is_legacy_transcoding": false
+     },
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:72743071/179af5fc-6b34-4730-9aca-27649a90c19f/stream/hls",
+      "preset": "aac_96k",
+      "duration": 370150,
+      "snipped": false,
+      "format": {
+       "protocol": "hls",
+       "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+      },
+      "quality": "lq",
+      "is_legacy_transcoding": false
+     },
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:72743071/da24c7d2-7a1a-41b7-ba3e-babbc4b423ed/stream/hls",
+      "preset": "abr_sq",
+      "duration": 370150,
+      "snipped": false,
+      "format": {
+       "protocol": "hls",
+       "mime_type": "audio/mpegurl"
+      },
+      "quality": "sq",
+      "is_legacy_transcoding": false
+     }
+    ]
+   },
+   "station_urn": "soundcloud:system-playlists:track-stations:72743071",
+   "station_permalink": "track-stations:72743071",
+   "track_authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJnZW8iOiJOTCIsInN1YiI6IiIsInJpZCI6ImFiODcwMTE5LWE1YjQtNGY1ZS1hMDAxLTQzZjMwNmYxMDU0MyIsImlhdCI6MTc5MTkyNDA4M30.Z579wx6yW47MPzWQ2liK2G1Z3eWee3na4RIV6-zIAS0",
+   "monetization_model": "BLACKBOX",
+   "policy": "MONETIZE",
+   "user": {
+    "avatar_url": "https://i1.sndcdn.com/avatars-mu3WrBvubSyFWuxW-l5L0sA-large.jpg",
+    "city": null,
+    "comments_count": 0,
+    "country_code": null,
+    "created_at": null,
+    "creator_subscriptions": [
+     {
+      "product": {
+       "id": "creator-pro-unlimited"
+      }
+     }
+    ],
+    "creator_subscription": {
+     "product": {
+      "id": "creator-pro-unlimited"
+     }
+    },
+    "description": "Techno / HardTechno Dj & Producer\n\u2716\ufe0fCo-Founder & Resident DJ at ADN Sound Festival \n\u2716\ufe0fContact & Booking: info@ibanzero.com",
+    "followers_count": 1059,
+    "followings_count": 96,
+    "first_name": "",
+    "full_name": "",
+    "groups_count": 0,
+    "id": 3259632,
+    "kind": "user",
+    "last_modified": "2026-10-01T11:13:36Z",
+    "last_name": "",
+    "likes_count": 23,
+    "playlist_likes_count": 0,
+    "permalink": "ibanzero",
+    "permalink_url": "https://soundcloud.com/ibanzero",
+    "playlist_count": 8,
+    "reposts_count": null,
+    "track_count": 19,
+    "uri": "https://api.soundcloud.com/users/soundcloud%3Ausers%3A3259632",
+    "urn": "soundcloud:users:3259632",
+    "username": "Iban Zero",
+    "verified": false,
+    "visuals": {
+     "urn": "soundcloud:users:3259632",
+     "enabled": true,
+     "visuals": [
+      {
+       "urn": "soundcloud:visuals:247534062",
+       "entry_time": 0,
+       "visual_url": "https://i1.sndcdn.com/visuals-000003259632-eL84Ei-original.jpg"
+      }
+     ],
+     "tracking": null
+    },
+    "badges": {
+     "pro": false,
+     "creator_mid_tier": false,
+     "pro_unlimited": true,
+     "verified": false
+    },
+    "station_urn": "soundcloud:system-playlists:artist-stations:3259632",
+    "station_permalink": "artist-stations:3259632",
+    "date_of_birth": null
+   }
+  },
+  {
+   "artwork_url": "https://i1.sndcdn.com/artworks-SxQRO5RFo6aZWvZR-h84ubg-large.png",
+   "caption": null,
+   "commentable": true,
+   "comment_count": 29,
+   "created_at": "2026-04-25T17:12:18Z",
+   "description": "",
+   "downloadable": false,
+   "download_count": 175,
+   "duration": 348046,
+   "full_duration": 348000,
+   "embeddable_by": "all",
+   "genre": "Schranz",
+   "has_downloads_left": false,
+   "id": 2309168453,
+   "kind": "track",
+   "label_name": "",
+   "last_modified": "2026-09-20T20:50:10Z",
+   "license": "all-rights-reserved",
+   "likes_count": 622,
+   "permalink": "jeff-mills-the-bells-thotte",
+   "permalink_url": "https://soundcloud.com/thottechno/jeff-mills-the-bells-thotte",
+   "playback_count": 9548,
+   "public": true,
+   "publisher_metadata": {
+    "id": 2309168453,
+    "urn": "soundcloud:tracks:2309168453",
+    "artist": "Thotte",
+    "explicit": false
+   },
+   "purchase_title": "Free Download",
+   "purchase_url": "https://droploud.com/track/2362e5fb-ddb6-476f-96a0-9229b6cbf4d0",
+   "release_date": null,
+   "reposts_count": 78,
+   "secret_token": null,
+   "sharing": "public",
+   "state": "finished",
+   "streamable": true,
+   "tag_list": "Hardtechno Hard techno classic jeff mills bells schranz edit",
+   "title": "Jeff Mills -  The Bells (Thotte Schranz Bootleg) [FREE DL]",
+   "uri": "https://api.soundcloud.com/tracks/soundcloud%3Atracks%3A2309168453",
+   "urn": "soundcloud:tracks:2309168453",
+   "user_id": 569346126,
+   "visuals": null,
+   "waveform_url": "https://wave.sndcdn.com/ZstzISaw3zHY_m.json",
+   "display_date": "2026-04-25T17:12:18Z",
+   "media": {
+    "transcodings": [
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:2309168453/a3d82927-670a-48cf-be4b-96ca942a41fe/stream/hls",
+      "preset": "aac_160k",
+      "duration": 348046,
+      "snipped": false,
+      "format": {
+       "protocol": "hls",
+       "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+      },
+      "quality": "sq",
+      "is_legacy_transcoding": false
+     },
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:2309168453/204db924-38c4-4f15-a98f-bea9aa155231/stream/hls",
+      "preset": "aac_96k",
+      "duration": 348046,
+      "snipped": false,
+      "format": {
+       "protocol": "hls",
+       "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+      },
+      "quality": "lq",
+      "is_legacy_transcoding": false
+     },
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:2309168453/5b6dce66-e39e-4516-9fd8-2fe656fb95c3/stream/hls",
+      "preset": "abr_sq",
+      "duration": 348046,
+      "snipped": false,
+      "format": {
+       "protocol": "hls",
+       "mime_type": "audio/mpegurl"
+      },
+      "quality": "sq",
+      "is_legacy_transcoding": false
+     }
+    ]
+   },
+   "station_urn": "soundcloud:system-playlists:track-stations:2309168453",
+   "station_permalink": "track-stations:2309168453",
+   "track_authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJnZW8iOiJOTCIsInN1YiI6IiIsInJpZCI6IjcwNWEzYjJkLWFiZmItNDZkZC1iNDIyLTcwODViZDdlM2RlOCIsImlhdCI6MTc5MTkyNDA4M30._jEdqy5R4fwgqARPIczEORHjqc0IhYbMMUk_XDqkTUU",
+   "monetization_model": "BLACKBOX",
+   "policy": "MONETIZE",
+   "user": {
+    "avatar_url": "https://i1.sndcdn.com/avatars-lPRzsvX4AX1QcaKw-dHuaVA-large.jpg",
+    "city": null,
+    "comments_count": 0,
+    "country_code": null,
+    "created_at": null,
+    "creator_subscriptions": [
+     {
+      "product": {
+       "id": "creator-pro-unlimited"
+      }
+     }
+    ],
+    "creator_subscription": {
+     "product": {
+      "id": "creator-pro-unlimited"
+     }
+    },
+    "description": "Hungary based Hard Techno / Schranz Producer, DJ, Mixing & Mastering Engineer\nContact: thotteofficial@gmail.com\n\nThotte\u2019s journey into electronic music began in his teenage years, when he was drawn into rave culture and the raw energy of 1990s electronic music. The rebellious spirit, intensity, and freedom of that era still shape his sound today. One of his strongest influences is The Prodigy, not only musically but in attitude \u2014 aggressive, instinctive, and uncompromising.\n\nProducing music since 2012, Thotte has explored a wide range of styles before ultimately finding his home in schranz \u2014 the sound that truly reflects who he is. Fast tempos, industrial pressure, distorted grooves and relentless energy define both his productions and DJ sets.\n\nHis music blends 2000s hardtechno with the anarchic mindset of \u201990s rave culture. This is not about nostalgia or trends, but about authenticity and roots. Sets are built with precision and intent, gradually evolving into controlled chaos that takes over the dancefloor.\n\nBeyond the booth, Thotte is the founder and manager of the Eternal Resurrection label, a platform dedicated to uncompromising underground hardtechno. His work has also been released on respected labels such as DSR Digital, Pure Hate, Second Air, Echo Audio, and Awesome Beats, further cementing his place within the international hard techno underground.\n\nAs a DJ and producer, Thotte represents the underground ethos in its purest form. His sound is not made for background listening \u2014 it is meant to be felt physically, by those who seek intensity, honesty, and full-volume release.\n\n@eternalresurrection",
+    "followers_count": 627,
+    "followings_count": 879,
+    "first_name": "",
+    "full_name": "",
+    "groups_count": 0,
+    "id": 569346126,
+    "kind": "user",
+    "last_modified": "2026-10-13T17:32:06Z",
+    "last_name": "",
+    "likes_count": 1379,
+    "playlist_likes_count": 40,
+    "permalink": "thottechno",
+    "permalink_url": "https://soundcloud.com/thottechno",
+    "playlist_count": 7,
+    "reposts_count": null,
+    "track_count": 76,
+    "uri": "https://api.soundcloud.com/users/soundcloud%3Ausers%3A569346126",
+    "urn": "soundcloud:users:569346126",
+    "username": "Thotte",
+    "verified": false,
+    "visuals": {
+     "urn": "soundcloud:users:569346126",
+     "enabled": true,
+     "visuals": [
+      {
+       "urn": "soundcloud:visuals:257334243",
+       "entry_time": 0,
+       "visual_url": "https://i1.sndcdn.com/visuals-000569346126-xCAJif-original.jpg"
+      }
+     ],
+     "tracking": null
+    },
+    "badges": {
+     "pro": false,
+     "creator_mid_tier": false,
+     "pro_unlimited": true,
+     "verified": false
+    },
+    "station_urn": "soundcloud:system-playlists:artist-stations:569346126",
+    "station_permalink": "artist-stations:569346126",
+    "date_of_birth": null
+   }
+  },
+  {
+   "artwork_url": "https://i1.sndcdn.com/artworks-AMDtGr5bphz4xyYV-0oH7hA-large.png",
+   "caption": null,
+   "commentable": true,
+   "comment_count": 14,
+   "created_at": "2026-04-21T06:44:17Z",
+   "description": "Hey guys! that's my new Techno Remix of legendary track called THE BELLS by JEFF MILLS. Have fun and take your time with listening. Write some comments below about what do you think and If you listening to my tracks and mixes? Then Follow me!\n\nfollow me on spinninrecords - www.spinninrecords.com/profil...\nAdd me on facebook - www.facebook.com/crisman.wort...\nfollow me on twitter - twitter.com/CrismanWortex\nfollow me on mixcloud - www.mixcloud.com/crismanwortex1/\nfollow me on instagram - www.instagram.com/crisman.wor...\nSubscribe me on YouTube - www.youtube.com/channel/UCeEg_UyI\u2026iew_as=subscriber",
+   "downloadable": false,
+   "download_count": 0,
+   "duration": 309559,
+   "full_duration": 309551,
+   "embeddable_by": "all",
+   "genre": "Techno",
+   "has_downloads_left": false,
+   "id": 2306443547,
+   "kind": "track",
+   "label_name": "",
+   "last_modified": "2026-04-21T06:44:24Z",
+   "license": "all-rights-reserved",
+   "likes_count": 238,
+   "permalink": "jeff-mills-the-bells-wortex",
+   "permalink_url": "https://soundcloud.com/crisman-wortex/jeff-mills-the-bells-wortex",
+   "playback_count": 5381,
+   "public": true,
+   "publisher_metadata": {
+    "id": 2306443547,
+    "urn": "soundcloud:tracks:2306443547",
+    "artist": "crisman WorteX",
+    "explicit": false
+   },
+   "purchase_title": null,
+   "purchase_url": null,
+   "release_date": null,
+   "reposts_count": 5,
+   "secret_token": null,
+   "sharing": "public",
+   "state": "finished",
+   "streamable": true,
+   "tag_list": "Techno Electronic \"Dance & EDM\"",
+   "title": "Jeff Mills - The Bells (WORTEX REMIX)",
+   "uri": "https://api.soundcloud.com/tracks/soundcloud%3Atracks%3A2306443547",
+   "urn": "soundcloud:tracks:2306443547",
+   "user_id": 215216394,
+   "visuals": null,
+   "waveform_url": "https://wave.sndcdn.com/pbA6yfP6W25x_m.json",
+   "display_date": "2026-04-21T06:44:17Z",
+   "media": {
+    "transcodings": [
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:2306443547/0e4873ab-8e74-4b5e-b1bd-14d14d1e7e4d/stream/hls",
+      "preset": "aac_160k",
+      "duration": 309559,
+      "snipped": false,
+      "format": {
+       "protocol": "hls",
+       "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+      },
+      "quality": "sq",
+      "is_legacy_transcoding": false
+     },
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:2306443547/bd4386f7-dd68-4c63-bb35-3347ba6b534e/stream/hls",
+      "preset": "aac_96k",
+      "duration": 309559,
+      "snipped": false,
+      "format": {
+       "protocol": "hls",
+       "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+      },
+      "quality": "lq",
+      "is_legacy_transcoding": false
+     },
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:2306443547/5bfd501d-f08b-493c-abc1-b53d3660307d/stream/hls",
+      "preset": "abr_sq",
+      "duration": 309559,
+      "snipped": false,
+      "format": {
+       "protocol": "hls",
+       "mime_type": "audio/mpegurl"
+      },
+      "quality": "sq",
+      "is_legacy_transcoding": false
+     }
+    ]
+   },
+   "station_urn": "soundcloud:system-playlists:track-stations:2306443547",
+   "station_permalink": "track-stations:2306443547",
+   "track_authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJnZW8iOiJOTCIsInN1YiI6IiIsInJpZCI6IjE1NzE2YzQzLTM4YjktNGQ3ZC04NGVmLTg0ZjllMWM0YjIwMiIsImlhdCI6MTc5MTkyNDA4M30.JOhHy02HJOM1DlAp3mqF9_oM1L4XxZ_BjquAtJfoG2o",
+   "monetization_model": "BLACKBOX",
+   "policy": "MONETIZE",
+   "user": {
+    "avatar_url": "https://i1.sndcdn.com/avatars-n6p1KTTZCLfZKYpw-DYlR0A-large.jpg",
+    "city": null,
+    "comments_count": 0,
+    "country_code": null,
+    "created_at": null,
+    "creator_subscriptions": [
+     {
+      "product": {
+       "id": "creator-pro-unlimited"
+      }
+     }
+    ],
+    "creator_subscription": {
+     "product": {
+      "id": "creator-pro-unlimited"
+     }
+    },
+    "description": "Slovenian Artist \nproducing and mixing: Techno, Tech-House and House music. \n\nIf you Liking and listening to my tracks? Please, show some love ;)",
+    "followers_count": 1149,
+    "followings_count": 1992,
+    "first_name": "",
+    "full_name": "Collective Records, No Mercy",
+    "groups_count": 0,
+    "id": 215216394,
+    "kind": "user",
+    "last_modified": "2026-09-17T06:10:08Z",
+    "last_name": "Collective Records, No Mercy",
+    "likes_count": 452,
+    "playlist_likes_count": 4,
+    "permalink": "crisman-wortex",
+    "permalink_url": "https://soundcloud.com/crisman-wortex",
+    "playlist_count": 0,
+    "reposts_count": null,
+    "track_count": 68,
+    "uri": "https://api.soundcloud.com/users/soundcloud%3Ausers%3A215216394",
+    "urn": "soundcloud:users:215216394",
+    "username": "crisman WorteX",
+    "verified": false,
+    "visuals": {
+     "urn": "soundcloud:users:215216394",
+     "enabled": true,
+     "visuals": [
+      {
+       "urn": "soundcloud:visuals:270900162",
+       "entry_time": 0,
+       "visual_url": "https://i1.sndcdn.com/visuals-000215216394-n83Aop-original.jpg"
+      }
+     ],
+     "tracking": null
+    },
+    "badges": {
+     "pro": false,
+     "creator_mid_tier": false,
+     "pro_unlimited": true,
+     "verified": false
+    },
+    "station_urn": "soundcloud:system-playlists:artist-stations:215216394",
+    "station_permalink": "artist-stations:215216394",
+    "date_of_birth": null
+   }
+  },
+  {
+   "artwork_url": null,
+   "caption": null,
+   "commentable": true,
+   "comment_count": 0,
+   "created_at": "2017-02-07T15:39:46Z",
+   "description": "",
+   "downloadable": false,
+   "download_count": 0,
+   "duration": 181258,
+   "full_duration": 181306,
+   "embeddable_by": "all",
+   "genre": "Techno",
+   "has_downloads_left": false,
+   "id": 306553975,
+   "kind": "track",
+   "label_name": null,
+   "last_modified": "2017-02-07T15:39:58Z",
+   "license": "all-rights-reserved",
+   "likes_count": 9,
+   "permalink": "jeff-mills-thebells",
+   "permalink_url": "https://soundcloud.com/officialjordanmc/jeff-mills-thebells",
+   "playback_count": 327,
+   "public": true,
+   "publisher_metadata": {
+    "id": 306553975,
+    "urn": "soundcloud:tracks:306553975"
+   },
+   "purchase_title": null,
+   "purchase_url": null,
+   "release_date": null,
+   "reposts_count": 0,
+   "secret_token": null,
+   "sharing": "public",
+   "state": "finished",
+   "streamable": true,
+   "tag_list": "",
+   "title": "Jeff Mills - theBells",
+   "uri": "https://api.soundcloud.com/tracks/soundcloud%3Atracks%3A306553975",
+   "urn": "soundcloud:tracks:306553975",
+   "user_id": 218756113,
+   "visuals": null,
+   "waveform_url": "https://wave.sndcdn.com/ijiN1Zna66H4_m.json",
+   "display_date": "2017-02-07T15:39:46Z",
+   "media": {
+    "transcodings": [
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:306553975/d910ca51-aebc-4e1c-868b-7f767eef7ae0/stream/hls",
+      "preset": "aac_160k",
+      "duration": 181258,
+      "snipped": false,
+      "format": {
+       "protocol": "hls",
+       "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+      },
+      "quality": "sq",
+      "is_legacy_transcoding": false
+     },
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:306553975/70708243-a5b1-46bd-a0f0-0b9756651ba5/stream/hls",
+      "preset": "aac_96k",
+      "duration": 181258,
+      "snipped": false,
+      "format": {
+       "protocol": "hls",
+       "mime_type": "audio/mp4; codecs=\"mp4a.40.2\""
+      },
+      "quality": "lq",
+      "is_legacy_transcoding": false
+     },
+     {
+      "url": "https://api-v2.soundcloud.com/media/soundcloud:tracks:306553975/385a45ae-4cb1-48d3-999e-ba8bd1b11536/stream/hls",
+      "preset": "abr_sq",
+      "duration": 181258,
+      "snipped": false,
+      "format": {
+       "protocol": "hls",
+       "mime_type": "audio/mpegurl"
+      },
+      "quality": "sq",
+      "is_legacy_transcoding": false
+     }
+    ]
+   },
+   "station_urn": "soundcloud:system-playlists:track-stations:306553975",
+   "station_permalink": "track-stations:306553975",
+   "track_authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJnZW8iOiJOTCIsInN1YiI6IiIsInJpZCI6ImUwNjU0YzYwLTVhY2MtNDBmMS1hNjg3LTFiNDc1NTIxYjg1ZiIsImlhdCI6MTc5MTkyNDA4M30.tGT8ED4NpcGdRJ-BpC0Zo5bIPvxyyCPfwov_Pi-r9NU",
+   "monetization_model": "BLACKBOX",
+   "policy": "MONETIZE",
+   "user": {
+    "avatar_url": "https://i1.sndcdn.com/avatars-000259816699-67unw4-large.jpg",
+    "city": null,
+    "comments_count": 0,
+    "country_code": null,
+    "created_at": null,
+    "creator_subscriptions": [
+     {
+      "product": {
+       "id": "free"
+      }
+     }
+    ],
+    "creator_subscription": {
+     "product": {
+      "id": "free"
+     }
+    },
+    "description": null,
+    "followers_count": 25,
+    "followings_count": 29,
+    "first_name": "",
+    "full_name": "",
+    "groups_count": 0,
+    "id": 218756113,
+    "kind": "user",
+    "last_modified": "2017-07-02T14:21:38Z",
+    "last_name": "",
+    "likes_count": 176,
+    "playlist_likes_count": 5,
+    "permalink": "officialjordanmc",
+    "permalink_url": "https://soundcloud.com/officialjordanmc",
+    "playlist_count": 0,
+    "reposts_count": null,
+    "track_count": 24,
+    "uri": "https://api.soundcloud.com/users/soundcloud%3Ausers%3A218756113",
+    "urn": "soundcloud:users:218756113",
+    "username": "officialjordanmc",
+    "verified": false,
+    "visuals": {
+     "urn": "soundcloud:users:218756113",
+     "enabled": true,
+     "visuals": [
+      {
+       "urn": "soundcloud:visuals:14245893",
+       "entry_time": 0,
+       "visual_url": "https://i1.sndcdn.com/visuals-000218756113-r8LfxK-original.jpg"
+      }
+     ],
+     "tracking": null
+    },
+    "badges": {
+     "pro": false,
+     "creator_mid_tier": false,
+     "pro_unlimited": false,
+     "verified": false
+    },
+    "station_urn": "soundcloud:system-playlists:artist-stations:218756113",
+    "station_permalink": "artist-stations:218756113",
+    "date_of_birth": null
+   }
+  }
+ ],
+ "total_results": 1676,
+ "next_href": "https://api-v2.soundcloud.com/search/tracks?query_urn=soundcloud%3Asearch%3A7b96a36384104e478af73ddb822fb3e2&limit=12&offset=12&q=Jeff%20Mills%20The%20Bells",
+ "query_urn": "soundcloud:search:7b96a36384104e478af73ddb822fb3e2"
+}

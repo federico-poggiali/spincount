@@ -68,3 +68,10 @@ Fixtures are real responses (Boards of Canada album and track pages, search JSON
 Live: album search returned the tracklist; yt-dlp downloaded a Bandcamp track (152 s mp3).
 No preview-only tracks were seen on Bandcamp; every streamable track plays in full. A track with no `file` or `streaming: 0` counts as unavailable.
 Also: matcher tie-break by artist similarity (a fan re-upload titled "Artist - Track" no longer outranks the artist's own upload).
+
+## Step 14: level 3, SoundCloud (gate: the owner chose the default content in Step 0)
+Built: `parsers/soundcloud.py` (`SoundcloudApi` + parsers), `adapters/soundcloud_tracks.py`, `adapters/soundcloud_sets.py`; the two run in parallel groups.
+How it works (checked live): yt-dlp has no set search and no public API key exists, so the client reuses yt-dlp's own SoundCloud extractor (`_call_api`, which finds and refreshes the client_id) to call the api-v2 endpoints `search/tracks`, `search/albums`, `search/playlists_without_albums` and `tracks?ids=`. This uses yt-dlp's private `_call_api`/`_API_V2_BASE`; if a yt-dlp upgrade breaks it, the fixture tests pin the response format and only `parsers/soundcloud.py` needs a fix. Audio is fetched with yt-dlp from the permalink.
+SoundCloud's `policy` field gives the quality hint: `SNIP` = 30 s snippet (preview, measured as a clip on fetch), `BLOCK` = unavailable. Candidate durations use `full_duration`, not the snippet length.
+Sets only resolve their first five tracks in the search; the rest are fetched in batches of 50 with `tracks?ids=` and re-ordered into set order.
+Fixtures are real responses. Rejections covered: hour-long DJ mixes ("Essential Mix", "Live Mix At Liquid Room") fail the duration rules in the matcher and the verifier; label preview medleys ("ALARM / STEAMPIT EP / JEFF MILLS - PURPOSE MAKER / ...", "...[WASP EP](Preview)") are caught by two new verifier rules (3+ tracks joined with " / ", or "preview" together with ep/lp/album/vinyl). Remixes, edits and bootlegs of the wanted track are rejected by the version check.

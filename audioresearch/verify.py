@@ -28,6 +28,10 @@ class Verification:
     duration_ok: Optional[bool] = None                    # None: not checked (preview/clip, or no duration)
 
 
+_PREVIEW = re.compile(r"\bpreview\b|\bsnippets?\b", re.I)
+_RELEASE_WORD = re.compile(r"\b(ep|lp|album|vinyl|all tracks)\b", re.I)
+
+
 def _looks_like_mix(track: TrackRef, candidate: Candidate | None) -> str | None:
     if candidate is None:
         return None
@@ -35,6 +39,10 @@ def _looks_like_mix(track: TrackRef, candidate: Candidate | None) -> str | None:
     m = _MIX.search(text)
     if m and not _MIX.search(track.title):
         return f"looks like a mix or medley ('{m.group(0)}')"
+    if text.count(" / ") >= 2 and track.title.count(" / ") < 2:
+        return "title lists several tracks (' / '): a label preview medley"
+    if _PREVIEW.search(text) and _RELEASE_WORD.search(text) and not _PREVIEW.search(track.title):
+        return "an EP/album preview, not this track alone: a label preview medley"
     return None
 
 
