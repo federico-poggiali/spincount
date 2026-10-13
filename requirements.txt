@@ -4,3 +4,5 @@ yt-dlp
 essentia
 numpy
 librosa
+jsonschema
+mutagen
