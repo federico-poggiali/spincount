@@ -227,7 +227,7 @@ def _shows(t: LabelTrack, field: str) -> bool:
 
 
 def _row_height(t: LabelTrack) -> int:
-    return _line_height(30) + (_line_height(26) if _shows(t, "note") else 0) + 10
+    return _line_height(30) + sum(_line_height(26) for f in ("artist", "note") if _shows(t, f)) + 10
 
 
 def _group_height(tracks: list[LabelTrack]) -> int:
@@ -302,11 +302,18 @@ def _render_tracks_page(groups: list[tuple[str, list[LabelTrack]]], warn) -> byt
                 if shown != text:
                     warn(f"Tags of {t.position} were too long and have been cut")
                 canvas.text((col, ty + 3), shown, SANS, 26)
+            line = ty + _line_height(30)
+            if _shows(t, "artist"):
+                shown = canvas.ellipsize(t.artist, SANS, 26, width)
+                if shown != t.artist:
+                    warn(f"The artist of {t.position} was too long and has been cut")
+                canvas.text((x, line), shown, SANS, 26)
+                line += _line_height(26)
             if _shows(t, "note"):
                 shown = canvas.ellipsize(t.note, SANS, 26, width)
                 if shown != t.note:
                     warn(f"The note of {t.position} was too long and has been cut")
-                canvas.text((x, ty + _line_height(30)), shown, SANS, 26)
+                canvas.text((x, line), shown, SANS, 26)
             row_top += row_h + slack
         canvas.draw.rectangle([MARGIN, top, MARGIN + SIDE_W - 1, top + block_h - 1], fill=0)
         for cx, cy in ((MARGIN, top), (MARGIN + SIDE_W - 6, top), (MARGIN, top + block_h - 6),

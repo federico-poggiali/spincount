@@ -8,11 +8,12 @@ from typing import Literal
 from pydantic import BaseModel, Field
 
 MainField = Literal["label", "catno", "year", "country", "styles", "note", "qr"]
-TrackField = Literal["bpm", "key", "tags", "note"]
+TrackField = Literal["artist", "bpm", "key", "tags", "note"]
 
 
 class LabelTrack(BaseModel):
     position: str
+    artist: str | None = Field(default=None, description="Only set when it is not the record's artist")
     bpm: str | None = None
     key: str | None = None
     tags: list[str] = []
@@ -59,17 +60,24 @@ def _bpm(value: float | None) -> str | None:
     return None if value is None else f"{round(value, 1):g}"
 
 
+def _track_artist(track: dict, record_artist: str) -> str | None:
+    """A track's own artist, only where it adds something: a compilation, or a guest on a record."""
+    artist = clean_artist(track["artist"] or "")
+    return artist if artist and artist.casefold() != record_artist.casefold() else None
+
+
 def build(record: dict) -> LabelData:
     """`record` is queries.record_detail(): the record with its tracks, tags and notes."""
     release_id = record["discogs_release_id"]
+    record_artist = clean_artist(record["artist"])
     return LabelData(
-        artist=clean_artist(record["artist"]),
+        artist=record_artist,
         label=record["label"], catno=record["catno"], title=record["title"],
         year=str(record["year"]) if record["year"] else None,
         styles=record["styles"] or [],
         note=first_sentence(record["notes"]),
         qr_url=f"https://www.discogs.com/release/{release_id}" if release_id else None,
-        tracks=[LabelTrack(position=t["position"], bpm=_bpm(t["bpm"]),
+        tracks=[LabelTrack(position=t["position"], artist=_track_artist(t, record_artist), bpm=_bpm(t["bpm"]),
                            key=t["camelot_key"] or t["key"], tags=t["tags"],
                            note=first_sentence(t["notes"]))
                 for t in record["tracks"]],

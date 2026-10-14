@@ -226,3 +226,19 @@ def test_tracks_labels_are_filled_to_the_bottom_with_sides_in_proportion():
     heights = [b - a for a, b in blocks]
     assert blocks[-1][1] >= label_render.H - label_render.MARGIN - 8
     assert 2.5 < heights[0] / heights[1] < 3.5
+
+
+def test_track_artist_is_kept_only_when_it_differs_from_the_record():
+    from app.labels.data import build
+    track = lambda artist: {"position": "A1", "artist": artist, "bpm": None, "camelot_key": None,  # noqa: E731
+                            "key": None, "tags": [], "notes": []}
+    record = {"discogs_release_id": None, "artist": "Various", "label": None, "catno": None, "title": "T",
+              "year": None, "styles": [], "notes": [], "tracks": [track("Jeff Mills (2)"), track("Various")]}
+    assert [t.artist for t in build(record).tracks] == ["Jeff Mills", None]
+
+
+def test_tracks_label_prints_the_artist_line():
+    plain = [LabelTrack(position="A1", bpm="130")]
+    with_artist = [LabelTrack(position="A1", bpm="130", artist="Jeff Mills")]
+    assert label_render._row_height(with_artist[0]) > label_render._row_height(plain[0])
+    assert label_render.render_tracks(sample(with_artist), lambda m: None)

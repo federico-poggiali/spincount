@@ -112,6 +112,7 @@ export function LabelEditor({ value, onChange, loose }: Props) {
                 )}
               </legend>
               <div className={styles.trackFields}>
+                {t.artist && <Field label="Artist" name={`Artist ${t.position}`} value={t.artist} onChange={(v) => setTrack(i, { artist: v || null })} printed={trackShown("artist")} onPrinted={trackPrinted("artist")} />}
                 <Field label="BPM" name={`BPM ${t.position}`} value={t.bpm ?? ""} onChange={(v) => setTrack(i, { bpm: v || null })} printed={trackShown("bpm")} onPrinted={trackPrinted("bpm")} />
                 <Field label="Key" name={`Key ${t.position}`} value={t.key ?? ""} onChange={(v) => setTrack(i, { key: v || null })} printed={trackShown("key")} onPrinted={trackPrinted("key")} />
                 <ListField label="Tags" name={`Tags ${t.position}`} value={t.tags ?? []} onChange={(v) => setTrack(i, { tags: v })} printed={trackShown("tags")} onPrinted={trackPrinted("tags")} />
