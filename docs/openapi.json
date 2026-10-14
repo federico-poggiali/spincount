@@ -3,6 +3,11 @@
     "schemas": {
       "AnalyzeRequest": {
         "properties": {
+          "refresh_audio": {
+            "default": false,
+            "title": "Refresh Audio",
+            "type": "boolean"
+          },
           "track_ids": {
             "anyOf": [
               {
@@ -1003,6 +1008,27 @@
           "position"
         ],
         "title": "LabelTrack",
+        "type": "object"
+      },
+      "LibraryAnalysisStarted": {
+        "properties": {
+          "job_ids": {
+            "items": {
+              "type": "integer"
+            },
+            "title": "Job Ids",
+            "type": "array"
+          },
+          "queued": {
+            "title": "Queued",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "queued",
+          "job_ids"
+        ],
+        "title": "LibraryAnalysisStarted",
         "type": "object"
       },
       "NoteCreate": {
@@ -2126,6 +2152,142 @@
         "title": "TagList",
         "type": "object"
       },
+      "TrackAudioOut": {
+        "description": "What audioresearch found for one track.",
+        "properties": {
+          "alternatives": {
+            "default": [],
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "title": "Alternatives",
+            "type": "array"
+          },
+          "confidence": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Confidence"
+          },
+          "found_at": {
+            "title": "Found At",
+            "type": "string"
+          },
+          "level": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Level"
+          },
+          "page": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Page"
+          },
+          "quality": {
+            "anyOf": [
+              {
+                "enum": [
+                  "full",
+                  "preview",
+                  "clip"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Quality"
+          },
+          "readings": {
+            "default": [],
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "title": "Readings",
+            "type": "array"
+          },
+          "reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reason"
+          },
+          "source": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source"
+          },
+          "status": {
+            "enum": [
+              "found",
+              "review",
+              "not_found"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "track_id": {
+            "title": "Track Id",
+            "type": "integer"
+          },
+          "url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Url"
+          }
+        },
+        "required": [
+          "track_id",
+          "status",
+          "source",
+          "level",
+          "quality",
+          "confidence",
+          "reason",
+          "url",
+          "page",
+          "found_at"
+        ],
+        "title": "TrackAudioOut",
+        "type": "object"
+      },
       "TrackHit": {
         "properties": {
           "analysis_raw": {
@@ -2986,6 +3148,28 @@
           }
         },
         "summary": "Backfill Styles",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/admin/find-audio-and-analyse": {
+      "post": {
+        "description": "Analyse (audio search first) every record that has no audio search yet, one after the other.\nRecords already searched are skipped, so running it again only continues where it stopped.",
+        "operationId": "find_audio_and_analyse",
+        "responses": {
+          "202": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LibraryAnalysisStarted"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Find Audio And Analyse",
         "tags": [
           "admin"
         ]
@@ -4218,6 +4402,53 @@
           }
         },
         "summary": "Analyze",
+        "tags": [
+          "records"
+        ]
+      }
+    },
+    "/api/records/{record_id}/audio": {
+      "get": {
+        "description": "What audioresearch found for each track of this record (tracks without a search are left out).",
+        "operationId": "record_audio",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "record_id",
+            "required": true,
+            "schema": {
+              "title": "Record Id",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/TrackAudioOut"
+                  },
+                  "title": "Response Record Audio",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Record Audio",
         "tags": [
           "records"
         ]

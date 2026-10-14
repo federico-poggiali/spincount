@@ -35,6 +35,22 @@ class ProposalOut(BaseModel):
     proposed_at: str
 
 
+class TrackAudioOut(BaseModel):
+    """What audioresearch found for one track."""
+    track_id: int
+    status: Literal["found", "review", "not_found"]
+    source: str | None
+    level: int | None
+    quality: Literal["full", "preview", "clip"] | None
+    confidence: float | None
+    reason: str | None
+    url: str | None
+    page: str | None  # the page the audio came from (a store's record page, a Bandcamp album ...)
+    readings: list[dict] = []  # BPM / key a store shows, kept apart from the audio
+    alternatives: list[dict] = []
+    found_at: str
+
+
 class TrackOut(BaseModel):
     id: int
     record_id: int

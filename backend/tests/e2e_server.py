@@ -25,7 +25,7 @@ from app.analysis import job as analysis_job  # noqa: E402
 from app.deps import get_discogs  # noqa: E402
 from app.discogs import DiscogsClient  # noqa: E402
 from app.vault import VaultSyncer  # noqa: E402
-from tests.conftest import fake_discogs_transport  # noqa: E402
+from tests.conftest import fake_discogs_transport, load_fixture  # noqa: E402
 
 owned: dict[int, list[int]] = {}
 
@@ -43,8 +43,25 @@ def fake_lookup(record, tracks, release):
             for i, t in enumerate(tracks)}
 
 
+def fake_research(release_id, audio_dir, refresh):
+    """A saved-shape audioresearch contract: first track found on Bandcamp, second needs review, the rest not found."""
+    base = {"contract_version": 1, "discogs_release_id": release_id, "adapters_off": [], "generated_at": "2026-10-14T00:00:00Z"}
+    fixtures = {9261843: "release_simple.json", 46673: "release_heading.json", 12472: "release_cd.json"}
+    tracklist = load_fixture(fixtures[release_id])["tracklist"] if release_id in fixtures else []
+    pos = [t["position"] for t in tracklist if t.get("type_") == "track"] or ["A1", "A2"]
+    shapes = [("found", "bandcamp", 2, "full", 0.92, "Bandcamp release matched on tracklist"),
+              ("review", "discogs_youtube", 1, "full", 0.55, "linked video, no Discogs duration to check against")]
+    tracks = []
+    for i, p in enumerate(pos):
+        st, src, lvl, q, conf, why = shapes[i] if i < 2 else ("not_found", None, None, None, 0.0, "not found at any level")
+        tracks.append({"position": p, "status": st, "audio_path": None, "page": f"https://example.bandcamp.com/album/{p}" if src else None,
+                       "source": src, "level": lvl, "url": f"https://example.com/{p}" if src else None, "quality": q,
+                       "confidence": conf, "reason": why, "readings": [], "alternatives": []})
+    return {**base, "tracks": tracks}
+
+
 _make_handler = analysis_job.make_handler
-analysis_job.make_handler = lambda factory, **kw: _make_handler(factory, lookup_fn=fake_lookup, **kw)
+analysis_job.make_handler = lambda factory, **kw: _make_handler(factory, lookup_fn=fake_lookup, **{**kw, "research_fn": fake_research})
 main._discogs = discogs
 main.app.dependency_overrides[get_discogs] = discogs
 _original_init = VaultSyncer.__init__

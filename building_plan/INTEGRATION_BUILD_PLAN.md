@@ -25,7 +25,7 @@ How to use: give Claude Code one step at a time ("Do Step I2 from INTEGRATION_BU
 Done: tool committed (`609b70f`), tests pass, docs match the code.
 Open, to settle at the start of I1: (a) the owner reads `docs/audioresearch_live_report.md` (Step 17 stays open until then); (b) is confidence 0.62 acceptable when Discogs has no durations (it is what Barker and Neurø got)?
 
-## Phase 1: audio in the app, read-only
+## Phase 1: audio in the app, read-only (steps I1 to I3 built; see `docs/integration_progress.md` for the differences)
 
 ### Step I1: contract v1 and one config
 1. Add `contract_version: 1` to `ReleaseResult` JSON and `output_schema.json`; test it.

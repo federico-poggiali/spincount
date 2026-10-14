@@ -13,6 +13,7 @@ export type NotePatch = S["NotePatch"];
 export type IntakeResponse = S["IntakeResponse"];
 export type JobOut = S["JobOut"];
 export type AudioMatchReport = S["AudioMatchReport"];
+export type TrackAudio = S["TrackAudioOut"];
 export type ExactResults = S["ExactResults"];
 export type SemanticHit = S["SemanticHit"];
 export type TagCount = S["TagCount"];
@@ -124,8 +125,10 @@ export const api = {
   deleteRecord: (id: number) => send<void>("DELETE", `/api/records/${id}`),
   intake: (body: { discogs_url: string; status: Status }) =>
     request<IntakeResponse>("POST", "/api/records/intake", { body }),
-  analyze: (id: number, trackIds?: number[]) =>
-    send<{ job_id: number }>("POST", `/api/records/${id}/analyze`, trackIds ? { track_ids: trackIds } : undefined),
+  analyze: (id: number, trackIds?: number[], refreshAudio = false) =>
+    send<{ job_id: number }>("POST", `/api/records/${id}/analyze`,
+      trackIds || refreshAudio ? { track_ids: trackIds, refresh_audio: refreshAudio } : undefined),
+  recordAudio: (id: number) => get<TrackAudio[]>(`/api/records/${id}/audio`),
   validate: (id: number, trackIds: number[], overwriteManual = false) =>
     send<RecordDetail>("POST", `/api/records/${id}/validate`, { track_ids: trackIds, overwrite_manual: overwriteManual }),
   discard: (id: number, trackIds?: number[]) =>
@@ -177,6 +180,7 @@ export const api = {
 
   vaultStatus: () => get<VaultStatus>("/api/admin/vault-status"),
   syncVault: () => send<VaultSyncOut>("POST", "/api/admin/sync-vault"),
+  findAudioAndAnalyse: () => send<{ queued: number; job_ids: number[] }>("POST", "/api/admin/find-audio-and-analyse"),
   backfillStyles: () => send<{ job_id: number }>("POST", "/api/admin/backfill-styles"),
   openVault: () => send<{ opened: boolean; path: string }>("POST", "/api/admin/open-vault"),
 };

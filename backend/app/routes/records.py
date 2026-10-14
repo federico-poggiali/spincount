@@ -9,7 +9,7 @@ from app import intake as intake_service
 from app import sync
 from app.analysis import job as analysis_job
 from app.analysis.camelot import to_camelot
-from app.db import proposals, queries, records, tracks
+from app.db import proposals, queries, records, track_audio, tracks
 from app.deps import get_db, get_discogs, get_discogs_lazy, get_runner
 from app.discogs import DiscogsClient, DiscogsError, DiscogsNotFound, release_to_record
 from app.jobs.runner import JobRunner
@@ -23,6 +23,7 @@ from app.schemas import (
     RecordPatch,
     RecordSummary,
     Status,
+    TrackAudioOut,
     ValidateRequest,
 )
 
@@ -31,6 +32,7 @@ router = APIRouter(prefix="/api/records", tags=["records"])
 
 class AnalyzeRequest(BaseModel):
     track_ids: list[int] | None = None  # omitted: the whole record
+    refresh_audio: bool = False  # search for audio again even if some was already found
 
 
 class IntakeRequest(BaseModel):
@@ -154,6 +156,13 @@ def sync_discogs(record_id: int, conn: sqlite3.Connection = Depends(get_db),
     return {"job_id": runner.enqueue(sync.JOB_TYPE, record_id), "status": "queued"}
 
 
+@router.get("/{record_id}/audio", response_model=list[TrackAudioOut])
+def record_audio(record_id: int, conn: sqlite3.Connection = Depends(get_db)) -> list[dict]:
+    """What audioresearch found for each track of this record (tracks without a search are left out)."""
+    require_record(conn, record_id)
+    return list(track_audio.for_record(conn, record_id).values())
+
+
 @router.post("/{record_id}/analyze", status_code=202, response_model=JobStarted)
 def analyze(record_id: int, body: AnalyzeRequest | None = None, conn: sqlite3.Connection = Depends(get_db),
             runner: JobRunner = Depends(get_runner)) -> dict:
@@ -165,6 +174,8 @@ def analyze(record_id: int, body: AnalyzeRequest | None = None, conn: sqlite3.Co
         if not body.track_ids or not set(body.track_ids) <= own:
             raise HTTPException(400, "track_ids must be a non-empty list of tracks on this record")
         params = {"track_ids": sorted(set(body.track_ids))}
+    if body and body.refresh_audio:
+        params = {**(params or {}), "refresh_audio": True}
     if record["discogs_release_id"] is None:
         raise HTTPException(400, "record has no Discogs release id, so nothing to look up")
     return {"job_id": runner.enqueue(analysis_job.JOB_TYPE, record_id, params), "status": "queued"}

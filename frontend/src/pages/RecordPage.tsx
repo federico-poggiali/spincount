@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { api, ApiError } from "../api/api";
+import { AudioFoundPanel } from "../components/AudioFoundPanel";
 import { AudioMatchPanel } from "../components/AudioMatchPanel";
 import { Cover } from "../components/Cover";
 import { Icon } from "../components/Icon";
@@ -52,6 +53,10 @@ export default function RecordPage() {
     mutationFn: (trackIds?: number[]) => api.analyze(id, trackIds),
     onSuccess: ({ job_id }, trackIds) => { setAnalysisIds(trackIds ?? null); setAnalysisJob(job_id); setAnalysing(true); },
   });
+  const searchAgain = useMutation({
+    mutationFn: () => api.analyze(id, undefined, true),
+    onSuccess: ({ job_id }) => { setAnalysisIds(null); setAnalysisJob(job_id); setAnalysing(true); },
+  });
   // Analysis results wait as proposals until validated; `conflict` holds tracks whose hand-set values they'd replace.
   const [conflict, setConflict] = useState<{ ids: number[]; manual: string[] } | null>(null);
   const validate = useMutation({
@@ -72,6 +77,7 @@ export default function RecordPage() {
     client.invalidateQueries({ queryKey: ["records"] });
     client.invalidateQueries({ queryKey: recordKey(id) });
     client.invalidateQueries({ queryKey: ["audio-match", id] });
+    client.invalidateQueries({ queryKey: ["record-audio", id] });
   }, [client, id]);
 
   // Opened from a search result: scroll to the note and highlight it.
@@ -232,6 +238,7 @@ export default function RecordPage() {
             <NotesPanel record={r} />
           </div>
           <div role="tabpanel" id="tab-audio" aria-labelledby="tabbtn-audio" hidden={tab !== "audio"}>
+            <AudioFoundPanel record={r} busy={analysisBusy || searchAgain.isPending} onSearchAgain={() => searchAgain.mutate()} />
             <AudioMatchPanel recordId={id} onAssigned={() => { setTab("tracks"); analyze.mutate(undefined); }} />
           </div>
         </div>

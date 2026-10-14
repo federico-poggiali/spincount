@@ -270,3 +270,25 @@ test("design tags in the Tag Manager, then put one on a record", async ({ page }
   await page.getByLabel("Add a tag to this record").selectOption("closer");
   await expect(page.getByRole("list", { name: "this record tags" })).toContainText("closer");
 });
+
+test("analysis finds audio first, shows it on the Audio tab, and Settings can search the whole library", async ({ page }) => {
+  await page.goto("/add");
+  await page.getByLabel("Discogs link").fill("https://www.discogs.com/release/12472");
+  await page.getByRole("button", { name: "Add record" }).click();
+  await expect(page).toHaveURL(/\/records\/\d+/);
+  // Nothing has been searched yet.
+  await page.getByRole("tab", { name: "Audio" }).click();
+  await expect(page.getByTestId("found-audio")).toContainText("not searched yet");
+  // Analysing runs the audio search first.
+  await page.getByRole("tab", { name: /Tracks/ }).click();
+  await page.getByRole("button", { name: "Analyse whole record" }).click();
+  await expect(page.getByTestId("job-analysis").getByRole("status")).toHaveText("done");
+  await page.getByRole("tab", { name: "Audio" }).click();
+  await expect(page.getByTestId("found-audio")).toContainText("1 found · 1 need a look · 10 not found");
+  await expect(page.getByTestId("found-audio-A1")).toContainText("bandcamp · full track · 92%");
+  await expect(page.getByTestId("found-audio-A2")).toContainText("needs a look");
+  // Settings: records already searched are skipped.
+  await page.goto("/settings");
+  await page.getByRole("button", { name: "Find audio and analyse the library" }).click();
+  await expect(page.getByTestId("library-audio-queued")).toContainText(/Nothing to do|queued/);
+});

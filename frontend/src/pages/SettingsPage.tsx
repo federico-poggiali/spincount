@@ -19,6 +19,8 @@ export default function SettingsPage() {
   });
   const [stylesJob, setStylesJob] = useState<number | null>(null);
   const fetchStyles = useMutation({ mutationFn: api.backfillStyles, onSuccess: ({ job_id }) => setStylesJob(job_id) });
+  const [libraryJobs, setLibraryJobs] = useState<number[]>([]);
+  const analyseLibrary = useMutation({ mutationFn: api.findAudioAndAnalyse, onSuccess: ({ job_ids }) => setLibraryJobs(job_ids) });
   const [keysOn, setKeysOn] = useKeysEnabled();
   const last = sync.data ?? status.data?.last_sync ?? null;
 
@@ -68,6 +70,28 @@ export default function SettingsPage() {
         BPM is always analysed and shown. With this on, analysis also proposes a key for each track, and the tracklist, library
         filters and track list show keys (Camelot or musical). Off, every key column, filter and picker is hidden.
       </p>
+
+      <header>
+        <span className="micro">audio</span>
+        <h2>Find audio and analyse the library</h2>
+      </header>
+      <p className={styles.hint}>
+        Audio is searched for as the first step of every analysis. This does it for every record that has not been searched yet,
+        one after the other: your own files, YouTube, Bandcamp, SoundCloud and record stores. It is slow (about a minute a record)
+        and downloads audio. Records already searched are skipped, so running it again only continues where it stopped. Results
+        wait on each record as proposals until you validate them.
+      </p>
+      <div className={styles.actions}>
+        <button className="primary" onClick={() => analyseLibrary.mutate()} disabled={analyseLibrary.isPending}>
+          {analyseLibrary.isPending ? "Queueing…" : "Find audio and analyse the library"}
+        </button>
+      </div>
+      {analyseLibrary.data && (
+        <p className={styles.hint} role="status" data-testid="library-audio-queued">
+          {analyseLibrary.data.queued === 0 ? "Nothing to do: every record has been searched." : `${analyseLibrary.data.queued} ${analyseLibrary.data.queued === 1 ? "record" : "records"} queued. You can leave this page; they run in the background.`}
+        </p>
+      )}
+      {libraryJobs.length > 0 && <p className={styles.hint}>Progress is on each record page (Audio tab).</p>}
 
       <header>
         <span className="micro">discogs</span>

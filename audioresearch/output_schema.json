@@ -2,12 +2,13 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "ReleaseResult",
   "type": "object",
-  "required": ["discogs_release_id", "tracks", "adapters_off", "generated_at"],
+  "required": ["contract_version", "discogs_release_id", "tracks", "adapters_off", "generated_at"],
   "additionalProperties": false,
   "properties": {
     "discogs_release_id": {"type": "integer"},
     "adapters_off": {"type": "array", "items": {"type": "string"}},
     "generated_at": {"type": "string"},
+    "contract_version": {"type": "integer", "const": 1},
     "tracks": {
       "type": "array",
       "items": {

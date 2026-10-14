@@ -10,6 +10,7 @@ from fastapi.staticfiles import StaticFiles
 
 from app import backfill, config, errors, sync
 from app.analysis import job as analysis_job
+from app.audio import stage as audio_stage
 from app.db import connect, migrate
 from app.discogs import DiscogsClient
 from app.jobs.runner import JobRunner
@@ -32,7 +33,7 @@ async def lifespan(app: FastAPI):
     conn.close()
     syncer = app.state.vault_syncer = VaultSyncer(config.VAULT_DIR)
     app.state.runner = JobRunner({
-        analysis_job.JOB_TYPE: analysis_job.make_handler(_discogs),
+        analysis_job.JOB_TYPE: analysis_job.make_handler(_discogs, research_fn=audio_stage.research_release),
         sync.JOB_TYPE: sync.make_handler(_discogs),
         backfill.JOB_TYPE: backfill.make_handler(_discogs),
     }, on_done=syncer.request)

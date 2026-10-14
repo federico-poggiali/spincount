@@ -1,3 +1,4 @@
+import sqlite3
 import subprocess
 import sys
 
@@ -5,7 +6,9 @@ from fastapi import APIRouter, Depends, HTTPException, Request
 from pydantic import BaseModel
 
 from app import backfill, config
-from app.deps import get_runner
+from app.analysis import job as analysis_job
+from app.db import track_audio
+from app.deps import get_db, get_runner
 from app.jobs.runner import JobRunner
 from app.schemas import JobStarted, OpenedPath
 from app.vault import EXAMPLES_FILE, VaultSyncer
@@ -49,6 +52,21 @@ def vault_status(request: Request) -> dict:
 def backfill_styles(runner: JobRunner = Depends(get_runner)) -> dict:
     """Fetch styles for records that have none yet. Runs as a job (Discogs allows 60 calls a minute)."""
     return {"job_id": runner.enqueue(backfill.JOB_TYPE), "status": "queued"}
+
+
+class LibraryAnalysisStarted(BaseModel):
+    queued: int
+    job_ids: list[int]
+
+
+@router.post("/find-audio-and-analyse", status_code=202, response_model=LibraryAnalysisStarted)
+def find_audio_and_analyse(conn: sqlite3.Connection = Depends(get_db),
+                           runner: JobRunner = Depends(get_runner)) -> dict:
+    """Analyse (audio search first) every record that has no audio search yet, one after the other.
+    Records already searched are skipped, so running it again only continues where it stopped."""
+    ids = [runner.enqueue(analysis_job.JOB_TYPE, record_id)
+           for record_id in track_audio.records_without_audio(conn)]
+    return {"queued": len(ids), "job_ids": ids}
 
 
 @router.post("/open-vault", response_model=OpenedPath)

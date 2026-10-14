@@ -23,9 +23,13 @@ def _float(name: str, default: float) -> float:
         return default
 
 
-AUDIORESEARCH_DB: Path = _path("AUDIORESEARCH_DB", "audioresearch.db")
-AUDIO_CACHE_DIR: Path = _path("AUDIO_CACHE_DIR", "audio_cache")
-LOCAL_AUDIO_DIR: Path = _path("AUDIORESEARCH_LOCAL_AUDIO", "audio")  # level 0: audio/<release id>/
+# Spin Count's database folder (DB_PATH in .env, e.g. Application Support) also holds this tool's cache and audio,
+# so gigabytes of downloads stay out of the repo (and out of OneDrive). Without DB_PATH it is the repo, as before.
+_DATA_DIR = Path(os.environ["DB_PATH"]).expanduser().parent if os.environ.get("DB_PATH") else ROOT
+AUDIORESEARCH_DB: Path = _path("AUDIORESEARCH_DB", str(_DATA_DIR / "audioresearch.db"))
+AUDIO_CACHE_DIR: Path = _path("AUDIO_CACHE_DIR", str(_DATA_DIR / "audio_cache"))
+# level 0: <folder>/<release id>/. The same folder Spin Count reads (AUDIO_DIR), so there is one place for your files.
+LOCAL_AUDIO_DIR: Path = _path("AUDIORESEARCH_LOCAL_AUDIO", os.environ.get("AUDIO_DIR") or "audio")
 REVIEW_THRESHOLD: float = _float("REVIEW_THRESHOLD", 0.6)
 HEALTH_MAX_FAILURES: int = int(_float("AUDIORESEARCH_MAX_FAILURES", 5))
 MAX_VIDEO_SECONDS: int = 20 * 60

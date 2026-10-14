@@ -24,6 +24,27 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/admin/find-audio-and-analyse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Find Audio And Analyse
+         * @description Analyse (audio search first) every record that has no audio search yet, one after the other.
+         *     Records already searched are skipped, so running it again only continues where it stopped.
+         */
+        post: operations["find_audio_and_analyse"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/admin/open-vault": {
         parameters: {
             query?: never;
@@ -432,6 +453,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/records/{record_id}/audio": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Record Audio
+         * @description What audioresearch found for each track of this record (tracks without a search are left out).
+         */
+        get: operations["record_audio"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/records/{record_id}/audio-match": {
         parameters: {
             query?: never;
@@ -801,6 +842,11 @@ export interface components {
     schemas: {
         /** AnalyzeRequest */
         AnalyzeRequest: {
+            /**
+             * Refresh Audio
+             * @default false
+             */
+            refresh_audio: boolean;
             /** Track Ids */
             track_ids?: number[] | null;
         };
@@ -1125,6 +1171,13 @@ export interface components {
              * @default []
              */
             tags: string[];
+        };
+        /** LibraryAnalysisStarted */
+        LibraryAnalysisStarted: {
+            /** Job Ids */
+            job_ids: number[];
+            /** Queued */
+            queued: number;
         };
         /** NoteCreate */
         NoteCreate: {
@@ -1473,6 +1526,49 @@ export interface components {
             /** Items */
             items: components["schemas"]["TagCount"][];
         };
+        /**
+         * TrackAudioOut
+         * @description What audioresearch found for one track.
+         */
+        TrackAudioOut: {
+            /**
+             * Alternatives
+             * @default []
+             */
+            alternatives: {
+                [key: string]: unknown;
+            }[];
+            /** Confidence */
+            confidence: number | null;
+            /** Found At */
+            found_at: string;
+            /** Level */
+            level: number | null;
+            /** Page */
+            page: string | null;
+            /** Quality */
+            quality: ("full" | "preview" | "clip") | null;
+            /**
+             * Readings
+             * @default []
+             */
+            readings: {
+                [key: string]: unknown;
+            }[];
+            /** Reason */
+            reason: string | null;
+            /** Source */
+            source: string | null;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "found" | "review" | "not_found";
+            /** Track Id */
+            track_id: number;
+            /** Url */
+            url: string | null;
+        };
         /** TrackHit */
         TrackHit: {
             /** Analysis Raw */
@@ -1758,6 +1854,26 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["JobStarted"];
+                };
+            };
+        };
+    };
+    find_audio_and_analyse: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LibraryAnalysisStarted"];
                 };
             };
         };
@@ -2578,6 +2694,37 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["JobStarted"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    record_audio: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                record_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TrackAudioOut"][];
                 };
             };
             /** @description Validation Error */

@@ -9,6 +9,7 @@ from pathlib import Path
 from app import config
 from app.analysis import engine, lookup
 from app.analysis.matching import find_audio_files, match_files
+from app.audio import stage as audio_stage
 from app.db import proposals, records, tracks
 from app.discogs import DiscogsClient
 
@@ -60,6 +61,7 @@ def make_handler(
     lookup_fn: Callable[[dict, list[dict], dict], dict[int, dict]] = lookup.lookup_tracks,
     analyze: Callable[[Path], dict] = engine.analyze,
     audio_dir: Path | None = None,
+    research_fn: audio_stage.ResearchFn | None = None,
 ) -> Callable[[sqlite3.Connection, dict], dict]:
     def handler(conn: sqlite3.Connection, job: dict) -> dict:
         record = records.get(conn, job["record_id"])
@@ -72,6 +74,12 @@ def make_handler(
         if selected is not None:
             track_rows = [t for t in track_rows if t["id"] in set(selected)]
         errors: list[dict] = []
+
+        # 0. Find audio for the tracks (audioresearch); a failure is reported but never stops the analysis.
+        audio_report = None
+        if research_fn is not None:
+            audio_report = audio_stage.run(conn, record, track_rows, research_fn, audio_dir,
+                                           refresh=bool((job.get("params") or {}).get("refresh_audio")))
 
         # 1. From the Discogs link: online databases, then audio bpmkey finds itself.
         release = discogs_factory().release(record["discogs_release_id"])
@@ -101,6 +109,7 @@ def make_handler(
             "from_audio_files_track_ids": from_files,
             "no_data_track_ids": [t["id"] for t in track_rows if t["id"] not in got_data],
             "audio_match": report,
+            "audio_research": audio_report,
             "errors": errors,
         }
 

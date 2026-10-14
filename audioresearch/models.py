@@ -170,6 +170,9 @@ def _now() -> str:
     return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
+CONTRACT_VERSION = 1   # bump when the JSON of ReleaseResult changes in a way readers must notice
+
+
 @dataclass
 class ReleaseResult:
     discogs_release_id: int
@@ -178,7 +181,7 @@ class ReleaseResult:
     generated_at: str = field(default_factory=_now)
 
     def to_dict(self) -> dict:
-        return {"discogs_release_id": self.discogs_release_id, "tracks": [t.to_dict() for t in self.tracks],
+        return {"contract_version": CONTRACT_VERSION, "discogs_release_id": self.discogs_release_id, "tracks": [t.to_dict() for t in self.tracks],
                 "adapters_off": list(self.adapters_off), "generated_at": self.generated_at}
 
     def to_json(self, indent: int | None = 2) -> str:
