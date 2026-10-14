@@ -22,7 +22,7 @@ import styles from "./RecordPage.module.css";
 
 /** Passed in router state by the add-record page, so the record can say what happened.
     askShelf: it was added as owned, so ask where it goes on the shelf. */
-export type Arrival = { existed: boolean; fromMaster: boolean; askShelf?: boolean };
+export type Arrival = { existed: boolean; fromMaster: boolean; askShelf?: boolean; audioJob?: number };
 
 type Tab = "tracks" | "notes" | "audio";
 
@@ -34,6 +34,8 @@ export default function RecordPage() {
   const client = useQueryClient();
   const [analysisJob, setAnalysisJob] = useState<number | null>(null);
   const [syncJob, setSyncJob] = useState<number | null>(null);
+  const [audioJob, setAudioJob] = useState<number | null>(arrival?.audioJob ?? null);
+  const [findingAudio, setFindingAudio] = useState(arrival?.audioJob != null);
   const [analysing, setAnalysing] = useState(false);
   const record = useRecord(id, analysing);
   const patch = usePatchRecord(id);
@@ -54,8 +56,8 @@ export default function RecordPage() {
     onSuccess: ({ job_id }, trackIds) => { setAnalysisIds(trackIds ?? null); setAnalysisJob(job_id); setAnalysing(true); },
   });
   const searchAgain = useMutation({
-    mutationFn: () => api.analyze(id, undefined, true),
-    onSuccess: ({ job_id }) => { setAnalysisIds(null); setAnalysisJob(job_id); setAnalysing(true); },
+    mutationFn: () => api.findAudio(id, true),
+    onSuccess: ({ job_id }) => { setAudioJob(job_id); setFindingAudio(true); },
   });
   // Analysis results wait as proposals until validated; `conflict` holds tracks whose hand-set values they'd replace.
   const [conflict, setConflict] = useState<{ ids: number[]; manual: string[] } | null>(null);
@@ -189,8 +191,9 @@ export default function RecordPage() {
               <span className={styles.spacer} />
               {keysOn && <KeyFormatToggle value={keyFormat} onChange={setKeyFormat} />}
             </div>
-            {(analysisJob != null || syncJob != null) && (
+            {(analysisJob != null || syncJob != null || audioJob != null) && (
               <div className={styles.jobs}>
+                {audioJob != null && <JobChip label="Finding audio" jobId={audioJob} onSettled={() => { setFindingAudio(false); refresh(); }} onRetry={() => searchAgain.mutate()} retrying={searchAgain.isPending} />}
                 {analysisJob != null && <JobChip label="Analysis" jobId={analysisJob} onSettled={() => { setAnalysing(false); refresh(); }} onRetry={() => analyze.mutate(analysisIds ?? undefined)} />}
                 {syncJob != null && <JobChip label="Discogs sync" jobId={syncJob} onSettled={() => { setSyncRunning(false); refresh(); }} onRetry={() => sync.mutate()} />}
               </div>
@@ -238,7 +241,7 @@ export default function RecordPage() {
             <NotesPanel record={r} />
           </div>
           <div role="tabpanel" id="tab-audio" aria-labelledby="tabbtn-audio" hidden={tab !== "audio"}>
-            <AudioFoundPanel record={r} busy={analysisBusy || searchAgain.isPending} onSearchAgain={() => searchAgain.mutate()} />
+            <AudioFoundPanel record={r} busy={findingAudio || searchAgain.isPending} onSearchAgain={() => searchAgain.mutate()} />
             <AudioMatchPanel recordId={id} onAssigned={() => { setTab("tracks"); analyze.mutate(undefined); }} />
           </div>
         </div>

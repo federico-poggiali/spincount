@@ -15,3 +15,14 @@ Differences from the plan:
 - **Analysis does not use the audio yet.** BPM and key still come from bpmkey exactly as before (its own online lookup and audio search). That is Phase 3 (steps I5 and I6); until then the found audio is only shown, not analysed.
 - Not built yet: playing the audio in the app, accept / reject / paste a link / assign a file (Phase 2, step I4). Your own files in `audio/<release id>/` are found by level 0 as before.
 - Step I1's two open questions were settled by default: the 0.62 confidence (no Discogs durations) is kept as it is, and the old cache stays where it is.
+
+## Audio on add, and the viewer's results in the app
+The owner changed rule 1: audio is found **by itself when a record is added**; analysis stays a button.
+- **`audio` job** (`backend/app/audio/job.py`): finds audio only, never BPM or key. Intake queues it for every new record (`jobs: {"audio": id}`); the record page shows a "Finding audio" chip. A failure fails the job (Retry), unlike inside analysis where it is only reported. The analysis job still searches first, but only when no audio was found yet.
+- **Results like the viewer**: `GET /api/records/{id}/audio` now returns `{tracks, previews}`, where `previews` is audioresearch's own plan (`audioresearch/previews.py`, built from the stored rows, so the app and the viewer pick the same links). The Audio tab shows a play button per track, the source family (YouTube, Bandcamp, SoundCloud, iTunes, a store, your files), quality, "needs a look", how sure, "Find at <store>" links, "Open" to the source page, "Play record", and a docked player (official YouTube / SoundCloud / Bandcamp embeds; store clips and iTunes previews in an audio element; clips roll on to the next track).
+- **Playback helpers**: `GET /api/tracks/{id}/audio-file` plays your own files (only files level 0 matched, and only inside `AUDIO_DIR`); `GET /api/audio/bandcamp-embed?url=` gives the id Bandcamp's player needs (bandcamp.com links only).
+- **Search again**: `POST /api/records/{id}/find-audio` (`refresh`), the "Search again" button.
+- **Settings**: "Find audio for the library" (`POST /api/admin/find-audio`) queues `audio` jobs, not analysis.
+- Tests: 172 backend (new: audio job, reuse by analysis, preview plan, store pages, file serving limited to the audio folder, Bandcamp link check), 35 browser (the audio flow now adds a record, waits for the automatic search, checks the rows and plays a YouTube track in the docked player).
+- Not checked in a real browser with real embeds: the e2e test only checks the player's iframe address. The Bandcamp embed endpoint is the viewer's code, not run against a live page here.
+- Still true: one job worker, so a new record's audio search (about a minute) delays anything queued after it, including an "Analyse" pressed straight away (which then reuses the audio).

@@ -9,7 +9,8 @@ from app import intake as intake_service
 from app import sync
 from app.analysis import job as analysis_job
 from app.analysis.camelot import to_camelot
-from app.db import proposals, queries, records, track_audio, tracks
+from app.audio import job as audio_job
+from app.db import proposals, queries, records, tracks
 from app.deps import get_db, get_discogs, get_discogs_lazy, get_runner
 from app.discogs import DiscogsClient, DiscogsError, DiscogsNotFound, release_to_record
 from app.jobs.runner import JobRunner
@@ -23,7 +24,6 @@ from app.schemas import (
     RecordPatch,
     RecordSummary,
     Status,
-    TrackAudioOut,
     ValidateRequest,
 )
 
@@ -61,7 +61,7 @@ def filters_from_query(bpm_min, bpm_max, key, tag, style, status, q, limit, offs
 
 @router.post("/intake", response_model=IntakeResponse)
 def intake(body: IntakeRequest, response: Response, conn: sqlite3.Connection = Depends(get_db),
-           discogs: DiscogsClient = Depends(get_discogs)) -> dict:
+           discogs: DiscogsClient = Depends(get_discogs), runner: JobRunner = Depends(get_runner)) -> dict:
     try:
         result = intake_service.intake(conn, discogs, body.discogs_url, body.status)
     except DiscogsNotFound as exc:
@@ -69,7 +69,12 @@ def intake(body: IntakeRequest, response: Response, conn: sqlite3.Connection = D
     except DiscogsError as exc:
         raise HTTPException(400 if "Not a Discogs" in str(exc) else 502, str(exc)) from exc
     response.status_code = 201 if result.created else 200
-    body_out = {**result.record, "resolved_from_master": result.resolved_from_master, "jobs": None}
+    # A new record starts finding its audio straight away. BPM and key wait for "Analyse" (which reuses it).
+    job = None
+    if result.created and result.record["discogs_release_id"] is not None:
+        job = runner.enqueue(audio_job.JOB_TYPE, result.record["id"])
+    body_out = {**result.record, "resolved_from_master": result.resolved_from_master,
+                "jobs": {"audio": job} if job is not None else None}
     return body_out
 
 
@@ -154,13 +159,6 @@ def sync_discogs(record_id: int, conn: sqlite3.Connection = Depends(get_db),
     if record["status"] != "owned":
         raise HTTPException(400, f"only owned records are collected (status: {record['status']})")
     return {"job_id": runner.enqueue(sync.JOB_TYPE, record_id), "status": "queued"}
-
-
-@router.get("/{record_id}/audio", response_model=list[TrackAudioOut])
-def record_audio(record_id: int, conn: sqlite3.Connection = Depends(get_db)) -> list[dict]:
-    """What audioresearch found for each track of this record (tracks without a search are left out)."""
-    require_record(conn, record_id)
-    return list(track_audio.for_record(conn, record_id).values())
 
 
 @router.post("/{record_id}/analyze", status_code=202, response_model=JobStarted)

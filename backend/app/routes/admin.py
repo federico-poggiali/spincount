@@ -6,7 +6,7 @@ from fastapi import APIRouter, Depends, HTTPException, Request
 from pydantic import BaseModel
 
 from app import backfill, config
-from app.analysis import job as analysis_job
+from app.audio import job as audio_job
 from app.db import track_audio
 from app.deps import get_db, get_runner
 from app.jobs.runner import JobRunner
@@ -54,17 +54,17 @@ def backfill_styles(runner: JobRunner = Depends(get_runner)) -> dict:
     return {"job_id": runner.enqueue(backfill.JOB_TYPE), "status": "queued"}
 
 
-class LibraryAnalysisStarted(BaseModel):
+class LibraryAudioStarted(BaseModel):
     queued: int
     job_ids: list[int]
 
 
-@router.post("/find-audio-and-analyse", status_code=202, response_model=LibraryAnalysisStarted)
-def find_audio_and_analyse(conn: sqlite3.Connection = Depends(get_db),
+@router.post("/find-audio", status_code=202, response_model=LibraryAudioStarted)
+def find_audio_for_library(conn: sqlite3.Connection = Depends(get_db),
                            runner: JobRunner = Depends(get_runner)) -> dict:
-    """Analyse (audio search first) every record that has no audio search yet, one after the other.
-    Records already searched are skipped, so running it again only continues where it stopped."""
-    ids = [runner.enqueue(analysis_job.JOB_TYPE, record_id)
+    """Find audio for every record that has not been searched yet, one after the other. Records already
+    searched are skipped, so running it again only continues where it stopped. BPM and key are not touched."""
+    ids = [runner.enqueue(audio_job.JOB_TYPE, record_id)
            for record_id in track_audio.records_without_audio(conn)]
     return {"queued": len(ids), "job_ids": ids}
 

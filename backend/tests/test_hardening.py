@@ -45,6 +45,7 @@ def test_openapi_lists_every_endpoint_with_a_schema():
     documented = {(path, method) for path, ops in schema["paths"].items() for method in ops}
     from app.routes import (
         admin,
+        audio,
         crate,
         jobs,
         label_maker,
@@ -56,7 +57,7 @@ def test_openapi_lists_every_endpoint_with_a_schema():
         tags,
         tracks,
     )
-    all_routes = [r for m in (records, tracks, notes, tags, styles, labels, label_maker, search, crate, jobs, admin) for r in m.router.routes]
+    all_routes = [r for m in (records, audio, tracks, notes, tags, styles, labels, label_maker, search, crate, jobs, admin) for r in m.router.routes]
     all_routes.append(next(r for r in app.routes if getattr(r, "path", "") == "/health"))
     routes = {(r.path, m.lower()) for r in all_routes for m in r.methods if m not in ("HEAD", "OPTIONS")}
     assert routes == documented

@@ -21,7 +21,7 @@ export default function AddRecordPage() {
     onSuccess: ({ data, status: http }) => {
       client.invalidateQueries({ queryKey: ["records"] });
       client.invalidateQueries({ queryKey: ["crate"] });
-      const arrival: Arrival = { existed: http === 200, fromMaster: data.resolved_from_master != null, askShelf: data.status === "owned" };
+      const arrival: Arrival = { existed: http === 200, fromMaster: data.resolved_from_master != null, askShelf: data.status === "owned", audioJob: data.jobs?.audio ?? undefined };
       navigate(`/records/${data.id}`, { state: arrival });
     },
   });

@@ -20,7 +20,7 @@ export default function SettingsPage() {
   const [stylesJob, setStylesJob] = useState<number | null>(null);
   const fetchStyles = useMutation({ mutationFn: api.backfillStyles, onSuccess: ({ job_id }) => setStylesJob(job_id) });
   const [libraryJobs, setLibraryJobs] = useState<number[]>([]);
-  const analyseLibrary = useMutation({ mutationFn: api.findAudioAndAnalyse, onSuccess: ({ job_ids }) => setLibraryJobs(job_ids) });
+  const analyseLibrary = useMutation({ mutationFn: api.findAudioForLibrary, onSuccess: ({ job_ids }) => setLibraryJobs(job_ids) });
   const [keysOn, setKeysOn] = useKeysEnabled();
   const last = sync.data ?? status.data?.last_sync ?? null;
 
@@ -73,17 +73,17 @@ export default function SettingsPage() {
 
       <header>
         <span className="micro">audio</span>
-        <h2>Find audio and analyse the library</h2>
+        <h2>Find audio for the library</h2>
       </header>
       <p className={styles.hint}>
-        Audio is searched for as the first step of every analysis. This does it for every record that has not been searched yet,
-        one after the other: your own files, YouTube, Bandcamp, SoundCloud and record stores. It is slow (about a minute a record)
-        and downloads audio. Records already searched are skipped, so running it again only continues where it stopped. Results
-        wait on each record as proposals until you validate them.
+        New records find their audio by themselves when you add them. This does it for every record that has not been searched
+        yet, one after the other: your own files, YouTube, Bandcamp, SoundCloud and record stores. It is slow (about a minute a
+        record) and downloads audio. Records already searched are skipped, so running it again only continues where it stopped.
+        BPM and key are not touched: analysing a record later reuses the audio found.
       </p>
       <div className={styles.actions}>
         <button className="primary" onClick={() => analyseLibrary.mutate()} disabled={analyseLibrary.isPending}>
-          {analyseLibrary.isPending ? "Queueing…" : "Find audio and analyse the library"}
+          {analyseLibrary.isPending ? "Queueing…" : "Find audio for the library"}
         </button>
       </div>
       {analyseLibrary.data && (

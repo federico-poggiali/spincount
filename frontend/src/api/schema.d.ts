@@ -24,7 +24,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/admin/find-audio-and-analyse": {
+    "/api/admin/find-audio": {
         parameters: {
             query?: never;
             header?: never;
@@ -34,11 +34,11 @@ export interface paths {
         get?: never;
         put?: never;
         /**
-         * Find Audio And Analyse
-         * @description Analyse (audio search first) every record that has no audio search yet, one after the other.
-         *     Records already searched are skipped, so running it again only continues where it stopped.
+         * Find Audio For Library
+         * @description Find audio for every record that has not been searched yet, one after the other. Records already
+         *     searched are skipped, so running it again only continues where it stopped. BPM and key are not touched.
          */
-        post: operations["find_audio_and_analyse"];
+        post: operations["find_audio_for_library"];
         delete?: never;
         options?: never;
         head?: never;
@@ -108,6 +108,26 @@ export interface paths {
         };
         /** Vault Status */
         get: operations["vault_status"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/audio/bandcamp-embed": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Bandcamp Embed
+         * @description The numeric id Bandcamp's embed player needs (it is only on the page).
+         */
+        get: operations["bandcamp_embed"];
         put?: never;
         post?: never;
         delete?: never;
@@ -462,7 +482,7 @@ export interface paths {
         };
         /**
          * Record Audio
-         * @description What audioresearch found for each track of this record (tracks without a search are left out).
+         * @description What audioresearch found for each track, and which link each track plays.
          */
         get: operations["record_audio"];
         put?: never;
@@ -504,6 +524,26 @@ export interface paths {
          * @description Drop analysis proposals (all of them, or only `track_ids`) without touching the tracks.
          */
         post: operations["discard"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/records/{record_id}/find-audio": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Find Audio
+         * @description Search for this record's audio (again, with `refresh`). BPM and key are not touched.
+         */
+        post: operations["find_audio"];
         delete?: never;
         options?: never;
         head?: never;
@@ -819,6 +859,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/tracks/{track_id}/audio-file": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Track Audio File
+         * @description Your own file for a track, so the page can play it. Only files level 0 matched inside AUDIO_DIR.
+         */
+        get: operations["track_audio_file"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/health": {
         parameters: {
             query?: never;
@@ -881,6 +941,13 @@ export interface components {
             score: number;
             /** Track Id */
             track_id: number;
+        };
+        /** BandcampEmbed */
+        BandcampEmbed: {
+            /** Id */
+            id: number;
+            /** Kind */
+            kind: string;
         };
         /** CrateOut */
         CrateOut: {
@@ -962,6 +1029,14 @@ export interface components {
             notes: components["schemas"]["ExactNoteHit"][];
             /** Records */
             records: components["schemas"]["RecordRef"][];
+        };
+        /** FindAudioRequest */
+        FindAudioRequest: {
+            /**
+             * Refresh
+             * @default false
+             */
+            refresh: boolean;
         };
         /** FromDiscogs */
         FromDiscogs: {
@@ -1172,8 +1247,8 @@ export interface components {
              */
             tags: string[];
         };
-        /** LibraryAnalysisStarted */
-        LibraryAnalysisStarted: {
+        /** LibraryAudioStarted */
+        LibraryAudioStarted: {
             /** Job Ids */
             job_ids: number[];
             /** Queued */
@@ -1274,6 +1349,15 @@ export interface components {
             key: string | null;
             /** Proposed At */
             proposed_at: string;
+        };
+        /** RecordAudioOut */
+        RecordAudioOut: {
+            /** Previews */
+            previews: {
+                [key: string]: unknown;
+            };
+            /** Tracks */
+            tracks: components["schemas"]["TrackAudioOut"][];
         };
         /** RecordDetail */
         RecordDetail: {
@@ -1858,7 +1942,7 @@ export interface operations {
             };
         };
     };
-    find_audio_and_analyse: {
+    find_audio_for_library: {
         parameters: {
             query?: never;
             header?: never;
@@ -1873,7 +1957,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["LibraryAnalysisStarted"];
+                    "application/json": components["schemas"]["LibraryAudioStarted"];
                 };
             };
         };
@@ -1954,6 +2038,37 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["VaultStatus"];
+                };
+            };
+        };
+    };
+    bandcamp_embed: {
+        parameters: {
+            query: {
+                url: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BandcampEmbed"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
                 };
             };
         };
@@ -2724,7 +2839,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["TrackAudioOut"][];
+                    "application/json": components["schemas"]["RecordAudioOut"];
                 };
             };
             /** @description Validation Error */
@@ -2791,6 +2906,41 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["RecordDetail"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    find_audio: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                record_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["FindAudioRequest"] | null;
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["JobStarted"];
                 };
             };
             /** @description Validation Error */
@@ -3485,6 +3635,37 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["TrackOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    track_audio_file: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                track_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The audio file, as stored */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/octet-stream": string;
                 };
             };
             /** @description Validation Error */

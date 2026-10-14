@@ -49,19 +49,25 @@ def fake_research(release_id, audio_dir, refresh):
     fixtures = {9261843: "release_simple.json", 46673: "release_heading.json", 12472: "release_cd.json"}
     tracklist = load_fixture(fixtures[release_id])["tracklist"] if release_id in fixtures else []
     pos = [t["position"] for t in tracklist if t.get("type_") == "track"] or ["A1", "A2"]
-    shapes = [("found", "bandcamp", 2, "full", 0.92, "Bandcamp release matched on tracklist"),
-              ("review", "discogs_youtube", 1, "full", 0.55, "linked video, no Discogs duration to check against")]
+    shapes = [("found", "discogs_youtube", 1, "full", 0.92, "linked video, duration agrees"),
+              ("review", "redeye", 5, "clip", 0.55, "store clip for the side, no Discogs duration to check against")]
+    urls = ["https://www.youtube.com/watch?v=dQw4w9WgXcQ", "https://www.redeyerecords.co.uk/clips/A2.mp3"]
+    pages = [None, "https://www.redeyerecords.co.uk/vinyl/12472"]
     tracks = []
     for i, p in enumerate(pos):
         st, src, lvl, q, conf, why = shapes[i] if i < 2 else ("not_found", None, None, None, 0.0, "not found at any level")
-        tracks.append({"position": p, "status": st, "audio_path": None, "page": f"https://example.bandcamp.com/album/{p}" if src else None,
-                       "source": src, "level": lvl, "url": f"https://example.com/{p}" if src else None, "quality": q,
+        tracks.append({"position": p, "status": st, "audio_path": None, "page": pages[i] if src else None,
+                       "source": src, "level": lvl, "url": urls[i] if src else None, "quality": q,
                        "confidence": conf, "reason": why, "readings": [], "alternatives": []})
     return {**base, "tracks": tracks}
 
 
 _make_handler = analysis_job.make_handler
 analysis_job.make_handler = lambda factory, **kw: _make_handler(factory, lookup_fn=fake_lookup, **{**kw, "research_fn": fake_research})
+from app.audio import job as audio_job  # noqa: E402
+
+_audio_handler = audio_job.make_handler
+audio_job.make_handler = lambda research_fn, **kw: _audio_handler(fake_research, **kw)
 main._discogs = discogs
 main.app.dependency_overrides[get_discogs] = discogs
 _original_init = VaultSyncer.__init__

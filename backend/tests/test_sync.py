@@ -15,11 +15,13 @@ def job_of(client, job_id):
     return client.get(f"/api/jobs/{job_id}").json()
 
 
-def test_intake_starts_no_jobs_so_the_user_chooses(client):
+def test_intake_only_starts_finding_audio(client):
+    """A new record starts its audio search; analysis and the Discogs sync wait for the user."""
     body = client.post("/api/records/intake", json=INTAKE).json()
-    assert body["jobs"] is None
+    assert set(body["jobs"]) == {"audio"}
+    assert job_of(client, body["jobs"]["audio"])["type"] == "audio"
     again = client.post("/api/records/intake", json=INTAKE).json()
-    assert again["jobs"] is None
+    assert again["jobs"] is None  # already in the library: nothing new starts
 
 
 def test_wantlist_is_not_synced(client):

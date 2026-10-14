@@ -2,11 +2,11 @@
 
 How to use: give Claude Code one step at a time ("Do Step I2 from INTEGRATION_BUILD_PLAN.md"). Ask the owner the open questions of a step before building it. Commit after every step and note it in `docs/integration_progress.md`.
 
-## Decisions (owner, 2026-10-14; row 1 revised the same day)
+## Decisions (owner, 2026-10-14; row 1 revised twice the same day)
 
 | # | Question | Answer |
 |---|----------|--------|
-| 1 | When does audio research run | Only as the first stage of analysis: when a record is added and analysis starts, or when you press Analyze. Never on its own at add time. A Settings option runs it for the whole existing library. Applies to every record that gets analysed (owned and wantlist) |
+| 1 | When does audio research run | **On its own when a record is added** (an `audio` job; BPM and key analysis stays a button). Analysis reuses the audio found, and searches first only if none was found yet. A Settings option finds audio for the whole existing library. Results are shown on the record page the way the audioresearch viewer shows them (play buttons, one source family per record, store links) |
 | 2 | Found audio in the app | Shown directly; only `review` tracks need the owner; uncertain audio may feed analysis, marked "audio uncertain" |
 | 3 | Audio cache and `audioresearch.db` | Application Support, next to `vinyl.db` (outside OneDrive) |
 | 4 | bpmkey CLI and web page (:8765) | Keep working; its own audio search stays behind a flag until the new path is proven, then it is removed |

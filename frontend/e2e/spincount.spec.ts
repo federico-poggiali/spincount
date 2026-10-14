@@ -271,24 +271,28 @@ test("design tags in the Tag Manager, then put one on a record", async ({ page }
   await expect(page.getByRole("list", { name: "this record tags" })).toContainText("closer");
 });
 
-test("analysis finds audio first, shows it on the Audio tab, and Settings can search the whole library", async ({ page }) => {
+test("adding a record finds its audio by itself; the Audio tab plays it like the audio research viewer", async ({ page }) => {
   await page.goto("/add");
   await page.getByLabel("Discogs link").fill("https://www.discogs.com/release/12472");
   await page.getByRole("button", { name: "Add record" }).click();
   await expect(page).toHaveURL(/\/records\/\d+/);
-  // Nothing has been searched yet.
+  // The audio search starts on its own; BPM and key analysis does not.
+  await expect(page.getByTestId("job-finding-audio").getByRole("status")).toHaveText("done");
+  await expect(page.getByTestId("job-analysis")).toHaveCount(0);
   await page.getByRole("tab", { name: "Audio" }).click();
-  await expect(page.getByTestId("found-audio")).toContainText("not searched yet");
-  // Analysing runs the audio search first.
-  await page.getByRole("tab", { name: /Tracks/ }).click();
-  await page.getByRole("button", { name: "Analyse whole record" }).click();
-  await expect(page.getByTestId("job-analysis").getByRole("status")).toHaveText("done");
-  await page.getByRole("tab", { name: "Audio" }).click();
-  await expect(page.getByTestId("found-audio")).toContainText("1 found · 1 need a look · 10 not found");
-  await expect(page.getByTestId("found-audio-A1")).toContainText("bandcamp · full track · 92%");
-  await expect(page.getByTestId("found-audio-A2")).toContainText("needs a look");
+  await expect(page.getByTestId("found-audio-counts")).toHaveText("1 found · 1 need a look · 10 not found · 2 of 12 playable");
+  await expect(page.getByTestId("found-audio-A1")).toContainText("YouTube");
+  await expect(page.getByTestId("found-audio-A2")).toContainText("Redeye · clip · needs a look");
+  await expect(page.getByTestId("found-audio-A2").getByRole("link", { name: "Find at Redeye ↗" })).toHaveAttribute("href", "https://www.redeyerecords.co.uk/vinyl/12472");
+  await expect(page.getByTestId("found-audio-A3")).toContainText("not found");
+  // Play: a YouTube track opens the docked player, closing it stops.
+  await page.getByRole("button", { name: "Play A1" }).click();
+  await expect(page.getByRole("region", { name: "Player" })).toContainText("A1 · YouTube");
+  await expect(page.getByRole("region", { name: "Player" }).locator("iframe")).toHaveAttribute("src", /youtube-nocookie\.com\/embed\/dQw4w9WgXcQ/);
+  await page.getByRole("button", { name: "Close player" }).click();
+  await expect(page.getByRole("region", { name: "Player" })).toHaveCount(0);
   // Settings: records already searched are skipped.
   await page.goto("/settings");
-  await page.getByRole("button", { name: "Find audio and analyse the library" }).click();
+  await page.getByRole("button", { name: "Find audio for the library" }).click();
   await expect(page.getByTestId("library-audio-queued")).toContainText(/Nothing to do|queued/);
 });

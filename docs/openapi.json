@@ -122,6 +122,24 @@
         "title": "AudioMatchedFile",
         "type": "object"
       },
+      "BandcampEmbed": {
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          },
+          "kind": {
+            "title": "Kind",
+            "type": "string"
+          }
+        },
+        "required": [
+          "kind",
+          "id"
+        ],
+        "title": "BandcampEmbed",
+        "type": "object"
+      },
       "CrateOut": {
         "properties": {
           "units": {
@@ -379,6 +397,17 @@
           "records"
         ],
         "title": "ExactResults",
+        "type": "object"
+      },
+      "FindAudioRequest": {
+        "properties": {
+          "refresh": {
+            "default": false,
+            "title": "Refresh",
+            "type": "boolean"
+          }
+        },
+        "title": "FindAudioRequest",
         "type": "object"
       },
       "FromDiscogs": {
@@ -1010,7 +1039,7 @@
         "title": "LabelTrack",
         "type": "object"
       },
-      "LibraryAnalysisStarted": {
+      "LibraryAudioStarted": {
         "properties": {
           "job_ids": {
             "items": {
@@ -1028,7 +1057,7 @@
           "queued",
           "job_ids"
         ],
-        "title": "LibraryAnalysisStarted",
+        "title": "LibraryAudioStarted",
         "type": "object"
       },
       "NoteCreate": {
@@ -1355,6 +1384,28 @@
           "proposed_at"
         ],
         "title": "ProposalOut",
+        "type": "object"
+      },
+      "RecordAudioOut": {
+        "properties": {
+          "previews": {
+            "additionalProperties": true,
+            "title": "Previews",
+            "type": "object"
+          },
+          "tracks": {
+            "items": {
+              "$ref": "#/components/schemas/TrackAudioOut"
+            },
+            "title": "Tracks",
+            "type": "array"
+          }
+        },
+        "required": [
+          "tracks",
+          "previews"
+        ],
+        "title": "RecordAudioOut",
         "type": "object"
       },
       "RecordDetail": {
@@ -3153,23 +3204,23 @@
         ]
       }
     },
-    "/api/admin/find-audio-and-analyse": {
+    "/api/admin/find-audio": {
       "post": {
-        "description": "Analyse (audio search first) every record that has no audio search yet, one after the other.\nRecords already searched are skipped, so running it again only continues where it stopped.",
-        "operationId": "find_audio_and_analyse",
+        "description": "Find audio for every record that has not been searched yet, one after the other. Records already\nsearched are skipped, so running it again only continues where it stopped. BPM and key are not touched.",
+        "operationId": "find_audio_for_library",
         "responses": {
           "202": {
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/LibraryAnalysisStarted"
+                  "$ref": "#/components/schemas/LibraryAudioStarted"
                 }
               }
             },
             "description": "Successful Response"
           }
         },
-        "summary": "Find Audio And Analyse",
+        "summary": "Find Audio For Library",
         "tags": [
           "admin"
         ]
@@ -3257,6 +3308,49 @@
         "summary": "Vault Status",
         "tags": [
           "admin"
+        ]
+      }
+    },
+    "/api/audio/bandcamp-embed": {
+      "get": {
+        "description": "The numeric id Bandcamp's embed player needs (it is only on the page).",
+        "operationId": "bandcamp_embed",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "url",
+            "required": true,
+            "schema": {
+              "title": "Url",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BandcampEmbed"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Bandcamp Embed",
+        "tags": [
+          "audio"
         ]
       }
     },
@@ -4409,7 +4503,7 @@
     },
     "/api/records/{record_id}/audio": {
       "get": {
-        "description": "What audioresearch found for each track of this record (tracks without a search are left out).",
+        "description": "What audioresearch found for each track, and which link each track plays.",
         "operationId": "record_audio",
         "parameters": [
           {
@@ -4427,11 +4521,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "items": {
-                    "$ref": "#/components/schemas/TrackAudioOut"
-                  },
-                  "title": "Response Record Audio",
-                  "type": "array"
+                  "$ref": "#/components/schemas/RecordAudioOut"
                 }
               }
             },
@@ -4450,7 +4540,7 @@
         },
         "summary": "Record Audio",
         "tags": [
-          "records"
+          "audio"
         ]
       }
     },
@@ -4553,6 +4643,66 @@
         "summary": "Discard",
         "tags": [
           "records"
+        ]
+      }
+    },
+    "/api/records/{record_id}/find-audio": {
+      "post": {
+        "description": "Search for this record's audio (again, with `refresh`). BPM and key are not touched.",
+        "operationId": "find_audio",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "record_id",
+            "required": true,
+            "schema": {
+              "title": "Record Id",
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "anyOf": [
+                  {
+                    "$ref": "#/components/schemas/FindAudioRequest"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "title": "Body"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JobStarted"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Find Audio",
+        "tags": [
+          "audio"
         ]
       }
     },
@@ -5662,6 +5812,50 @@
         "summary": "Assign Audio",
         "tags": [
           "tracks"
+        ]
+      }
+    },
+    "/api/tracks/{track_id}/audio-file": {
+      "get": {
+        "description": "Your own file for a track, so the page can play it. Only files level 0 matched inside AUDIO_DIR.",
+        "operationId": "track_audio_file",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "track_id",
+            "required": true,
+            "schema": {
+              "title": "Track Id",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "format": "binary",
+                  "type": "string"
+                }
+              }
+            },
+            "description": "The audio file, as stored"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Track Audio File",
+        "tags": [
+          "audio"
         ]
       }
     },

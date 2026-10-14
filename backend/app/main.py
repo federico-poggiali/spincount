@@ -10,12 +10,26 @@ from fastapi.staticfiles import StaticFiles
 
 from app import backfill, config, errors, sync
 from app.analysis import job as analysis_job
+from app.audio import job as audio_job
 from app.audio import stage as audio_stage
 from app.db import connect, migrate
 from app.discogs import DiscogsClient
 from app.jobs.runner import JobRunner
 from app.logging_config import configure as configure_logging
-from app.routes import admin, crate, jobs, label_maker, labels, notes, records, search, styles, tags, tracks
+from app.routes import (
+    admin,
+    audio,
+    crate,
+    jobs,
+    label_maker,
+    labels,
+    notes,
+    records,
+    search,
+    styles,
+    tags,
+    tracks,
+)
 from app.vault import VaultSyncer
 
 log = logging.getLogger("app.request")
@@ -34,6 +48,7 @@ async def lifespan(app: FastAPI):
     syncer = app.state.vault_syncer = VaultSyncer(config.VAULT_DIR)
     app.state.runner = JobRunner({
         analysis_job.JOB_TYPE: analysis_job.make_handler(_discogs, research_fn=audio_stage.research_release),
+        audio_job.JOB_TYPE: audio_job.make_handler(audio_stage.research_release),
         sync.JOB_TYPE: sync.make_handler(_discogs),
         backfill.JOB_TYPE: backfill.make_handler(_discogs),
     }, on_done=syncer.request)
@@ -52,7 +67,7 @@ app = FastAPI(title="Vinyl Second-Brain", lifespan=lifespan, generate_unique_id_
 app.add_middleware(CORSMiddleware, allow_origins=config.CORS_ORIGINS, allow_methods=["*"],
                    allow_headers=["*"])
 errors.install(app)
-for module in (records, tracks, notes, tags, styles, labels, label_maker, search, crate, jobs, admin):
+for module in (records, audio, tracks, notes, tags, styles, labels, label_maker, search, crate, jobs, admin):
     app.include_router(module.router)
 
 
