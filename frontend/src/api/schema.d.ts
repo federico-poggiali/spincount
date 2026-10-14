@@ -541,7 +541,8 @@ export interface paths {
         put?: never;
         /**
          * Find Audio
-         * @description Search for this record's audio (again, with `refresh`). BPM and key are not touched.
+         * @description Search for this record's audio (again, with `refresh`; every level for every track, with `everything`).
+         *     BPM and key are not touched.
          */
         post: operations["find_audio"];
         delete?: never;
@@ -1053,6 +1054,11 @@ export interface components {
         };
         /** FindAudioRequest */
         FindAudioRequest: {
+            /**
+             * Everything
+             * @default false
+             */
+            everything: boolean;
             /**
              * Refresh
              * @default false

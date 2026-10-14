@@ -34,8 +34,9 @@ class Research:
     def __init__(self, result=None, error=None):
         self.calls, self.result, self.error = [], result, error
 
-    def __call__(self, release_id, audio_dir, refresh):
+    def __call__(self, release_id, audio_dir, refresh, everything=False):
         self.calls.append((release_id, refresh))
+        self.everything = everything
         if self.error:
             raise self.error
         return self.result or contract()
@@ -151,6 +152,14 @@ def test_the_audio_job_fails_visibly_and_can_search_again(client, db_path):
     run_audio_job(client, rid, research)
     run_audio_job(client, rid, research, {"refresh": True})
     assert [refresh for _, refresh in research.calls] == [False, False, True]
+
+
+def test_finding_more_sources_searches_everything_even_when_audio_was_found(client, db_path):
+    rid, *_ = setup_record(db_path)
+    research = Research()
+    run_audio_job(client, rid, research)
+    run_audio_job(client, rid, research, {"everything": True})
+    assert len(research.calls) == 2 and research.everything is True
 
 
 def test_analysis_reuses_audio_found_on_add(client, db_path):

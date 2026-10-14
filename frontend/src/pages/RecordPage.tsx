@@ -6,7 +6,6 @@ import { ClampedNote } from "../components/ClampedNote";
 import { Cover } from "../components/Cover";
 import { Icon } from "../components/Icon";
 import { JobChip } from "../components/JobChip";
-import { KeyFormatToggle } from "../components/KeyFormatToggle";
 import { useRecordAudio } from "../components/useRecordAudio";
 import { QuickNote } from "../components/QuickNote";
 import { SaveIndicator } from "../components/SaveIndicator";
@@ -40,7 +39,7 @@ export default function RecordPage() {
   const allTags = useTags();
   const styleMutations = useStyleMutations(id);
   const allStyles = useStyles();
-  const [keyFormat, setKeyFormat] = useKeyFormat();
+  const [keyFormat] = useKeyFormat();
   const [keysOn] = useKeysEnabled();
   const [confidenceOn] = useKeyConfidenceEnabled();
   const [confirmDelete, setConfirmDelete] = useState(false);
@@ -54,7 +53,7 @@ export default function RecordPage() {
     onSuccess: ({ job_id }, trackIds) => { setAnalysisIds(trackIds ?? null); setAnalysisJob(job_id); setAnalysing(true); },
   });
   const searchAgain = useMutation({
-    mutationFn: () => api.findAudio(id, true),
+    mutationFn: (everything: boolean = false) => api.findAudio(id, !everything, everything),
     onSuccess: ({ job_id }) => { setAudioJob(job_id); setFindingAudio(true); },
   });
   // Your own files go into the record's audio folder; searching afterwards matches them to their tracks first.
@@ -163,7 +162,7 @@ export default function RecordPage() {
                 {selected.size === 0 ? "Analyse all tracks" : `Analyse ${selected.size} ${selected.size === 1 ? "track" : "tracks"}`}
               </button>
               {selected.size > 0 && <button className="ghost" onClick={() => setSelected(new Set())}>Clear selection</button>}
-              <button className="ghost" onClick={() => searchAgain.mutate()} disabled={findingAudio || searchAgain.isPending || upload.isPending || r.discogs_release_id == null}>
+              <button className="ghost" onClick={() => searchAgain.mutate(false)} disabled={findingAudio || searchAgain.isPending || upload.isPending || r.discogs_release_id == null}>
                 {findingAudio || searchAgain.isPending ? "Searching audio…" : audio.searched ? "Search audio again" : "Find audio"}
               </button>
               <button className="ghost" onClick={() => pickFiles.current?.click()} disabled={upload.isPending || findingAudio || r.discogs_release_id == null}>
@@ -173,11 +172,10 @@ export default function RecordPage() {
                 onChange={(e) => { const files = [...(e.target.files ?? [])]; e.target.value = ""; if (files.length) upload.mutate(files); }} />
               {audio.playFirst && <button className="ghost" onClick={audio.playFirst}>▶ Play record</button>}
               <span className={styles.spacer} />
-              {keysOn && <KeyFormatToggle value={keyFormat} onChange={setKeyFormat} />}
             </div>
             {(analysisJob != null || syncJob != null || audioJob != null) && (
               <div className={styles.jobs}>
-                {audioJob != null && <JobChip label="Finding audio" jobId={audioJob} onSettled={() => { setFindingAudio(false); refresh(); }} onRetry={() => searchAgain.mutate()} retrying={searchAgain.isPending} />}
+                {audioJob != null && <JobChip label="Finding audio" jobId={audioJob} onSettled={() => { setFindingAudio(false); refresh(); }} onRetry={() => searchAgain.mutate(searchAgain.variables ?? false)} retrying={searchAgain.isPending} />}
                 {analysisJob != null && <JobChip label="Analysis" jobId={analysisJob} onSettled={() => { setAnalysing(false); refresh(); }} onRetry={() => analyze.mutate(analysisIds ?? undefined)} />}
                 {syncJob != null && <JobChip label="Discogs sync" jobId={syncJob} onSettled={() => { setSyncRunning(false); refresh(); }} onRetry={() => sync.mutate()} />}
               </div>
@@ -214,16 +212,21 @@ export default function RecordPage() {
                 )}
               </div>
             )}
-            <p className={styles.hint}>{selected.size === 0 ? "Tick the boxes to analyse only some tracks. Analysis is optional." : "Only the ticked tracks will be analysed."}</p>
+            {selected.size > 0 && <p className={styles.hint}>Only the ticked tracks will be analysed.</p>}
           </div>
           <TrackTable record={r} audio={audio} editable keyFormat={keyFormat} showKeys={keysOn} busyIds={busyIds} selection={{ ids: selected, onChange: setSelected }}
             onUse={r.status === "owned" ? (t) => startValidate([t]) : undefined} onPass={(t) => discard.mutate([t.id])} />
           {audio.player}
-          {audio.others.length > 0 && (
+          {audio.searched && (
             <details className={styles.others} data-testid="other-audio">
-              <summary>Other audio sources <span>{audio.others.reduce((n, o) => n + o.links.length, 0)}</span></summary>
-              <p className={styles.hint}>Everything else the search found for each track. Search again to look for more.</p>
-              <ul>
+              <summary>Other audio sources{audio.others.length > 0 && <span>{audio.others.reduce((n, o) => n + o.links.length, 0)}</span>}</summary>
+              <div className={styles.othersHead}>
+                <p className={styles.hint}>{audio.others.length > 0 ? "Everything else the search found for each track." : "No other sources yet."} Finding more searches every source for every track, so it is slower.</p>
+                <button className="ghost small" onClick={() => searchAgain.mutate(true)} disabled={findingAudio || searchAgain.isPending || upload.isPending}>
+                  {findingAudio && searchAgain.variables ? "Finding more sources…" : "Find more sources"}
+                </button>
+              </div>
+              {audio.others.length > 0 && <ul>
                 {audio.others.map((o) => (
                   <li key={o.position}>
                     <b>{o.position} {o.title}</b>
@@ -232,7 +235,7 @@ export default function RecordPage() {
                     ))}</span>
                   </li>
                 ))}
-              </ul>
+              </ul>}
             </details>
           )}
           {upload.isError && <p className={styles.hint} role="alert">Upload failed: {(upload.error as Error).message}</p>}
@@ -243,7 +246,6 @@ export default function RecordPage() {
         </div>
 
         <aside className={styles.attrs} aria-label="Attributes">
-          <h2>Attributes</h2>
           <dl>
             <div className={styles.attr}>
               <dt>Status</dt>

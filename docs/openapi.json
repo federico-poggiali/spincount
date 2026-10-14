@@ -401,6 +401,11 @@
       },
       "FindAudioRequest": {
         "properties": {
+          "everything": {
+            "default": false,
+            "title": "Everything",
+            "type": "boolean"
+          },
           "refresh": {
             "default": false,
             "title": "Refresh",
@@ -4674,7 +4679,7 @@
     },
     "/api/records/{record_id}/find-audio": {
       "post": {
-        "description": "Search for this record's audio (again, with `refresh`). BPM and key are not touched.",
+        "description": "Search for this record's audio (again, with `refresh`; every level for every track, with `everything`).\nBPM and key are not touched.",
         "operationId": "find_audio",
         "parameters": [
           {

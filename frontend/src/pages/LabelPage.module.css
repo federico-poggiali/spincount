@@ -6,6 +6,9 @@
 .layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 480px); gap: 32px; align-items: start; }
 .preview { display: grid; gap: 14px; position: sticky; top: 16px; min-width: 0; }
 .warnings { display: grid; gap: 6px; margin: 0; padding: 10px 14px; border: 1px solid var(--signal); border-radius: var(--r-m); font-size: 0.875rem; color: var(--signal-ink); }
+.figure[data-skipped] img { opacity: 0.3; }
+.choose { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; }
+.choose input { width: 16px; height: 16px; accent-color: var(--signal); cursor: pointer; }
 .hint { margin: 0; color: var(--ink-3); font-size: 0.8125rem; }
 .missing { display: grid; gap: 12px; justify-items: start; padding-top: 10vh; }
 .missing h1 { font: 600 2rem/1.05 var(--sans); letter-spacing: -0.02em; }

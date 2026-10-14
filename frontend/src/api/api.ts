@@ -129,8 +129,10 @@ export const api = {
     send<{ job_id: number }>("POST", `/api/records/${id}/analyze`,
       trackIds || refreshAudio ? { track_ids: trackIds, refresh_audio: refreshAudio } : undefined),
   recordAudio: (id: number) => get<RecordAudio>(`/api/records/${id}/audio`),
-  findAudio: (id: number, refresh = false) =>
-    send<{ job_id: number }>("POST", `/api/records/${id}/find-audio`, refresh ? { refresh: true } : undefined),
+  /** `everything` searches every level for every track, for more sources (slower). */
+  findAudio: (id: number, refresh = false, everything = false) =>
+    send<{ job_id: number }>("POST", `/api/records/${id}/find-audio`,
+      refresh || everything ? { refresh, everything } : undefined),
   uploadAudio: (id: number, file: File) =>
     request<{ file: string }>("POST", `/api/records/${id}/upload-audio`, { query: { filename: file.name }, file }).then((r) => r.data),
   audioFileUrl: (trackId: number) => `/api/tracks/${trackId}/audio-file`,

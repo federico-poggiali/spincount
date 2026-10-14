@@ -2,7 +2,8 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { api } from "../api/api";
 import { JobChip } from "../components/JobChip";
-import { useKeyConfidenceEnabled, useKeysEnabled } from "../hooks";
+import { KeyFormatToggle } from "../components/KeyFormatToggle";
+import { useKeyConfidenceEnabled, useKeyFormat, useKeysEnabled } from "../hooks";
 import { pushToast } from "../toast";
 import styles from "./SettingsPage.module.css";
 
@@ -22,6 +23,7 @@ export default function SettingsPage() {
   const [libraryJobs, setLibraryJobs] = useState<number[]>([]);
   const analyseLibrary = useMutation({ mutationFn: api.findAudioForLibrary, onSuccess: ({ job_ids }) => setLibraryJobs(job_ids) });
   const [keysOn, setKeysOn] = useKeysEnabled();
+  const [keyFormat, setKeyFormat] = useKeyFormat();
   const [confidenceOn, setConfidenceOn] = useKeyConfidenceEnabled();
   const last = sync.data ?? status.data?.last_sync ?? null;
 
@@ -71,6 +73,11 @@ export default function SettingsPage() {
         BPM is always analysed and shown. With this on, analysis also proposes a key for each track, and the tracklist, library
         filters and track list show keys (Camelot or musical). Off, every key column, filter and picker is hidden.
       </p>
+      <div className={styles.toggle}>
+        <KeyFormatToggle value={keyFormat} onChange={setKeyFormat} />
+        <span>Key notation: Camelot (8A) or musical (Am)</span>
+      </div>
+      <p className={styles.hint}>Used wherever keys are shown. Needs musical key on.</p>
       <label className={styles.toggle}>
         <input type="checkbox" checked={confidenceOn} disabled={!keysOn} onChange={(e) => setConfidenceOn(e.target.checked)} />
         <span>Show how sure the key analysis is</span>

@@ -11,18 +11,19 @@ from pathlib import Path
 from app import config
 from app.db import track_audio
 
-# (release id, folder of your own audio, refresh) -> the audioresearch output contract as a dict
-ResearchFn = Callable[[int, Path, bool], dict]
+# (release id, folder of your own audio, refresh, everything) -> the audioresearch output contract as a dict
+ResearchFn = Callable[[int, Path, bool, bool], dict]
 
 
-def research_release(release_id: int, audio_dir: Path, refresh: bool = False) -> dict:
-    """The real thing: all levels, cached by audioresearch in its own database."""
+def research_release(release_id: int, audio_dir: Path, refresh: bool = False, everything: bool = False) -> dict:
+    """The real thing: all levels, cached by audioresearch in its own database. Normally it stops as soon as
+    every track has audio; `everything` searches every level for every track, so each track gets alternatives."""
     from audioresearch.pipeline import research
     from audioresearch.store import Store
 
     store = Store()
     try:
-        return research(release_id, refresh=refresh, store=store, audio_dir=audio_dir).to_dict()
+        return research(release_id, refresh=refresh, store=store, audio_dir=audio_dir, search_all=everything).to_dict()
     finally:
         store.close()
 
@@ -56,13 +57,14 @@ def store_contract(conn: sqlite3.Connection, contract: dict, tracks: list[dict])
 
 
 def run(conn: sqlite3.Connection, record: dict, tracks: list[dict], research_fn: ResearchFn,
-        audio_dir: Path | None = None, refresh: bool = False) -> dict:
-    """Find audio for these tracks unless they already have it. Returns a small report, never raises."""
+        audio_dir: Path | None = None, refresh: bool = False, everything: bool = False) -> dict:
+    """Find audio for these tracks unless they already have it (`everything` always searches, see
+    research_release). Returns a small report, never raises."""
     ids = [t["id"] for t in tracks]
-    if not needs_audio(conn, ids, refresh):
+    if not everything and not needs_audio(conn, ids, refresh):
         return {"ran": False, "reason": "audio already found", "stored_track_ids": []}
     try:
-        contract = research_fn(record["discogs_release_id"], audio_dir or config.AUDIO_DIR, refresh)
+        contract = research_fn(record["discogs_release_id"], audio_dir or config.AUDIO_DIR, refresh, everything)
         stored = store_contract(conn, contract, tracks)
     except Exception as exc:  # audio is a bonus: analysis must still run
         return {"ran": True, "error": f"{type(exc).__name__}: {exc}", "stored_track_ids": []}

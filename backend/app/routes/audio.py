@@ -27,6 +27,7 @@ class RecordAudioOut(BaseModel):
 
 class FindAudioRequest(BaseModel):
     refresh: bool = False  # search again even where audio was already found
+    everything: bool = False  # search every level for every track, for more sources (slower)
 
 
 class BandcampEmbed(BaseModel):
@@ -52,10 +53,11 @@ def record_audio(record_id: int, conn: sqlite3.Connection = Depends(get_db)) -> 
 @router.post("/api/records/{record_id}/find-audio", status_code=202, response_model=JobStarted)
 def find_audio(record_id: int, body: FindAudioRequest | None = None,
                conn: sqlite3.Connection = Depends(get_db), runner: JobRunner = Depends(get_runner)) -> dict:
-    """Search for this record's audio (again, with `refresh`). BPM and key are not touched."""
+    """Search for this record's audio (again, with `refresh`; every level for every track, with `everything`).
+    BPM and key are not touched."""
     if _record(conn, record_id)["discogs_release_id"] is None:
         raise HTTPException(400, "record has no Discogs release id, so nothing to search for")
-    params = {"refresh": True} if body and body.refresh else None
+    params = {k: True for k in ("refresh", "everything") if body and getattr(body, k)} or None
     return {"job_id": runner.enqueue(audio_job.JOB_TYPE, record_id, params), "status": "queued"}
 
 

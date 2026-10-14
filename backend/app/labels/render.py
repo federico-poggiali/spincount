@@ -2,7 +2,7 @@
 
 Pure black on white, no grey (thermal printers dither it), thick rules, smallest text 26 px.
 Text is drawn without anti-aliasing, so what the preview shows is exactly what gets printed.
-The 8-bit look (pixel headers, glitch slices, a sprite) lives in glitch.py."""
+The 8-bit touch (pixel headers, one doodle per label) lives in doodles.py."""
 import io
 import re
 from dataclasses import dataclass
@@ -12,7 +12,7 @@ from pathlib import Path
 import qrcode
 from PIL import Image, ImageDraw, ImageFont
 
-from app.labels import glitch
+from app.labels import doodles
 from app.labels.data import LabelData, LabelTrack
 
 W, H = 696, 472  # 62 x 40 mm at 300 dpi
@@ -21,7 +21,7 @@ RULE = 6
 MIN_SIZE = 26  # about 2.2 mm
 FONTS = Path(__file__).parent / "fonts"
 SANS, MONO = "DejaVuSans-Bold.ttf", "DejaVuSansMono-Bold.ttf"
-PIXEL = glitch.PIXEL
+PIXEL = doodles.PIXEL
 ELLIPSIS = "…"
 
 # (font size, most lines) to try in order; the first that fits wins, the last gets cut with "…".
@@ -46,7 +46,7 @@ def _line_height(size: int) -> int:
 
 def _header_font(text: str) -> str:
     """The pixel font when it can spell the text, otherwise the plain one."""
-    return PIXEL if glitch.covers(str(FONTS / PIXEL), text) else SANS
+    return PIXEL if doodles.covers(str(FONTS / PIXEL), text) else SANS
 
 
 class Canvas:
@@ -159,20 +159,13 @@ def render_main(d: LabelData, warn) -> bytes:
     text_w = right - MARGIN - (qr_size + 16 if qr_size else 0)
 
     y = MARGIN
-    rng = glitch.rng_for(d.artist, d.title)
-    sprite = glitch.sprite_for(d.artist, d.title)
-    sprite_w, sprite_h = glitch.sprite_size(sprite)
     artist = d.artist.upper()
     artist_font = _header_font(artist)
     if artist_font == PIXEL:  # the pixel font is only crisp at multiples of 8 px
         artist_fit: Fit = [(s, 1) for s in (80, 72, 64, 56, 48, 40)] + [(s, 2) for s in (48, 40, 32)]
     else:
         artist_fit = [(s, 1) for s in range(64, 43, -4)] + [(s, 2) for s in range(52, 35, -4)]
-    y = canvas.block(y, artist, artist_font, text_w, artist_fit, warn, "The artist")
-    if artist_font == PIXEL:
-        unit = canvas.fit(artist, PIXEL, text_w, artist_fit)[1] // 8  # one pixel of the font
-        glitch.slice_glitch(canvas.img, (MARGIN, MARGIN, MARGIN + text_w, y), unit, rng)
-    y += 6
+    y = canvas.block(y, artist, artist_font, text_w, artist_fit, warn, "The artist") + 6
     label_line = " · ".join(
         p for p in ((d.label or "").upper() if shown("label") else "",
                     f"Cat# {d.catno}" if shown("catno") else "") if p)
@@ -186,15 +179,10 @@ def render_main(d: LabelData, warn) -> bytes:
     parts = [d.year if shown("year") else None, d.country if shown("country") else None,
              ", ".join(d.styles) if shown("styles") else None]
     info = " · ".join(p for p in parts if p)
-    sprite_drawn = False
     if info:
         y = canvas.rule(y) + 10
         info_fit: Fit = [(s, 1) for s in (32, 30, 28, 26)] + [(26, 2)]
-        glitch.draw_sprite(canvas.draw, sprite, right - sprite_w, y)
-        sprite_drawn = True
-        bottom = canvas.block(y, info, SANS, W - 2 * MARGIN - sprite_w - 16, info_fit, warn,
-                              "The info line")
-        y = max(bottom, y + sprite_h) + 6
+        y = canvas.block(y, info, SANS, W - 2 * MARGIN, info_fit, warn, "The info line") + 6
     if shown("note") and d.note:
         y = canvas.rule(y) + 10
         room = H - MARGIN - y
@@ -205,8 +193,7 @@ def render_main(d: LabelData, warn) -> bytes:
             canvas.block(y, d.note, SANS, W - 2 * MARGIN, note_fit, warn, "The note")
     elif y > H - MARGIN:
         warn("The label is too full: hide a field")
-    elif not sprite_drawn and y + sprite_h <= H - MARGIN:
-        glitch.draw_sprite(canvas.draw, sprite, right - sprite_w, H - MARGIN - sprite_h)
+    doodles.place(canvas.img, doodles.rng_for(d.artist, d.title), (MARGIN, MARGIN, W - MARGIN, H - MARGIN))
     return canvas.png()
 
 
@@ -261,7 +248,7 @@ def _paginate(entries: list[LabelTrack]) -> list[list[tuple[str, list[LabelTrack
     return pages
 
 
-def _render_tracks_page(groups: list[tuple[str, list[LabelTrack]]], warn) -> bytes:
+def _render_tracks_page(groups: list[tuple[str, list[LabelTrack]]], warn, seed: str) -> bytes:
     """One label per pair of sides: the sides share the label's height in proportion to their
     tracks, and each side's rows are spread evenly over its block, so the label is always full."""
     canvas = Canvas()
@@ -326,6 +313,7 @@ def _render_tracks_page(groups: list[tuple[str, list[LabelTrack]]], warn) -> byt
         label_w = canvas.width(side, font, size)
         canvas.text((MARGIN + int((SIDE_W - label_w) / 2), top + 8), side, font, size, fill=255)
         y = top + block + 12
+    doodles.place(canvas.img, doodles.rng_for(seed), (x, MARGIN, W - MARGIN, H - MARGIN))
     return canvas.png()
 
 
@@ -336,7 +324,8 @@ def render_tracks(d: LabelData, warn) -> list[bytes]:
     pages = _paginate(entries)
     if len(pages) > 1:
         warn(f"The tracks need {len(pages)} labels")
-    return [_render_tracks_page(groups, warn) for groups in pages]
+    return [_render_tracks_page(groups, warn, f"{d.artist}\0{d.title}\0tracks-{i}")
+            for i, groups in enumerate(pages, start=1)]
 
 
 def render(d: LabelData) -> tuple[list[Rendered], list[str]]:

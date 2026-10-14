@@ -43,7 +43,7 @@ def fake_lookup(record, tracks, release):
             for i, t in enumerate(tracks)}
 
 
-def fake_research(release_id, audio_dir, refresh):
+def fake_research(release_id, audio_dir, refresh, everything=False):
     """A saved-shape audioresearch contract: first track found on Bandcamp, second needs review, the rest not found."""
     base = {"contract_version": 1, "discogs_release_id": release_id, "adapters_off": [], "generated_at": "2026-10-14T00:00:00Z"}
     fixtures = {9261843: "release_simple.json", 46673: "release_heading.json", 12472: "release_cd.json"}

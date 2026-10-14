@@ -20,9 +20,9 @@ def make_handler(research_fn: stage.ResearchFn,
             raise ValueError("record no longer exists")
         if record["discogs_release_id"] is None:
             raise ValueError("record has no Discogs release id")
-        refresh = bool((job.get("params") or {}).get("refresh"))
+        params = job.get("params") or {}
         report = stage.run(conn, record, tracks.list_for_record(conn, record["id"]), research_fn, audio_dir,
-                           refresh=refresh)
+                           refresh=bool(params.get("refresh")), everything=bool(params.get("everything")))
         if "error" in report:  # here finding audio is the whole job, so a failure shows (and can be retried)
             raise RuntimeError(report["error"])
         return report

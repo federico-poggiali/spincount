@@ -194,7 +194,7 @@ def test_label_from_bad_link_is_a_clear_error(client):
     assert out.status_code == 400
 
 
-def test_the_glitch_is_the_same_on_every_render_and_differs_per_record():
+def test_the_doodle_is_the_same_on_every_render_and_differs_per_record():
     first = label_render.render(sample())[0][0].png
     assert label_render.render(sample())[0][0].png == first
     assert label_render.render(sample(title="Something else"))[0][0].png != first
@@ -242,3 +242,15 @@ def test_tracks_label_prints_the_artist_line():
     with_artist = [LabelTrack(position="A1", bpm="130", artist="Jeff Mills")]
     assert label_render._row_height(with_artist[0]) > label_render._row_height(plain[0])
     assert label_render.render_tracks(sample(with_artist), lambda m: None)
+
+
+def test_every_label_gets_at_most_one_doodle_in_blank_space():
+    from app.labels import doodles
+    img = Image.new("L", (label_render.W, label_render.H), 255)
+    img.paste(0, (0, 0, label_render.W, label_render.H // 2))  # the top half is "text"
+    area = (label_render.MARGIN, label_render.MARGIN, label_render.W - label_render.MARGIN, label_render.H - label_render.MARGIN)
+    assert doodles.place(img, doodles.rng_for("a", "b"), area) in doodles.DOODLES
+    ink = img.crop((0, label_render.H // 2 + doodles.CLEARANCE - 1, label_render.W, label_render.H)).getbbox()
+    assert ink is not None  # drawn in the blank half
+    full = Image.new("L", (label_render.W, label_render.H), 0)
+    assert doodles.place(full, doodles.rng_for("a", "b"), area) is None  # no room, no doodle

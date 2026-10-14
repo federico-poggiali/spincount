@@ -89,7 +89,15 @@ export function LabelEditor({ value, onChange, loose }: Props) {
       </section>
 
       <section aria-label="Tracks label" className={styles.group}>
-        <h2>Tracks label</h2>
+        <div className={styles.tracksHead}>
+          <h2>Tracks label</h2>
+          {(value.tracks ?? []).length > 1 && (
+            <div className={styles.bulk}>
+              <button type="button" className="ghost small" onClick={() => set("tracks", (value.tracks ?? []).map((t) => ({ ...t, skip: false })))}>All</button>
+              <button type="button" className="ghost small" onClick={() => set("tracks", (value.tracks ?? []).map((t) => ({ ...t, skip: true })))}>None</button>
+            </div>
+          )}
+        </div>
         {(value.tracks ?? []).length === 0 && <p className={styles.empty}>{loose ? "No tracks yet." : "This record has no tracks."}</p>}
         {(value.tracks ?? []).map((t, i) => {
           const trackShown = (f: TrackHidden) => !(t.hidden ?? []).includes(f);

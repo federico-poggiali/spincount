@@ -286,6 +286,7 @@ test("adding a record finds its audio by itself; the track table plays it like t
   await expect(page.getByTestId("found-audio-A2")).toContainText("needs a look");
   await page.getByText("Other audio sources").click();
   await expect(page.getByTestId("other-audio").getByRole("link", { name: /Redeye/ }).first()).toHaveAttribute("href", /redeyerecords\.co\.uk/);
+  await expect(page.getByTestId("other-audio").getByRole("button", { name: "Find more sources" })).toBeEnabled();
   await expect(page.getByTestId("found-audio-A3")).toContainText("not found");
   // Play: a YouTube track opens the docked player, closing it stops.
   await page.getByRole("button", { name: "Play A1" }).click();
