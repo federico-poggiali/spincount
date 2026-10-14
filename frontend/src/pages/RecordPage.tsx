@@ -1,22 +1,21 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { api, ApiError } from "../api/api";
-import { AudioFoundPanel } from "../components/AudioFoundPanel";
-import { AudioMatchPanel } from "../components/AudioMatchPanel";
+import { ClampedNote } from "../components/ClampedNote";
 import { Cover } from "../components/Cover";
 import { Icon } from "../components/Icon";
 import { JobChip } from "../components/JobChip";
 import { KeyFormatToggle } from "../components/KeyFormatToggle";
+import { useRecordAudio } from "../components/useRecordAudio";
 import { QuickNote } from "../components/QuickNote";
-import { NotesPanel } from "../components/NotesPanel";
 import { SaveIndicator } from "../components/SaveIndicator";
 import { ShelfPrompt } from "../components/ShelfPrompt";
 import { Skeleton } from "../components/Skeleton";
 import { StyleEditor } from "../components/StyleEditor";
 import { TagEditor } from "../components/TagEditor";
 import { TrackTable } from "../components/TrackTable";
-import { recordKey, usePatchRecord, useKeyFormat, useKeysEnabled, useRecord, useStyleMutations, useStyles, useTagMutations, useTags } from "../hooks";
+import { recordKey, usePatchRecord, useKeyFormat, useKeyConfidenceEnabled, useKeysEnabled, useRecord, useStyleMutations, useStyles, useTagMutations, useTags } from "../hooks";
 import { LOW_CONFIDENCE } from "../lib";
 import styles from "./RecordPage.module.css";
 
@@ -24,12 +23,10 @@ import styles from "./RecordPage.module.css";
     askShelf: it was added as owned, so ask where it goes on the shelf. */
 export type Arrival = { existed: boolean; fromMaster: boolean; askShelf?: boolean; audioJob?: number };
 
-type Tab = "tracks" | "notes" | "audio";
-
 export default function RecordPage() {
   const id = Number(useParams().id);
   const navigate = useNavigate();
-  const { hash, state } = useLocation();
+  const { state } = useLocation();
   const arrival = state as Arrival | null;
   const client = useQueryClient();
   const [analysisJob, setAnalysisJob] = useState<number | null>(null);
@@ -45,10 +42,11 @@ export default function RecordPage() {
   const allStyles = useStyles();
   const [keyFormat, setKeyFormat] = useKeyFormat();
   const [keysOn] = useKeysEnabled();
+  const [confidenceOn] = useKeyConfidenceEnabled();
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [askShelf, setAskShelf] = useState(!!arrival?.askShelf);
-  const [tab, setTab] = useState<Tab>(hash.startsWith("#note-") ? "notes" : "tracks");
 
+  const audio = useRecordAudio(record.data);
   const [selected, setSelected] = useState<Set<number>>(new Set());
   const [analysisIds, setAnalysisIds] = useState<number[] | null>(null); // tracks of the running analysis; null = whole record
   const analyze = useMutation({
@@ -59,6 +57,15 @@ export default function RecordPage() {
     mutationFn: () => api.findAudio(id, true),
     onSuccess: ({ job_id }) => { setAudioJob(job_id); setFindingAudio(true); },
   });
+  // Your own files go into the record's audio folder; searching afterwards matches them to their tracks first.
+  const upload = useMutation({
+    mutationFn: async (files: File[]) => {
+      for (const file of files) await api.uploadAudio(id, file);
+      return api.findAudio(id, true);
+    },
+    onSuccess: ({ job_id }) => { setAudioJob(job_id); setFindingAudio(true); },
+  });
+  const pickFiles = useRef<HTMLInputElement>(null);
   // Analysis results wait as proposals until validated; `conflict` holds tracks whose hand-set values they'd replace.
   const [conflict, setConflict] = useState<{ ids: number[]; manual: string[] } | null>(null);
   const validate = useMutation({
@@ -82,17 +89,6 @@ export default function RecordPage() {
     client.invalidateQueries({ queryKey: ["record-audio", id] });
   }, [client, id]);
 
-  // Opened from a search result: scroll to the note and highlight it.
-  useEffect(() => {
-    if (!record.data || !hash.startsWith("#note-")) return;
-    setTab("notes");
-    const el = document.getElementById(hash.slice(1));
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth", block: "center" });
-      el.setAttribute("data-highlight", "true");
-    }
-  }, [record.data, hash]);
-
   if (record.isError) {
     const missing = record.error instanceof ApiError && record.error.status === 404;
     return (
@@ -110,7 +106,7 @@ export default function RecordPage() {
   const busyIds = analysing ? new Set(analysisIds ?? r.tracks.map((t) => t.id)) : undefined;
   const recordNote = r.notes.map((n) => n.body.trim()).find(Boolean);
   const pending = r.tracks.filter((t) => t.proposal);
-  const lowCount = !keysOn ? 0 : pending.filter((t) => t.proposal!.confidence != null && t.proposal!.confidence < LOW_CONFIDENCE).length;
+  const lowCount = !keysOn || !confidenceOn ? 0 : pending.filter((t) => t.proposal!.confidence != null && t.proposal!.confidence < LOW_CONFIDENCE).length;
   const pickedPending = pending.filter((t) => selected.has(t.id));
   const startValidate = (tracks: typeof pending) => {
     const manual = tracks.filter((t) => {
@@ -123,11 +119,6 @@ export default function RecordPage() {
     else validate.mutate({ ids, overwrite: false });
   };
 
-  const tabs: { id: Tab; label: string; count?: number }[] = [
-    { id: "tracks", label: "Tracks", count: r.tracks.length },
-    { id: "notes", label: "Notes", count: r.notes.filter((n) => n.body.trim()).length },
-    { id: "audio", label: "Audio" },
-  ];
   const facts = [
     ["Label", r.label], ["Catalogue", r.catno], ["Year", r.year], ["Format", r.format],
   ].filter(([, v]) => v != null && v !== "") as [string, string | number][];
@@ -151,7 +142,7 @@ export default function RecordPage() {
           {pending.length > 0 && (
             <span className={styles.pendingBadge}>{pending.length} {pending.length === 1 ? "track" : "tracks"} to validate</span>
           )}
-          {recordNote && <p className={styles.noteLine}>{recordNote}</p>}
+          {recordNote && <ClampedNote text={recordNote} className={styles.noteLine} />}
         </div>
         <div className={styles.actions}>
           <QuickNote recordId={r.id} title={r.title} filled={r.notes.some((n) => n.body.trim() !== "")} />
@@ -164,30 +155,23 @@ export default function RecordPage() {
 
       <div className={styles.body}>
         <div className={styles.main}>
-          <div className={styles.tabs} role="tablist" aria-label="Record sections">
-            {tabs.map((t) => (
-              <button key={t.id} id={`tabbtn-${t.id}`} type="button" role="tab" aria-selected={tab === t.id} aria-controls={`tab-${t.id}`}
-                tabIndex={tab === t.id ? 0 : -1} onClick={() => setTab(t.id)}
-                onKeyDown={(e) => {
-                  const i = tabs.findIndex((x) => x.id === tab);
-                  const step = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0;
-                  if (!step) return;
-                  const next = tabs[(i + step + tabs.length) % tabs.length].id;
-                  setTab(next);
-                  document.getElementById(`tabbtn-${next}`)?.focus();
-                }}>
-                {t.label}{t.count ? <span className={styles.tabCount}>{t.count}</span> : null}
-              </button>
-            ))}
-          </div>
-
-      <section aria-label="Tracks" role="tabpanel" id="tab-tracks" aria-labelledby="tabbtn-tracks" hidden={tab !== "tracks"}>
+      <section aria-label="Tracks">
           <div className={styles.toolbar}>
             <div className={styles.toolbarActions}>
-              <button className="primary" onClick={() => analyze.mutate([...selected])} disabled={analysisBusy || selected.size === 0 || r.discogs_release_id == null}>
-                Analyse selected{selected.size ? ` (${selected.size})` : ""}
+              <button className="primary" onClick={() => analyze.mutate(selected.size ? [...selected] : undefined)}
+                disabled={analysisBusy || r.discogs_release_id == null}>
+                {selected.size === 0 ? "Analyse all tracks" : `Analyse ${selected.size} ${selected.size === 1 ? "track" : "tracks"}`}
               </button>
-              <button className="ghost" onClick={() => analyze.mutate(undefined)} disabled={analysisBusy || r.discogs_release_id == null}>Analyse whole record</button>
+              {selected.size > 0 && <button className="ghost" onClick={() => setSelected(new Set())}>Clear selection</button>}
+              <button className="ghost" onClick={() => searchAgain.mutate()} disabled={findingAudio || searchAgain.isPending || upload.isPending || r.discogs_release_id == null}>
+                {findingAudio || searchAgain.isPending ? "Searching audio…" : audio.searched ? "Search audio again" : "Find audio"}
+              </button>
+              <button className="ghost" onClick={() => pickFiles.current?.click()} disabled={upload.isPending || findingAudio || r.discogs_release_id == null}>
+                {upload.isPending ? "Uploading…" : "Upload audio"}
+              </button>
+              <input ref={pickFiles} type="file" accept="audio/*,.flac,.aif,.aiff" multiple hidden aria-label="Audio files to upload"
+                onChange={(e) => { const files = [...(e.target.files ?? [])]; e.target.value = ""; if (files.length) upload.mutate(files); }} />
+              {audio.playFirst && <button className="ghost" onClick={audio.playFirst}>▶ Play record</button>}
               <span className={styles.spacer} />
               {keysOn && <KeyFormatToggle value={keyFormat} onChange={setKeyFormat} />}
             </div>
@@ -230,20 +214,32 @@ export default function RecordPage() {
                 )}
               </div>
             )}
-            <p className={styles.hint}>Tick tracks to analyse just those, or analyse the whole record. Or skip analysis and only add it to your collection.</p>
+            <p className={styles.hint}>{selected.size === 0 ? "Tick the boxes to analyse only some tracks. Analysis is optional." : "Only the ticked tracks will be analysed."}</p>
           </div>
-          <TrackTable record={r} editable keyFormat={keyFormat} showKeys={keysOn} busyIds={busyIds} selection={{ ids: selected, onChange: setSelected }}
+          <TrackTable record={r} audio={audio} editable keyFormat={keyFormat} showKeys={keysOn} busyIds={busyIds} selection={{ ids: selected, onChange: setSelected }}
             onUse={r.status === "owned" ? (t) => startValidate([t]) : undefined} onPass={(t) => discard.mutate([t.id])} />
+          {audio.player}
+          {audio.others.length > 0 && (
+            <details className={styles.others} data-testid="other-audio">
+              <summary>Other audio sources <span>{audio.others.reduce((n, o) => n + o.links.length, 0)}</span></summary>
+              <p className={styles.hint}>Everything else the search found for each track. Search again to look for more.</p>
+              <ul>
+                {audio.others.map((o) => (
+                  <li key={o.position}>
+                    <b>{o.position} {o.title}</b>
+                    <span>{o.links.map((l) => (
+                      <a key={l.url} href={l.url} target="_blank" rel="noopener noreferrer">{l.label} ↗{l.detail ? <small> {l.detail}</small> : null}</a>
+                    ))}</span>
+                  </li>
+                ))}
+              </ul>
+            </details>
+          )}
+          {upload.isError && <p className={styles.hint} role="alert">Upload failed: {(upload.error as Error).message}</p>}
+          {audio.searched && <p className={styles.hint} data-testid="found-audio-counts">{audio.summary}</p>}
           <p className={styles.hint}>Click a {keysOn ? "BPM or key" : "BPM"} to set it yourself. A value you set is marked manual; validating new analysis asks before replacing it.</p>
         </section>
 
-          <div role="tabpanel" id="tab-notes" aria-labelledby="tabbtn-notes" hidden={tab !== "notes"}>
-            <NotesPanel record={r} />
-          </div>
-          <div role="tabpanel" id="tab-audio" aria-labelledby="tabbtn-audio" hidden={tab !== "audio"}>
-            <AudioFoundPanel record={r} busy={findingAudio || searchAgain.isPending} onSearchAgain={() => searchAgain.mutate()} />
-            <AudioMatchPanel recordId={id} onAssigned={() => { setTab("tracks"); analyze.mutate(undefined); }} />
-          </div>
         </div>
 
         <aside className={styles.attrs} aria-label="Attributes">

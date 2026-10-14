@@ -22,11 +22,6 @@ export function keyLabel(camelot: string | null | undefined, format: KeyFormat):
 
 export const formatBpm = (bpm: number | null | undefined) => (bpm == null ? "" : String(Math.round(bpm * 10) / 10));
 
-export function altBpm(raw: Record<string, unknown> | null | undefined): number | null {
-  const value = raw?.bpm_alt;
-  return typeof value === "number" ? value : null;
-}
-
 export const LOW_CONFIDENCE = 0.4;
 
 export function formatDuration(sec: number | null | undefined): string {
@@ -34,4 +29,3 @@ export function formatDuration(sec: number | null | undefined): string {
   return `${Math.floor(sec / 60)}:${String(sec % 60).padStart(2, "0")}`;
 }
 
-export const STATUSES = ["owned", "wantlist", "considering"] as const;

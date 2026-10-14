@@ -2,7 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { api } from "../api/api";
 import { JobChip } from "../components/JobChip";
-import { useKeysEnabled } from "../hooks";
+import { useKeyConfidenceEnabled, useKeysEnabled } from "../hooks";
 import { pushToast } from "../toast";
 import styles from "./SettingsPage.module.css";
 
@@ -22,6 +22,7 @@ export default function SettingsPage() {
   const [libraryJobs, setLibraryJobs] = useState<number[]>([]);
   const analyseLibrary = useMutation({ mutationFn: api.findAudioForLibrary, onSuccess: ({ job_ids }) => setLibraryJobs(job_ids) });
   const [keysOn, setKeysOn] = useKeysEnabled();
+  const [confidenceOn, setConfidenceOn] = useKeyConfidenceEnabled();
   const last = sync.data ?? status.data?.last_sync ?? null;
 
   return (
@@ -69,6 +70,13 @@ export default function SettingsPage() {
       <p className={styles.hint}>
         BPM is always analysed and shown. With this on, analysis also proposes a key for each track, and the tracklist, library
         filters and track list show keys (Camelot or musical). Off, every key column, filter and picker is hidden.
+      </p>
+      <label className={styles.toggle}>
+        <input type="checkbox" checked={confidenceOn} disabled={!keysOn} onChange={(e) => setConfidenceOn(e.target.checked)} />
+        <span>Show how sure the key analysis is</span>
+      </label>
+      <p className={styles.hint}>
+        Adds the confidence percentage and the low-confidence warnings next to proposed and analysed keys. Needs musical key on.
       </p>
 
       <header>

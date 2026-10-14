@@ -3,11 +3,13 @@ import sqlite3
 from pathlib import Path
 from urllib.parse import urlparse
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Query, Request
 from fastapi.responses import FileResponse
 from pydantic import BaseModel
 
 from app import config
+from app.analysis.job import audio_folder
+from app.analysis.matching import AUDIO_EXTENSIONS
 from app.audio import job as audio_job
 from app.audio.previews import plan_for_record
 from app.db import records, track_audio, tracks
@@ -55,6 +57,43 @@ def find_audio(record_id: int, body: FindAudioRequest | None = None,
         raise HTTPException(400, "record has no Discogs release id, so nothing to search for")
     params = {"refresh": True} if body and body.refresh else None
     return {"job_id": runner.enqueue(audio_job.JOB_TYPE, record_id, params), "status": "queued"}
+
+
+MAX_UPLOAD = 1024 * 1024 * 1024  # one file
+
+
+class Uploaded(BaseModel):
+    file: str
+
+
+@router.post("/api/records/{record_id}/upload-audio", status_code=201, response_model=Uploaded)
+async def upload_audio(record_id: int, request: Request, filename: str = Query(min_length=1),
+                       conn: sqlite3.Connection = Depends(get_db)) -> dict:
+    """Put one of your own files in the record's audio folder (the request body is the file). Searching
+    audio afterwards matches it to its track before anything online."""
+    folder = audio_folder(_record(conn, record_id))
+    if folder is None:
+        raise HTTPException(400, "record has no Discogs release id, so it has no audio folder")
+    if Path(filename).name != filename or filename.startswith("."):
+        raise HTTPException(422, "filename must be a plain file name")
+    if Path(filename).suffix.lower() not in AUDIO_EXTENSIONS:
+        raise HTTPException(422, f"not an audio file (use {', '.join(sorted(AUDIO_EXTENSIONS))})")
+    folder.mkdir(parents=True, exist_ok=True)
+    target, size = folder / filename, 0
+    try:
+        with target.open("wb") as out:
+            async for chunk in request.stream():
+                size += len(chunk)
+                if size > MAX_UPLOAD:
+                    raise HTTPException(413, "file is too large")
+                out.write(chunk)
+    except BaseException:
+        target.unlink(missing_ok=True)
+        raise
+    if size == 0:
+        target.unlink(missing_ok=True)
+        raise HTTPException(422, "the file is empty")
+    return {"file": filename}
 
 
 _BINARY = {"schema": {"type": "string", "format": "binary"}}

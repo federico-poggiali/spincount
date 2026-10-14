@@ -12,7 +12,6 @@ export type NoteCreate = S["NoteCreate"];
 export type NotePatch = S["NotePatch"];
 export type IntakeResponse = S["IntakeResponse"];
 export type JobOut = S["JobOut"];
-export type AudioMatchReport = S["AudioMatchReport"];
 export type TrackAudio = S["TrackAudioOut"];
 export type RecordAudio = S["RecordAudioOut"];
 export type ExactResults = S["ExactResults"];
@@ -65,14 +64,14 @@ function toSearch(query?: Query): string {
 export async function request<T>(
   method: string,
   path: string,
-  opts: { query?: Query; body?: unknown; signal?: AbortSignal } = {},
+  opts: { query?: Query; body?: unknown; file?: File; signal?: AbortSignal } = {},
 ): Promise<{ data: T; status: number }> {
   let response: Response;
   try {
     response = await fetch(path + toSearch(opts.query), {
       method,
       headers: opts.body !== undefined ? { "Content-Type": "application/json" } : undefined,
-      body: opts.body !== undefined ? JSON.stringify(opts.body) : undefined,
+      body: opts.file ?? (opts.body !== undefined ? JSON.stringify(opts.body) : undefined),
       signal: opts.signal,
     });
   } catch (error) {
@@ -132,6 +131,8 @@ export const api = {
   recordAudio: (id: number) => get<RecordAudio>(`/api/records/${id}/audio`),
   findAudio: (id: number, refresh = false) =>
     send<{ job_id: number }>("POST", `/api/records/${id}/find-audio`, refresh ? { refresh: true } : undefined),
+  uploadAudio: (id: number, file: File) =>
+    request<{ file: string }>("POST", `/api/records/${id}/upload-audio`, { query: { filename: file.name }, file }).then((r) => r.data),
   audioFileUrl: (trackId: number) => `/api/tracks/${trackId}/audio-file`,
   bandcampEmbed: (url: string) => get<{ kind: string; id: number }>("/api/audio/bandcamp-embed", { url }),
   validate: (id: number, trackIds: number[], overwriteManual = false) =>
@@ -139,12 +140,9 @@ export const api = {
   discard: (id: number, trackIds?: number[]) =>
     send<RecordDetail>("POST", `/api/records/${id}/discard`, trackIds ? { track_ids: trackIds } : undefined),
   syncDiscogs: (id: number) => send<{ job_id: number }>("POST", `/api/records/${id}/sync-discogs`),
-  audioMatch: (id: number) => get<AudioMatchReport>(`/api/records/${id}/audio-match`),
   getJob: (id: number) => get<JobOut>(`/api/jobs/${id}`),
 
   patchTrack: (id: number, body: TrackPatch) => send<TrackOut>("PATCH", `/api/tracks/${id}`, body),
-  assignAudio: (id: number, file: string) => send<TrackOut>("POST", `/api/tracks/${id}/audio`, { file }),
-  unassignAudio: (id: number) => send<TrackOut>("DELETE", `/api/tracks/${id}/audio`),
 
   createNote: (body: NoteCreate) => send<NoteOut>("POST", "/api/notes", body),
   patchNote: (id: number, body: NotePatch) => send<NoteOut>("PATCH", `/api/notes/${id}`, body),

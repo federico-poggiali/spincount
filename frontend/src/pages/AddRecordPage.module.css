@@ -4,14 +4,7 @@
 .status button { display: inline-flex; align-items: center; height: 34px; padding: 0 14px; border-radius: var(--r-m); border: 1px solid var(--line-2); font-size: 0.875rem; cursor: pointer; transition: background 0.2s var(--ease); }
 .status button:hover { background: var(--surface); }
 .status button.on { background: var(--ink); color: var(--bg); border-color: var(--ink); }
-.result { display: grid; gap: 18px; }
-.dupe { margin: 0; padding: 12px 14px; border: 1px solid var(--signal); border-radius: var(--r-m); }
-.dupe a { color: var(--signal-ink); }
 .release { display: flex; gap: 16px; align-items: center; }
-.cover { width: 88px; flex: none; }
 .release h2 { font: 600 1.5rem/1.1 var(--sans); letter-spacing: -0.02em; }
 .release p { margin: 4px 0 0; color: var(--ink-2); }
-.release .meta { color: var(--ink-3); font-size: 0.8125rem; }
-.open { display: inline-block; margin-top: 8px; font-size: 0.875rem; }
 .jobs { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
-.tracksHead { display: flex; justify-content: space-between; align-items: center; }

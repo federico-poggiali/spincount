@@ -13,7 +13,9 @@
 .num { text-align: right; white-space: nowrap; }
 .bpmWrap, .keyWrap { display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
 .keyWrap { justify-content: flex-start; }
-.bpm { font: 600 1.25rem/1 var(--sans); letter-spacing: -0.02em; font-variant-numeric: tabular-nums; border: 0; background: none; padding: 4px 6px; border-radius: var(--r-s); min-width: 3rem; text-align: right; }
+.stack { flex-direction: column; align-items: flex-end; gap: 4px; }
+.keyWrap.stack { align-items: flex-start; }
+.bpm { font: 600 1.25rem/1 var(--sans); letter-spacing: -0.02em; font-variant-numeric: tabular-nums; border: 0; background: none; padding: 4px 6px; border-radius: var(--r-s); min-width: 3rem; min-height: 1.9rem; text-align: right; }
 button.bpm:hover { background: var(--raise); }
 .bpmInput { width: 92px; height: 34px; text-align: right; font: 600 1rem var(--sans); }
 .dash { color: var(--ink-3); font: 500 0.75rem var(--mono); font-weight: 500; letter-spacing: 0; }
@@ -31,8 +33,6 @@ button.bpm:hover { background: var(--raise); }
 .manual { display: inline-flex; align-items: center; gap: 2px; font: 500 0.625rem/1 var(--mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-2); border: 1px solid var(--line-2); border-radius: var(--r-s); padding: 3px 3px 3px 6px; }
 .manual button { border: 0; background: none; color: var(--ink-3); font-size: 0.9rem; line-height: 1; padding: 0 3px; }
 .manual button:hover { color: var(--signal-ink); }
-.alt { border: 1px dashed var(--line-2); background: none; border-radius: var(--r-s); padding: 3px 7px; font: 500 0.6875rem/1 var(--mono); color: var(--ink-2); }
-.alt:hover { border-color: var(--ink); color: var(--ink); }
 .proposed { background: none; font: 600 0.6875rem/1 var(--mono); color: var(--signal-ink); border: 1px solid var(--signal); border-radius: var(--r-s); padding: 3px 6px; white-space: nowrap; cursor: pointer; }
 .proposed:hover, .proposed[aria-expanded="true"] { background: var(--surface); }
 .detailRow td { padding: 0 10px 16px; background: var(--surface); }
@@ -58,3 +58,10 @@ button.bpm:hover { background: var(--raise); }
 .popFacts dd { margin: 0; font-weight: 600; font-variant-numeric: tabular-nums; }
 .popWarn { margin: 0; font-size: 0.8125rem; color: var(--ink-2); border-left: 2px solid var(--signal); padding-left: 8px; }
 .popActions { display: flex; gap: 8px; }
+.noteLine[role=button] { cursor: pointer; }
+.playCell { width: 2.5rem; }
+.play { width: 28px; height: 28px; padding: 0; border-radius: 50%; font-size: 11px; line-height: 1; }
+.playing { background: var(--ink); color: var(--bg); border-color: transparent; }
+.audioLine { display: flex; flex-wrap: wrap; gap: 4px 12px; margin-top: 3px; font-size: 0.75rem; color: var(--ink-3); }
+.audioLine a { white-space: nowrap; }
+.review { color: var(--ink-2); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }

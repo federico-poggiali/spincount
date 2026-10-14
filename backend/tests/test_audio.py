@@ -204,6 +204,19 @@ def test_your_files_play_only_from_the_audio_folder(client, db_path, audio_dir):
     assert client.get(f"/api/records/{rid}/audio").json()["previews"]["tracks"]["A1"]["kind"] == "file"
 
 
+def test_upload_audio_saves_into_the_records_folder(client, db_path, audio_dir):
+    rid, _, _ = setup_record(db_path)
+    url = f"/api/records/{rid}/upload-audio"
+    sent = client.post(url, params={"filename": "A1 - First.mp3"}, content=b"ID3fake")
+    assert sent.status_code == 201 and sent.json() == {"file": "A1 - First.mp3"}
+    assert (audio_dir / "9261843" / "A1 - First.mp3").read_bytes() == b"ID3fake"
+    assert client.post(url, params={"filename": "notes.txt"}, content=b"x").status_code == 422
+    assert client.post(url, params={"filename": "../x.mp3"}, content=b"x").status_code == 422
+    assert client.post(url, params={"filename": "empty.mp3"}, content=b"").status_code == 422
+    assert not (audio_dir / "9261843" / "empty.mp3").exists()
+    assert client.post("/api/records/999/upload-audio", params={"filename": "a.mp3"}, content=b"x").status_code == 404
+
+
 def test_bandcamp_embed_rejects_other_sites(client):
     assert client.get("/api/audio/bandcamp-embed", params={"url": "https://evil.example/x"}).status_code == 400
 

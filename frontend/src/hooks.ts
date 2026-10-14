@@ -208,3 +208,35 @@ export function useKeysEnabled(): [boolean, (on: boolean) => void] {
   };
   return [on, set];
 }
+
+const CONFIDENCE_STORAGE = "spincount.key-confidence";
+const CONFIDENCE_EVENT = "spincount-key-confidence";
+
+/** Whether the confidence of a key is shown (percentage and low-confidence warnings). Off unless switched on
+ *  in Settings; only matters while keys themselves are shown. Remembered per browser. */
+export function useKeyConfidenceEnabled(): [boolean, (on: boolean) => void] {
+  const read = () => {
+    try {
+      return localStorage.getItem(CONFIDENCE_STORAGE) === "on";
+    } catch {
+      return false;
+    }
+  };
+  const [on, setOn] = useState(read);
+  useEffect(() => {
+    const sync = () => setOn(read());
+    window.addEventListener(CONFIDENCE_EVENT, sync);
+    window.addEventListener("storage", sync);
+    return () => { window.removeEventListener(CONFIDENCE_EVENT, sync); window.removeEventListener("storage", sync); };
+  }, []);
+  const set = (next: boolean) => {
+    setOn(next);
+    try {
+      localStorage.setItem(CONFIDENCE_STORAGE, next ? "on" : "off");
+    } catch {
+      /* private mode: the choice just is not remembered */
+    }
+    window.dispatchEvent(new Event(CONFIDENCE_EVENT));
+  };
+  return [on, set];
+}

@@ -45,10 +45,8 @@
 .thumb { width: 52px; }
 .thumb > * { width: 28px; border-radius: 5px; overflow: hidden; }
 .noteCell { width: 44px; text-align: right !important; }
-.num { text-align: right !important; font-variant-numeric: tabular-nums; font-weight: 600; }
 .dim { color: var(--ink-2); }
-.mono { font: 600 0.75rem var(--mono); }
 .rec { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; color: var(--ink-2); }
 .rec:hover { color: var(--ink); }
 .rec > * { width: 24px; border-radius: 4px; overflow: hidden; }
-@media (max-width: 760px) { .table th:nth-child(n+4), .table td:nth-child(n+4) { display: none; } .table th.num, .table td.num { display: table-cell; } }
+@media (max-width: 760px) { .table th:nth-child(n+4), .table td:nth-child(n+4) { display: none; } }

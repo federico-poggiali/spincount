@@ -967,6 +967,18 @@
       },
       "LabelTrack": {
         "properties": {
+          "artist": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Only set when it is not the record's artist",
+            "title": "Artist"
+          },
           "bpm": {
             "anyOf": [
               {
@@ -982,6 +994,7 @@
             "default": [],
             "items": {
               "enum": [
+                "artist",
                 "bpm",
                 "key",
                 "tags",
@@ -3047,6 +3060,19 @@
         "title": "UnsortedRecord",
         "type": "object"
       },
+      "Uploaded": {
+        "properties": {
+          "file": {
+            "title": "File",
+            "type": "string"
+          }
+        },
+        "required": [
+          "file"
+        ],
+        "title": "Uploaded",
+        "type": "object"
+      },
       "ValidateRequest": {
         "properties": {
           "overwrite_manual": {
@@ -4841,6 +4867,59 @@
         "summary": "Sync Discogs",
         "tags": [
           "records"
+        ]
+      }
+    },
+    "/api/records/{record_id}/upload-audio": {
+      "post": {
+        "description": "Put one of your own files in the record's audio folder (the request body is the file). Searching\naudio afterwards matches it to its track before anything online.",
+        "operationId": "upload_audio",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "record_id",
+            "required": true,
+            "schema": {
+              "title": "Record Id",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filename",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "title": "Filename",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Uploaded"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Upload Audio",
+        "tags": [
+          "audio"
         ]
       }
     },

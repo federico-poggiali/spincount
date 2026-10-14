@@ -21,7 +21,7 @@ test("add a record, take a note, find it by search, and see it in the vault", as
   await expect(page.getByRole("heading", { level: 1, name: "7_1 12-inch Mixes" })).toBeVisible();
   // Nothing runs by itself: choose to analyse the whole record, and watch its progress.
   await expect(page.getByTestId("job-analysis")).toHaveCount(0);
-  await page.getByRole("button", { name: "Analyse whole record" }).click();
+  await page.getByRole("button", { name: "Analyse all tracks" }).click();
   await expect(page.getByTestId("job-analysis").getByRole("status")).toHaveText("done");
   // Results wait for validation before they are saved onto the tracks.
   await expect(page.getByText(/tracks? to validate/)).toBeVisible();
@@ -41,13 +41,13 @@ test("add a record, take a note, find it by search, and see it in the vault", as
   await page.goto("/");
   await page.getByRole("link", { name: /7_1 12-inch Mixes/ }).click();
   await expect(page.getByRole("heading", { level: 1, name: "7_1 12-inch Mixes" })).toBeVisible();
-  await page.getByRole("tab", { name: /Notes/ }).click();
-  await page.getByPlaceholder("Huge energy").fill("Huge energy, the floor erupted at midnight.");
-  await page.getByRole("button", { name: "Add note" }).click();
+  await page.getByRole("button", { name: /Add a note for 7_1 12-inch Mixes/ }).click();
+  await page.getByRole("textbox", { name: "Note" }).fill("Huge energy, the floor erupted at midnight.");
+  await page.getByRole("button", { name: "Done" }).click();
   await expect(page.getByText("Huge energy, the floor erupted at midnight.")).toBeVisible();
 
 
-  // 5. "/" jumps to search; exact search finds the note and opens it highlighted.
+  // 5. "/" jumps to search; exact search finds the note and opens its record.
   await page.locator("body").click({ position: { x: 700, y: 5 } });
   await page.keyboard.press("/");
   await expect(page).toHaveURL(/\/search/);
@@ -56,7 +56,8 @@ test("add a record, take a note, find it by search, and see it in the vault", as
   const hit = page.getByRole("link", { name: /Huge energy/ });
   await expect(hit.locator("mark")).toHaveText("erupted");
   await hit.click();
-  await expect(page.locator("[data-highlight='true']")).toContainText("floor erupted");
+  await expect(page.getByRole("heading", { level: 1, name: "7_1 12-inch Mixes" })).toBeVisible();
+  await expect(page.getByText("Huge energy, the floor erupted at midnight.")).toBeVisible();
 
   // 6. The same note and the hand-set BPM end up in the generated Obsidian file.
   await expect
@@ -271,7 +272,7 @@ test("design tags in the Tag Manager, then put one on a record", async ({ page }
   await expect(page.getByRole("list", { name: "this record tags" })).toContainText("closer");
 });
 
-test("adding a record finds its audio by itself; the Audio tab plays it like the audio research viewer", async ({ page }) => {
+test("adding a record finds its audio by itself; the track table plays it like the audio research viewer", async ({ page }) => {
   await page.goto("/add");
   await page.getByLabel("Discogs link").fill("https://www.discogs.com/release/12472");
   await page.getByRole("button", { name: "Add record" }).click();
@@ -279,11 +280,12 @@ test("adding a record finds its audio by itself; the Audio tab plays it like the
   // The audio search starts on its own; BPM and key analysis does not.
   await expect(page.getByTestId("job-finding-audio").getByRole("status")).toHaveText("done");
   await expect(page.getByTestId("job-analysis")).toHaveCount(0);
-  await page.getByRole("tab", { name: "Audio" }).click();
   await expect(page.getByTestId("found-audio-counts")).toHaveText("1 found · 1 need a look · 10 not found · 2 of 12 playable");
-  await expect(page.getByTestId("found-audio-A1")).toContainText("YouTube");
-  await expect(page.getByTestId("found-audio-A2")).toContainText("Redeye · clip · needs a look");
-  await expect(page.getByTestId("found-audio-A2").getByRole("link", { name: "Find at Redeye ↗" })).toHaveAttribute("href", "https://www.redeyerecords.co.uk/vinyl/12472");
+  // A found track shows nothing but its play button (and a flag when it needs a look); the rest is under "Other audio sources".
+  await expect(page.getByTestId("found-audio-A1")).toHaveCount(0);
+  await expect(page.getByTestId("found-audio-A2")).toContainText("needs a look");
+  await page.getByText("Other audio sources").click();
+  await expect(page.getByTestId("other-audio").getByRole("link", { name: /Redeye/ }).first()).toHaveAttribute("href", /redeyerecords\.co\.uk/);
   await expect(page.getByTestId("found-audio-A3")).toContainText("not found");
   // Play: a YouTube track opens the docked player, closing it stops.
   await page.getByRole("button", { name: "Play A1" }).click();
