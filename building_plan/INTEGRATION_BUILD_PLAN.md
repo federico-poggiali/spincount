@@ -2,11 +2,11 @@
 
 How to use: give Claude Code one step at a time ("Do Step I2 from INTEGRATION_BUILD_PLAN.md"). Ask the owner the open questions of a step before building it. Commit after every step and note it in `docs/integration_progress.md`.
 
-## Decisions (owner, 2026-10-14)
+## Decisions (owner, 2026-10-14; row 1 revised the same day)
 
 | # | Question | Answer |
 |---|----------|--------|
-| 1 | When does audio research run | On every add, for owned and wantlist records; a Settings backfill for existing records |
+| 1 | When does audio research run | Only as the first stage of analysis: when a record is added and analysis starts, or when you press Analyze. Never on its own at add time. A Settings option runs it for the whole existing library. Applies to every record that gets analysed (owned and wantlist) |
 | 2 | Found audio in the app | Shown directly; only `review` tracks need the owner; uncertain audio may feed analysis, marked "audio uncertain" |
 | 3 | Audio cache and `audioresearch.db` | Application Support, next to `vinyl.db` (outside OneDrive) |
 | 4 | bpmkey CLI and web page (:8765) | Keep working; its own audio search stays behind a flag until the new path is proven, then it is removed |
@@ -15,7 +15,7 @@ How to use: give Claude Code one step at a time ("Do Step I2 from INTEGRATION_BU
 
 1. **The output contract is the only link.** The backend calls `audioresearch.research()` and stores each track's result in `vinyl.db`. It never reads `audioresearch.db`, which stays the tool's own cache and provenance log. `bpmkey` never imports `audioresearch` (the reverse import already exists).
 2. **Owner decisions live in `vinyl.db` only.** Hand-assigned files, pasted links, accepted or rejected candidates are stored there and passed into `research()` on each run.
-3. **Two jobs.** `audio` (finding, minutes of network) and `analysis` (BPM and key from a local file, seconds). Analysis can rerun without searching again; a finished `audio` job queues `analysis`.
+3. **Audio is a stage of analysis.** Asking for analysis (intake, the Analyze button, a Settings run) queues an `audio` job followed by the `analysis` job; nothing queues `audio` alone except the Settings library run. Two jobs, because finding audio is minutes of network and analysis is seconds on a local file: a re-analysis reuses the audio already found and does not search again unless you ask.
 4. **bpmkey receives audio, it does not find it.** New entry point taking `{position: (path, quality)}` plus store readings (deejay.de BPM) as one more vote.
 5. **One setting per folder.** `AUDIO_DIR` and `AUDIORESEARCH_LOCAL_AUDIO` become one.
 6. **Tests never touch the network.** The backend injects a fake `research` function (as it does `lookup_fn`); saved contract JSON is the test data.
@@ -36,14 +36,14 @@ Open, to settle at the start of I1: (a) the owner reads `docs/audioresearch_live
 1. Migration: `track_audio` (track_id, status, source, level, quality, confidence, reason, url, page, audio_path, readings JSON, alternatives JSON, run_id, found_at). One row per track; a new run replaces it.
 2. `backend/app/audio/job.py`: handler that builds a `ReleaseIdentity` from the record (`identity=`), passes manual links, rejections and assigned files from `vinyl.db`, calls `research()`, maps positions to track ids, stores rows. Injectable `research_fn`.
 3. Own queue (second worker) so long audio jobs never block Discogs sync or analysis.
-4. Intake enqueues `audio` for owned and wantlist records; a finished `audio` job enqueues `analysis`.
-**Done when:** with a saved contract JSON, adding a record fills `track_audio` and queues analysis; the e2e server fakes it.
+4. Wherever analysis is requested today (intake, `POST /api/records/{id}/analyze`) the request now queues `audio` then `analysis`. Re-analysis skips `audio` when `track_audio` rows exist, unless the request says `refresh_audio`.
+**Done when:** with a saved contract JSON, adding a record fills `track_audio` and then queues analysis; analysing again does not call `research`; the e2e server fakes it.
 
 ### Step I3: record page and Settings backfill
 1. API: `GET /api/records/{id}/audio` (per track: status, source, quality, confidence, reason, page link, alternatives); `POST /api/records/{id}/find-audio`.
 2. Record page: per track source, quality badge, confidence, link to the page it came from, and a player built on the rules in `audioresearch/previews.py` (one family per record).
-3. Settings: "Find audio for existing records" (resumable, polite delays, skips cached releases), as with the styles backfill.
-**Done when:** a new record shows audio status; the backfill runs twice with no repeated network calls.
+3. Settings: "Find audio and analyse the library" (the library sync option): runs the audio stage, then analysis, for every record that has no `track_audio` yet; resumable, polite delays, skips cached releases, like the styles backfill. Nothing runs on its own.
+**Done when:** an analysed record shows audio status; the Settings run works twice with no repeated network calls.
 
 ## Phase 2: review in the app
 
