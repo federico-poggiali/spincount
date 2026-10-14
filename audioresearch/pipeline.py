@@ -46,6 +46,7 @@ class Run:
         self.results: dict[str, TrackResult] = {t.position: TrackResult(t.position) for t in identity.tracks}
         self.overrides = store.overrides(identity.discogs_release_id) if store else {}
         self.rejected_urls = {o["detail"] for o in self.overrides.values() if o["action"] == "reject" and o["detail"]}
+        self.searched: set[tuple[str, str]] = set()   # (adapter, position) pairs already searched this run
 
     # ---- helpers -------------------------------------------------------------------------------
     def settled(self, pos: str) -> bool:
@@ -63,6 +64,9 @@ class Run:
         if r.status == Status.FOUND and r.quality.rank >= adapter.max_quality.rank:
             return False
         return True
+
+    def all_found(self) -> bool:
+        return not self.search_all and all(r.status == Status.FOUND for r in self.results.values())
 
     def unfound(self) -> list[str]:
         if self.search_all:
@@ -92,13 +96,15 @@ class Run:
         for adapter in group:
             run = _AdapterRun(adapter)
             runs.append(run)
-            tracks = [t for t in self.identity.tracks if t.position not in taken and self.eligible(adapter, t.position)]
+            tracks = [t for t in self.identity.tracks if t.position not in taken and self.eligible(adapter, t.position)
+                      and (adapter.name, t.position) not in self.searched]
             if not tracks or self.health.is_off(adapter.name):
                 if self.health.is_off(adapter.name):
                     run.failed = True
                 continue
             self.em.emit(ev.STAGE_STARTED, level=level, adapter=adapter.name, stage=ev.SEARCH, tracks=len(tracks))
             t = self.em.timer()
+            self.searched |= {(adapter.name, t_.position) for t_ in tracks}
             got = self._cached_search(adapter, tracks)
             if got is FAILED:
                 run.failed = True
@@ -285,16 +291,26 @@ class Run:
                      adapters=[a.name for a in self.registry.for_level(level)])
         tl = self.em.timer()
         groups = self.registry.groups(level)
-        runs: list[_AdapterRun] = []
         if groups and unfound:
-            with ThreadPoolExecutor(max_workers=len(groups)) as pool:
-                for rs in pool.map(lambda g: self._run_group(level, g), groups):
-                    runs.extend(rs)
-            self._fetch_verify(level, runs)
-            self._decide(level)
+            self._search_fetch_decide(level, groups, retry=False)
+            # A fallback in a group skips the tracks its predecessor matched (iTunes after the Discogs YouTube
+            # links). When such a match then failed (download refused, wrong recording), the fallback searches
+            # those tracks now. Tracks it already searched are not searched again.
+            if any(len(g) > 1 for g in groups) and self.unfound():
+                self._search_fetch_decide(level, groups, retry=True)
         resolved = [p for p, r in self.results.items()
                     if r.status != Status.NOT_FOUND and (r.status, r.source, r.quality) != before[p]]
         self.em.emit(ev.LEVEL_FINISHED, level=level, resolved=resolved, unfound=self.unfound(), ms=tl.ms)
+
+    def _search_fetch_decide(self, level: int, groups: list[list[Adapter]], retry: bool) -> None:
+        runs: list[_AdapterRun] = []
+        with ThreadPoolExecutor(max_workers=len(groups)) as pool:
+            for rs in pool.map(lambda g: self._run_group(level, g), groups):
+                runs.extend(rs)
+        if retry and not any(r.outcome for r in runs):
+            return   # the second pass had nothing left to search
+        self._fetch_verify(level, runs)
+        self._decide(level)
 
     def final(self) -> ReleaseResult:
         tracks = []
@@ -351,6 +367,8 @@ def research(url_or_id: str | int, levels: Iterable[int] = range(0, 6), refresh:
               review_threshold=review_threshold, max_candidates=max_candidates, search_all=search_all)
     for level in levels:
         run.run_level(level)
+        if run.all_found():
+            break  # every track has audio: no point searching the higher levels
     result = run.final()
     if store is not None:
         store.save_result(result, levels, em.run_id)

@@ -65,7 +65,7 @@ def test_dj_mix_is_rejected_by_duration_whether_or_not_discogs_has_one():
     assert long_ones, "the saved results contain hour-long sets"
     # and the verifier catches one that slips through with a known track length
     f = FetchedAudio(Path("x"), "soundcloud_tracks", "u", Quality.FULL, 7201.0)
-    v = verify(TrackRef("A1", "Jeff Mills", "The Bells", 289), f, long_ones[0], with_fingerprint=False)
+    v = verify(TrackRef("A1", "Jeff Mills", "The Bells", 289), f, long_ones[0])
     assert not v.ok and "mix or medley" in v.reasons[0]
 
 
@@ -76,7 +76,7 @@ def test_label_preview_medley_is_rejected():
     medleys = [c for c in cands if " / " in c.title or "Preview" in c.title or "preview" in c.title]
     assert medleys
     track = ident.tracks[0]
-    flagged = [c for c in medleys if not verify(track, FetchedAudio(Path("x"), "sc", c.url, Quality.FULL, 344.0), c, with_fingerprint=False).ok]
+    flagged = [c for c in medleys if not verify(track, FetchedAudio(Path("x"), "sc", c.url, Quality.FULL, 344.0), c).ok]
     titles = {c.title for c in flagged}
     assert any(t.startswith("ALARM / STEAMPIT EP") for t in titles)             # three tracks joined with ' / '
     assert any("EP](Preview)" in t or "(preview)" in t.lower() for t in titles)  # an EP preview

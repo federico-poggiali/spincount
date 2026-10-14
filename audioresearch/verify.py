@@ -1,4 +1,6 @@
-"""Stage 5: verify the recording. Duration check, mix/medley check, fingerprint cross-check."""
+"""Stage 5: verify the recording. Duration check, mix/medley check, fingerprint cross-check.
+
+A fingerprint (fpcalc, ~1 s a file) is only computed when a track has a second source to compare it with."""
 from __future__ import annotations
 
 import logging
@@ -47,7 +49,7 @@ def _looks_like_mix(track: TrackRef, candidate: Candidate | None) -> str | None:
 
 
 def verify(track: TrackRef, fetched: FetchedAudio, candidate: Candidate | None = None, *,
-           tolerance: int = DURATION_TOLERANCE, with_fingerprint: bool = True) -> Verification:
+           tolerance: int = DURATION_TOLERANCE) -> Verification:
     v = Verification(True)
     dur, ref = fetched.duration, track.duration
 
@@ -68,11 +70,6 @@ def verify(track: TrackRef, fetched: FetchedAudio, candidate: Candidate | None =
         v.reasons.append("full length, no Discogs duration to compare")
     else:
         v.reasons.append(f"{fetched.quality.value}: duration check skipped")
-
-    if with_fingerprint and fetched.fingerprint is None:
-        fetched.fingerprint = fingerprint.compute(fetched.path)
-        if fetched.fingerprint is None:
-            v.warnings.append("no fingerprint (fpcalc missing or file unreadable): duration only")
     return v
 
 

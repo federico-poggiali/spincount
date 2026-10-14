@@ -32,8 +32,10 @@ def test_viewer_runs_a_release_streams_and_replays(tmp_path):
     types = [e["type"] for e in events]
     assert types[0] == "run_started" and types[1] == "release_identified" and types[-1] == "run_finished"
     assert [e["seq"] for e in events] == list(range(1, len(events) + 1))
-    for level in range(6):  # every level is announced and closed, in order
-        assert types.count("level_started") == 6
+    started = [e["level"] for e in events if e["type"] == "level_started"]
+    # levels run in order and stop early once every track is found
+    assert started == list(range(len(started))) and started
+    assert types.count("level_finished") == len(started)
     stages = {(e["level"], e["stage"]) for e in events if e["type"] == "stage_finished"}
     assert (1, "search") in stages and (1, "decide") in stages
     finished = events[-1]["data"]

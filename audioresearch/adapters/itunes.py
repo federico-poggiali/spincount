@@ -27,6 +27,7 @@ def parse_results(data: dict, position: str | None = None, adapter: str = "itune
 class ITunesPreview(Adapter):
     name = "itunes"
     level = 1
+    group = "youtube"   # after the Discogs YouTube links: only the tracks they did not match
     max_quality = Quality.PREVIEW
 
     def __init__(self, http=None):

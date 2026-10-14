@@ -79,7 +79,7 @@ def demo_registry(identity: ReleaseIdentity, delay: float = 0.35):
     st = [track_cand("deejay_de", 5, t, Quality.CLIP) for t in pick(0.7)]
     return Registry([
         FakeAdapter("discogs_youtube", 1, yt, group="youtube", delay=delay),
-        FakeAdapter("itunes", 1, it, max_quality=Quality.PREVIEW, delay=delay * 0.7),
+        FakeAdapter("itunes", 1, it, group="youtube", max_quality=Quality.PREVIEW, delay=delay * 0.7),
         FakeAdapter("bandcamp", 2, bc, delay=delay),
         FakeAdapter("soundcloud_tracks", 3, sc, delay=delay),
         FakeAdapter("deejay_de", 5, st, max_quality=Quality.CLIP, delay=delay),

@@ -16,7 +16,7 @@ def fa(dur, q=Quality.FULL, path="x.fake"):
 
 
 def check(track=TRACK, f=None, cand=None):
-    return verify.verify(track, f, cand, with_fingerprint=False)
+    return verify.verify(track, f, cand)
 
 
 def test_duration_tolerance_for_full():
@@ -57,9 +57,15 @@ def test_missing_fpcalc_falls_back_to_duration_only(tmp_path, monkeypatch):
     monkeypatch.setattr(shutil, "which", lambda name: None)
     monkeypatch.setattr(fingerprint, "_warned", False)
     f = fa(360, path=make_wav(tmp_path / "a.wav", 5))
-    v = verify.verify(TRACK, f)
-    assert v.ok and any("duration only" in w for w in v.warnings)
+    assert verify.verify(TRACK, f).ok
     assert verify.cross_check(f, fa(360, path=f.path)) is None
+
+
+def test_verify_computes_no_fingerprint(tmp_path, monkeypatch):
+    """fpcalc only runs when two sources are compared: a single source needs no fingerprint."""
+    monkeypatch.setattr(fingerprint, "compute", lambda path: pytest.fail("fingerprint computed"))
+    f = fa(360, path=make_wav(tmp_path / "a.wav", 5))
+    assert verify.verify(TRACK, f).ok and f.fingerprint is None
 
 
 @needs_fpcalc

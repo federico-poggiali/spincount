@@ -39,6 +39,29 @@ def test_split_across_levels_1_and_3(tmp_path):
     assert reg.get("sc").searched == [["A2", "B1"]]
 
 
+def youtube_then_itunes(fetch_errors=None):
+    yt = FakeAdapter("yt", 1, [tc("yt", 1, "A1", "Night Drive", 360), tc("yt", 1, "A2", "Morning Light", 400)],
+                     group="youtube", fetch_errors=fetch_errors)
+    it = FakeAdapter("it", 1, [tc("it", 1, p, t, q=Quality.PREVIEW) for p, t in
+                               (("A1", "Night Drive"), ("A2", "Morning Light"), ("B1", "Deep Water"))],
+                     group="youtube", max_quality=Quality.PREVIEW)
+    return Registry([yt, it], disabled=set())
+
+
+def test_fallback_searches_only_the_tracks_its_group_did_not_match(tmp_path):
+    reg = youtube_then_itunes()
+    res = run(reg, tmp_path)
+    assert reg.get("it").searched == [["B1"]]   # not A1/A2: the YouTube links matched them
+    assert [(t.position, t.source) for t in res.tracks] == [("A1", "yt"), ("A2", "yt"), ("B1", "it")]
+
+
+def test_fallback_searches_again_when_its_groups_match_failed(tmp_path):
+    reg = youtube_then_itunes(fetch_errors={"https://yt/A2"})   # matched, but the download is refused
+    res = run(reg, tmp_path)
+    assert reg.get("it").searched == [["B1"], ["A2"]]   # second pass: only A2, B1 is not searched twice
+    assert [(t.position, t.source) for t in res.tracks] == [("A1", "yt"), ("A2", "it"), ("B1", "it")]
+
+
 def test_never_found(tmp_path):
     reg = Registry([FakeAdapter("yt", 1, [tc("yt", 1, "A1", "Night Drive", 360)])], disabled=set())
     res = run(reg, tmp_path)
