@@ -32,7 +32,7 @@ MAX_VIDEO_SECONDS: int = 20 * 60
 
 DEFAULT_DELAY = 1.0
 STORE_DELAY = 2.0
-_STORES = ("deejay_de", "decks_de", "hardwax", "clone", "kalahari_oyster_cult")
+_STORES = ("deejay_de", "decks_de", "hardwax", "redeye", "runas", "orbitwax", "soundmetaphors", "one_eye_witness", "smallblackdots", "clone", "kalahari_oyster_cult")
 
 
 def site_delay(site: str) -> float:
@@ -50,4 +50,3 @@ def disabled_adapters() -> set[str]:
     """Adapters switched off in config (env: AUDIORESEARCH_DISABLED=bandcamp,clone)."""
     return {s.strip() for s in os.environ.get("AUDIORESEARCH_DISABLED", "").split(",") if s.strip()}
 
-BEATPORT_TOKEN: str = os.environ.get("BEATPORT_TOKEN", "")   # OAuth access token for api.beatport.com/v4 (see progress notes)

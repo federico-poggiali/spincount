@@ -70,15 +70,16 @@ class ReleaseIdentity:
     year: Optional[int]
     tracks: list[TrackRef]
     videos: list[dict] = field(default_factory=list)
+    cover: Optional[str] = None   # Discogs cover image, for the viewer
 
     def to_dict(self) -> dict:
-        return {**{k: getattr(self, k) for k in ("discogs_release_id", "artist", "title", "label", "catno", "year", "videos")},
+        return {**{k: getattr(self, k) for k in ("discogs_release_id", "artist", "title", "label", "catno", "year", "videos", "cover")},
                 "tracks": [t.to_dict() for t in self.tracks]}
 
     @classmethod
     def from_dict(cls, d: dict) -> "ReleaseIdentity":
         return cls(d["discogs_release_id"], d["artist"], d["title"], d.get("label"), d.get("catno"), d.get("year"),
-                   [TrackRef.from_dict(t) for t in d["tracks"]], d.get("videos", []))
+                   [TrackRef.from_dict(t) for t in d["tracks"]], d.get("videos", []), d.get("cover"))
 
     def track(self, position: str) -> TrackRef:
         return next(t for t in self.tracks if t.position == position)
@@ -148,9 +149,10 @@ class TrackResult:
     reason: str = ""
     readings: list[Reading] = field(default_factory=list)
     alternatives: list[dict] = field(default_factory=list)
+    page: Optional[str] = None   # the release page the audio came from (a store's record page)
 
     def to_dict(self) -> dict:
-        return {"position": self.position, "status": self.status.value, "audio_path": self.audio_path,
+        return {"position": self.position, "status": self.status.value, "audio_path": self.audio_path, "page": self.page,
                 "source": self.source, "level": self.level, "url": self.url,
                 "quality": self.quality.value if self.quality else None,
                 "confidence": round(self.confidence, 3), "reason": self.reason,
@@ -161,7 +163,7 @@ class TrackResult:
         return cls(d["position"], Status(d["status"]), d.get("audio_path"), d.get("source"), d.get("level"),
                    d.get("url"), Quality(d["quality"]) if d.get("quality") else None, d.get("confidence", 0.0),
                    d.get("reason", ""), [Reading.from_dict(r) for r in d.get("readings", [])],
-                   d.get("alternatives", []))
+                   d.get("alternatives", []), d.get("page"))
 
 
 def _now() -> str:

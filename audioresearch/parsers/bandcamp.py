@@ -102,3 +102,15 @@ def parse_page(page: str, url: str) -> BCPage:
     if not tracks:
         raise ParseError(f"no tracks on {url}")
     return BCPage(kind, url, title, artist, _find_catno(ld), tracks)
+
+
+def parse_item_id(page: str) -> tuple[str, int] | None:
+    """-> ("track"|"album", numeric id) from a page's data-tralbum; the official embed player needs it."""
+    m = re.search(r'data-tralbum="([^"]*)"', page)
+    try:
+        tr = json.loads(htmllib.unescape(m.group(1))) if m else {}
+    except ValueError:
+        return None
+    if not isinstance(tr.get("id"), int):
+        return None
+    return ("album" if tr.get("item_type") == "album" else "track"), tr["id"]

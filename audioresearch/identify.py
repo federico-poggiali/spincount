@@ -33,6 +33,7 @@ def identity_from_release(data: dict, release_id: int) -> ReleaseIdentity:
         tracks=[TrackRef(t.position, t.artist, t.title, t.duration)
                 for t in discogs.parse_tracklist(data, release_id)],
         videos=list(data.get("videos") or []),
+        cover=next((i.get("uri") or i.get("uri150") for i in data.get("images") or [] if i.get("uri") or i.get("uri150")), None),
     )
 
 

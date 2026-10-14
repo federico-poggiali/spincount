@@ -12,6 +12,7 @@ can be computed: a part with no data, e.g. missing durations, is left out, not c
 
 A release candidate is accepted at RELEASE_THRESHOLD. Inside it, a track pairs with a candidate
 track at TRACK_IN_RELEASE_THRESHOLD (title 0.65, position 0.20, duration 0.15, same leave-out rule).
+A Discogs track with a named mix needs 70% of that mix name in the candidate title, else no match.
 """
 from __future__ import annotations
 
@@ -19,17 +20,22 @@ import re
 from dataclasses import dataclass, field
 from difflib import SequenceMatcher
 
-from bpmkey.matching import (DURATION_TOLERANCE, bracket_penalty, dynamic_threshold, norm, score_candidate,
-                             similarity, version_penalty)
+from bpmkey.matching import (_HARMLESS, DURATION_TOLERANCE, bracket_penalty, bracket_text, dynamic_threshold, norm,
+                             score_candidate, similarity, version_penalty)
 
+from .scope import classify
 from .models import Candidate, ReleaseIdentity, TrackRef
 
 W_CATNO, W_TITLE, W_ARTIST, W_COUNT, W_TRACK_TITLES, W_DURATIONS = 0.35, 0.15, 0.10, 0.10, 0.20, 0.10
-RELEASE_THRESHOLD = 0.70
-TRACK_IN_RELEASE_THRESHOLD = 0.60
+RELEASE_THRESHOLD = 0.80
+TRACK_IN_RELEASE_THRESHOLD = 0.70
+MIN_TRACK_BAR = 0.70           # floor for a lone track candidate, whatever the release's titles
+MIX_MATCH = 0.70               # share of the Discogs mix name ("Six Mil Version") the candidate must carry
 MIN_PAIR_TITLE = 0.50          # a track never pairs on position alone
 VERSION_CONFLICT_PENALTY = 0.5  # Original Mix vs Dub Mix: in either direction
 AMBIGUITY_MARGIN = 0.03
+LINKED_TRACK_BAR = 0.55        # videos linked on the Discogs release itself: looser bar, they belong to it
+LINKED_ADAPTER = "discogs_youtube"
 
 
 def norm_catno(s: str | None) -> str:
@@ -60,8 +66,23 @@ def version_conflict(a: str, b: str) -> bool:
     return version_penalty(a, b) > 0 or version_penalty(b, a) > 0
 
 
+def mix_overlap(track_title: str, cand_title: str) -> float | None:
+    """Share of the track's bracketed mix name found in the candidate title; None when it has none.
+
+    "Original Mix" and the like are ignored, so only a named mix ("Six Mil Version") is demanded."""
+    tokens = set(re.findall(r"[a-z0-9]+", _HARMLESS.sub(" ", bracket_text(track_title).lower())))
+    if not tokens:
+        return None
+    cand = set(re.findall(r"[a-z0-9]+", cand_title.lower()))
+    return len(tokens & cand) / len(tokens)
+
+
 def title_score(a: str, b: str) -> float:
-    """0..1 similarity of two track titles; a version conflict costs 0.5 in either direction."""
+    """0..1 similarity of two track titles; a version conflict costs 0.5 in either direction.
+
+    When the first title names a mix, the second must carry at least MIX_MATCH of it, else 0."""
+    if (m := mix_overlap(a, b)) is not None and m < MIX_MATCH:
+        return 0.0
     s = similarity(a, b)
     if version_conflict(a, b):
         s -= VERSION_CONFLICT_PENALTY
@@ -154,11 +175,25 @@ def match_tracks_in_release(identity: ReleaseIdentity, cand: Candidate) -> dict[
 
 def track_threshold(identity: ReleaseIdentity) -> float:
     """Bar for a lone track candidate; rises when the release's titles are alike (many mixes of one song)."""
-    return dynamic_threshold([t.title for t in identity.tracks])
+    return max(MIN_TRACK_BAR, dynamic_threshold([t.title for t in identity.tracks]))
+
+
+def side_hint(title: str, positions: list[str]) -> set[str]:
+    """Positions a candidate title points at: "(B1)", "[A2]", "side B" -> B1 / A2 / B."""
+    out: set[str] = set()
+    for m in re.finditer(r"(?<![a-z0-9])([a-d])\s?-?(\d{1,2})(?![a-z0-9])|\bside\s+([a-d])\b", title.lower()):
+        tok = (m.group(1) + m.group(2) if m.group(1) else m.group(3)).upper()
+        for p in positions:
+            np = norm_position(p)
+            if np == tok or np == tok[0] or (len(tok) == 1 and np.startswith(tok)):
+                out.add(p)
+    return out
 
 
 def match_track(identity: ReleaseIdentity, track: TrackRef, cand: Candidate) -> float:
     """0..1 score of a track candidate against one track (compare with track_threshold)."""
+    if (m := mix_overlap(track.title, cand.title)) is not None and m < MIX_MATCH:
+        return 0.0
     s = score_candidate(track.artist, track.title, track.duration, cand.title, cand.artist, cand.duration)
     if s and version_conflict(track.title, cand.title):
         # bpmkey only checks one direction and charges 0.4; here a conflict always costs 0.5
@@ -209,14 +244,24 @@ def match_candidates(identity: ReleaseIdentity, tracks: list[TrackRef], candidat
             if not hit:
                 out.rejected.append((c, "release matched but none of the wanted tracks"))
         else:
+            c.extra["scope"], c.extra["scope_why"] = classify(identity, c)
             scored = sorted(((match_track(identity, t, c), t.position) for t in tracks), reverse=True)
-            if not scored or scored[0][0] < bar:
-                out.rejected.append((c, f"track score {scored[0][0] if scored else 0:.2f} below {bar:.2f}"))
-            elif len(scored) > 1 and scored[0][0] - scored[1][0] < AMBIGUITY_MARGIN and scored[1][0] >= bar:
-                out.rejected.append((c, f"ambiguous: fits {scored[0][1]} and {scored[1][1]} equally"))
-            else:
-                t = identity.track(scored[0][1])
-                found.append(Match(scored[0][1], c, scored[0][0], "track",
+            cbar = LINKED_TRACK_BAR if c.adapter == LINKED_ADAPTER else bar
+            if not scored or scored[0][0] < cbar:
+                out.rejected.append((c, f"track score {scored[0][0] if scored else 0:.2f} below {cbar:.2f}"))
+                continue
+            tied = [pos for sc, pos in scored if scored[0][0] - sc < AMBIGUITY_MARGIN and sc >= cbar]
+            if len(tied) > 1:
+                hinted = [pos for pos in tied if pos in side_hint(c.title, tied)]
+                if hinted:
+                    tied = hinted[:1] if len(hinted) == 1 else hinted
+                elif c.adapter != LINKED_ADAPTER:
+                    out.rejected.append((c, f"ambiguous: fits {tied[0]} and {tied[1]} equally"))
+                    continue
+                # a linked video that fits several identical titles with no side hint goes to all of them
+            for pos in tied:
+                t = identity.track(pos)
+                found.append(Match(pos, c, dict((p, sc) for sc, p in scored)[pos], "track",
                                    artist_sim=similarity(t.artist, c.artist) if c.artist else 0.0))
     for m in found:
         out.matches.setdefault(m.position, []).append(m)

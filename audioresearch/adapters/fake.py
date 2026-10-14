@@ -76,13 +76,11 @@ def demo_registry(identity: ReleaseIdentity, delay: float = 0.35):
     bc = [Candidate("bandcamp", 2, "release", "https://bandcamp.example/release", identity.title, identity.artist,
                     tracklist=tracklist, catno=identity.catno)] if identity.discogs_release_id % 2 == 0 else []
     sc = [track_cand("soundcloud_tracks", 3, t, Quality.FULL) for t in pick(0.5)]
-    bp = [track_cand("beatport_tracks", 4, t, Quality.PREVIEW) for t in pick(0.5)]
     st = [track_cand("deejay_de", 5, t, Quality.CLIP) for t in pick(0.7)]
     return Registry([
         FakeAdapter("discogs_youtube", 1, yt, group="youtube", delay=delay),
         FakeAdapter("itunes", 1, it, max_quality=Quality.PREVIEW, delay=delay * 0.7),
         FakeAdapter("bandcamp", 2, bc, delay=delay),
         FakeAdapter("soundcloud_tracks", 3, sc, delay=delay),
-        FakeAdapter("beatport_tracks", 4, bp, max_quality=Quality.PREVIEW, delay=delay),
         FakeAdapter("deejay_de", 5, st, max_quality=Quality.CLIP, delay=delay),
     ], disabled=set())

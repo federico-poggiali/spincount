@@ -77,4 +77,5 @@ def decide_track(position: str, accepted: list[Accepted], readings: list[Reading
     others = [a for _, a in scored if a is not best]
     status = Status.FOUND if conf >= review_threshold else Status.REVIEW
     return TrackResult(position, status, str(best.fetched.path), best.fetched.adapter, best.level, best.fetched.url,
-                       best.fetched.quality, conf, reason_for(best, others, conf, review_threshold), readings)
+                       best.fetched.quality, conf, reason_for(best, others, conf, review_threshold), readings,
+                       page=best.match.candidate.extra.get("release_url"))

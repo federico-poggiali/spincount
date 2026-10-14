@@ -301,7 +301,8 @@ class Run:
         for t in self.identity.tracks:
             r = self.results[t.position]
             alts = [{"source": a.fetched.adapter, "quality": a.fetched.quality.value,
-                     "confidence": round(confidence(a, self.review_threshold), 3), "audio_path": str(a.fetched.path), "url": a.fetched.url}
+                     "confidence": round(confidence(a, self.review_threshold), 3), "audio_path": str(a.fetched.path), "url": a.fetched.url,
+                     "level": a.level, "page": a.match.candidate.extra.get("release_url")}
                     for a in self.accepted[t.position] if str(a.fetched.path) != r.audio_path]
             r.alternatives = alts
             o = self.overrides.get(t.position)
@@ -332,7 +333,7 @@ def research(url_or_id: str | int, levels: Iterable[int] = range(0, 6), refresh:
     elif store is not None:
         store.save_identity(identity)
     em.emit(ev.RELEASE_IDENTIFIED, artist=identity.artist, title=identity.title, catno=identity.catno,
-            label=identity.label, year=identity.year, release_id=identity.discogs_release_id,
+            label=identity.label, year=identity.year, cover=identity.cover, release_id=identity.discogs_release_id,
             tracks=[t_.to_dict() for t_ in identity.tracks], track_count=len(identity.tracks), ms=t.ms)
     registry = registry or default_registry(store=store)
     total = em.timer()

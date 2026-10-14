@@ -11,23 +11,23 @@ def cand(adapter, level, pos, title="One"):
 
 def registry():
     return Registry([
-        FakeAdapter("local", 0), FakeAdapter("yt", 1, group="youtube"), FakeAdapter("ytm", 1, group="youtube"),
+        FakeAdapter("local", 0), FakeAdapter("yt", 1, group="youtube"), FakeAdapter("yt2", 1, group="youtube"),
         FakeAdapter("itunes", 1, max_quality=Quality.PREVIEW), FakeAdapter("bc", 2),
     ], disabled=set())
 
 
 def test_adapters_per_level_and_groups():
     r = registry()
-    assert [a.name for a in r.for_level(1)] == ["yt", "ytm", "itunes"]
-    assert [[a.name for a in g] for g in r.groups(1)] == [["yt", "ytm"], ["itunes"]]
+    assert [a.name for a in r.for_level(1)] == ["yt", "yt2", "itunes"]
+    assert [[a.name for a in g] for g in r.groups(1)] == [["yt", "yt2"], ["itunes"]]
     assert r.for_level(5) == []
 
 
 def test_config_switch():
     r = registry()
-    r.switch("ytm", False)
+    r.switch("yt2", False)
     assert [[a.name for a in g] for g in r.groups(1)] == [["yt"], ["itunes"]]
-    r.switch("ytm", True)
+    r.switch("yt2", True)
     assert len(r.for_level(1)) == 3
     assert Registry([FakeAdapter("x", 1)], disabled={"x"}).for_level(1) == []
 

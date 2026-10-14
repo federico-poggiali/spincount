@@ -11,7 +11,7 @@ from .base import Adapter
 class DiscogsYouTube(Adapter):
     name = "discogs_youtube"
     level = 1
-    group = "youtube"          # youtube_music follows in this group, for tracks no video matched
+    group = "youtube"
 
     def search(self, release: ReleaseIdentity, tracks: list[TrackRef]) -> list[Candidate]:
         """One track candidate per linked video; the shared matcher pairs them with tracks."""
@@ -22,7 +22,7 @@ class DiscogsYouTube(Adapter):
                 continue
             out.append(Candidate(self.name, self.level, "track", uri, (v.get("title") or "").strip(), "",
                                  v.get("duration") or None, quality_hint=Quality.FULL,
-                                 extra={"description": (v.get("description") or "")[:200]}))
+                                 extra={"description": (v.get("description") or "")[:3000]}))
         return out
 
     def fetch(self, candidate: Candidate, dest: Path) -> FetchedAudio:

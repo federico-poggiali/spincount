@@ -8,7 +8,6 @@ Confirmed by the owner on 2026-10-13: "all defaults".
 | 2 | Level 5 record stores content | As in architecture section 5 | yes |
 | 3 | Clips count as results | Yes, marked `clip`, used as reference fingerprints | yes |
 | 4 | First store | `deejay_de`, then one store at a time | yes |
-| 5 | YouTube Music | Only when no Discogs video matches | yes |
 | 6 | Keep downloaded audio | Yes, in `audio_cache/` | yes |
 | 7 | Fingerprint method | Chromaprint (`fpcalc`), local alignment | yes |
 | 8 | Review threshold | 0.6 | yes |

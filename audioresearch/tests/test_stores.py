@@ -5,7 +5,11 @@ import pytest
 from audioresearch.adapters.stores.clone import Clone
 from audioresearch.adapters.stores.decks_de import DecksDe
 from audioresearch.adapters.stores.deejay_de import DeejayDe
+from audioresearch.adapters.stores.eshop import SoundMetaphors
 from audioresearch.adapters.stores.hardwax import Hardwax
+from audioresearch.adapters.stores.redeye import Redeye
+from audioresearch.adapters.stores.shopify import OrbitWax
+from audioresearch.adapters.stores.redeye import Redeye
 from audioresearch.http import HttpError
 from audioresearch.matcher import match_candidates
 from audioresearch.models import Quality, ReleaseIdentity, TrackRef
@@ -123,6 +127,58 @@ def test_hardwax_miss():
     assert Hardwax(http).search(ident, ident.tracks) == []
 
 
+# ---- redeye ---------------------------------------------------------------------------------------------
+def test_parse_redeye_one_track_per_side_and_clip_urls():
+    r = p.parse_redeye(page("redeye_catno.html"))[0]
+    assert (r.id, r.artist, r.title, r.catno, r.label) == ("141884", "Jeff Mills", "The Directors Cut Chapter 6", "AX084DC", "Axis")
+    assert [(t.position, t.title, t.clip_url) for t in r.tracks][:2] == [
+        ("A1", "The Bells (Original Version)", "https://sounds.redeyerecords.co.uk/141884.mp3"),
+        ("B1", "The Bells (Blue Potential Version)", "https://sounds.redeyerecords.co.uk/141884b.mp3")]
+    assert p.parse_redeye(page("redeye_miss.html")) == []
+
+
+def test_redeye_catalogue_number_then_title_only_and_matches():
+    ident = directors_cut()
+    http = FakeHttp({"https://www.redeyerecords.co.uk/search/?searchType=CAT&keywords=AX084DC": page("redeye_catno.html")})
+    cands = Redeye(http).search(ident, ident.tracks)
+    assert http.urls == ["https://www.redeyerecords.co.uk/search/?searchType=CAT&keywords=AX084DC"]
+    out = match_candidates(ident, ident.tracks, cands)
+    assert out.releases and out.matches["B2"][0].candidate.url == "https://sounds.redeyerecords.co.uk/141884c.mp3"
+
+
+def test_redeye_title_search_has_no_artist_and_no_punctuation():
+    ident = directors_cut(catno=None)
+    url = "https://www.redeyerecords.co.uk/search/?searchType=Artist&keywords=The+Directors+Cut+Chapter+6"
+    http = FakeHttp({url: page("redeye_title.html")})
+    assert Redeye(http).search(ident, ident.tracks) and http.urls == [url]
+
+
+# ---- redeye ---------------------------------------------------------------------------------------------
+def test_parse_redeye_one_track_per_side_and_clip_urls():
+    r = p.parse_redeye(page("redeye_catno.html"))[0]
+    assert (r.id, r.artist, r.title, r.catno, r.label) == ("141884", "Jeff Mills", "The Directors Cut Chapter 6", "AX084DC", "Axis")
+    assert [(t.position, t.title, t.clip_url) for t in r.tracks][:2] == [
+        ("A1", "The Bells (Original Version)", "https://sounds.redeyerecords.co.uk/141884.mp3"),
+        ("B1", "The Bells (Blue Potential Version)", "https://sounds.redeyerecords.co.uk/141884b.mp3")]
+    assert p.parse_redeye(page("redeye_miss.html")) == []
+
+
+def test_redeye_catalogue_number_first_and_enough_and_matches():
+    ident = directors_cut()
+    http = FakeHttp({"https://www.redeyerecords.co.uk/search/?searchType=CAT&keywords=AX084DC": page("redeye_catno.html")})
+    cands = Redeye(http).search(ident, ident.tracks)
+    assert len(http.urls) == 1
+    out = match_candidates(ident, ident.tracks, cands)
+    assert out.releases and out.matches["B2"][0].candidate.url == "https://sounds.redeyerecords.co.uk/141884c.mp3"
+
+
+def test_redeye_title_search_has_no_artist_and_no_punctuation():
+    ident = directors_cut(catno=None)
+    url = "https://www.redeyerecords.co.uk/search/?searchType=Artist&keywords=The+Directors+Cut+Chapter+6"
+    http = FakeHttp({url: page("redeye_title.html")})
+    assert Redeye(http).search(ident, ident.tracks) and http.urls == [url]
+
+
 # ---- blocked sites --------------------------------------------------------------------------------------
 @pytest.mark.parametrize("cls,fixture", [(DecksDe, "decks_de_cloudflare_challenge.html"), (Clone, "clone_cloudflare_challenge.html")])
 def test_cloudflare_blocked_stores_are_off_by_default_and_say_why(cls, fixture):
@@ -132,16 +188,19 @@ def test_cloudflare_blocked_stores_are_off_by_default_and_say_why(cls, fixture):
         a.search(directors_cut(), directors_cut().tracks)
 
 
+OPEN_STORES = {"deejay_de", "hardwax", "redeye", "runas", "orbitwax", "soundmetaphors", "one_eye_witness", "smallblackdots"}
+
+
 def test_default_registry_leaves_blocked_stores_out_unless_enabled(monkeypatch):
     from audioresearch.adapters import default_registry
 
-    assert {a.name for a in default_registry(disabled=set()).for_level(5)} == {"deejay_de", "hardwax"}
+    assert {a.name for a in default_registry(disabled=set()).for_level(5)} == OPEN_STORES
     monkeypatch.setenv("AUDIORESEARCH_ENABLE", "decks_de,clone")
-    assert {a.name for a in default_registry(disabled=set()).for_level(5)} == {"deejay_de", "hardwax", "decks_de", "clone"}
+    assert {a.name for a in default_registry(disabled=set()).for_level(5)} == OPEN_STORES | {"decks_de", "clone"}
 
 
 @pytest.mark.live
-@pytest.mark.parametrize("cls", [DeejayDe, Hardwax])
+@pytest.mark.parametrize("cls", [DeejayDe, Hardwax, Redeye])
 def test_live_catalogue_number_search(cls):
     from audioresearch.http import HttpClient
 

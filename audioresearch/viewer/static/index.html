@@ -61,6 +61,70 @@
   a { color: var(--run); text-decoration: none; word-break: break-all; } a:hover { text-decoration: underline; }
   td.lnk { font-family: var(--mono); max-width: 360px; } .alt { color: var(--dim); font-size: 11px; display: block; }
   .err { color: var(--accent); font: 12px var(--mono); white-space: pre-wrap; }
+  /* Record view: mirrors Spin Count's record page (frontend/src/pages/RecordPage.module.css) */
+  .rec { --ink: #eceef1; --ink-2: #a6adb8; --ink-3: #8b929d; --surface: #141518; --raise: #1b1d21;
+    --hair: rgba(200,212,235,.07); --hair-2: rgba(200,212,235,.13); --signal-ink: #ff6b70;
+    display: grid; gap: 18px; margin-top: 14px; padding: 22px; border: 1px solid var(--line); border-radius: 14px; background: #0d0e10; }
+  .rec[hidden] { display: none; }
+  .rec .crumbs { display: flex; gap: 6px; font-size: 13px; font-weight: 500; color: var(--ink-3); }
+  .rec .crumbs b { color: var(--ink-2); font-weight: 500; }
+  .rec .head { display: grid; grid-template-columns: 88px minmax(0,1fr) auto; gap: 18px; align-items: center; padding-bottom: 20px; border-bottom: 1px solid var(--hair); }
+  .rec .cover { width: 88px; aspect-ratio: 1; border-radius: 10px; overflow: hidden; background: var(--raise); box-shadow: 0 0 0 1px var(--hair), 0 12px 30px -10px rgba(0,4,12,.7); }
+  .rec .cover img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .rec .cover.empty { display: flex; align-items: flex-end; justify-content: center; gap: 4px; padding-bottom: 28%; }
+  .rec .cover.empty i { width: 12%; height: 22%; border-radius: 1px; background: var(--hair-2); }
+  .rec .cover.empty i:nth-child(2) { height: 38%; background: var(--ink-3); }
+  .rec h1 { margin: 0; font-size: clamp(24px, 3vw, 32px); line-height: 1.1; letter-spacing: -.02em; font-weight: 600; overflow-wrap: anywhere; }
+  .rec .artist { margin: 6px 0 0; font-size: 15px; font-weight: 500; color: var(--ink-2); } .rec .artist span { color: var(--ink-3); }
+  .rec .badge { display: inline-block; margin-top: 8px; font-size: 12px; font-weight: 500; color: var(--signal-ink); background: rgba(229,72,77,.12); border-radius: 7px; padding: 5px 8px; }
+  .rec .actions { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+  .rec .ghost { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border: 1px solid var(--hair-2); border-radius: 10px; background: transparent;
+    color: var(--ink); font: 500 13px var(--sans); text-decoration: none; word-break: normal; }
+  .rec .ghost:hover { border-color: var(--ink); text-decoration: none; }
+  .rec .primary { background: #d93036; border-color: #e5484d; color: #fff; }
+  .rec .body { display: grid; grid-template-columns: minmax(0,1fr) 300px; gap: 28px; align-items: start; }
+  .rec .tabs { display: flex; gap: 20px; border-bottom: 1px solid var(--hair); margin-bottom: 12px; }
+  .rec .tabs span { position: relative; display: inline-flex; gap: 6px; align-items: center; height: 38px; font-weight: 500; font-size: 14px; }
+  .rec .tabs span::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; border-radius: 2px; background: var(--ink); }
+  .rec .tabs em { font: 600 11px var(--sans); font-style: normal; padding: 2px 6px; border-radius: 999px; background: var(--raise); color: var(--ink-2); }
+  .rec table { background: none; border: 0; border-radius: 0; }
+  .rec th { font: 500 11px/1 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); padding: 0 10px 10px; border: 0; }
+  .rec td { padding: 12px 10px; border-top: 1px solid var(--hair); border-bottom: 0; vertical-align: middle; font-size: 14px; }
+  .rec tr:hover td, .rec tr.now td { background: var(--surface); }
+  .rec .tpos { color: var(--ink-3); font: 500 12px var(--mono); width: 3rem; }
+  .rec .tname b { display: block; font-weight: 600; letter-spacing: -.01em; } .rec .tname span { color: var(--ink-2); font-size: 13px; }
+  .rec tr.none .tname b { color: var(--ink-2); }
+  .rec .len { color: var(--ink-3); font: 500 12px var(--mono); text-align: right; white-space: nowrap; }
+  .rec .src { font: 500 11px/1 var(--mono); padding: 4px 7px; border-radius: 7px; background: var(--surface); color: var(--ink-2); white-space: nowrap; }
+  .rec .src.rev { color: var(--signal-ink); }
+  .rec .none-src { color: var(--ink-3); font: 500 12px var(--mono); }
+  .rec .hint { margin: 10px 2px 0; color: var(--ink-3); font-size: 13px; }
+  .rec aside { position: sticky; top: 20px; display: grid; gap: 14px; padding: 16px; border: 1px solid var(--hair); border-radius: 12px; background: var(--surface); }
+  .rec aside h2 { margin: 0; font-size: 13px; font-weight: 600; color: var(--ink-2); letter-spacing: 0; text-transform: none; }
+  .rec dl { margin: 0; display: grid; }
+  .rec .attr { display: grid; grid-template-columns: 92px minmax(0,1fr); gap: 10px; align-items: center; min-height: 34px; border-top: 1px solid var(--hair); }
+  .rec .attr:first-child { border-top: 0; }
+  .rec .attr dt { font-size: 13px; font-weight: 500; color: var(--ink-3); } .rec .attr dd { margin: 0; font-size: 13px; font-weight: 500; overflow-wrap: anywhere; }
+  .rec .block { padding-top: 14px; border-top: 1px solid var(--hair); display: grid; gap: 8px; }
+  .rec .block h3 { margin: 0; font-size: 13px; font-weight: 500; color: var(--ink-3); }
+  .rec .famrow { display: flex; justify-content: space-between; gap: 8px; font-size: 13px; font-weight: 500; }
+  .rec .famrow span { color: var(--ink-3); font: 500 12px var(--mono); }
+  .rec .stores { display: flex; flex-wrap: wrap; gap: 6px; }
+  .rec .play { border-color: var(--hair-2); }
+  @media (max-width: 1000px) { .rec .body { grid-template-columns: 1fr; } .rec aside { position: static; order: -1; } }
+  @media (max-width: 640px) { .rec .head { grid-template-columns: 64px minmax(0,1fr); } .rec .cover { width: 64px; } .rec .actions { grid-column: 1 / -1; justify-content: flex-start; } }
+  .play { width: 30px; height: 30px; padding: 0; border-radius: 50%; font-size: 12px; line-height: 1; }
+  .play.on { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .find { display: inline-block; margin: 4px 4px 0 0; padding: 3px 8px; border: 1px solid var(--line); border-radius: 5px;
+    font: 11px var(--mono); color: var(--text); white-space: nowrap; word-break: normal; }
+  .find:hover { border-color: var(--accent); text-decoration: none; }
+  .fam { font: 12px var(--mono); color: var(--dim); margin: 0 0 8px; }
+  .fam b { color: var(--text); font-weight: 600; }
+  #dock { position: fixed; right: 16px; bottom: 16px; width: 380px; max-width: calc(100vw - 32px); background: var(--panel);
+    border: 1px solid var(--line); border-radius: 8px; padding: 10px; box-shadow: 0 8px 30px rgba(0,0,0,.5); }
+  #dock .dh { display: flex; justify-content: space-between; align-items: center; font: 12px var(--mono); color: var(--dim); margin-bottom: 8px; gap: 8px; }
+  #dock .dh button { padding: 2px 8px; }
+  #dock iframe { display: block; width: 100%; border: 0; }
 </style>
 </head>
 <body>
@@ -74,6 +138,8 @@
     <div class="total" id="total">0.0 s</div>
   </div>
   <div class="release" id="release">No run yet. Paste a Discogs release link and press Start.</div>
+
+  <section class="rec" id="record" hidden aria-label="Record with previews"></section>
 
   <h2>Levels</h2>
   <div id="levels"></div>
@@ -90,11 +156,13 @@
   <h2>Event log</h2>
   <div id="log" role="log"></div>
 </main>
+<div id="dock" hidden></div>
 <script>
 const LEVELS = [
   [0, "Your files", "local files, pasted links"], [1, "Discogs find", "YouTube, iTunes"], [2, "Bandcamp", ""],
-  [3, "SoundCloud", "tracks, sets"], [4, "Beatport", "tracks, releases"], [5, "Record stores", "clips"],
+  [3, "SoundCloud", "tracks, sets"], [5, "Record stores", "clips"],
 ];
+const STORES = { deejay_de: "deejay.de", hardwax: "Hard Wax", redeye: "Redeye", decks_de: "Decks", clone: "Clone", soundmetaphors: "Sound Metaphors", one_eye_witness: "One Eye Witness", smallblackdots: "Small Black Dots", runas: "Runas", orbitwax: "Orbit Wax" };
 const $ = (id) => document.getElementById(id);
 let es = null, state = null, ticker = null;
 
@@ -127,7 +195,8 @@ function linkFor(e) {
 
 function apply(e) {
   state.lastMs = Math.max(state.lastMs, e.time);
-  const L = e.level != null ? state.levels[e.level] : null;
+  const L = e.level != null ? state.levels.find((l) => l.n === e.level) : null;
+  if (e.level != null && !L) return;   // a level this page no longer shows (old runs: level 4)
   switch (e.type) {
     case "release_identified": state.release = e.data; break;
     case "level_started":
@@ -173,18 +242,136 @@ function linkRow(l) {
 const isUrl = (u) => /^https?:/.test(u || "");
 const link = (u, text) => isUrl(u) ? `<small><a href="${esc(u)}" target="_blank" rel="noopener noreferrer">${esc(text || u)}</a></small>` : (u ? `<small>${esc(u)}</small>` : "");
 
+// ---- previews: one play button per track; the source per track comes from the server's plan ----
+const player = { run: null, plan: null, pos: null, kind: null, playing: false, audio: new Audio() };
+player.audio.onended = () => {   // clips roll on to the next track that has a preview
+  const order = (state.release?.tracks || []).map((t) => t.position).filter((p) => player.plan?.tracks[p]);
+  const next = order[order.indexOf(player.pos) + 1];
+  player.playing = false; buttons();
+  if (next) play(next);
+};
+
+function buttons() {
+  document.querySelectorAll(".play").forEach((b) => {
+    const on = b.dataset.pos === player.pos && player.playing;
+    b.classList.toggle("on", on); b.textContent = on ? "❚❚" : "▶";
+    b.setAttribute("aria-label", `${on ? "Pause" : "Play"} ${b.dataset.pos}`);
+  });
+  document.querySelectorAll("[data-row]").forEach((r) => r.classList.toggle("now", r.dataset.row === player.pos));
+}
+
+function stopAll() {
+  player.audio.pause(); player.audio.removeAttribute("src");
+  $("dock").innerHTML = ""; $("dock").hidden = true;
+  player.pos = null; player.kind = null; player.playing = false;
+}
+
+function command(play) {   // YouTube and SoundCloud players take commands by postMessage
+  const f = $("dock").querySelector("iframe"); if (!f) return;
+  const msg = player.kind === "youtube" ? { event: "command", func: play ? "playVideo" : "pauseVideo", args: [] } : { method: play ? "play" : "pause" };
+  f.contentWindow.postMessage(JSON.stringify(msg), "*");
+}
+
+function dock(o, pos, html) {
+  $("dock").innerHTML = `<div class="dh"><span>${esc(pos)} · ${esc(o.family)}${o.review ? " · review" : ""}</span><button onclick="stopAll(); buttons()" aria-label="Close player">✕</button></div>${html}`;
+  $("dock").hidden = false;
+}
+
+async function play(pos) {
+  const o = player.plan?.tracks[pos]; if (!o) return;
+  if (player.pos === pos) {        // same track: pause / resume
+    player.playing = !player.playing;
+    if (player.kind === "audio" || player.kind === "file") player.playing ? player.audio.play() : player.audio.pause();
+    else if (player.kind === "bandcamp") { if (!player.playing) stopAll(); }   // no API: closing stops it
+    else command(player.playing);
+    return buttons();
+  }
+  stopAll(); player.pos = pos; player.kind = o.kind; player.playing = true; buttons();
+  if (o.kind === "audio" || o.kind === "file") {
+    player.audio.src = o.kind === "file" ? `/runs/${player.run}/local/${encodeURIComponent(pos)}` : o.url;
+    player.audio.play().catch(() => { player.playing = false; buttons(); });
+  } else if (o.kind === "youtube") {
+    dock(o, pos, `<iframe height="200" allow="autoplay; encrypted-media" title="YouTube player"
+      src="https://www.youtube-nocookie.com/embed/${encodeURIComponent(o.embed_id)}?autoplay=1&enablejsapi=1&rel=0"></iframe>`);
+  } else if (o.kind === "soundcloud") {
+    dock(o, pos, `<iframe height="20" allow="autoplay" title="SoundCloud player"
+      src="https://w.soundcloud.com/player/?url=${encodeURIComponent(o.url)}&auto_play=true&visual=false&show_artwork=false&show_comments=false&hide_related=true&color=%23e5484d"></iframe>`);
+  } else if (o.kind === "bandcamp") {
+    dock(o, pos, `<span class="s-waiting">loading Bandcamp…</span>`);
+    try {
+      const r = await fetch(`/embed/bandcamp?url=${encodeURIComponent(o.url)}`); if (!r.ok) throw new Error(await r.text());
+      const b = await r.json(); if (player.pos !== pos) return;
+      dock(o, pos, `<iframe height="42" title="Bandcamp player"
+        src="https://bandcamp.com/EmbeddedPlayer/${b.kind}=${b.id}/size=small/bgcol=141416/linkcol=e5484d/transparent=true/"></iframe>`);
+    } catch (e) { if (player.pos === pos) dock(o, pos, `<span class="err">Bandcamp player unavailable. <a href="${esc(o.url)}" target="_blank" rel="noopener noreferrer">Open on Bandcamp</a></span>`); }
+  }
+}
+
+const FAMILY = { youtube: "YouTube", bandcamp: "Bandcamp", soundcloud: "SoundCloud", itunes: "iTunes", "your files": "Your files" };
+const famName = (f) => FAMILY[f] || STORES[f] || f;
+const mmss = (s) => s ? `${Math.floor(s / 60)}:${String(Math.round(s % 60)).padStart(2, "0")}` : "";
+
+function renderRecord(r) {
+  const rel = state.release; if (!rel) return;
+  const pv = r.previews || { tracks: {}, families: [], stores: {} };
+  const playable = rel.tracks.filter((t) => pv.tracks[t.position]).length;
+  const allStores = {};
+  for (const list of Object.values(pv.stores || {})) for (const s of list) allStores[s.source] ||= s.page;
+  const facts = [["Label", rel.label], ["Catalogue", rel.catno], ["Year", rel.year], ["Previews", `${playable} of ${rel.tracks.length} tracks`]]
+    .filter(([, v]) => v != null && v !== "");
+  const rows = rel.tracks.map((t) => {
+    const o = pv.tracks[t.position];
+    const stores = (pv.stores?.[t.position] || []).map((s) => `<a class="find" href="${esc(s.page)}" target="_blank" rel="noopener noreferrer">Find at ${esc(STORES[s.source] || s.source)} ↗</a>`).join("");
+    return `<tr class="${o ? "" : "none"}" data-row="${esc(t.position)}">
+      <td style="width:44px">${o ? `<button class="play" data-pos="${esc(t.position)}" aria-label="Play ${esc(t.position)}">▶</button>` : ""}</td>
+      <td class="tpos">${esc(t.position)}</td>
+      <td class="tname"><b>${esc(t.title)}</b>${t.artist && t.artist !== rel.artist ? `<span>${esc(t.artist)}</span>` : ""}${stores ? `<div>${stores}</div>` : ""}</td>
+      <td>${o ? `<span class="src ${o.review ? "rev" : ""}" title="${esc(o.source)} · ${esc(o.quality || "")}">${esc(famName(o.family))}${o.quality && o.quality !== "full" ? ` · ${esc(o.quality)}` : ""}${o.review ? " · review" : ""}</span>` : `<span class="none-src">no preview</span>`}</td>
+      <td class="len">${mmss(t.duration)}</td></tr>`;
+  }).join("");
+  $("record").innerHTML = `
+    <nav class="crumbs">Audio research <span>›</span> <b>${esc(rel.title)}</b></nav>
+    <header class="head">
+      ${rel.cover ? `<div class="cover"><img src="${esc(rel.cover)}" alt="${esc(rel.artist)} - ${esc(rel.title)}"></div>` : `<div class="cover empty" aria-hidden="true"><i></i><i></i><i></i></div>`}
+      <div><h1>${esc(rel.title)}</h1><p class="artist">${esc(rel.artist)}${rel.year ? `<span> · ${rel.year}</span>` : ""}</p>
+        ${playable < rel.tracks.length ? `<span class="badge">${rel.tracks.length - playable} ${rel.tracks.length - playable === 1 ? "track" : "tracks"} without a preview</span>` : ""}</div>
+      <div class="actions">${playable ? `<button class="ghost primary" id="playfirst">▶ Play record</button>` : ""}
+        <a class="ghost" href="https://www.discogs.com/release/${esc(rel.release_id)}" target="_blank" rel="noopener noreferrer">Discogs ↗</a></div>
+    </header>
+    <div class="body">
+      <div>
+        <div class="tabs"><span>Tracks <em>${rel.tracks.length}</em></span></div>
+        <table><tr><th></th><th>Pos</th><th>Title</th><th>Preview</th><th style="text-align:right">Length</th></tr>${rows}</table>
+        <p class="hint">Each track plays from the source that covers most of the record; the rest come from the next best one.</p>
+      </div>
+      <aside aria-label="Attributes"><h2>Attributes</h2>
+        <dl>${facts.map(([k, v]) => `<div class="attr"><dt>${k}</dt><dd>${esc(v)}</dd></div>`).join("")}</dl>
+        ${pv.families.length ? `<div class="block"><h3>Preview sources</h3>${pv.families.map((f) => `<div class="famrow">${esc(famName(f.family))}<span>${f.tracks.map(esc).join(" ")}</span></div>`).join("")}</div>` : ""}
+        ${Object.keys(allStores).length ? `<div class="block"><h3>In record stores</h3><div class="stores">${Object.entries(allStores).map(([s, u]) => `<a class="find" href="${esc(u)}" target="_blank" rel="noopener noreferrer">Find at ${esc(STORES[s] || s)} ↗</a>`).join("")}</div></div>` : ""}
+      </aside>
+    </div>`;
+  $("record").hidden = false;
+  $("record").querySelectorAll(".play").forEach((b) => (b.onclick = () => play(b.dataset.pos)));
+  const first = rel.tracks.find((t) => pv.tracks[t.position]);
+  if (first && $("playfirst")) $("playfirst").onclick = () => play(first.position);
+  buttons();
+}
+
 async function loadResults(runId) {
   try {
     const r = await (await fetch(`/runs/${runId}`)).json();
+    stopAll(); player.run = runId; player.plan = r.previews;
     const titles = Object.fromEntries((state.release?.tracks || []).map((t) => [t.position, t.title]));
-    let h = "<table><tr><th>Pos</th><th>Title</th><th>Status</th><th>Link</th><th>Source</th><th>Quality</th><th>Conf.</th><th>Why</th></tr>";
+    const fams = (r.previews?.families || []).map((f) => `<b>${esc(f.family)}</b> ${f.tracks.length} (${f.tracks.map(esc).join(" ")})`).join(" · ");
+    let h = `<div class="fam">Previews: ${fams || "nothing playable found"}</div><table><tr><th>Pos</th><th>Title</th><th>Status</th><th>Link</th><th>Source</th><th>Quality</th><th>Conf.</th><th>Why</th></tr>`;
     for (const t of r.tracks) {
       const alts = (t.alternatives || []).map((a) => `<span class="alt">also: ${esc(a.source)} ${esc(a.quality)} ${a.confidence} ${isUrl(a.url) ? `<a href="${esc(a.url)}" target="_blank" rel="noopener noreferrer">link</a>` : ""}</span>`).join("");
       h += `<tr><td class="pos">${esc(t.position)}</td><td class="ttl">${esc(titles[t.position])}</td><td class="cell-${t.status === "not_found" ? "notfound" : t.status}">${t.status}</td>
-        <td class="lnk">${isUrl(t.url) ? `<a href="${esc(t.url)}" target="_blank" rel="noopener noreferrer">${esc(t.url)}</a>` : esc(t.url || "")}${alts}</td>
+        <td class="lnk">${(r.previews?.stores[t.position] || []).map((s) => `<a class="find" href="${esc(s.page)}" target="_blank" rel="noopener noreferrer">Find at ${esc(STORES[s.source] || s.source)} ↗</a>`).join("")}${isUrl(t.url) ? `<a href="${esc(t.url)}" target="_blank" rel="noopener noreferrer">${esc(t.url)}</a>` : esc(t.url || "")}${alts}</td>
         <td>${esc(t.source || "")}</td><td>${esc(t.quality || "")}</td><td>${t.source ? t.confidence : ""}</td><td>${esc(t.reason)}</td></tr>`;
     }
     $("results").innerHTML = h + "</table>";
+    renderRecord(r);
   } catch (e) { $("results").textContent = "No result available."; }
 }
 
@@ -198,7 +385,7 @@ function render() {
     const names = Object.keys(L.adapters);
     const boxes = names.map((n) => box(n, L.adapters[n], n in s.off)).join("");
     const shared = ["fetch", "verify", "decide"].map((x) => stageRow(x, L.stages[x])).join("");
-    const meta = LEVELS[L.n];
+    const meta = LEVELS.find(([n]) => n === L.n);
     return `<div class="level ${L.status}"><div class="lname"><b>${L.n} · ${meta[1]}</b><span class="s-${L.status === "done" ? "done" : L.status}"><span class="dot"></span>${L.status}</span></div>
       <div class="boxes">${boxes}${L.stages.fetch || L.status === "running" ? `<div class="abox"><div class="an">fetch · verify · decide</div>${shared}</div>` : ""}${!names.length && L.status === "waiting" ? '<span class="s-waiting">waiting</span>' : ""}</div>
       <div class="lms">${fmt(L.ms)}</div></div>`;
@@ -249,7 +436,7 @@ function watch(runId) {
   if (es) es.close();
   clearInterval(ticker);
   state = fresh(); $("log").innerHTML = ""; $("summary").textContent = "Shown when the run finishes."; $("results").textContent = "Shown when the run finishes.";
-  $("release").textContent = "Starting…";
+  $("release").textContent = "Starting…"; $("record").hidden = true; stopAll();
   es = new EventSource(`/runs/${runId}/events`);
   let queued = false;
   es.addEventListener("run", (m) => {
@@ -279,7 +466,9 @@ $("start").onclick = async () => {
 };
 $("url").onkeydown = (e) => { if (e.key === "Enter") $("start").click(); };
 $("past").onchange = (e) => { if (e.target.value) watch(e.target.value); };
-state = fresh(); render(); loadPast();
+state = fresh(); render();
+// open on the latest run, so the record and its previews show without picking one
+loadPast().then(() => { const latest = $("past").options[1]?.value; if (latest) { $("past").value = latest; watch(latest); } });
 </script>
 </body>
 </html>

@@ -27,7 +27,7 @@ What it is not: it does not analyse tempo, key or anything else. It returns audi
 | **Adapter** | The code for one level (or one site inside a level). It only searches and fetches. |
 | **Candidate** | Something an adapter found that might be a track or a release: a URL plus its metadata. |
 | **Quality** | `full` (whole track), `preview` (long excerpt, roughly a minute or more), `clip` (short excerpt). |
-| **Reading** | A BPM or key a site shows (Beatport, deejay.de, decks.de). Kept apart from audio. |
+| **Reading** | A BPM or key a site shows (deejay.de, decks.de). Kept apart from audio. |
 | **Audio research** | Finding audio online (levels 1 to 5). |
 | **Audio matching** | Matching your own files to tracks (level 0). |
 
@@ -43,7 +43,7 @@ One pipeline. Levels plug into it as adapters.
  │1 Discogs   │  │ 4. Fetch top candidates       │ │ │ Provenance log  │
  │2 Bandcamp  │  │ 5. Verify recording           │ │ │ Rate limits     │
  │3 SoundCloud│  │ 6. Decide and store ──────────┼─┼►│ Review queue    │
- │4 Beatport  │  └──────────────┬───────────────┘ │ │ Fingerprints    │
+ │4 (unused)  │  └──────────────┬───────────────┘ │ │ Fingerprints    │
  │5 Stores    │                 │                 │ │ Adapter health  │
  └────────────┘      found ◄────┴────► unfound ───┘ └─────────────────┘
                 (output contract)    (next level)
@@ -98,13 +98,13 @@ A candidate is accepted only if:
 ### Stage 6: Decide and store
 Per track, pick the best verified candidate: highest quality first, then highest confidence. Record:
 - `confidence` 0 to 1, from the match score, verification results and agreement between sources
-- `reason`: one line, e.g. `"Bandcamp release matched on catno; fingerprint agrees with Beatport preview"`
+- `reason`: one line, e.g. `"Bandcamp release matched on catno; fingerprint agrees with a store clip"`
 
 Low-confidence results (default below 0.6) go to the review queue. Tracks still unfound go back to stage 2 at the next level. After the last level they are reported `not_found`.
 
 ## 5. The levels and their adapters
 
-Order **[decided]**: 0 Your files, 1 Discogs find, 2 Bandcamp, 3 SoundCloud, 4 Beatport, 5 Record stores.
+Order **[decided]**: 0 Your files, 1 Discogs find, 2 Bandcamp, 3 SoundCloud, 4 (unused: Beatport was dropped), 5 Record stores.
 
 Every adapter implements the same interface:
 
@@ -130,7 +130,6 @@ Two adapters. Always run first; their results always win.
 ### Level 1: Discogs find [decided]
 The audio is already on the Discogs release. Two routes **in parallel**.
 - **`discogs_youtube`** (route 1b): the YouTube videos linked on the release. Scored with `score_candidate` and `dynamic_threshold` as in `bpmkey/sources/youtube.py`. Fetched with `yt-dlp` (best audio stream, no re-encoding; skip videos over 20 minutes). Quality: `full`.
-  - Fallback **`youtube_music`** when no linked video matches: search YouTube Music by artist and title with `ytmusicapi` (unofficial). Fetch with `yt-dlp`. Quality: `full`. **[default]** The Discogs video is used directly when it matches; YouTube Music is searched only on no match.
 - **`itunes`** (route 1a): iTunes Search API, artist and title, as in `bpmkey/sources/itunes.py`. No key needed. Quality: `preview` (about 30 s; treat as `clip` if shorter). Future option, not built now: Apple Music API (needs an Apple developer token).
 
 ### Level 2: Bandcamp [decided]
@@ -143,17 +142,13 @@ Two routes in parallel, fetched with `yt-dlp` (no API key; SoundCloud's API regi
 - **`soundcloud_sets`**: search sets (albums, playlists) by artist and release title, matched on the whole tracklist like Bandcamp.
 Extra care: fan rips, DJ mixes and label preview medleys are common. The duration and mix/medley checks of stage 5 matter most here. Quality: `full` or `preview` depending on the upload.
 
-### Level 4: Beatport [decided]
-Two routes in parallel. Beatport's API is partner-only, so the adapter reads its public pages.
-- **`beatport_tracks`**: artist and track title. Beatport names the version ("Original Mix", "Dub Mix"), which feeds the version check.
-- **`beatport_releases`**: catalogue number or release title; whole tracklist first.
-- **Readings [decided]**: Beatport's BPM and key for the track are stored as a reading, separate from the audio.
-Quality: `preview` (Beatport plays excerpts, roughly a couple of minutes). Beatport sells digital releases, so vinyl-only records are often missing.
+### Level 4: unused
+**[changed]** Beatport was dropped. Its pages and its v4 API sit behind a Cloudflare challenge or a partner-only OAuth token, so no adapter could be verified against a real response (see progress notes, Step 15). The level number stays so levels 0 to 5 keep their meaning; the registry has no level 4 adapter. BPM and key readings now come only from the stores that show them (`deejay_de`; `decks_de` is blocked).
 
 ### Level 5: Record stores [default, not yet validated]
 One adapter per store, all searched in parallel. Search by **catalogue number first**, then artist and title. Store pages usually label clips by position (`A1`, `B1`), which the track match uses.
 - **`deejay_de`** and **`decks_de`**: clips plus the store's BPM, kept as a reading.
-- **`hardwax`**, **`clone`**, **`kalahari_oyster_cult`**: clips only.
+- **`hardwax`**, **`redeye`** (one clip per side), **`runas`** and **`orbitwax`** (Shopify shops, clips on the product page), **`soundmetaphors`**, **`one_eye_witness`**, **`smallblackdots`** (one storefront, found through its sitemap), **`clone`**, **`kalahari_oyster_cult`**: clips only.
 Quality: `clip` or `preview`, depending on the store. **[default]** Clips are accepted as results, marked `clip`, and are used as reference fingerprints. **[default]** Build one store at a time, starting with `deejay_de`.
 
 ## 6. Data model
@@ -192,7 +187,7 @@ class Candidate:
 
 @dataclass
 class Reading:
-    source: str                # "beatport", "deejay_de", ...
+    source: str                # "deejay_de", ...
     bpm: float | None
     key: str | None
 ```
@@ -227,8 +222,8 @@ What the tool returns for one release, as JSON (CLI) or Python objects (library)
       "quality": "full",             // full | preview | clip
       "confidence": 0.92,
       "reason": "Bandcamp release matched on tracklist; fingerprint agrees with Beatport preview",
-      "readings": [{"source": "beatport", "bpm": 124.0, "key": "A minor"}],
-      "alternatives": [ { "source": "beatport", "quality": "preview", "confidence": 0.8, "audio_path": "..." } ]
+      "readings": [{"source": "deejay_de", "bpm": 124.0, "key": null}],
+      "alternatives": [ { "source": "deejay_de", "quality": "clip", "confidence": 0.8, "audio_path": "..." } ]
     }
   ],
   "adapters_off": [],
@@ -252,7 +247,6 @@ What the tool returns for one release, as JSON (CLI) or Python objects (library)
 | Level 5 record stores content | As in section 5 |
 | Clips acceptable as results | Yes, marked `clip` |
 | Which store first | `deejay_de`, then one at a time |
-| YouTube Music step | Discogs video used directly when it matches; YouTube Music only on no match |
 | Keep downloaded audio | Yes, in `audio_cache/` |
 | Fingerprint method | Chromaprint (`fpcalc`), local alignment |
 | Confidence threshold for review | 0.6 |
@@ -261,7 +255,7 @@ What the tool returns for one release, as JSON (CLI) or Python objects (library)
 
 ## 11. Risks
 
-- **No official APIs** for Bandcamp, Beatport, SoundCloud search, YouTube Music and the record stores: their page readers and `ytmusicapi` can break when sites change. Mitigation: one parser per site, saved fixtures, adapter health.
-- **Terms of service**: downloading audio from YouTube, SoundCloud, Bandcamp, Beatport and the stores is likely outside their terms. Personal use, low request rates.
+- **No official APIs** for Bandcamp, SoundCloud search and the record stores: their page readers can break when sites change. Mitigation: one parser per site, saved fixtures, adapter health.
+- **Terms of service**: downloading audio from YouTube, SoundCloud, Bandcamp and the stores is likely outside their terms. Personal use, low request rates.
 - **Coverage**: vinyl-only and white-label records may exist only at record stores, and only as clips.
 - **Site details** (search URLs, clip lengths, where BPM is shown) are from general knowledge and must be checked against the live sites when each adapter is built.

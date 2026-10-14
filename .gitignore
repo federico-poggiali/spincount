@@ -43,3 +43,6 @@ benchmark/*.log
 # Audio research tool
 audio_cache/
 audioresearch.db*
+
+# TypeScript build info
+frontend/tsconfig.tsbuildinfo

@@ -6,6 +6,7 @@ import json
 import threading
 import traceback
 from pathlib import Path
+from urllib.parse import urlparse
 from typing import Callable
 
 from fastapi import FastAPI, HTTPException
@@ -17,6 +18,7 @@ from ..adapters import Registry, default_registry
 from ..adapters.fake import demo_registry
 from ..identify import identify
 from ..pipeline import research
+from ..previews import plan
 from ..store import Store
 
 STATIC = Path(__file__).parent / "static"
@@ -65,7 +67,33 @@ def create_app(store: Store, *, fake: bool = False, discogs=None, audio_dir: Pat
         result = store.get_run_result(run_id)
         if result is None:
             raise HTTPException(404, "no result (yet) for this run")
-        return result.to_dict()
+        return {**result.to_dict(), "previews": plan(result)}
+
+    @app.get("/runs/{run_id}/local/{position}")
+    def local_file(run_id: str, position: str):
+        """Your own file for a track, so the viewer can play it. Only files level 0 matched."""
+        result = store.get_run_result(run_id)
+        t = next((t for t in result.tracks if t.position == position), None) if result else None
+        paths = ([t.audio_path] if t and t.source == "local_files" else []) + \
+                [a["audio_path"] for a in (t.alternatives if t else []) if a["source"] == "local_files"]
+        if not paths or not Path(paths[0]).is_file():
+            raise HTTPException(404, "no file of yours for this track")
+        return FileResponse(paths[0])
+
+    @app.get("/embed/bandcamp")
+    def bandcamp_embed(url: str):
+        """The numeric id Bandcamp's embed player needs (it is only on the page)."""
+        if not url.startswith("https://") or not urlparse(url).netloc.endswith("bandcamp.com"):
+            raise HTTPException(400, "not a Bandcamp link")
+        from .. import http as http_mod
+        from ..parsers.bandcamp import parse_item_id
+        try:
+            item = parse_item_id(http_mod.shared().get_text(url, site="bandcamp", adapter="viewer"))
+        except Exception as e:
+            raise HTTPException(502, f"Bandcamp page unreadable: {e}")
+        if not item:
+            raise HTTPException(404, "no Bandcamp id on that page")
+        return {"kind": item[0], "id": item[1]}
 
     @app.get("/runs/{run_id}/events")
     async def stream(run_id: str, last: int = 0):
@@ -89,7 +117,7 @@ def create_app(store: Store, *, fake: bool = False, discogs=None, audio_dir: Pat
 
     @app.get("/")
     def index():
-        return FileResponse(STATIC / "index.html")
+        return FileResponse(STATIC / "index.html", headers={"Cache-Control": "no-store"})   # always the current page
 
     return app
 

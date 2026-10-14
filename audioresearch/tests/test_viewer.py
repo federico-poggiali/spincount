@@ -50,3 +50,13 @@ def test_viewer_reports_a_failed_run(tmp_path):
     events = sse(client, run_id)
     assert events[-1]["type"] == "run_failed" and "Discogs" in events[-1]["data"]["error"]
     assert client.get("/runs/nope/events").status_code == 404
+
+
+def test_viewer_result_carries_a_preview_plan(tmp_path):
+    store, client = make(tmp_path)
+    run_id = client.post("/runs", json={"url": "https://www.discogs.com/release/9261843"}).json()["run_id"]
+    sse(client, run_id)
+    result = client.get(f"/runs/{run_id}").json()
+    assert set(result["previews"]["tracks"]) == {t["position"] for t in result["tracks"]}
+    assert client.get("/embed/bandcamp", params={"url": "https://evil.example/x"}).status_code == 400
+    assert client.get(f"/runs/{run_id}/local/ZZ9").status_code == 404

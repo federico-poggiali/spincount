@@ -29,7 +29,7 @@ def test_release_with_one_bonus_track():
     i = identity()
     tl = numbered(i.tracks) + [TrackRef("5", "Foo", "Bonus Beats", 200, "https://bc/t5")]
     c = release_cand(tl)
-    assert match_release(i, c) >= RELEASE_THRESHOLD + 0.2
+    assert match_release(i, c) >= RELEASE_THRESHOLD + 0.15
     assert len(match_tracks_in_release(i, c)) == 4
 
 
@@ -84,3 +84,24 @@ def test_missing_durations_still_match():
 def test_dynamic_threshold_rises_for_alike_titles():
     alike = identity([TrackRef("A1", "Foo", "Song (Mix 1)", 300), TrackRef("A2", "Foo", "Song (Mix 2)", 300)])
     assert track_threshold(alike) > track_threshold(identity())
+
+
+def test_named_mix_needs_70_percent_of_its_name():
+    from audioresearch.matcher import mix_overlap, title_score
+    assert mix_overlap("Paul Daley (Six Mil Version)", "Paul Daley - Six Mil Version") == 1.0
+    assert abs(mix_overlap("Paul Daley (Six Mil Version)", "Paul Daley - Six Mil") - 2 / 3) < 1e-9
+    assert mix_overlap("Paul Daley (Original Mix)", "Paul Daley") is None
+    assert title_score("Paul Daley (Six Mil Version)", "Paul Daley (Six Mil Version)") > 0.9
+    assert title_score("Paul Daley (Six Mil Version)", "Paul Daley (Original Mix)") == 0.0
+    assert title_score("Paul Daley (Six Mil Version)", "Paul Daley") == 0.0
+
+
+def test_linked_video_uses_side_hint_and_looser_bar():
+    ident = ReleaseIdentity(1, "Pling Plong", "Frek Fire", "L", "J1", 2001,
+                            [TrackRef("A", "Pling Plong", "Frek Fire", 353, None),
+                             TrackRef("B", "Pling Plong", "Frek Fire", 353, None)], [])
+    hinted = Candidate("discogs_youtube", 1, "track", "https://y/1", "Pling Plong | Frek Fire (B1)", "", 357)
+    loose = Candidate("discogs_youtube", 1, "track", "https://y/2", "pling plong freak fire", "", 358)
+    out = match_candidates(ident, ident.tracks, [hinted, loose])
+    assert [m.candidate.url for m in out.matches["B"]][0] == "https://y/1"
+    assert "https://y/2" in [m.candidate.url for m in out.matches["A"]]

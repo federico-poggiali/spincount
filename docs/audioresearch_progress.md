@@ -17,7 +17,7 @@ Note: `bpmkey.discogs.DiscogsClient` makes its own HTTP calls, outside the share
 
 ## Step 4: adapter interface and registry
 Built: `adapters/base.py` (`Adapter`, `AdapterError`), `adapters/__init__.py` (`Registry`, `default_registry`; adapters switched off with `AUDIORESEARCH_DISABLED=a,b` or `registry.switch`), `adapters/fake.py` (`FakeAdapter`, kept outside `tests/` because the viewer's `--fake` mode needs it).
-Additions: `Adapter.group` (adapters in a group run one after another, so `youtube_music` can fall back after `discogs_youtube`; groups run in parallel) and `Adapter.max_quality` (lets the pipeline skip adapters that cannot improve a track).
+Additions: `Adapter.group` (adapters in a group run one after another; groups run in parallel) and `Adapter.max_quality` (lets the pipeline skip adapters that cannot improve a track).
 
 ## Step 5: matcher
 Built: `matcher.py` (weights documented at the top), `match_release`, `match_tracks_in_release`, `match_track`, `match_candidates` (top 3 per track, ambiguity and rejection reasons).
@@ -57,8 +57,8 @@ Level 0 is never cached (your folder and links are read fresh), and `changed_sin
 Not built: assigning an unmatched file to a track by hand (rename the file for now).
 
 ## Step 12: level 1
-Built: `adapters/discogs_youtube.py` (linked videos as candidates; matching left to the shared matcher), `adapters/youtube_music.py` (ytmusicapi 1.12.3 pinned; fallback inside the `youtube` group, so only tracks no Discogs video matched are searched), `adapters/itunes.py` (previews; candidate duration is the full track length, the 30 s file turns into `clip` at fetch). `adapters/common.py` strips version brackets from search terms.
-Fixtures from live calls: iTunes (hit and miss) and ytmusicapi (`tests/fixtures/itunes`, `.../youtube_music`).
+Built: `adapters/discogs_youtube.py` (linked videos as candidates; matching left to the shared matcher), `adapters/itunes.py` (previews; candidate duration is the full track length, the 30 s file turns into `clip` at fetch). `adapters/common.py` strips version brackets from search terms.
+Fixtures from live calls: iTunes (hit and miss) (`tests/fixtures/itunes`).
 Live check (`tests/test_live.py --live`) on Discogs 249504: track A found via the linked video (full, 213 s vs 212 s), track B (a different version) not found at level 1.
 
 ## Step 13: level 2, Bandcamp
@@ -76,11 +76,8 @@ SoundCloud's `policy` field gives the quality hint: `SNIP` = 30 s snippet (previ
 Sets only resolve their first five tracks in the search; the rest are fetched in batches of 50 with `tracks?ids=` and re-ordered into set order.
 Fixtures are real responses. Rejections covered: hour-long DJ mixes ("Essential Mix", "Live Mix At Liquid Room") fail the duration rules in the matcher and the verifier; label preview medleys ("ALARM / STEAMPIT EP / JEFF MILLS - PURPOSE MAKER / ...", "...[WASP EP](Preview)") are caught by two new verifier rules (3+ tracks joined with " / ", or "preview" together with ep/lp/album/vinyl). Remixes, edits and bootlegs of the wanted track are rejected by the version check.
 
-## Step 15: level 4, Beatport  (BLOCKED: needs a decision)
-Built: `parsers/beatport.py`, `adapters/beatport.py` (`BeatportTracks`, `BeatportReleases`; catalogue number first, then title; mix name appended to the title as "Name (Mix Name)"; BPM and key stored as `Reading`s with source `beatport`; quality `preview`), `AdapterUnavailable` (an adapter that cannot work at all is switched off at once instead of after 5 failures), `BEATPORT_TOKEN` setting.
-What the live check found: **beatport.com cannot be read.** Every page, including search, answers HTTP 403 "Just a moment..." (a Cloudflare managed challenge) to plain HTTP, headless Chromium and headed Chromium; `api.beatport.com/v4` answers 401 without an OAuth token. The architecture assumed public pages. Real responses are saved in `tests/fixtures/beatport/` (`cloudflare_challenge.html`, `api_unauthenticated.json`).
-Consequence: no real Beatport data was available, so the API fixtures `UNVERIFIED_*.json` are hand-written in the shape of Beatport's public v4 API documentation and the parser is UNVERIFIED against a real response. Without `BEATPORT_TOKEN` both adapters report "unavailable" and are switched off (visible in the run's `adapters_off`). The tests cover that, the remix/dub rejection, the readings in the output JSON and the catalogue-number-first search.
-Decision for the owner: (a) supply a Beatport OAuth token (`BEATPORT_TOKEN=...`) and run `pytest audioresearch/tests --live`, then replace the unverified fixtures with real responses; or (b) drop level 4 and rely on level 5 stores for BPM readings (deejay.de and decks.de also show BPM).
+## Step 15: level 4, Beatport (dropped)
+Built and then removed. The live check found beatport.com unreadable (Cloudflare challenge on every page; `api.beatport.com/v4` needs an OAuth token), so the parser could never be checked against a real response and the API fixtures were hand-written. The adapters, parser, `BEATPORT_TOKEN` setting and fixtures are deleted; level 4 stays empty so the other level numbers keep their meaning. BPM readings now come only from `deejay_de`. `AdapterUnavailable` (switch an adapter off at once) stays, because the blocked stores use it.
 
 ## Step 16: level 5, record stores (gate: the owner chose the default content in Step 0)
 Built one store at a time against the live sites; shared plumbing in `adapters/stores/base.py` (catalogue number first, then artist and title, then one query per track if nothing was found; release candidates whose tracks are the store's clips labelled by position), parsers in `parsers/stores.py`.
@@ -94,3 +91,13 @@ Clips of 60 s or more now measure as `preview` (not `full`) when there is no Dis
 
 ## Step 17: live run
 16 releases from your library, 87 tracks: 73 found, 3 review, 11 not found. Details in `audioresearch_live_report.md`. The owner has not read the report yet, so by the plan this step is not closed: fixes become new steps.
+
+## After Step 17: fixes and additions
+- **YouTube Music removed** (`ytmusicapi` dropped from `requirements.txt`; decision 5 deleted from the decisions file). Level 1 is now the linked Discogs videos plus iTunes.
+- **More level 5 stores**, each against the live site with real fixtures: `redeye` (one clip per side), `runas` and `orbitwax` (Shopify product pages, `stores/shopify.py`), `soundmetaphors`, `one_eye_witness`, `smallblackdots` (one storefront whose search is unreachable, so its sitemap is read and ranked, `stores/eshop.py`). None show a BPM.
+- **Matcher is stricter** after reading the live report: release threshold 0.70 to 0.80, track-in-release 0.60 to 0.70, a floor of 0.70 for a lone track; a named mix ("Six Mil Version") needs 70% of its words in the candidate title; a title that names a side ("B1", "side B") breaks ties between identical track titles. Videos linked on the Discogs release use a looser bar (0.55) because they belong to it and may serve several tracks with the same title.
+- **`scope.py`**: flags whether a YouTube or SoundCloud link is one track or the whole record (timestamps in the description, or duration against the summed track durations). A flag only, never a rejection.
+- **`previews.py`**: the viewer's playback plan. One record should sound like one source, so each link belongs to a family (YouTube, Bandcamp, SoundCloud, iTunes, one store, your files) and families are picked greedily by how many tracks they cover; your files go first. Nothing is downloaded for this.
+- **Output contract**: `TrackResult.page` (the release page the audio came from, e.g. a store's record page) and `ReleaseIdentity.cover`; both are in `output_schema.json`.
+- **Viewer**: previews, cover image, links for every result at every level, `--search-all` test mode (searches every level even once a track is found), `/runs/{id}/local/{position}` to play your own files, `/embed/bandcamp` for Bandcamp's player, and the page is never cached.
+- Not verified: the six new stores have not been run on a full live research of the 16-release sample; the live report in `audioresearch_live_report.md` predates them.

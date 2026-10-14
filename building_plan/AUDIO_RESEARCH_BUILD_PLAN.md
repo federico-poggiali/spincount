@@ -200,7 +200,6 @@ For every adapter: (1) check the live site and save real responses as fixtures, 
 
 **Instructions:**
 1. `adapters/discogs_youtube.py`: candidates from the release's linked videos; port the scoring from `bpmkey/sources/youtube.py`.
-2. `adapters/youtube_music.py`: fallback with `ytmusicapi` search by artist and title, only for tracks the Discogs videos did not match. Pin the `ytmusicapi` version.
 3. `adapters/itunes.py`: iTunes Search API, as in `bpmkey/sources/itunes.py`; quality `preview` or `clip`.
 4. The YouTube route and the iTunes route run in parallel.
 
@@ -226,15 +225,11 @@ Ask the owner to confirm the SoundCloud level as described in the architecture b
 
 **Done when:** fixture tests pass, including the two rejections.
 
-## Step 15: Level 4, Beatport
+## Step 15: Level 4, Beatport (dropped)
 
-**Instructions:**
-1. `adapters/beatport_tracks.py` and `adapters/beatport_releases.py` with `parsers/beatport.py`: track search by artist and title; release search by catalogue number, then release title.
-2. Read the mix name ("Original Mix", "Dub Mix") into the title used for version matching.
-3. Store Beatport's BPM and key as `Reading`s (source `beatport`), separate from audio.
-4. Quality from the real file length (Step 8).
+Not built. Beatport cannot be read without a partner OAuth token (see progress notes, Step 15). Level 4 stays empty so the other level numbers do not change.
 
-**Done when:** fixture tests pass, readings appear in the output JSON, and a remix on Beatport is not matched to the original.
+---
 
 ## Step 16: Level 5, record stores — GATE
 
