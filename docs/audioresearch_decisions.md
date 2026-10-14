@@ -15,3 +15,6 @@ Confirmed by the owner on 2026-10-13: "all defaults".
 | 10 | "Audio wins" rule | Stays in `bpmkey` | yes |
 | 11 | Tool setup (`fpcalc`, `ffmpeg`, `yt-dlp`, Python 3.11) | Not answered explicitly; none installed at Step 0. Assumed: install via Homebrew when a step needs them | assumed |
 | 12 | Plan files in `building_plan/` | Copied there | yes |
+
+## Integration with Spin Count (2026-10-14)
+Decisions are in `building_plan/INTEGRATION_BUILD_PLAN.md`: audio research on every add (owned and wantlist), audio shown directly, cache in Application Support, bpmkey CLI and web page kept for now.
