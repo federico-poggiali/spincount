@@ -1,7 +1,8 @@
 """Draw the labels for a Brother QL, 62 mm roll at 300 dpi: 696 px wide, 1 px = 1 dot.
 
 Pure black on white, no grey (thermal printers dither it), thick rules, smallest text 26 px.
-Text is drawn without anti-aliasing, so what the preview shows is exactly what gets printed."""
+Text is drawn without anti-aliasing, so what the preview shows is exactly what gets printed.
+The 8-bit look (pixel headers, glitch slices, a sprite) lives in glitch.py."""
 import io
 import re
 from dataclasses import dataclass
@@ -11,6 +12,7 @@ from pathlib import Path
 import qrcode
 from PIL import Image, ImageDraw, ImageFont
 
+from app.labels import glitch
 from app.labels.data import LabelData, LabelTrack
 
 W, H = 696, 472  # 62 x 40 mm at 300 dpi
@@ -19,6 +21,7 @@ RULE = 6
 MIN_SIZE = 26  # about 2.2 mm
 FONTS = Path(__file__).parent / "fonts"
 SANS, MONO = "DejaVuSans-Bold.ttf", "DejaVuSansMono-Bold.ttf"
+PIXEL = glitch.PIXEL
 ELLIPSIS = "…"
 
 # (font size, most lines) to try in order; the first that fits wins, the last gets cut with "…".
@@ -39,6 +42,11 @@ def _font(name: str, size: int) -> ImageFont.FreeTypeFont:
 
 def _line_height(size: int) -> int:
     return round(size * 1.2)
+
+
+def _header_font(text: str) -> str:
+    """The pixel font when it can spell the text, otherwise the plain one."""
+    return PIXEL if glitch.covers(str(FONTS / PIXEL), text) else SANS
 
 
 class Canvas:
@@ -103,8 +111,13 @@ class Canvas:
         if cut:
             warn(f"{what} was too long and has been cut")
         for line in lines:
-            self.text((x, y), line, name, size)
-            y += _line_height(size)
+            if name == PIXEL:  # tight lines: the pixel font has a lot of room above its caps
+                top, bottom = _font(name, size).getbbox("ÀJ")[1::2]
+                self.text((x, y - top), line, name, size)
+                y += bottom - top + size // 8
+            else:
+                self.text((x, y), line, name, size)
+                y += _line_height(size)
         return y
 
     def png(self) -> bytes:
@@ -146,8 +159,20 @@ def render_main(d: LabelData, warn) -> bytes:
     text_w = right - MARGIN - (qr_size + 16 if qr_size else 0)
 
     y = MARGIN
-    artist_fit: Fit = [(s, 1) for s in range(64, 43, -4)] + [(s, 2) for s in range(52, 35, -4)]
-    y = canvas.block(y, d.artist.upper(), SANS, text_w, artist_fit, warn, "The artist")
+    rng = glitch.rng_for(d.artist, d.title)
+    sprite = glitch.sprite_for(d.artist, d.title)
+    sprite_w, sprite_h = glitch.sprite_size(sprite)
+    artist = d.artist.upper()
+    artist_font = _header_font(artist)
+    if artist_font == PIXEL:  # the pixel font is only crisp at multiples of 8 px
+        artist_fit: Fit = [(s, 1) for s in (80, 72, 64, 56, 48, 40)] + [(s, 2) for s in (48, 40, 32)]
+    else:
+        artist_fit = [(s, 1) for s in range(64, 43, -4)] + [(s, 2) for s in range(52, 35, -4)]
+    y = canvas.block(y, artist, artist_font, text_w, artist_fit, warn, "The artist")
+    if artist_font == PIXEL:
+        unit = canvas.fit(artist, PIXEL, text_w, artist_fit)[1] // 8  # one pixel of the font
+        glitch.slice_glitch(canvas.img, (MARGIN, MARGIN, MARGIN + text_w, y), unit, rng)
+    y += 6
     label_line = " · ".join(
         p for p in ((d.label or "").upper() if shown("label") else "",
                     f"Cat# {d.catno}" if shown("catno") else "") if p)
@@ -161,10 +186,15 @@ def render_main(d: LabelData, warn) -> bytes:
     parts = [d.year if shown("year") else None, d.country if shown("country") else None,
              ", ".join(d.styles) if shown("styles") else None]
     info = " · ".join(p for p in parts if p)
+    sprite_drawn = False
     if info:
         y = canvas.rule(y) + 10
         info_fit: Fit = [(s, 1) for s in (32, 30, 28, 26)] + [(26, 2)]
-        y = canvas.block(y, info, SANS, W - 2 * MARGIN, info_fit, warn, "The info line") + 6
+        glitch.draw_sprite(canvas.draw, sprite, right - sprite_w, y)
+        sprite_drawn = True
+        bottom = canvas.block(y, info, SANS, W - 2 * MARGIN - sprite_w - 16, info_fit, warn,
+                              "The info line")
+        y = max(bottom, y + sprite_h) + 6
     if shown("note") and d.note:
         y = canvas.rule(y) + 10
         room = H - MARGIN - y
@@ -175,6 +205,8 @@ def render_main(d: LabelData, warn) -> bytes:
             canvas.block(y, d.note, SANS, W - 2 * MARGIN, note_fit, warn, "The note")
     elif y > H - MARGIN:
         warn("The label is too full: hide a field")
+    elif not sprite_drawn and y + sprite_h <= H - MARGIN:
+        glitch.draw_sprite(canvas.draw, sprite, right - sprite_w, H - MARGIN - sprite_h)
     return canvas.png()
 
 
@@ -207,11 +239,14 @@ def _page_height(groups: list[tuple[str, list[LabelTrack]]]) -> int:
 
 
 def _paginate(entries: list[LabelTrack]) -> list[list[tuple[str, list[LabelTrack]]]]:
-    """Pages of (side, tracks): a side that runs over continues, with its block, on the next label."""
+    """Pages of (side, tracks), two sides to a label (a double LP is A+B, C+D…). A side that runs
+    over continues, with its block, on the next label."""
     limit = H - 2 * MARGIN
     pages: list[list[tuple[str, list[LabelTrack]]]] = [[]]
     for t in entries:
         side = side_of(t.position)
+        if len(pages[-1]) >= 2 and pages[-1][-1][0] != side:  # a label holds two sides: A+B, C+D…
+            pages.append([])
         page = pages[-1]
         if page and page[-1][0] == side:
             page[-1][1].append(t)
@@ -227,6 +262,8 @@ def _paginate(entries: list[LabelTrack]) -> list[list[tuple[str, list[LabelTrack
 
 
 def _render_tracks_page(groups: list[tuple[str, list[LabelTrack]]], warn) -> bytes:
+    """One label per pair of sides: the sides share the label's height in proportion to their
+    tracks, and each side's rows are spread evenly over its block, so the label is always full."""
     canvas = Canvas()
     x = MARGIN + SIDE_W + GAP
     width = W - MARGIN - x
@@ -235,38 +272,53 @@ def _render_tracks_page(groups: list[tuple[str, list[LabelTrack]]], warn) -> byt
     show_bpm = any(_shows(t, "bpm") for t in all_tracks)
     show_key = any(_shows(t, "key") for t in all_tracks)
     bpm_w, key_w = (112 if show_bpm else 0), (84 if show_key else 0)
+
+    natural = [_group_height(tracks) for _, tracks in groups]
+    gaps = 12 * (len(groups) - 1)
+    # the last block loses its 6 px of trailing space, so it ends exactly at the bottom margin
+    room = H - 2 * MARGIN + 6 - gaps
+    weights = [sum(_row_height(t) for t in tracks) for _, tracks in groups]
     y = MARGIN
-    for side, tracks in groups:
+    for (side, tracks), nat, weight in zip(groups, natural, weights, strict=True):
         top = y
-        for t in tracks:
-            canvas.text((x, y), t.position, MONO, 30)
+        block = max(nat, round(room * weight / sum(weights)))  # share the height by tracks
+        block_h = block - 6
+        rows = [_row_height(t) for t in tracks]
+        slack = max(0, block - sum(rows)) / len(tracks)  # extra space per row
+        row_top = float(top)
+        for t, row_h in zip(tracks, rows, strict=True):
+            ty = int(row_top + slack / 2)
+            canvas.text((x, ty), t.position, MONO, 30)
             col = x + pos_w
             if _shows(t, "bpm"):
-                canvas.text((col, y), t.bpm, MONO, 30)
+                canvas.text((col, ty), t.bpm, MONO, 30)
             col += bpm_w
             if _shows(t, "key"):
-                canvas.text((col, y), t.key, MONO, 30)
+                canvas.text((col, ty), t.key, MONO, 30)
             col += key_w
             if _shows(t, "tags") and t.tags:
                 text = ", ".join(t.tags)
                 shown = canvas.ellipsize(text, SANS, 26, x + width - col)
                 if shown != text:
                     warn(f"Tags of {t.position} were too long and have been cut")
-                canvas.text((col, y + 3), shown, SANS, 26)
-            y += _line_height(30)
+                canvas.text((col, ty + 3), shown, SANS, 26)
             if _shows(t, "note"):
                 shown = canvas.ellipsize(t.note, SANS, 26, width)
                 if shown != t.note:
                     warn(f"The note of {t.position} was too long and has been cut")
-                canvas.text((x, y), shown, SANS, 26)
-                y += _line_height(26)
-            y += 10
-        block_h = _group_height(tracks) - 6
+                canvas.text((x, ty + _line_height(30)), shown, SANS, 26)
+            row_top += row_h + slack
         canvas.draw.rectangle([MARGIN, top, MARGIN + SIDE_W - 1, top + block_h - 1], fill=0)
-        size = 44 if len(side) == 1 else 34 if len(side) == 2 else 26
-        label_w = canvas.width(side, SANS, size)
-        canvas.text((MARGIN + int((SIDE_W - label_w) / 2), top + 6), side, SANS, size, fill=255)
-        y = top + block_h + 6 + 12
+        for cx, cy in ((MARGIN, top), (MARGIN + SIDE_W - 6, top), (MARGIN, top + block_h - 6),
+                       (MARGIN + SIDE_W - 6, top + block_h - 6)):  # stepped pixel corners
+            canvas.draw.rectangle([cx, cy, cx + 5, cy + 5], fill=255)
+        font = _header_font(side)
+        size = 40 if len(side) == 1 else 32 if len(side) == 2 else 24
+        if font == SANS:
+            size = 44 if len(side) == 1 else 34 if len(side) == 2 else 26
+        label_w = canvas.width(side, font, size)
+        canvas.text((MARGIN + int((SIDE_W - label_w) / 2), top + 8), side, font, size, fill=255)
+        y = top + block + 12
     return canvas.png()
 
 

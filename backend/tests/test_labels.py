@@ -192,3 +192,37 @@ def test_label_from_discogs_link_stores_nothing(client):
 def test_label_from_bad_link_is_a_clear_error(client):
     out = client.post("/api/labels/from-discogs", json={"discogs_url": "https://example.com/x"})
     assert out.status_code == 400
+
+
+def test_the_glitch_is_the_same_on_every_render_and_differs_per_record():
+    first = label_render.render(sample())[0][0].png
+    assert label_render.render(sample())[0][0].png == first
+    assert label_render.render(sample(title="Something else"))[0][0].png != first
+
+
+def test_names_the_pixel_font_cannot_spell_fall_back_to_the_plain_font():
+    assert label_render._header_font("JEFF MILLS") == label_render.PIXEL
+    assert label_render._header_font("RYŌJI IKEDA") == label_render.SANS
+
+
+def test_a_label_holds_two_sides_so_a_double_lp_needs_three_labels():
+    tracks = [LabelTrack(position=f"{side}{n}", bpm="128") for side in "ABCD" for n in (1, 2)]
+    assert [i.name for i in label_render.render(sample(tracks))[0]] == ["main", "tracks-1", "tracks-2"]
+    pages = label_render._paginate(tracks)
+    assert [[s for s, _ in page] for page in pages] == [["A", "B"], ["C", "D"]]
+
+
+def test_tracks_labels_are_filled_to_the_bottom_with_sides_in_proportion():
+    tracks = [LabelTrack(position=p, bpm="128") for p in ("A1", "A2", "A3", "B1")]
+    img = Image.open(io.BytesIO(label_render.render(sample(tracks))[0][1].png)).convert("L")
+    column = [img.getpixel((label_render.MARGIN + 8, y)) for y in range(label_render.H)]
+    blocks, prev = [], 255
+    for y, v in enumerate(column):
+        if v == 0 and prev != 0:
+            blocks.append([y, y])
+        if v == 0:
+            blocks[-1][1] = y
+        prev = v
+    heights = [b - a for a, b in blocks]
+    assert blocks[-1][1] >= label_render.H - label_render.MARGIN - 8
+    assert 2.5 < heights[0] / heights[1] < 3.5
