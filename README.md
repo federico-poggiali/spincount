@@ -153,7 +153,8 @@ Measured against human-labelled electronic music (Beatport previews; audio not i
 
 | | result |
 |---|---|
-| BPM, within ±4% of the Beatport BPM (GiantSteps-MTG, 885 clips) | 94.8% |
+| BPM, within ±4% of the hand-checked BPM (GiantSteps Tempo, 661 clips) | 76.7% (was 62.5%) |
+| BPM, within ±4% of Beatport's listed BPM (GiantSteps-MTG, 1104 clips) | 91.2% (was 94.4%) |
 | Key, exact match, shipped committee detector (GiantSteps Key, 604 clips, cross-validated) | 63-64% exact; 43% of major keys found |
 | Key, exact match, Essentia `edmm` profile alone (same clips) | 65% (weighted MIREX score 0.70); 0% of major keys found |
 | Key, exact match, Essentia `bgate` profile (same clips) | 61% (0.68) |
@@ -162,11 +163,13 @@ Measured against human-labelled electronic music (Beatport previews; audio not i
 
 Key detection is a small committee (`bpmkey/keydetect.py`): Essentia's `edmm` and `bgate` profiles plus the track's mean chroma vote on all 24 keys, with weights fitted on GiantSteps. It replaced `edmm` alone because `edmm` can only answer minor: on GiantSteps it never produced a major key, so the 15% of clips that are major were always wrong, and a database saying "major" could never overrule it. The committee finds about 4 in 10 of the major keys at the same overall exact accuracy, and its probabilities are better calibrated (log-loss 1.59 to 1.31). Major vs minor stays the hardest call (mode AUC 0.78). `MODE_PRIOR_SHIFT` in `keydetect.py` sets how readily it says major: GiantSteps is 85% minor, so 0 keeps that prior (66% exact, 23% of majors found) and the shipped 1.0 assumes a mixed collection (63-64% exact, 43% of majors). The database reliabilities were estimated from a handful of tracks and the database-combination gains were simulated, so treat both as unverified until measured against labelled tracks from a real collection. The benchmark scripts and report were removed from the repo to keep it light; they are in the git history (before October 2026).
 
+BPM is a vote (`bpmkey/tempo.py`): Essentia's `degara` beat tracker and Percival estimator plus the onset tempogram vote on a tempo, and a log-normal prior over BPM picks between half, single and double. It replaced RhythmExtractor2013 `multifeature` folded into 70-180, and runs in about 3 s per full track instead of 3-5 s. Almost every error is an octave (x2, x1/2) and the two test sets disagree on octaves for some genres (drum & bass is ~174 in GiantSteps Tempo, ~88 in Beatport's listings), so the default prior is a compromise between them; `analyze_file(path, bpm_prior=...)` takes a narrower one, e.g. `tempo.fit_prior` over your own BPMs for the record's style. Beat This! (a neural beat tracker) was tried and dropped: 86% on the Beatport set it had not trained on, and it needs PyTorch.
+
 Key detection by audio alone is the weak spot, so the database votes matter. A 90% exact-key target is not realistic for any current method.
 
 ## Known limitations
 
-- Half/double tempo is ambiguous for some genres (e.g. footwork at 80 vs 160 BPM).
+- Half/double tempo is ambiguous for some genres (e.g. footwork at 80 vs 160 BPM); until a style prior from your own BPMs is passed in, the default prior decides.
 - Key detection is unreliable on atonal or heavily percussive music, and on tracks that change key.
 - YouTube sometimes blocks downloads (403 or age-gating); the next source is tried automatically.
 - Bandcamp is not used: its search is behind a bot challenge, and following artist and label pages found nothing on 7 tracks YouTube had missed, at about 20 s per track, before it was rate-limited.

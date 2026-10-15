@@ -3,7 +3,7 @@ from __future__ import annotations
 import tempfile
 from pathlib import Path
 
-from . import keydetect
+from . import keydetect, tempo
 from .camelot import key_index_to_camelot
 from .models import Measurement
 
@@ -54,8 +54,11 @@ def download_audio(url: str, dest: Path) -> Path:
     return path
 
 
-def analyze_file(path: Path | str) -> Measurement:
-    """BPM and key (EDM profile, with a backup profile) from the whole track."""
+def analyze_file(path: Path | str, bpm_prior: tuple[float, float] | None = None) -> Measurement:
+    """BPM (tempo vote, see tempo.py) and key (committee, see keydetect.py) from the whole track.
+
+    bpm_prior: (mean, sd) of log BPM for this music, e.g. tempo.fit_prior over known BPMs of its style.
+    """
     import essentia.standard as es
 
     audio = es.MonoLoader(filename=str(path), sampleRate=SAMPLE_RATE)()
@@ -64,8 +67,9 @@ def analyze_file(path: Path | str) -> Measurement:
         start = (len(audio) - n) // 2
         audio = audio[start:start + n]
 
-    bpm, _, _, _, _ = es.RhythmExtractor2013(method="multifeature")(audio)
-    bpm = clamp_bpm(float(bpm))
+    bpm = tempo.estimate(audio, SAMPLE_RATE, bpm_prior)
+    if bpm is None:  # no estimator found a beat: the old single estimate, folded
+        bpm = clamp_bpm(float(es.RhythmExtractor2013(method="degara")(audio)[0]) or 120.0)
 
     est = keydetect.detect(audio)
     name, mode = keydetect.NAMES[est.index % 12], "minor" if est.index >= 12 else "major"

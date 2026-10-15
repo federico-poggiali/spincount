@@ -1,0 +1,16 @@
+{
+ "weights": {
+  "exact": 0.25,
+  "tempogram": 0.5,
+  "prior": 0.4
+ },
+ "prior": {
+  "mu": 4.8594,
+  "sd": 0.1849
+ },
+ "fitted_on": "GiantSteps Tempo v2 (661) + GiantSteps-MTG (1104)",
+ "acc1": {
+  "tempo": 0.767,
+  "mtg": 0.912
+ }
+}
