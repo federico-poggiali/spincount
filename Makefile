@@ -1,22 +1,23 @@
-# Spin Count (Vinyl Second-Brain). One Python 3.11 env (.venv) and one Node env (.nodeenv).
+# Spin Count. One Python 3.11 env (.venv) and one Node env (.nodeenv).
 PY := .venv/bin/python
+RUN_PY := cd backend && PYTHONPATH=..:. ../$(PY)
 export PATH := $(CURDIR)/.nodeenv/bin:$(PATH)
 PORT ?= 8000
 
-.PHONY: help setup run dev frontend-dev build test test-audioresearch test-frontend e2e test-all lint coverage \
+.PHONY: help setup run dev frontend-dev build test test-frontend e2e test-all lint coverage \
         sync-vault backfill-styles openapi types backup
 
 help:
 	@echo "make run        build the app and serve it on http://127.0.0.1:$(PORT)  (sets everything up first)"
 	@echo "make dev        API with auto-reload; run 'make frontend-dev' in a second terminal"
-	@echo "make test-all   backend tests, frontend tests and the browser tests"
+	@echo "make test-all   every Python suite, the frontend tests and the browser tests"
 	@echo "make backup     copy the database to backend/backups/ now"
 
 # ---- environments (created on first use) ----
 $(PY):
 	/opt/anaconda3/bin/python3.11 -m venv .venv || python3.11 -m venv .venv
 	$(PY) -m pip install -q --upgrade pip
-	$(PY) -m pip install -q -r requirements.lock.txt
+	$(PY) -m pip install -q -r requirements-dev.lock.txt
 
 .nodeenv/bin/node:
 	@command -v conda >/dev/null || [ -x /opt/anaconda3/bin/conda ] || { echo "Node 22 is needed: install it, or install conda."; exit 1; }
@@ -34,17 +35,18 @@ build: frontend/node_modules
 	cd frontend && npm run --silent build
 
 run: setup build
-	cd backend && PYTHONPATH=..:. ../$(PY) -m uvicorn app.main:app --host 127.0.0.1 --port $(PORT)
+	$(RUN_PY) -m uvicorn app.main:app --host 127.0.0.1 --port $(PORT)
 
 dev: $(PY)
-	cd backend && PYTHONPATH=..:. ../$(PY) -m uvicorn app.main:app --reload --port $(PORT)
+	$(RUN_PY) -m uvicorn app.main:app --reload --port $(PORT)
 
 frontend-dev: frontend/node_modules
 	cd frontend && BACKEND_URL=http://127.0.0.1:$(PORT) npm run dev
 
 # ---- checks ----
 test: $(PY)
-	cd backend && ../$(PY) -m pytest
+	cd backend && ../$(PY) -m pytest -q
+	$(PY) -m pytest -q audioresearch/tests bpmkey/tests
 
 test-frontend: frontend/node_modules
 	cd frontend && npm run --silent test
@@ -54,27 +56,25 @@ e2e: frontend/node_modules
 
 test-all: test test-frontend e2e
 
-test-audioresearch: $(PY)
-	$(PY) -m pytest audioresearch/tests -q
-
 lint: $(PY)
 	$(PY) -m ruff check backend
+	cd frontend && npx tsc --noEmit -p .
 
 coverage: $(PY)
 	cd backend && ../$(PY) -m pytest --cov=app --cov-report=term-missing:skip-covered -q
 
 # ---- tools ----
 sync-vault: $(PY)
-	cd backend && PYTHONPATH=..:. ../$(PY) -m app.vault
+	$(RUN_PY) -m app.vault
 
 backfill-styles: $(PY)
-	cd backend && PYTHONPATH=..:. ../$(PY) -m app.backfill
+	$(RUN_PY) -m app.backfill
 
 openapi: $(PY)
-	cd backend && PYTHONPATH=..:. ../$(PY) -m app.export_openapi
+	$(RUN_PY) -m app.export_openapi
 
 types: openapi frontend/node_modules
 	cd frontend && npm run --silent api:types
 
 backup: $(PY)
-	cd backend && PYTHONPATH=..:. ../$(PY) -m app.backup
+	$(RUN_PY) -m app.backup

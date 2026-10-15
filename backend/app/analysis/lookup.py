@@ -6,23 +6,15 @@ videos, YouTube, SoundCloud, iTunes preview) and analyzes it.
 import logging
 
 from bpmkey.analyze import clamp_bpm
-from bpmkey.camelot import camelot_to_key_index
-from bpmkey.keydetect import NAMES
 from bpmkey.models import Track as BpmkeyTrack
 from bpmkey.pipeline import Pipeline
 from bpmkey.reconcile import is_analysis
 
 from app.analysis.engine import alternate_bpm
+from app.keys import key_name
 
 log = logging.getLogger(__name__)
 ENGINE = "bpmkey-lookup"
-
-
-def key_name(camelot: str | None) -> str | None:
-    index = camelot_to_key_index(camelot) if camelot else None
-    if index is None:
-        return None
-    return f"{NAMES[index % 12]} {'minor' if index >= 12 else 'major'}"
 
 
 def lookup_tracks(record: dict, tracks: list[dict], release: dict) -> dict[int, dict]:

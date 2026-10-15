@@ -51,7 +51,6 @@ test("add a record, take a note, find it by search, and see it in the vault", as
   await page.locator("body").click({ position: { x: 700, y: 5 } });
   await page.keyboard.press("/");
   await expect(page).toHaveURL(/\/search/);
-  await page.getByRole("button", { name: "Exact" }).click();
   await page.getByRole("searchbox").fill("erupted");
   const hit = page.getByRole("link", { name: /Huge energy/ });
   await expect(hit.locator("mark")).toHaveText("erupted");
@@ -280,7 +279,6 @@ test("adding a record finds its audio by itself; the track table plays it like t
   // The audio search starts on its own; BPM and key analysis does not.
   await expect(page.getByTestId("job-finding-audio").getByRole("status")).toHaveText("done");
   await expect(page.getByTestId("job-analysis")).toHaveCount(0);
-  await expect(page.getByTestId("found-audio-counts")).toHaveText("1 found · 1 need a look · 10 not found · 2 of 12 playable");
   // A found track shows nothing but its play button (and a flag when it needs a look); the rest is under "Other audio sources".
   await expect(page.getByTestId("found-audio-A1")).toHaveCount(0);
   await expect(page.getByTestId("found-audio-A2")).toContainText("needs a look");

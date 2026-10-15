@@ -26,9 +26,8 @@ def record_id(conn):
     tracks.create(conn, rid, position="B", title="Other", bpm=None, key="A minor")
     tags.create_tag(conn, 1, "peak")
     tags.add(conn, "track", t1, "peak")
-    notes.create(conn, type="location", body="Shelf B", record_id=rid)
-    notes.create(conn, type="prose", body="Relentless and hypnotic. Great after midnight.", record_id=rid)
-    notes.create(conn, type="prose", body="Drop at two minutes", track_id=t1)
+    notes.create(conn, body="Relentless and hypnotic. Great after midnight.", record_id=rid)
+    notes.create(conn, body="Drop at two minutes", track_id=t1)
     return rid
 
 
@@ -84,7 +83,7 @@ def test_labels_are_62_by_40_mm_one_bit_images():
         img = pixels(image.png)
         assert img.size == (696, 472) and img.mode == "1"  # 62 x 40 mm at 300 dpi, black or white only
         assert round(img.info["dpi"][0]) == 300
-        assert 0 < sum(1 for p in img.getdata() if p == 0)  # something was drawn
+        assert img.histogram()[0] > 0  # something was drawn (black pixels)
 
 
 def test_hiding_a_field_changes_the_label():
@@ -244,13 +243,22 @@ def test_tracks_label_prints_the_artist_line():
     assert label_render.render_tracks(sample(with_artist), lambda m: None)
 
 
-def test_every_label_gets_at_most_one_doodle_in_blank_space():
+def test_a_doodle_goes_on_the_rim_only_where_there_is_room():
     from app.labels import doodles
-    img = Image.new("L", (label_render.W, label_render.H), 255)
-    img.paste(0, (0, 0, label_render.W, label_render.H // 2))  # the top half is "text"
-    area = (label_render.MARGIN, label_render.MARGIN, label_render.W - label_render.MARGIN, label_render.H - label_render.MARGIN)
-    assert doodles.place(img, doodles.rng_for("a", "b"), area) in doodles.DOODLES
-    ink = img.crop((0, label_render.H // 2 + doodles.CLEARANCE - 1, label_render.W, label_render.H)).getbbox()
-    assert ink is not None  # drawn in the blank half
-    full = Image.new("L", (label_render.W, label_render.H), 0)
-    assert doodles.place(full, doodles.rng_for("a", "b"), area) is None  # no room, no doodle
+    W, H, M = label_render.W, label_render.H, label_render.MARGIN
+    area = (M, M, W - M, H - M)
+    for seed in "abcdefgh":
+        img = Image.new("L", (W, H), 255)
+        img.paste(0, (0, 0, W, H // 2))  # the top half is "text"
+        assert doodles.place(img, doodles.rng_for(seed), area) in doodles.DOODLES
+        x0, y0, x1, y1 = _ink_below(img, H // 2 + 1)
+        assert y0 > H // 2 + doodles.CLEARANCE - 2  # clear of the text
+        assert x0 == M or x1 == W - M or y1 == H - M  # touching the rim, not floating in the middle
+    full = Image.new("L", (W, H), 0)
+    assert doodles.place(full, doodles.rng_for("a"), area) is None  # no room, no doodle
+
+
+def _ink_below(img: Image.Image, top: int) -> tuple[int, int, int, int]:
+    from PIL import ImageOps
+    x0, y0, x1, y1 = ImageOps.invert(img.crop((0, top, img.width, img.height))).getbbox()
+    return x0, y0 + top, x1, y1 + top

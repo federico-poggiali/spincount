@@ -43,12 +43,6 @@ CREATE TABLE notes (
 CREATE INDEX idx_notes_record ON notes(record_id);
 CREATE INDEX idx_notes_track ON notes(track_id);
 
--- Only notes with type='prose' get a row (enforced in the data-access layer).
-CREATE VIRTUAL TABLE note_embeddings USING vec0(
-    note_id INTEGER PRIMARY KEY,
-    embedding FLOAT[1536]
-);
-
 CREATE TABLE tags (
     id INTEGER PRIMARY KEY,
     name TEXT NOT NULL UNIQUE CHECK (name = lower(name))

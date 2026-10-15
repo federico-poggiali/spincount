@@ -22,6 +22,14 @@ export function keyLabel(camelot: string | null | undefined, format: KeyFormat):
 
 export const formatBpm = (bpm: number | null | undefined) => (bpm == null ? "" : String(Math.round(bpm * 10) / 10));
 
+/** A BPM as typed ("124,5" works too), or null when it is not a plausible tempo. */
+export function parseBpm(text: string): number | null {
+  const value = parseFloat(text.replace(",", "."));
+  return Number.isFinite(value) && value > 0 && value <= 400 ? value : null;
+}
+
+export const plural = (n: number, one: string, many = `${one}s`) => `${n} ${n === 1 ? one : many}`;
+
 export const LOW_CONFIDENCE = 0.4;
 
 export function formatDuration(sec: number | null | undefined): string {

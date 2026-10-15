@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState, type RefObject } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { api, type NoteCreate, type NotePatch, type RecordDetail, type RecordPatch, type TrackPatch } from "./api/api";
 import { keyByCamelot, type KeyFormat } from "./lib";
@@ -155,88 +155,60 @@ export function useTagMutations(recordId: number) {
   return { add, remove };
 }
 
-const FORMAT_STORAGE = "spincount.keyformat";
-
-/** Camelot or musical key labels, remembered per browser. */
-export function useKeyFormat(): [KeyFormat, (f: KeyFormat) => void] {
-  const [format, setFormat] = useState<KeyFormat>(() => {
+/** A setting remembered per browser (localStorage) and kept in step across every component that reads it. */
+function useStoredSetting<T extends string>(key: string, fallback: T, valid: readonly T[]): [T, (value: T) => void] {
+  const read = (): T => {
     try {
-      return localStorage.getItem(FORMAT_STORAGE) === "musical" ? "musical" : "camelot";
+      const stored = localStorage.getItem(key) as T | null;
+      return stored !== null && valid.includes(stored) ? stored : fallback;
     } catch {
-      return "camelot";
-    }
-  });
-  const set = (f: KeyFormat) => {
-    setFormat(f);
-    try {
-      localStorage.setItem(FORMAT_STORAGE, f);
-    } catch {
-      /* private mode: the choice just is not remembered */
+      return fallback; // private mode: the choice just is not remembered
     }
   };
-  return [format, set];
+  const [value, setValue] = useState(read);
+  useEffect(() => {
+    const sync = () => setValue(read());
+    window.addEventListener(SETTINGS_EVENT, sync);
+    window.addEventListener("storage", sync);
+    return () => { window.removeEventListener(SETTINGS_EVENT, sync); window.removeEventListener("storage", sync); };
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  const set = (next: T) => {
+    setValue(next);
+    try {
+      localStorage.setItem(key, next);
+    } catch {
+      /* not remembered */
+    }
+    window.dispatchEvent(new Event(SETTINGS_EVENT));
+  };
+  return [value, set];
 }
 
-const KEYS_STORAGE = "spincount.keys";
-const KEYS_EVENT = "spincount-keys";
+const SETTINGS_EVENT = "spincount-settings";
+const ON_OFF = ["on", "off"] as const;
 
-/** Whether musical keys are analysed and shown anywhere. Off unless switched on in Settings;
- *  remembered per browser. BPM is always shown regardless. */
-export function useKeysEnabled(): [boolean, (on: boolean) => void] {
-  const read = () => {
-    try {
-      return localStorage.getItem(KEYS_STORAGE) === "on";
-    } catch {
-      return false;
-    }
-  };
-  const [on, setOn] = useState(read);
-  useEffect(() => {
-    const sync = () => setOn(read());
-    window.addEventListener(KEYS_EVENT, sync);
-    window.addEventListener("storage", sync);
-    return () => { window.removeEventListener(KEYS_EVENT, sync); window.removeEventListener("storage", sync); };
-  }, []);
-  const set = (next: boolean) => {
-    setOn(next);
-    try {
-      localStorage.setItem(KEYS_STORAGE, next ? "on" : "off");
-    } catch {
-      /* private mode: the choice just is not remembered */
-    }
-    window.dispatchEvent(new Event(KEYS_EVENT));
-  };
-  return [on, set];
+function useStoredToggle(key: string): [boolean, (on: boolean) => void] {
+  const [value, set] = useStoredSetting(key, "off", ON_OFF);
+  return [value === "on", (on) => set(on ? "on" : "off")];
 }
 
-const CONFIDENCE_STORAGE = "spincount.key-confidence";
-const CONFIDENCE_EVENT = "spincount-key-confidence";
+/** Camelot or musical key labels. */
+export const useKeyFormat = () => useStoredSetting<KeyFormat>("spincount.keyformat", "camelot", ["camelot", "musical"]);
 
-/** Whether the confidence of a key is shown (percentage and low-confidence warnings). Off unless switched on
- *  in Settings; only matters while keys themselves are shown. Remembered per browser. */
-export function useKeyConfidenceEnabled(): [boolean, (on: boolean) => void] {
-  const read = () => {
-    try {
-      return localStorage.getItem(CONFIDENCE_STORAGE) === "on";
-    } catch {
-      return false;
-    }
-  };
-  const [on, setOn] = useState(read);
+/** Whether musical keys are analysed and shown anywhere (off unless switched on in Settings). BPM is always shown. */
+export const useKeysEnabled = () => useStoredToggle("spincount.keys");
+
+/** Whether a key's confidence is shown (percentage and low-confidence warnings); only matters while keys are shown. */
+export const useKeyConfidenceEnabled = () => useStoredToggle("spincount.key-confidence");
+
+/** Close a popover when the pointer goes down anywhere outside `root`. */
+export function useDismiss(root: RefObject<HTMLElement | null>, open: boolean, close: () => void) {
+  const latest = useRef(close);
+  latest.current = close;
   useEffect(() => {
-    const sync = () => setOn(read());
-    window.addEventListener(CONFIDENCE_EVENT, sync);
-    window.addEventListener("storage", sync);
-    return () => { window.removeEventListener(CONFIDENCE_EVENT, sync); window.removeEventListener("storage", sync); };
-  }, []);
-  const set = (next: boolean) => {
-    setOn(next);
-    try {
-      localStorage.setItem(CONFIDENCE_STORAGE, next ? "on" : "off");
-    } catch {
-      /* private mode: the choice just is not remembered */
-    }
-    window.dispatchEvent(new Event(CONFIDENCE_EVENT));
-  };
-  return [on, set];
+    if (!open) return;
+    const onDown = (e: MouseEvent) => { if (!root.current?.contains(e.target as Node)) latest.current(); };
+    document.addEventListener("mousedown", onDown);
+    return () => document.removeEventListener("mousedown", onDown);
+  }, [open, root]);
 }

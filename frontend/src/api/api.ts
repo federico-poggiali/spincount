@@ -15,7 +15,6 @@ export type JobOut = S["JobOut"];
 export type TrackAudio = S["TrackAudioOut"];
 export type RecordAudio = S["RecordAudioOut"];
 export type ExactResults = S["ExactResults"];
-export type SemanticHit = S["SemanticHit"];
 export type TagCount = S["TagCount"];
 export type TagGroup = S["TagGroup"];
 export type StyleCount = S["StyleCount"];
@@ -170,8 +169,7 @@ export const api = {
 
   listStyles: () => get<{ items: StyleCount[] }>("/api/styles"),
 
-  searchExact: (q: string, signal?: AbortSignal) => get<ExactResults>("/api/search/exact", { q }, signal),
-  searchSemantic: (q: string, signal?: AbortSignal) => get<SemanticHit[]>("/api/search/semantic", { q }, signal),
+  search: (q: string, signal?: AbortSignal) => get<ExactResults>("/api/search/exact", { q }, signal),
 
   getCrate: () => get<CrateOut>("/api/crate"),
   createUnit: (body: UnitCreate) => send<CrateOut>("POST", "/api/crate/units", body),

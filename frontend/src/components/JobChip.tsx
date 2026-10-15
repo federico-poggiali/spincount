@@ -5,23 +5,21 @@ import styles from "./JobChip.module.css";
 
 type Props = {
   label: string;
-  jobId: number | null;
-  idleText?: string;
+  jobId: number;
   onSettled?: (job: JobOut) => void;
   onRetry: () => void;
   retrying?: boolean;
-  canStart?: boolean;
 };
 
-export function JobChip({ label, jobId, idleText = "not started", onSettled, onRetry, retrying, canStart = true }: Props) {
+/** A background job's progress, polled until it is done or failed; a failed job can be retried. */
+export function JobChip({ label, jobId, onSettled, onRetry, retrying }: Props) {
   const job = useQuery({
     queryKey: ["job", jobId],
-    queryFn: () => api.getJob(jobId!),
-    enabled: jobId != null,
+    queryFn: () => api.getJob(jobId),
     refetchInterval: (q) => (q.state.data && ["done", "failed"].includes(q.state.data.status) ? false : 1500),
     meta: { quiet: true },
   });
-  const status = jobId == null ? "idle" : job.data?.status ?? "queued";
+  const status = job.data?.status ?? "queued";
   const notified = useRef<number | null>(null);
 
   useEffect(() => {
@@ -33,8 +31,7 @@ export function JobChip({ label, jobId, idleText = "not started", onSettled, onR
 
   const skipped = job.data?.status === "done" && typeof (job.data.result as { skipped?: string } | null)?.skipped === "string";
   const text =
-    status === "idle" ? idleText
-    : status === "queued" ? "waiting"
+    status === "queued" ? "waiting"
     : status === "running" ? "working…"
     : status === "failed" ? "failed"
     : skipped ? "skipped"
@@ -49,11 +46,7 @@ export function JobChip({ label, jobId, idleText = "not started", onSettled, onR
         {status === "failed" && job.data?.error && <small>{job.data.error}</small>}
         {skipped && <small>{(job.data!.result as { skipped: string }).skipped}</small>}
       </div>
-      {(status === "failed" || (status === "idle" && canStart)) && (
-        <button className="ghost small" onClick={onRetry} disabled={retrying}>
-          {status === "failed" ? "Retry" : "Start"}
-        </button>
-      )}
+      {status === "failed" && <button className="ghost small" onClick={onRetry} disabled={retrying}>Retry</button>}
     </div>
   );
 }

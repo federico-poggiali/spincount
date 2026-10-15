@@ -19,6 +19,10 @@ class DiscogsNotFound(DiscogsError):
     pass
 
 
+class DiscogsBadUrl(DiscogsError):
+    pass
+
+
 class DiscogsClient:
     def __init__(self, token: str, client: httpx.Client | None = None,
                  sleep: Callable[[float], None] = time.sleep, max_retries: int = 5):
@@ -71,17 +75,12 @@ class DiscogsClient:
         path = f"/users/{self.username}/collection/folders/{folder_id}/releases/{release_id}"
         return self._request("POST", path).json()["instance_id"], True
 
-    def remove_from_collection(self, release_id: int, instance_id: int,
-                               folder_id: int = DEFAULT_FOLDER) -> None:
-        self._request("DELETE", f"/users/{self.username}/collection/folders/{folder_id}"
-                                f"/releases/{release_id}/instances/{instance_id}")
-
     def resolve(self, url: str) -> tuple[int, int | None]:
         """Return (release_id, master_id); master_id is set when the URL was a master."""
         try:
             kind, id_ = parse_url(url)
         except ValueError as exc:
-            raise DiscogsError(str(exc)) from exc
+            raise DiscogsBadUrl(str(exc)) from exc
         if kind == "master":
             return self.master_main_release(id_), id_
         return id_, None

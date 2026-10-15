@@ -3,30 +3,16 @@ import subprocess
 import sys
 
 from fastapi import APIRouter, Depends, HTTPException, Request
-from pydantic import BaseModel
 
 from app import backfill, config
 from app.audio import job as audio_job
 from app.db import track_audio
 from app.deps import get_db, get_runner
 from app.jobs.runner import JobRunner
-from app.schemas import JobStarted, OpenedPath
+from app.schemas import JobStarted, LibraryAudioStarted, OpenedPath, VaultStatus, VaultSyncOut
 from app.vault import EXAMPLES_FILE, VaultSyncer
 
 router = APIRouter(prefix="/api/admin", tags=["admin"])
-
-
-class VaultSyncOut(BaseModel):
-    written: int
-    skipped: int
-    deleted: int
-    synced_at: str
-
-
-class VaultStatus(BaseModel):
-    vault_dir: str
-    last_sync: VaultSyncOut | None
-    last_error: str | None
 
 
 def _syncer(request: Request) -> VaultSyncer:
@@ -44,7 +30,7 @@ def sync_vault_now(request: Request) -> dict:
 @router.get("/vault-status", response_model=VaultStatus)
 def vault_status(request: Request) -> dict:
     syncer = _syncer(request)
-    return {"vault_dir": str(syncer.vault_dir or config.VAULT_DIR), "last_sync": syncer.last_result,
+    return {"vault_dir": str(syncer.vault_dir), "last_sync": syncer.last_result,
             "last_error": syncer.last_error}
 
 
@@ -52,11 +38,6 @@ def vault_status(request: Request) -> dict:
 def backfill_styles(runner: JobRunner = Depends(get_runner)) -> dict:
     """Fetch styles for records that have none yet. Runs as a job (Discogs allows 60 calls a minute)."""
     return {"job_id": runner.enqueue(backfill.JOB_TYPE), "status": "queued"}
-
-
-class LibraryAudioStarted(BaseModel):
-    queued: int
-    job_ids: list[int]
 
 
 @router.post("/find-audio", status_code=202, response_model=LibraryAudioStarted)

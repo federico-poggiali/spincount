@@ -1,10 +1,7 @@
-"""CLI command implementations (filled in as the pipeline is built)."""
+"""The audioresearch command line: research, review, report, viewer.
+
+TEMPORARY (kept for debugging only; remove once the app covers it, see README)."""
 from __future__ import annotations
-
-
-def _todo(name: str) -> int:
-    print(f"`{name}` is not implemented yet")
-    return 2
 
 
 def _store():

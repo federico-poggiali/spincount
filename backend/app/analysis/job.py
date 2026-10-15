@@ -1,41 +1,24 @@
-"""The 'analysis' job: look BPM/key up from the Discogs link; local audio files override.
+"""The 'analysis' job: look BPM/key up from the Discogs link; your own audio files override.
 
 Results are stored as proposals; the owner validates them onto the tracks (see validate)."""
 import sqlite3
 from collections.abc import Callable
-from datetime import UTC, datetime
 from pathlib import Path
 
-from app import config
 from app.analysis import engine, lookup
-from app.analysis.matching import find_audio_files, match_files
 from app.audio import stage as audio_stage
-from app.db import proposals, records, tracks
+from app.audio.files import match_own_files
+from app.db import _util, proposals, records, tracks
 from app.discogs import DiscogsClient
 
 JOB_TYPE = "analysis"
 
 
-def audio_folder(record: dict, audio_dir: Path | None = None) -> Path | None:
-    if record["discogs_release_id"] is None:
-        return None
-    return (audio_dir or config.AUDIO_DIR) / str(record["discogs_release_id"])
-
-
-def match_report(conn: sqlite3.Connection, record_id: int, audio_dir: Path | None = None) -> dict:
-    record = records.get(conn, record_id)
-    folder = audio_folder(record, audio_dir)
-    files = find_audio_files(folder) if folder else []
-    report = match_files(files, tracks.list_for_record(conn, record_id))
-    return {"folder": str(folder) if folder else None, **report}
-
-
-def _store(conn: sqlite3.Connection, track_id: int, result: dict, audio_path: Path | None) -> None:
+def _propose(conn: sqlite3.Connection, track_id: int, result: dict, audio_path: Path | None) -> None:
     """Keep an analysis result as a proposal; nothing reaches the track until it is validated."""
     proposals.put(conn, track_id, bpm=result["bpm"], key=result["key"], camelot_key=result["camelot_key"],
                   confidence=result["confidence"], analysis_raw=result["raw"],
-                  audio_path=str(audio_path) if audio_path else None,
-                  proposed_at=datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ"))
+                  audio_path=str(audio_path) if audio_path else None, proposed_at=_util.now())
 
 
 def validate(conn: sqlite3.Connection, track_ids: list[int], overwrite_manual: bool = False) -> None:
@@ -69,38 +52,37 @@ def make_handler(
             raise ValueError("record no longer exists")
         if record["discogs_release_id"] is None:
             raise ValueError("record has no Discogs release id")
-        track_rows = tracks.list_for_record(conn, record["id"])
-        selected = (job.get("params") or {}).get("track_ids")
-        if selected is not None:
-            track_rows = [t for t in track_rows if t["id"] in set(selected)]
-        errors: list[dict] = []
+        params = job.get("params") or {}
+        all_tracks = tracks.list_for_record(conn, record["id"])
+        selected = set(params["track_ids"]) if params.get("track_ids") is not None else None
+        track_rows = [t for t in all_tracks if selected is None or t["id"] in selected]
 
         # 0. Find audio for the tracks (audioresearch); a failure is reported but never stops the analysis.
         audio_report = None
         if research_fn is not None:
             audio_report = audio_stage.run(conn, record, track_rows, research_fn, audio_dir,
-                                           refresh=bool((job.get("params") or {}).get("refresh_audio")))
+                                           refresh=bool(params.get("refresh_audio")))
 
         # 1. From the Discogs link: online databases, then audio bpmkey finds itself.
         release = discogs_factory().release(record["discogs_release_id"])
         found = lookup_fn(record, track_rows, release)
         for track_id, result in found.items():
-            _store(conn, track_id, result, None)
+            _propose(conn, track_id, result, None)
 
-        # 2. Optional: files you dropped in audio/<release_id>/ override the lookup.
-        report = match_report(conn, record["id"], audio_dir)
+        # 2. Your own files in audio/<release id>/ override the lookup.
+        own = match_own_files(record, all_tracks, audio_dir)
         from_files: list[int] = []
-        folder = audio_folder(record, audio_dir)
-        for m in report["matched"]:
+        errors: list[dict] = []
+        for m in own["matched"]:
             if selected is not None and m["track_id"] not in selected:
                 continue
-            path = folder / m["file"]
+            path = Path(own["folder"]) / m["file"]
             try:
                 result = analyze(path)
             except Exception as exc:
                 errors.append({"file": m["file"], "error": f"{type(exc).__name__}: {exc}"})
                 continue
-            _store(conn, m["track_id"], result, path)
+            _propose(conn, m["track_id"], result, path)
             from_files.append(m["track_id"])
 
         got_data = set(found) | set(from_files)
@@ -108,7 +90,7 @@ def make_handler(
             "looked_up_track_ids": sorted(found),
             "from_audio_files_track_ids": from_files,
             "no_data_track_ids": [t["id"] for t in track_rows if t["id"] not in got_data],
-            "audio_match": report,
+            "audio_files": own,
             "audio_research": audio_report,
             "errors": errors,
         }

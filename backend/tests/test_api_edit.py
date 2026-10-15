@@ -58,8 +58,8 @@ def test_manual_key_accepts_camelot_and_rejects_nonsense(client, rec):
 
 def test_notes_crud_record_and_track_level(client, rec):
     rid, t1, _ = rec
-    rec_note = client.post("/api/notes", json={"type": "location", "body": "Shelf B", "record_id": rid})
-    trk_note = client.post("/api/notes", json={"type": "prose", "body": "huge energy", "track_id": t1})
+    rec_note = client.post("/api/notes", json={"body": "Shelf B", "record_id": rid})
+    trk_note = client.post("/api/notes", json={"body": "huge energy", "track_id": t1})
     assert rec_note.status_code == trk_note.status_code == 201
     detail = client.get(f"/api/records/{rid}").json()
     assert [n["body"] for n in detail["notes"]] == ["Shelf B"]
@@ -75,12 +75,10 @@ def test_notes_crud_record_and_track_level(client, rec):
 
 def test_note_needs_exactly_one_existing_parent(client, rec):
     rid, t1, _ = rec
-    bad = [{"type": "prose", "body": "x"},
-           {"type": "prose", "body": "x", "record_id": rid, "track_id": t1},
-           {"type": "", "body": "x", "record_id": rid}]
-    assert [client.post("/api/notes", json=b).status_code for b in bad] == [422, 422, 422]
-    assert client.post("/api/notes", json={"type": "a", "body": "x", "record_id": 999}).status_code == 404
-    assert client.post("/api/notes", json={"type": "a", "body": "x", "track_id": 999}).status_code == 404
+    bad = [{"body": "x"}, {"body": "x", "record_id": rid, "track_id": t1}]
+    assert [client.post("/api/notes", json=b).status_code for b in bad] == [422, 422]
+    assert client.post("/api/notes", json={"body": "x", "record_id": 999}).status_code == 404
+    assert client.post("/api/notes", json={"body": "x", "track_id": 999}).status_code == 404
 
 
 def test_tags_endpoints(client, rec):

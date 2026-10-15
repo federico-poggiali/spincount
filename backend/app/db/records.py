@@ -1,7 +1,7 @@
 import json
 import sqlite3
 
-from app.db import _util, notes
+from app.db import _util
 
 _COLUMNS = {"discogs_release_id", "artist", "title", "label", "year", "format", "cover_url",
             "status", "discogs_collection_synced", "styles", "styles_manual", "catno"}
@@ -47,16 +47,11 @@ def get_by_discogs_id(conn: sqlite3.Connection, release_id: int) -> dict | None:
     return decode(dict(row)) if row else None
 
 
-def list_all(conn: sqlite3.Connection) -> list[dict]:
-    return [decode(dict(r)) for r in conn.execute("SELECT * FROM records ORDER BY id")]
-
-
 def update(conn: sqlite3.Connection, record_id: int, **values) -> None:
     _util.update(conn, "records", record_id, _encode(values), _COLUMNS)
 
 
 def delete(conn: sqlite3.Connection, record_id: int) -> bool:
-    notes.delete_embeddings_for_record(conn, record_id)
     return _util.delete(conn, "records", record_id)
 
 

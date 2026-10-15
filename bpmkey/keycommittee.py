@@ -9,8 +9,6 @@ from __future__ import annotations
 
 import numpy as np
 
-SHIPPED_PROFILES, SHIPPED_LAMBDA = ("edmm", "bgate"), 2.0  # what keydetect runs; see benchmark/keymodel_fit.py
-ALL_PROFILES = ("edmm", "edma", "bgate", "krumhansl", "temperley", "shaath", "braw")
 PER_PROFILE = 5  # match, match x strength, relative, parallel, fifth
 
 _K = np.arange(24)
@@ -43,7 +41,7 @@ def template_features(chroma: np.ndarray) -> np.ndarray:
     return out
 
 
-def features(votes: dict[str, tuple[int, float]], profiles=ALL_PROFILES, chroma=None) -> np.ndarray:
+def features(votes: dict[str, tuple[int, float]], profiles: tuple[str, ...], chroma=None) -> np.ndarray:
     """votes: profile -> (key index, strength). Returns 24 x F. A missing profile contributes zeros.
 
     With `chroma` (12 values) the data-fitted template block is appended.
@@ -61,17 +59,3 @@ def features(votes: dict[str, tuple[int, float]], profiles=ALL_PROFILES, chroma=
         cols.append(template_features(chroma))
     return np.hstack(cols)
 
-
-# ---- the previous scheme, kept for benchmarking only -------------------------------------
-_STRENGTH = [0.65, 0.76, 0.84, 0.895, 0.95]
-_ACCURACY = [0.31, 0.50, 0.73, 0.83, 0.87]
-
-
-def legacy_probs(votes: dict[str, tuple[int, float]]) -> np.ndarray:
-    idx, strength = votes["edmm"]
-    p = float(np.interp(strength, _STRENGTH, _ACCURACY))
-    probs = np.full(24, (1 - p) / 23)
-    probs[idx] = p
-    if strength < 0.71 and "bgate" in votes and votes["bgate"][0] != idx:
-        probs[votes["bgate"][0]] = min((1 - p) * 0.5, 0.8 * p)
-    return probs / probs.sum()

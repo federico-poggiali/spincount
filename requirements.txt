@@ -1,10 +1,14 @@
+# What the app needs to run (pinned versions: requirements.lock.txt; tests and lint: requirements-dev.lock.txt)
+fastapi
+uvicorn[standard]
+httpx
+pillow
+qrcode
 requests
-pytest
 yt-dlp
 essentia
 numpy
 librosa
-jsonschema
 mutagen
 beautifulsoup4
 lxml

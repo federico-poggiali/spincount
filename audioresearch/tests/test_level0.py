@@ -39,6 +39,13 @@ def test_two_files_claiming_one_position_are_not_guessed():
     assert file_position("A01 - x") == "A1" and file_position("Night Drive") is None
 
 
+def test_a_title_matching_two_tracks_equally_is_not_guessed():
+    from pathlib import Path
+    tracks = [TrackRef("A1", "Foo", "Mix Part 1"), TrackRef("A2", "Foo", "Mix Part 2")]
+    res = match_files([Path("Mix Part.wav")], tracks)
+    assert res["matched"] == [] and res["unmatched_files"][0]["reason"] == "title matches several tracks"
+
+
 def test_local_files_win_over_everything_and_report_unmatched(tmp_path):
     folder(tmp_path, ["A1 - Night Drive.wav", "junk.wav"])
     events = []

@@ -32,7 +32,7 @@ export function parseFilters(params: URLSearchParams, defaultStatus: Status): Fi
     key: params.get("key") ?? undefined,
     tags: params.getAll("tag"),
     styles: params.getAll("style"),
-    status: status === "all" || status === "owned" || status === "wantlist" || status === "considering" ? status : defaultStatus,
+    status: status === "all" || status === "owned" || status === "wantlist" ? status : defaultStatus,
     view: view === "grid" || view === "tracks" ? view : "table",
     page: Math.max(1, num(params.get("page")) ?? 1),
   };

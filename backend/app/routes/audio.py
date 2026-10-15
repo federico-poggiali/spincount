@@ -1,51 +1,29 @@
-"""Audio found for a record's tracks: results, the preview plan, playback helpers, and searching again."""
+"""Audio for a record's tracks: what was found, which link plays, playback helpers, uploads, search again."""
 import sqlite3
 from pathlib import Path
 from urllib.parse import urlparse
 
 from fastapi import APIRouter, Depends, HTTPException, Query, Request
 from fastapi.responses import FileResponse
-from pydantic import BaseModel
 
 from app import config
-from app.analysis.job import audio_folder
-from app.analysis.matching import AUDIO_EXTENSIONS
 from app.audio import job as audio_job
+from app.audio.files import AUDIO_EXTENSIONS, audio_folder
 from app.audio.previews import plan_for_record
-from app.db import records, track_audio, tracks
-from app.deps import get_db, get_runner
+from app.db import track_audio, tracks
+from app.deps import get_db, get_runner, require_record
 from app.jobs.runner import JobRunner
-from app.schemas import JobStarted, TrackAudioOut
+from app.schemas import BandcampEmbed, FindAudioRequest, JobStarted, RecordAudioOut, Uploaded
 
 router = APIRouter(tags=["audio"])
 
-
-class RecordAudioOut(BaseModel):
-    tracks: list[TrackAudioOut]  # tracks never searched are left out
-    previews: dict  # audioresearch's plan: {tracks: {position: option | null}, families, stores}
-
-
-class FindAudioRequest(BaseModel):
-    refresh: bool = False  # search again even where audio was already found
-    everything: bool = False  # search every level for every track, for more sources (slower)
-
-
-class BandcampEmbed(BaseModel):
-    kind: str  # "track" | "album"
-    id: int
-
-
-def _record(conn: sqlite3.Connection, record_id: int) -> dict:
-    record = records.get(conn, record_id)
-    if record is None:
-        raise HTTPException(404, "record not found")
-    return record
+MAX_UPLOAD = 1024 * 1024 * 1024  # one file
 
 
 @router.get("/api/records/{record_id}/audio", response_model=RecordAudioOut)
 def record_audio(record_id: int, conn: sqlite3.Connection = Depends(get_db)) -> dict:
     """What audioresearch found for each track, and which link each track plays."""
-    _record(conn, record_id)
+    require_record(conn, record_id)
     return {"tracks": list(track_audio.for_record(conn, record_id).values()),
             "previews": plan_for_record(conn, record_id)}
 
@@ -55,17 +33,10 @@ def find_audio(record_id: int, body: FindAudioRequest | None = None,
                conn: sqlite3.Connection = Depends(get_db), runner: JobRunner = Depends(get_runner)) -> dict:
     """Search for this record's audio (again, with `refresh`; every level for every track, with `everything`).
     BPM and key are not touched."""
-    if _record(conn, record_id)["discogs_release_id"] is None:
+    if require_record(conn, record_id)["discogs_release_id"] is None:
         raise HTTPException(400, "record has no Discogs release id, so nothing to search for")
     params = {k: True for k in ("refresh", "everything") if body and getattr(body, k)} or None
     return {"job_id": runner.enqueue(audio_job.JOB_TYPE, record_id, params), "status": "queued"}
-
-
-MAX_UPLOAD = 1024 * 1024 * 1024  # one file
-
-
-class Uploaded(BaseModel):
-    file: str
 
 
 @router.post("/api/records/{record_id}/upload-audio", status_code=201, response_model=Uploaded)
@@ -73,7 +44,7 @@ async def upload_audio(record_id: int, request: Request, filename: str = Query(m
                        conn: sqlite3.Connection = Depends(get_db)) -> dict:
     """Put one of your own files in the record's audio folder (the request body is the file). Searching
     audio afterwards matches it to its track before anything online."""
-    folder = audio_folder(_record(conn, record_id))
+    folder = audio_folder(require_record(conn, record_id))
     if folder is None:
         raise HTTPException(400, "record has no Discogs release id, so it has no audio folder")
     if Path(filename).name != filename or filename.startswith("."):
@@ -98,14 +69,13 @@ async def upload_audio(record_id: int, request: Request, filename: str = Query(m
     return {"file": filename}
 
 
-_BINARY = {"schema": {"type": "string", "format": "binary"}}
-_AUDIO_FILE = {200: {"description": "The audio file, as stored",
-                     "content": {"application/octet-stream": _BINARY}}}
+_BINARY = {"application/octet-stream": {"schema": {"type": "string", "format": "binary"}}}
+_AUDIO_FILE = {200: {"description": "The audio file, as stored", "content": _BINARY}}
 
 
 @router.get("/api/tracks/{track_id}/audio-file", response_class=FileResponse, responses=_AUDIO_FILE)
 def track_audio_file(track_id: int, conn: sqlite3.Connection = Depends(get_db)):
-    """Your own file for a track, so the page can play it. Only files level 0 matched inside AUDIO_DIR."""
+    """Your own file for a track, for the player: only files level 0 matched, inside AUDIO_DIR."""
     track = tracks.get(conn, track_id)
     found = track_audio.for_record(conn, track["record_id"]).get(track_id) if track else None
     if found is None:

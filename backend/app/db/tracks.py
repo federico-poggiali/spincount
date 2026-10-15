@@ -1,7 +1,7 @@
 import json
 import sqlite3
 
-from app.db import _util, notes
+from app.db import _util
 
 _COLUMNS = {"position", "artist", "title", "duration_sec", "bpm", "key", "camelot_key", "confidence",
             "analysis_raw", "audio_path", "analyzed_at", "bpm_manual", "key_manual"}
@@ -39,7 +39,3 @@ def list_for_record(conn: sqlite3.Connection, record_id: int) -> list[dict]:
 def update(conn: sqlite3.Connection, track_id: int, **values) -> None:
     _util.update(conn, "tracks", track_id, _prepare(values), _COLUMNS)
 
-
-def delete(conn: sqlite3.Connection, track_id: int) -> bool:
-    notes.delete_embeddings_for_track(conn, track_id)
-    return _util.delete(conn, "tracks", track_id)

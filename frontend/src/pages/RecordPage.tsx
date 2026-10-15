@@ -84,7 +84,6 @@ export default function RecordPage() {
   const refresh = useCallback(() => {
     client.invalidateQueries({ queryKey: ["records"] });
     client.invalidateQueries({ queryKey: recordKey(id) });
-    client.invalidateQueries({ queryKey: ["audio-match", id] });
     client.invalidateQueries({ queryKey: ["record-audio", id] });
   }, [client, id]);
 
@@ -239,7 +238,6 @@ export default function RecordPage() {
             </details>
           )}
           {upload.isError && <p className={styles.hint} role="alert">Upload failed: {(upload.error as Error).message}</p>}
-          {audio.searched && <p className={styles.hint} data-testid="found-audio-counts">{audio.summary}</p>}
           <p className={styles.hint}>Click a {keysOn ? "BPM or key" : "BPM"} to set it yourself. A value you set is marked manual; validating new analysis asks before replacing it.</p>
         </section>
 
@@ -254,9 +252,8 @@ export default function RecordPage() {
                   <span className={styles.owned}>Owned</span>
                 ) : (
                   <div className={styles.statusActions}>
-                    <span className={styles.statusText}>{r.status}</span>
+                    <span className={styles.statusText}>Wishlist</span>
                     <button className="primary small" onClick={() => patch.mutate({ status: "owned" }, { onSuccess: () => { client.invalidateQueries({ queryKey: ["crate"] }); setAskShelf(true); } })}>Add to library</button>
-                    {r.status !== "wantlist" && <button className="ghost small" onClick={() => patch.mutate({ status: "wantlist" })}>Add to wishlist</button>}
                   </div>
                 )}
               </dd>

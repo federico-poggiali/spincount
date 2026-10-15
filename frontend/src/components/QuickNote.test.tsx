@@ -9,6 +9,7 @@ let notes: { id: number; body: string }[] = [];
 
 vi.mock("../hooks", () => ({
   useRecord: () => ({ data: { notes }, isLoading: false }),
+  useDismiss: () => undefined,
   useNoteMutations: () => ({ create: { mutateAsync: create }, patch: { mutateAsync: patch }, remove: { mutateAsync: remove } }),
 }));
 
@@ -18,13 +19,13 @@ const open = () => fireEvent.click(screen.getByRole("button", { name: /note for 
 const type = (value: string) => { fireEvent.change(screen.getByLabelText("Note"), { target: { value } }); act(() => { vi.advanceTimersByTime(900); }); };
 
 describe("QuickNote", () => {
-  it("opens a blank pad and saves what you write as a prose note on the record", async () => {
+  it("opens a blank pad and saves what you write as the record note", async () => {
     render(<QuickNote recordId={3} title="Dub Plate" filled={false} />);
     open();
     expect(screen.getByLabelText("Note")).toHaveValue("");
     type("Shelf B. Floor went off.");
     await act(async () => { await Promise.resolve(); });
-    expect(create).toHaveBeenCalledWith({ type: "prose", body: "Shelf B. Floor went off.", record_id: 3, track_id: null });
+    expect(create).toHaveBeenCalledWith({ body: "Shelf B. Floor went off.", record_id: 3, track_id: null });
   });
 
   it("edits the existing note and removes it when emptied", async () => {

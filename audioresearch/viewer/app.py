@@ -1,4 +1,6 @@
-"""Temporary process viewer: paste a Discogs link, watch the research run. Localhost only, no login."""
+"""Process viewer: paste a Discogs link, watch the research run. Localhost only, no login.
+
+TEMPORARY (kept for debugging only; remove once the app covers it, see README)."""
 from __future__ import annotations
 
 import asyncio

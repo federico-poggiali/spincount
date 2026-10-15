@@ -81,8 +81,8 @@ def test_status_and_text_filters(client, library):
     assert ids(client.get("/api/records?q=daft")) == [library["house"]]
     assert ids(client.get("/api/records?q=dis")) == [library["house"]]  # prefix match
     assert ids(client.get('/api/records?q="; DROP TABLE')) == []  # punctuation cannot break FTS
-    client.post("/api/notes", json={"type": "location", "body": "second shelf", "record_id": library["techno"]})
-    client.post("/api/notes", json={"type": "cue-points", "body": "drop at 1:04", "track_id": library["w1"]})
+    client.post("/api/notes", json={"body": "second shelf", "record_id": library["techno"]})
+    client.post("/api/notes", json={"body": "drop at 1:04", "track_id": library["w1"]})
     assert ids(client.get("/api/records?q=shelf")) == [library["techno"]]
     assert ids(client.get("/api/records?q=drop")) == [library["want"]]  # via a track note
 

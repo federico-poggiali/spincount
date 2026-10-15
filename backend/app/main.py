@@ -16,20 +16,7 @@ from app.db import connect, migrate
 from app.discogs import DiscogsClient
 from app.jobs.runner import JobRunner
 from app.logging_config import configure as configure_logging
-from app.routes import (
-    admin,
-    audio,
-    crate,
-    jobs,
-    label_maker,
-    labels,
-    notes,
-    records,
-    search,
-    styles,
-    tags,
-    tracks,
-)
+from app.routes import admin, audio, crate, jobs, labels, notes, records, search, styles, tags, tracks
 from app.vault import VaultSyncer
 
 log = logging.getLogger("app.request")
@@ -67,7 +54,7 @@ app = FastAPI(title="Vinyl Second-Brain", lifespan=lifespan, generate_unique_id_
 app.add_middleware(CORSMiddleware, allow_origins=config.CORS_ORIGINS, allow_methods=["*"],
                    allow_headers=["*"])
 errors.install(app)
-for module in (records, audio, tracks, notes, tags, styles, labels, label_maker, search, crate, jobs, admin):
+for module in (records, audio, tracks, notes, tags, styles, labels, search, crate, jobs, admin):
     app.include_router(module.router)
 
 
@@ -81,13 +68,16 @@ async def log_requests(request: Request, call_next):
     return response
 
 
+READ_ONLY_POSTS = ("/sync-vault", "/render", "/from-discogs")  # label previews and lookups write nothing
+
+
 @app.middleware("http")
 async def refresh_vault_after_writes(request: Request, call_next):
     response = await call_next(request)
     syncer = getattr(request.app.state, "vault_syncer", None)
     if (syncer and request.method in ("POST", "PATCH", "PUT", "DELETE")
             and response.status_code < 400
-            and not request.url.path.endswith(("/sync-vault", "/label/render"))):  # these write nothing
+            and not request.url.path.endswith(READ_ONLY_POSTS)):
         syncer.request()
     return response
 

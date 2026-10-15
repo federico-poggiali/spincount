@@ -5,25 +5,26 @@ database. Results go to the `track_audio` table. A failure here never stops the 
 """
 import sqlite3
 from collections.abc import Callable
-from datetime import UTC, datetime
 from pathlib import Path
 
 from app import config
-from app.db import track_audio
+from app.db import _util, track_audio
 
 # (release id, folder of your own audio, refresh, everything) -> the audioresearch output contract as a dict
 ResearchFn = Callable[[int, Path, bool, bool], dict]
 
 
-def research_release(release_id: int, audio_dir: Path, refresh: bool = False, everything: bool = False) -> dict:
-    """The real thing: all levels, cached by audioresearch in its own database. Normally it stops as soon as
-    every track has audio; `everything` searches every level for every track, so each track gets alternatives."""
+def research_release(release_id: int, audio_dir: Path, refresh: bool = False,
+                     everything: bool = False) -> dict:
+    """The real thing: all levels, cached by audioresearch in its own database. Normally it stops as soon
+    as every track has audio; `everything` searches every level for every track, for alternatives."""
     from audioresearch.pipeline import research
     from audioresearch.store import Store
 
     store = Store()
     try:
-        return research(release_id, refresh=refresh, store=store, audio_dir=audio_dir, search_all=everything).to_dict()
+        return research(release_id, refresh=refresh, store=store, audio_dir=audio_dir,
+                        search_all=everything).to_dict()
     finally:
         store.close()
 
@@ -41,7 +42,7 @@ def store_contract(conn: sqlite3.Connection, contract: dict, tracks: list[dict])
     if contract.get("contract_version") != 1:
         raise ValueError(f"unsupported audioresearch contract version {contract.get('contract_version')!r}")
     by_position = {t["position"]: t for t in tracks}
-    now = datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ")
+    now = _util.now()
     stored = []
     for item in contract["tracks"]:
         row = by_position.get(item["position"])
@@ -64,7 +65,8 @@ def run(conn: sqlite3.Connection, record: dict, tracks: list[dict], research_fn:
     if not everything and not needs_audio(conn, ids, refresh):
         return {"ran": False, "reason": "audio already found", "stored_track_ids": []}
     try:
-        contract = research_fn(record["discogs_release_id"], audio_dir or config.AUDIO_DIR, refresh, everything)
+        release_id, folder = record["discogs_release_id"], audio_dir or config.AUDIO_DIR
+        contract = research_fn(release_id, folder, refresh, everything)
         stored = store_contract(conn, contract, tracks)
     except Exception as exc:  # audio is a bonus: analysis must still run
         return {"ran": True, "error": f"{type(exc).__name__}: {exc}", "stored_track_ids": []}

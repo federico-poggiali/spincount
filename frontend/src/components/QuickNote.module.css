@@ -10,6 +10,3 @@
 .status { min-width: 4.5em; text-align: right; }
 @keyframes pad-in { from { opacity: 0; transform: translateY(-4px) scale(0.98); } }
 @media (prefers-reduced-motion: reduce) { .pad { animation: none; } .doodle { transition: none; } }
-.hero .doodle { width: auto; height: auto; flex-direction: row; gap: 8px; padding: 8px 14px; border-radius: var(--r-m); border: 1px solid var(--line-2); background: transparent; color: var(--ink-2); }
-.hero .doodle:hover, .hero .doodle[aria-expanded="true"] { background: var(--surface); }
-.caption { font: 500 0.8125rem var(--sans); }

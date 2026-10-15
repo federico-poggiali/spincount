@@ -4,7 +4,7 @@ from fastapi import APIRouter, Depends, HTTPException
 
 from app.db import records, tags, tracks
 from app.deps import get_db
-from app.schemas import GroupIn, GroupList, GroupRename, TagCount, TagDefIn, TagDefUpdate, TagIn, TagList
+from app.schemas import GroupIn, GroupList, TagCount, TagDefUpdate, TagIn, TagList
 
 router = APIRouter(prefix="/api", tags=["tags"])
 
@@ -40,7 +40,7 @@ def create_group(body: GroupIn, conn: sqlite3.Connection = Depends(get_db)) -> d
 
 
 @router.patch("/tag-groups/{group_id}", response_model=GroupList)
-def rename_group(group_id: int, body: GroupRename, conn: sqlite3.Connection = Depends(get_db)) -> dict:
+def rename_group(group_id: int, body: GroupIn, conn: sqlite3.Connection = Depends(get_db)) -> dict:
     _guard(tags.rename_group, conn, group_id, body.name)
     return {"items": tags.list_groups(conn)}
 
@@ -52,7 +52,7 @@ def delete_group(group_id: int, conn: sqlite3.Connection = Depends(get_db)) -> d
 
 
 @router.post("/tag-groups/{group_id}/tags", status_code=201, response_model=GroupList)
-def create_tag(group_id: int, body: TagDefIn, conn: sqlite3.Connection = Depends(get_db)) -> dict:
+def create_tag(group_id: int, body: TagIn, conn: sqlite3.Connection = Depends(get_db)) -> dict:
     _guard(tags.create_tag, conn, group_id, body.name)
     return {"items": tags.list_groups(conn)}
 

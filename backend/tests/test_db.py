@@ -51,8 +51,8 @@ def test_invalid_status_and_duplicate_release_rejected(conn, record):
 
 def test_notes_record_and_track_level(conn, record):
     rid, t1, _ = record
-    n1 = notes.create(conn, type="location", body="Shelf B", record_id=rid)
-    n2 = notes.create(conn, type="prose", body="huge energy", track_id=t1)
+    n1 = notes.create(conn, body="Shelf B", record_id=rid)
+    n2 = notes.create(conn, body="huge energy", track_id=t1)
     assert [n["id"] for n in notes.list_for_record(conn, rid)] == [n1]
     assert [n["id"] for n in notes.list_for_track(conn, t1)] == [n2]
 
@@ -60,28 +60,9 @@ def test_notes_record_and_track_level(conn, record):
 def test_note_requires_exactly_one_parent(conn, record):
     rid, t1, _ = record
     with pytest.raises(sqlite3.IntegrityError):
-        notes.create(conn, type="prose", body="none")
+        notes.create(conn, body="none")
     with pytest.raises(sqlite3.IntegrityError):
-        notes.create(conn, type="prose", body="both", record_id=rid, track_id=t1)
-
-
-def test_embeddings_only_for_prose_and_cleaned_up(conn, record):
-    rid, _, _ = record
-    vec = [0.1] * 1536
-    prose = notes.create(conn, type="prose", body="banging", record_id=rid)
-    other = notes.create(conn, type="location", body="Shelf", record_id=rid)
-    notes.set_embedding(conn, prose, vec)
-    with pytest.raises(ValueError):
-        notes.set_embedding(conn, other, vec)
-    with pytest.raises(ValueError):
-        notes.set_embedding(conn, prose, [0.1] * 3)
-    assert notes.has_embedding(conn, prose)
-    notes.update(conn, prose, type="location")
-    assert not notes.has_embedding(conn, prose)
-    notes.update(conn, prose, type="prose")
-    notes.set_embedding(conn, prose, vec)
-    notes.delete(conn, prose)
-    assert not notes.has_embedding(conn, prose)
+        notes.create(conn, body="both", record_id=rid, track_id=t1)
 
 
 def test_tags(conn, record):
@@ -109,17 +90,21 @@ def test_full_text_search_tracks_changes(conn, record):
     records.update(conn, rid, artist="Justice")
     assert records.search(conn, "daft") == []
     assert [r["id"] for r in records.search(conn, "justice")] == [rid]
-    nid = notes.create(conn, type="prose", body="floor erupted", record_id=rid)
-    assert [n["id"] for n in notes.search(conn, "erupted")] == [nid]
+    nid = notes.create(conn, body="floor erupted", record_id=rid)
+    assert note_hits(conn, "erupted") == [nid]
     notes.update(conn, nid, body="calm")
-    assert notes.search(conn, "erupted") == []
+    assert note_hits(conn, "erupted") == []
     notes.delete(conn, nid)
-    assert notes.search(conn, "calm") == []
+    assert note_hits(conn, "calm") == []
+
+
+def note_hits(conn, word):
+    return [r[0] for r in conn.execute("SELECT rowid FROM notes_fts WHERE notes_fts MATCH ?", (word,))]
 
 
 def test_cascade_delete(conn, record):
     rid, t1, _ = record
-    notes.create(conn, type="prose", body="x", track_id=t1)
+    notes.create(conn, body="x", track_id=t1)
     tags.create_tag(conn, 1, "a")
     tags.add(conn, "track", t1, "a")
     records.delete(conn, rid)
@@ -146,7 +131,6 @@ def test_styles_round_trip_and_are_cleaned(conn):
     rid = records.create(conn, artist="A", title="B", styles=["Deep House", " deep  house ", "", "Techno"])
     assert records.get(conn, rid)["styles"] == ["Deep House", "Techno"]
     assert records.get_by_discogs_id(conn, 1) is None
-    assert records.list_all(conn)[0]["styles"] == ["Deep House", "Techno"]
     records.update(conn, rid, styles=[])
     assert records.get(conn, rid)["styles"] == []  # "Discogs has none" differs from never fetched
     with pytest.raises(sqlite3.IntegrityError):

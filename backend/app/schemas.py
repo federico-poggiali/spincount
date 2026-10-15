@@ -4,7 +4,7 @@ from typing import Generic, Literal, TypeVar
 from pydantic import BaseModel, Field
 
 T = TypeVar("T")
-Status = Literal["owned", "wantlist", "considering"]
+Status = Literal["owned", "wantlist"]  # owned = the library; wantlist = everything else
 
 
 class Page(BaseModel, Generic[T]):
@@ -16,7 +16,6 @@ class Page(BaseModel, Generic[T]):
 
 class NoteOut(BaseModel):
     id: int
-    type: str
     body: str
     record_id: int | None
     track_id: int | None
@@ -112,8 +111,18 @@ class ValidateRequest(BaseModel):
         default=False, description="Replace hand-entered BPM/key too (and release their lock)")
 
 
+class AnalyzeRequest(BaseModel):
+    track_ids: list[int] | None = None  # omitted: the whole record
+    refresh_audio: bool = False  # search for audio again even if some was already found
+
+
 class DiscardRequest(BaseModel):
     track_ids: list[int] | None = None  # omitted: every proposal on the record
+
+
+class IntakeRequest(BaseModel):
+    discogs_url: str
+    status: Status = "owned"
 
 
 class IntakeResponse(RecordDetail):
@@ -156,15 +165,13 @@ class TrackPatch(BaseModel):
 
 
 class NoteCreate(BaseModel):
-    type: str = Field(default="prose", min_length=1, max_length=50)  # a note is prose; kept for old data
     body: str
     record_id: int | None = None
     track_id: int | None = None
 
 
 class NotePatch(BaseModel):
-    type: str | None = Field(default=None, min_length=1, max_length=50)
-    body: str | None = None
+    body: str
 
 
 class TagIn(BaseModel):
@@ -180,14 +187,6 @@ class TagCount(BaseModel):
 
 class GroupIn(BaseModel):
     name: str = Field(min_length=1, max_length=40)
-
-
-class GroupRename(GroupIn):
-    pass
-
-
-class TagDefIn(BaseModel):
-    name: str = Field(min_length=1, max_length=50)
 
 
 class TagDefUpdate(BaseModel):
@@ -229,43 +228,6 @@ class JobStarted(BaseModel):
     status: str
 
 
-class SemanticHit(BaseModel):
-    score: float
-    note: NoteOut
-    record: RecordRef
-    track: TrackOut | None = None
-
-
-class AudioMatchedFile(BaseModel):
-    track_id: int
-    position: str
-    file: str
-    method: Literal["assigned", "position", "title"]
-    score: float
-
-
-class UnmatchedFile(BaseModel):
-    file: str
-    reason: str
-
-
-class UnmatchedTrack(BaseModel):
-    track_id: int
-    position: str
-    title: str
-
-
-class AudioMatchReport(BaseModel):
-    folder: str | None
-    matched: list[AudioMatchedFile]
-    unmatched_files: list[UnmatchedFile]
-    unmatched_tracks: list[UnmatchedTrack]
-
-
-class ReembedOut(BaseModel):
-    embedded: int
-
-
 class StyleCount(BaseModel):
     name: str
     record_count: int
@@ -279,8 +241,8 @@ class TagList(BaseModel):
     items: list[TagCount]
 
 
-class AssignAudio(BaseModel):
-    file: str = Field(min_length=1)
+class FromDiscogs(BaseModel):
+    discogs_url: str
 
 
 class ExactNoteHit(BaseModel):
@@ -293,6 +255,47 @@ class ExactNoteHit(BaseModel):
 class ExactResults(BaseModel):
     notes: list[ExactNoteHit]
     records: list[RecordRef]
+
+
+# --- Audio -------------------------------------------------------------------------------------
+
+class RecordAudioOut(BaseModel):
+    tracks: list[TrackAudioOut]  # tracks never searched are left out
+    previews: dict  # audioresearch's plan: {tracks: {position: option | null}, families, stores}
+
+
+class FindAudioRequest(BaseModel):
+    refresh: bool = False  # search again even where audio was already found
+    everything: bool = False  # search every level for every track, for more sources (slower)
+
+
+class Uploaded(BaseModel):
+    file: str
+
+
+class BandcampEmbed(BaseModel):
+    kind: str  # "track" | "album"
+    id: int
+
+
+# --- Admin -------------------------------------------------------------------------------------
+
+class VaultSyncOut(BaseModel):
+    written: int
+    skipped: int
+    deleted: int
+    synced_at: str
+
+
+class VaultStatus(BaseModel):
+    vault_dir: str
+    last_sync: VaultSyncOut | None
+    last_error: str | None
+
+
+class LibraryAudioStarted(BaseModel):
+    queued: int
+    job_ids: list[int]
 
 
 class OpenedPath(BaseModel):

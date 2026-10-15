@@ -33,7 +33,6 @@ export type RecordAudioState = {
   /** Null until audio has been searched for. */
   view: (position: string, trackId: number) => TrackAudioView | null;
   searched: boolean;
-  summary: string;
   playFirst: (() => void) | null;
   /** The hidden <audio> element and the docked embedded player; render once, anywhere. */
   player: ReactNode;
@@ -102,8 +101,6 @@ export function useRecordAudio(record: RecordDetail | undefined): RecordAudioSta
   };
 
   const searched = byTrack.size > 0;
-  const counts = { found: 0, review: 0, not_found: 0 };
-  byTrack.forEach((a) => { counts[a.status] += 1; });
   const height = now?.kind === "youtube" ? 200 : now?.kind === "bandcamp" ? 42 : 20;
 
   const others: OtherSources = tracks.flatMap((t) => {
@@ -153,7 +150,6 @@ export function useRecordAudio(record: RecordDetail | undefined): RecordAudioSta
 
   return {
     view, searched, player, others,
-    summary: `${counts.found} found · ${counts.review} need a look · ${counts.not_found} not found · ${order.length} of ${tracks.length} playable`,
     playFirst: order.length > 0 ? () => void play(order[0]) : null,
   };
 }

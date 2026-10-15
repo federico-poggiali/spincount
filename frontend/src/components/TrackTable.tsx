@@ -1,7 +1,7 @@
 import { Fragment, useEffect, useRef, useState } from "react";
-import { formatBpm, formatDuration, keyLabel, LOW_CONFIDENCE, WHEEL_KEYS, type KeyFormat } from "../lib";
+import { formatBpm, formatDuration, keyLabel, LOW_CONFIDENCE, parseBpm, WHEEL_KEYS, type KeyFormat } from "../lib";
 import type { RecordDetail, TrackOut } from "../api/api";
-import { useKeyConfidenceEnabled, usePatchTrack, useTagMutations, useTags } from "../hooks";
+import { useDismiss, useKeyConfidenceEnabled, usePatchTrack, useTagMutations, useTags } from "../hooks";
 import { ClampedNote } from "./ClampedNote";
 import { STORES, type RecordAudioState, type TrackAudioView } from "./useRecordAudio";
 import { QuickNote } from "./QuickNote";
@@ -20,6 +20,8 @@ const SORTED_KEYS = [...WHEEL_KEYS].sort((a, b) => parseInt(a.camelot) - parseIn
 
 export function TrackTable({ record, audio, editable, keyFormat, showKeys, busyIds, selection, onUse, onPass }: Props) {
   const [open, setOpen] = useState<number | null>(null);
+  const [confidenceOn] = useKeyConfidenceEnabled();
+  const showConfidence = showKeys && confidenceOn;
   const all = record.tracks.length > 0 && record.tracks.every((t) => selection?.ids.has(t.id));
   const showLength = record.tracks.some((t) => t.duration_sec != null);
   const colSpan = (selection ? 6 : 5) + (showKeys ? 1 : 0) - (showLength ? 0 : 1) + (audio?.searched ? 1 : 0);
@@ -52,6 +54,7 @@ export function TrackTable({ record, audio, editable, keyFormat, showKeys, busyI
             editable={editable}
             keyFormat={keyFormat}
             showKeys={showKeys}
+            showConfidence={showConfidence}
             open={open === track.id}
             working={busyIds?.has(track.id) ?? false}
             colSpan={colSpan}
@@ -79,6 +82,7 @@ type RowProps = {
   editable: boolean;
   keyFormat: KeyFormat;
   showKeys: boolean;
+  showConfidence: boolean;
   open: boolean;
   working: boolean;
   colSpan: number;
@@ -91,14 +95,13 @@ type RowProps = {
   onToggle: () => void;
 };
 
-function TrackRow({ track, record, editable, keyFormat, showKeys, open, working, colSpan, showLength, audio, onUse, onPass, picked, onPick, onToggle }: RowProps) {
-  const [confidenceOn] = useKeyConfidenceEnabled();
+function TrackRow({ track, record, editable, keyFormat, showKeys, showConfidence, open, working, colSpan, showLength, audio, onUse, onPass, picked, onPick, onToggle }: RowProps) {
   const patch = usePatchTrack(record.id);
   const onEdit = (v: { bpm?: number; key?: string }) => patch.mutate({ trackId: track.id, patch: v });
   const trackNote = track.notes.map((n) => n.body.trim()).filter(Boolean).join(" · ");
   const raw = (track.analysis_raw ?? {}) as { status?: string; note?: string; measurements?: { origin: string; bpm?: number; camelot?: string }[] };
   const hasDetail = Boolean(raw.status || raw.measurements?.length || track.audio_path || track.analyzed_at
-    || (showKeys && confidenceOn && track.confidence != null && !track.key_manual));
+    || (showConfidence && track.confidence != null && !track.key_manual));
   const hasData = track.bpm != null || (showKeys && track.camelot_key != null) || track.proposal != null;
 
   return (
@@ -137,14 +140,14 @@ function TrackRow({ track, record, editable, keyFormat, showKeys, open, working,
         </th>
         {showLength && <td className={`${styles.num} ${styles.length}`}>{track.duration_sec != null ? formatDuration(track.duration_sec) : ""}</td>}
         <td className={styles.num}>
-          <BpmCell track={track} editable={editable} keyFormat={keyFormat} showKeys={showKeys}
+          <BpmCell track={track} editable={editable} keyFormat={keyFormat} showKeys={showKeys} showConfidence={showConfidence}
             onUse={onUse} onPass={onPass} onEdit={onEdit}
             onSave={(bpm) => patch.mutate({ trackId: track.id, patch: { bpm } })}
             onUnlock={() => patch.mutate({ trackId: track.id, patch: { unlock: ["bpm"] } })} />
         </td>
         {showKeys && (
           <td>
-            <KeyCell track={track} keyFormat={keyFormat} editable={editable} showKeys={showKeys}
+            <KeyCell track={track} keyFormat={keyFormat} editable={editable} showKeys={showKeys} showConfidence={showConfidence}
               onUse={onUse} onPass={onPass} onEdit={onEdit}
               onSave={(key) => patch.mutate({ trackId: track.id, patch: { key } })}
               onUnlock={() => patch.mutate({ trackId: track.id, patch: { unlock: ["key"] } })} />
@@ -168,7 +171,7 @@ function TrackRow({ track, record, editable, keyFormat, showKeys, open, working,
                   <dd>{[m.bpm ? `${formatBpm(m.bpm)} BPM` : "", showKeys ? m.camelot ?? "" : ""].filter(Boolean).join(" · ") || "no value"}</dd>
                 </Fragment>
               ))}
-              {showKeys && confidenceOn && track.confidence != null && !track.key_manual && (<><dt>Key confidence</dt><dd>{Math.round(track.confidence * 100)}%{track.confidence < LOW_CONFIDENCE ? ", low: check it by ear" : ""}</dd></>)}
+              {showConfidence && track.confidence != null && !track.key_manual && (<><dt>Key confidence</dt><dd>{Math.round(track.confidence * 100)}%{track.confidence < LOW_CONFIDENCE ? ", low: check it by ear" : ""}</dd></>)}
               {track.audio_path && (<><dt>Audio file</dt><dd>{track.audio_path.split("/").pop()}</dd></>)}
               {track.analyzed_at && (<><dt>Analysed</dt><dd>{track.analyzed_at.replace("T", " ").replace("Z", "")}</dd></>)}
             </dl>
@@ -185,12 +188,7 @@ function TrackTagButton({ track, label }: { track: TrackOut; label: string }) {
   const mutations = useTagMutations(track.record_id);
   const allTags = useTags();
   const root = useRef<HTMLSpanElement>(null);
-  useEffect(() => {
-    if (!open) return;
-    const onDown = (e: MouseEvent) => { if (!root.current?.contains(e.target as Node)) setOpen(false); };
-    document.addEventListener("mousedown", onDown);
-    return () => document.removeEventListener("mousedown", onDown);
-  }, [open]);
+  useDismiss(root, open, () => setOpen(false));
   const has = (track.tags ?? []).length > 0;
   return (
     <span className={styles.tagPop} ref={root} onKeyDown={(e) => { if (e.key === "Escape") setOpen(false); }}>
@@ -213,11 +211,11 @@ function TrackTagButton({ track, label }: { track: TrackOut; label: string }) {
  *  corrected before using them, with how sure the analysis was (when switched on), and the choice to use it or pass on it. */
 type EditValues = { bpm?: number; key?: string };
 type PopProps = {
-  track: TrackOut; keyFormat: KeyFormat; showKeys: boolean; label: string; low?: boolean;
+  track: TrackOut; keyFormat: KeyFormat; showKeys: boolean; showConfidence: boolean; label: string;
   onUse?: (t: TrackOut) => void; onPass?: (t: TrackOut) => void; onEdit: (v: EditValues) => void;
 };
 
-function ProposalPop({ track, keyFormat, showKeys, label, onUse, onPass, onEdit }: PopProps) {
+function ProposalPop({ track, keyFormat, showKeys, showConfidence, label, onUse, onPass, onEdit }: PopProps) {
   const [open, setOpen] = useState(false);
   const root = useRef<HTMLSpanElement>(null);
   const p = track.proposal!;
@@ -227,17 +225,14 @@ function ProposalPop({ track, keyFormat, showKeys, label, onUse, onPass, onEdit 
     if (!open) return;
     setBpmDraft(p.bpm != null ? String(p.bpm) : "");
     setKeyDraft(p.camelot_key ?? "");
-    const onDown = (e: MouseEvent) => { if (!root.current?.contains(e.target as Node)) setOpen(false); };
-    document.addEventListener("mousedown", onDown);
-    return () => document.removeEventListener("mousedown", onDown);
   }, [open, p.bpm, p.camelot_key]);
-  const [confidenceOn] = useKeyConfidenceEnabled();
-  const low = showKeys && confidenceOn && p.confidence != null && p.confidence < LOW_CONFIDENCE;
+  useDismiss(root, open, () => setOpen(false));
+  const low = showConfidence && p.confidence != null && p.confidence < LOW_CONFIDENCE;
   const use = () => {
     setOpen(false);
-    const bpm = parseFloat(bpmDraft.replace(",", "."));
+    const bpm = parseBpm(bpmDraft);
     const edit: EditValues = {};
-    if (Number.isFinite(bpm) && bpm > 0 && bpm <= 400 && bpm !== p.bpm) edit.bpm = bpm;
+    if (bpm != null && bpm !== p.bpm) edit.bpm = bpm;
     if (showKeys && keyDraft && keyDraft !== p.camelot_key) edit.key = keyDraft;
     if (edit.bpm == null && edit.key == null) { onUse?.(track); return; }
     // Corrected by hand: save the corrected values (marked manual) and let the rest of the proposal go.
@@ -263,7 +258,7 @@ function ProposalPop({ track, keyFormat, showKeys, label, onUse, onPass, onEdit 
                 {SORTED_KEYS.map((k) => <option key={k.camelot} value={k.camelot}>{keyLabel(k.camelot, keyFormat)}</option>)}
               </select>
             </dd></>)}
-            {showKeys && confidenceOn && p.confidence != null && (<><dt>Confidence</dt><dd>{Math.round(p.confidence * 100)}%</dd></>)}
+            {showConfidence && p.confidence != null && (<><dt>Confidence</dt><dd>{Math.round(p.confidence * 100)}%</dd></>)}
           </dl>
           {low && <p className={styles.popWarn}>The analysis was unsure about this key. Check it by ear.</p>}
           <div className={styles.popActions}>
@@ -276,8 +271,8 @@ function ProposalPop({ track, keyFormat, showKeys, label, onUse, onPass, onEdit 
   );
 }
 
-function KeyCell({ track, keyFormat, editable, showKeys, onSave, onUnlock, onUse, onPass, onEdit }: {
-  track: TrackOut; keyFormat: KeyFormat; editable: boolean; showKeys: boolean; onSave: (key: string) => void; onUnlock: () => void;
+function KeyCell({ track, keyFormat, editable, showKeys, showConfidence, onSave, onUnlock, onUse, onPass, onEdit }: {
+  track: TrackOut; keyFormat: KeyFormat; editable: boolean; showKeys: boolean; showConfidence: boolean; onSave: (key: string) => void; onUnlock: () => void;
   onUse?: (t: TrackOut) => void; onPass?: (t: TrackOut) => void; onEdit: (v: EditValues) => void;
 }) {
   const label = keyLabel(track.camelot_key, keyFormat);
@@ -309,14 +304,14 @@ function KeyCell({ track, keyFormat, editable, showKeys, onSave, onUnlock, onUse
         )}</span>
       )}
       {proposed && (
-        <ProposalPop track={track} keyFormat={keyFormat} showKeys={showKeys} label={proposed} onUse={onUse} onPass={onPass} onEdit={onEdit} />
+        <ProposalPop track={track} keyFormat={keyFormat} showKeys={showKeys} showConfidence={showConfidence} label={proposed} onUse={onUse} onPass={onPass} onEdit={onEdit} />
       )}
     </span>
   );
 }
 
-function BpmCell({ track, editable, keyFormat, showKeys, onSave, onUnlock, onUse, onPass, onEdit }: {
-  track: TrackOut; editable: boolean; keyFormat: KeyFormat; showKeys: boolean;
+function BpmCell({ track, editable, keyFormat, showKeys, showConfidence, onSave, onUnlock, onUse, onPass, onEdit }: {
+  track: TrackOut; editable: boolean; keyFormat: KeyFormat; showKeys: boolean; showConfidence: boolean;
   onSave: (bpm: number) => void; onUnlock: () => void; onUse?: (t: TrackOut) => void; onPass?: (t: TrackOut) => void; onEdit: (v: EditValues) => void;
 }) {
   const [editing, setEditing] = useState(false);
@@ -324,8 +319,8 @@ function BpmCell({ track, editable, keyFormat, showKeys, onSave, onUnlock, onUse
 
   const commit = () => {
     setEditing(false);
-    const value = parseFloat(draft.replace(",", "."));
-    if (Number.isFinite(value) && value > 0 && value <= 400 && value !== track.bpm) onSave(value);
+    const value = parseBpm(draft);
+    if (value != null && value !== track.bpm) onSave(value);
   };
 
   if (editing) {
@@ -364,7 +359,7 @@ function BpmCell({ track, editable, keyFormat, showKeys, onSave, onUnlock, onUse
         )}</span>
       )}
       {proposalLabel && (
-        <ProposalPop track={track} keyFormat={keyFormat} showKeys={showKeys} label={proposalLabel} onUse={onUse} onPass={onPass} onEdit={onEdit} />
+        <ProposalPop track={track} keyFormat={keyFormat} showKeys={showKeys} showConfidence={showConfidence} label={proposalLabel} onUse={onUse} onPass={onPass} onEdit={onEdit} />
       )}
     </span>
   );

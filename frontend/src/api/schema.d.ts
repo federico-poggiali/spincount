@@ -65,23 +65,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/admin/reembed": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Reembed */
-        post: operations["reembed"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/api/admin/sync-vault": {
         parameters: {
             query?: never;
@@ -493,23 +476,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/records/{record_id}/audio-match": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Audio Match */
-        get: operations["audio_match"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/api/records/{record_id}/discard": {
         parameters: {
             query?: never;
@@ -656,25 +622,11 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Exact */
+        /**
+         * Exact
+         * @description Notes with a highlighted snippet, plus records whose artist, title or label match.
+         */
         get: operations["exact"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/search/semantic": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Semantic */
-        get: operations["semantic"];
         put?: never;
         post?: never;
         delete?: never;
@@ -860,27 +812,6 @@ export interface paths {
         patch: operations["patch_track"];
         trace?: never;
     };
-    "/api/tracks/{track_id}/audio": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /**
-         * Assign Audio
-         * @description Pin one file from the record's audio folder to this track (then run analysis again).
-         */
-        post: operations["assign_audio"];
-        /** Unassign Audio */
-        delete: operations["unassign_audio"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/api/tracks/{track_id}/audio-file": {
         parameters: {
             query?: never;
@@ -890,7 +821,7 @@ export interface paths {
         };
         /**
          * Track Audio File
-         * @description Your own file for a track, so the page can play it. Only files level 0 matched inside AUDIO_DIR.
+         * @description Your own file for a track, for the player: only files level 0 matched, inside AUDIO_DIR.
          */
         get: operations["track_audio_file"];
         put?: never;
@@ -931,38 +862,6 @@ export interface components {
             refresh_audio: boolean;
             /** Track Ids */
             track_ids?: number[] | null;
-        };
-        /** AssignAudio */
-        AssignAudio: {
-            /** File */
-            file: string;
-        };
-        /** AudioMatchReport */
-        AudioMatchReport: {
-            /** Folder */
-            folder: string | null;
-            /** Matched */
-            matched: components["schemas"]["AudioMatchedFile"][];
-            /** Unmatched Files */
-            unmatched_files: components["schemas"]["UnmatchedFile"][];
-            /** Unmatched Tracks */
-            unmatched_tracks: components["schemas"]["UnmatchedTrack"][];
-        };
-        /** AudioMatchedFile */
-        AudioMatchedFile: {
-            /** File */
-            file: string;
-            /**
-             * Method
-             * @enum {string}
-             */
-            method: "assigned" | "position" | "title";
-            /** Position */
-            position: string;
-            /** Score */
-            score: number;
-            /** Track Id */
-            track_id: number;
         };
         /** BandcampEmbed */
         BandcampEmbed: {
@@ -1080,11 +979,6 @@ export interface components {
             /** Items */
             items: components["schemas"]["TagGroup"][];
         };
-        /** GroupRename */
-        GroupRename: {
-            /** Name */
-            name: string;
-        };
         /** HTTPValidationError */
         HTTPValidationError: {
             /** Detail */
@@ -1099,7 +993,7 @@ export interface components {
              * @default owned
              * @enum {string}
              */
-            status: "owned" | "wantlist" | "considering";
+            status: "owned" | "wantlist";
         };
         /** IntakeResponse */
         IntakeResponse: {
@@ -1133,7 +1027,7 @@ export interface components {
              * Status
              * @enum {string}
              */
-            status: "owned" | "wantlist" | "considering";
+            status: "owned" | "wantlist";
             /**
              * Styles
              * @default []
@@ -1294,11 +1188,6 @@ export interface components {
             record_id?: number | null;
             /** Track Id */
             track_id?: number | null;
-            /**
-             * Type
-             * @default prose
-             */
-            type: string;
         };
         /** NoteOut */
         NoteOut: {
@@ -1312,17 +1201,13 @@ export interface components {
             record_id: number | null;
             /** Track Id */
             track_id: number | null;
-            /** Type */
-            type: string;
             /** Updated At */
             updated_at: string;
         };
         /** NotePatch */
         NotePatch: {
             /** Body */
-            body?: string | null;
-            /** Type */
-            type?: string | null;
+            body: string;
         };
         /** OpenedPath */
         OpenedPath: {
@@ -1417,7 +1302,7 @@ export interface components {
              * Status
              * @enum {string}
              */
-            status: "owned" | "wantlist" | "considering";
+            status: "owned" | "wantlist";
             /**
              * Styles
              * @default []
@@ -1456,7 +1341,7 @@ export interface components {
              */
             reset_styles: boolean;
             /** Status */
-            status?: ("owned" | "wantlist" | "considering") | null;
+            status?: ("owned" | "wantlist") | null;
             /**
              * Styles
              * @description Replaces the whole list and locks it against Discogs re-fetches
@@ -1479,7 +1364,7 @@ export interface components {
              * Status
              * @enum {string}
              */
-            status: "owned" | "wantlist" | "considering";
+            status: "owned" | "wantlist";
             /** Title */
             title: string;
         };
@@ -1523,7 +1408,7 @@ export interface components {
              * Status
              * @enum {string}
              */
-            status: "owned" | "wantlist" | "considering";
+            status: "owned" | "wantlist";
             /**
              * Styles
              * @default []
@@ -1543,11 +1428,6 @@ export interface components {
             /** Year */
             year: number | null;
         };
-        /** ReembedOut */
-        ReembedOut: {
-            /** Embedded */
-            embedded: number;
-        };
         /** SectionIn */
         SectionIn: {
             /**
@@ -1566,14 +1446,6 @@ export interface components {
             position: number;
             /** Records */
             records: components["schemas"]["CrateRecord"][];
-        };
-        /** SemanticHit */
-        SemanticHit: {
-            note: components["schemas"]["NoteOut"];
-            record: components["schemas"]["RecordRef"];
-            /** Score */
-            score: number;
-            track?: components["schemas"]["TrackOut"] | null;
         };
         /** StyleCount */
         StyleCount: {
@@ -1608,11 +1480,6 @@ export interface components {
             record_count: number;
             /** Track Count */
             track_count: number;
-        };
-        /** TagDefIn */
-        TagDefIn: {
-            /** Name */
-            name: string;
         };
         /** TagDefUpdate */
         TagDefUpdate: {
@@ -1862,22 +1729,6 @@ export interface components {
             /** Y */
             y?: number | null;
         };
-        /** UnmatchedFile */
-        UnmatchedFile: {
-            /** File */
-            file: string;
-            /** Reason */
-            reason: string;
-        };
-        /** UnmatchedTrack */
-        UnmatchedTrack: {
-            /** Position */
-            position: string;
-            /** Title */
-            title: string;
-            /** Track Id */
-            track_id: number;
-        };
         /** UnsortedRecord */
         UnsortedRecord: {
             /** Artist */
@@ -2015,26 +1866,6 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["OpenedPath"];
-                };
-            };
-        };
-    };
-    reembed: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ReembedOut"];
                 };
             };
         };
@@ -2598,7 +2429,7 @@ export interface operations {
                 key?: string | null;
                 tag?: string[];
                 style?: string[];
-                status?: ("owned" | "wantlist" | "considering") | null;
+                status?: ("owned" | "wantlist") | null;
                 q?: string | null;
                 limit?: number;
                 offset?: number;
@@ -2890,37 +2721,6 @@ export interface operations {
             };
         };
     };
-    audio_match: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                record_id: number;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["AudioMatchReport"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
     discard: {
         parameters: {
             query?: never;
@@ -3188,38 +2988,6 @@ export interface operations {
             };
         };
     };
-    semantic: {
-        parameters: {
-            query: {
-                q: string;
-                limit?: number;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["SemanticHit"][];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
     list_styles: {
         parameters: {
             query?: never;
@@ -3401,7 +3169,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["GroupRename"];
+                "application/json": components["schemas"]["GroupIn"];
             };
         };
         responses: {
@@ -3436,7 +3204,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["TagDefIn"];
+                "application/json": components["schemas"]["TagIn"];
             };
         };
         responses: {
@@ -3488,7 +3256,7 @@ export interface operations {
                 key?: string | null;
                 tag?: string[];
                 style?: string[];
-                status?: ("owned" | "wantlist" | "considering") | null;
+                status?: ("owned" | "wantlist") | null;
                 q?: string | null;
                 limit?: number;
                 offset?: number;
@@ -3631,72 +3399,6 @@ export interface operations {
                 "application/json": components["schemas"]["TrackPatch"];
             };
         };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["TrackOut"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    assign_audio: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                track_id: number;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["AssignAudio"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["TrackOut"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    unassign_audio: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                track_id: number;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
         responses: {
             /** @description Successful Response */
             200: {

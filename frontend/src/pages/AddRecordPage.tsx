@@ -6,14 +6,14 @@ import type { Arrival } from "./RecordPage";
 import shared from "../styles/intake.module.css";
 import styles from "./AddRecordPage.module.css";
 
-// Nothing picked means "considering": it only keeps it on a list. Owned and wantlist are opt-in toggles.
+// A new record goes to the wantlist unless you say you own it (owning also adds it to your Discogs collection).
 const ADD_AS: Status[] = ["wantlist", "owned"];
 
 export default function AddRecordPage() {
   const client = useQueryClient();
   const navigate = useNavigate();
   const [url, setUrl] = useState("");
-  const [status, setStatus] = useState<Status>("considering");
+  const [status, setStatus] = useState<Status>("wantlist");
 
   // A pasted release goes straight to its record page, which shows the jobs it started.
   const intake = useMutation({
@@ -52,12 +52,12 @@ export default function AddRecordPage() {
           <legend className="micro">add as</legend>
           {ADD_AS.map((s) => (
             <button key={s} type="button" aria-pressed={status === s} className={status === s ? styles.on : ""}
-              onClick={() => setStatus(status === s ? "considering" : s)}>
+              onClick={() => setStatus(s)}>
               {s}
             </button>
           ))}
         </fieldset>
-        <p className={shared.hint}>Release or master links both work. Pick nothing and it is only considered. Click a choice again to undo it.</p>
+        <p className={shared.hint}>Release or master links both work. Owned records are also added to your Discogs collection.</p>
         {intake.isError && <p className={shared.error} role="alert">{intake.error.message}</p>}
       </header>
     </div>

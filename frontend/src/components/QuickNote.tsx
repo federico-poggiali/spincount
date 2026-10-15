@@ -1,12 +1,10 @@
 import { useEffect, useId, useRef, useState } from "react";
-import { useNoteMutations, useRecord } from "../hooks";
+import { useDismiss, useNoteMutations, useRecord } from "../hooks";
 import styles from "./QuickNote.module.css";
 
-/** A note on a corner: the small icon opens a dark pad, and what you write there
- *  is the record's note, the one that prints on its label. */
-export function NoteDoodle({ filled, size = 18 }: { filled: boolean; size?: number }) {
+function NoteDoodle({ filled }: { filled: boolean }) {
   return (
-    <svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <svg viewBox="0 0 24 24" width={18} height={18} fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <path d="M5 4h14v12l-4 4H5Z" />
       <path d="M15 20v-4h4M8 9h8M8 13h4" />
       {filled && <circle cx="19" cy="4.5" r="2.6" fill="var(--signal)" stroke="none" />}
@@ -20,12 +18,12 @@ type Props = {
   filled: boolean;
   /** Set to write a track's note instead of the record's; its notes are already in hand. */
   track?: { id: number; notes: { id: number; body: string }[] };
-  /** "hero": a big doodle with a caption, for the top of a record page. */
-  variant?: "corner" | "hero";
   debounceMs?: number;
 };
 
-export function QuickNote({ recordId, title, filled, track, variant = "corner", debounceMs = 700 }: Props) {
+/** A note on a corner: the small icon opens a dark pad, and what you write there is the record's
+ *  (or the track's) note, the one that prints on its label. Saves as you type. */
+export function QuickNote({ recordId, title, filled, track, debounceMs = 700 }: Props) {
   const [open, setOpen] = useState(false);
   const fetched = useRecord(open && !track ? recordId : 0);
   const record = track ? { data: { notes: track.notes }, isLoading: false } : fetched;
@@ -59,7 +57,7 @@ export function QuickNote({ recordId, title, filled, track, variant = "corner", 
     queue.current = queue.current.then(async () => {
       if (noteId.current == null) {
         if (!body.trim()) return;
-        const made = await create.mutateAsync({ type: "prose", body, record_id: track ? null : recordId, track_id: track?.id ?? null });
+        const made = await create.mutateAsync({ body, record_id: track ? null : recordId, track_id: track?.id ?? null });
         noteId.current = made.id;
       } else if (!body.trim()) {
         const id = noteId.current;
@@ -81,22 +79,14 @@ export function QuickNote({ recordId, title, filled, track, variant = "corner", 
   }, [text, open, debounceMs]);
 
   const close = () => { if (loaded.current) flush(text); setOpen(false); };
-
-  useEffect(() => {
-    if (!open) return;
-    const onDown = (e: MouseEvent) => { if (!root.current?.contains(e.target as Node)) close(); };
-    document.addEventListener("mousedown", onDown);
-    return () => document.removeEventListener("mousedown", onDown);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [open, text]);
+  useDismiss(root, open, close);
 
   return (
-    <span className={`${styles.root} ${variant === "hero" ? styles.hero : ""}`} ref={root}>
+    <span className={styles.root} ref={root}>
       <button type="button" className={styles.doodle} data-filled={filled} aria-expanded={open} aria-controls={open ? padId : undefined}
         aria-label={`${filled ? "Edit note" : "Add a note"} for ${title}`} title={filled ? "Edit note" : "Add a note"}
         onClick={() => (open ? close() : setOpen(true))}>
-        <NoteDoodle filled={filled} size={variant === "hero" ? 18 : 18} />
-        {variant === "hero" && <span className={styles.caption}>{filled ? "Edit note" : "Add note"}</span>}
+        <NoteDoodle filled={filled} />
       </button>
       {open && (
         <div id={padId} className={styles.pad} role="dialog" aria-label={`Note for ${title}`}

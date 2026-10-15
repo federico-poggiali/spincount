@@ -178,10 +178,6 @@ def suggest(record: dict, places: list[dict]) -> dict | None:
 
 # --- read -------------------------------------------------------------------------------------
 
-def cube_label(cube: dict) -> str:
-    return cube["name"] or f"row {cube['row'] + 1}, cube {cube['col'] + 1}"
-
-
 def layout(conn: sqlite3.Connection) -> dict:
     """The whole shelf with the owned records in each section, plus unsorted owned records with
     a suggested section each."""

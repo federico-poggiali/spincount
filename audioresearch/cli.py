@@ -1,3 +1,6 @@
+"""Command line: python -m audioresearch <discogs link> (or research / review / report / viewer).
+
+TEMPORARY (kept for debugging only; remove once the app covers it, see README)."""
 from __future__ import annotations
 
 import argparse

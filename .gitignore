@@ -1,15 +1,11 @@
 .env
 __pycache__/
 *.pyc
-cache.sqlite
 .venv/
-benchmark/audio/
-benchmark/gs/
-benchmark/cache/
-benchmark/seg_cache/
-benchmark/*.log
+.nodeenv/
+node_modules/
 
-# Vinyl Second-Brain
+# Your data (the database lives in DB_PATH, normally outside the repo)
 audio/*
 !audio/.gitkeep
 vault/*
@@ -17,32 +13,23 @@ vault/*
 *.db
 *.db-wal
 *.db-shm
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm
+backend/data/
 backend/backups/
-node_modules/
+audio_cache/
 
-# Frontend
+# Local research data from the old key-detection benchmark (scripts are in git history)
+benchmark/
+
+# Frontend build and test output
 frontend/dist/
 frontend/e2e/.run/
 frontend/test-results/
 frontend/playwright-report/
 frontend/.shots/
-.nodeenv/
-
-# Local tooling / stray files
-.claude/settings.local.json
-backend/*.sqlite
-*.sqlite
-*.sqlite-wal
-*.sqlite-shm
-backend/data/
-
-# bpmkey research leftovers (scripts stay tracked)
-benchmark/*.npy
-benchmark/*.log
-
-# Audio research tool
-audio_cache/
-audioresearch.db*
-
-# TypeScript build info
 frontend/tsconfig.tsbuildinfo
+
+# Local tooling
+.claude/settings.local.json

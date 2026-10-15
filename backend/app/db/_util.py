@@ -1,4 +1,5 @@
 import sqlite3
+from datetime import UTC, datetime
 from typing import Any
 
 
@@ -31,3 +32,8 @@ def delete(conn: sqlite3.Connection, table: str, row_id: int) -> bool:
     cur = conn.execute(f"DELETE FROM {table} WHERE id = ?", (row_id,))
     conn.commit()
     return cur.rowcount > 0
+
+
+def now() -> str:
+    """UTC now, in the format every timestamp column uses."""
+    return datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ")

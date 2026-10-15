@@ -13,6 +13,7 @@ WORKDIR /app
 COPY requirements.lock.txt ./
 RUN pip install --no-cache-dir -r requirements.lock.txt
 COPY bpmkey/ bpmkey/
+COPY audioresearch/ audioresearch/
 COPY backend/ backend/
 COPY --from=frontend /app/frontend/dist frontend/dist
 ENV PYTHONPATH=/app:/app/backend \

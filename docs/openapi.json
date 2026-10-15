@@ -26,102 +26,6 @@
         "title": "AnalyzeRequest",
         "type": "object"
       },
-      "AssignAudio": {
-        "properties": {
-          "file": {
-            "minLength": 1,
-            "title": "File",
-            "type": "string"
-          }
-        },
-        "required": [
-          "file"
-        ],
-        "title": "AssignAudio",
-        "type": "object"
-      },
-      "AudioMatchReport": {
-        "properties": {
-          "folder": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Folder"
-          },
-          "matched": {
-            "items": {
-              "$ref": "#/components/schemas/AudioMatchedFile"
-            },
-            "title": "Matched",
-            "type": "array"
-          },
-          "unmatched_files": {
-            "items": {
-              "$ref": "#/components/schemas/UnmatchedFile"
-            },
-            "title": "Unmatched Files",
-            "type": "array"
-          },
-          "unmatched_tracks": {
-            "items": {
-              "$ref": "#/components/schemas/UnmatchedTrack"
-            },
-            "title": "Unmatched Tracks",
-            "type": "array"
-          }
-        },
-        "required": [
-          "folder",
-          "matched",
-          "unmatched_files",
-          "unmatched_tracks"
-        ],
-        "title": "AudioMatchReport",
-        "type": "object"
-      },
-      "AudioMatchedFile": {
-        "properties": {
-          "file": {
-            "title": "File",
-            "type": "string"
-          },
-          "method": {
-            "enum": [
-              "assigned",
-              "position",
-              "title"
-            ],
-            "title": "Method",
-            "type": "string"
-          },
-          "position": {
-            "title": "Position",
-            "type": "string"
-          },
-          "score": {
-            "title": "Score",
-            "type": "number"
-          },
-          "track_id": {
-            "title": "Track Id",
-            "type": "integer"
-          }
-        },
-        "required": [
-          "track_id",
-          "position",
-          "file",
-          "method",
-          "score"
-        ],
-        "title": "AudioMatchedFile",
-        "type": "object"
-      },
       "BandcampEmbed": {
         "properties": {
           "id": {
@@ -459,21 +363,6 @@
         "title": "GroupList",
         "type": "object"
       },
-      "GroupRename": {
-        "properties": {
-          "name": {
-            "maxLength": 40,
-            "minLength": 1,
-            "title": "Name",
-            "type": "string"
-          }
-        },
-        "required": [
-          "name"
-        ],
-        "title": "GroupRename",
-        "type": "object"
-      },
       "HTTPValidationError": {
         "properties": {
           "detail": {
@@ -497,8 +386,7 @@
             "default": "owned",
             "enum": [
               "owned",
-              "wantlist",
-              "considering"
+              "wantlist"
             ],
             "title": "Status",
             "type": "string"
@@ -625,8 +513,7 @@
           "status": {
             "enum": [
               "owned",
-              "wantlist",
-              "considering"
+              "wantlist"
             ],
             "title": "Status",
             "type": "string"
@@ -1105,13 +992,6 @@
               }
             ],
             "title": "Track Id"
-          },
-          "type": {
-            "default": "prose",
-            "maxLength": 50,
-            "minLength": 1,
-            "title": "Type",
-            "type": "string"
           }
         },
         "required": [
@@ -1156,10 +1036,6 @@
             ],
             "title": "Track Id"
           },
-          "type": {
-            "title": "Type",
-            "type": "string"
-          },
           "updated_at": {
             "title": "Updated At",
             "type": "string"
@@ -1167,7 +1043,6 @@
         },
         "required": [
           "id",
-          "type",
           "body",
           "record_id",
           "track_id",
@@ -1180,30 +1055,13 @@
       "NotePatch": {
         "properties": {
           "body": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Body"
-          },
-          "type": {
-            "anyOf": [
-              {
-                "maxLength": 50,
-                "minLength": 1,
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Type"
+            "title": "Body",
+            "type": "string"
           }
         },
+        "required": [
+          "body"
+        ],
         "title": "NotePatch",
         "type": "object"
       },
@@ -1509,8 +1367,7 @@
           "status": {
             "enum": [
               "owned",
-              "wantlist",
-              "considering"
+              "wantlist"
             ],
             "title": "Status",
             "type": "string"
@@ -1647,8 +1504,7 @@
               {
                 "enum": [
                   "owned",
-                  "wantlist",
-                  "considering"
+                  "wantlist"
                 ],
                 "type": "string"
               },
@@ -1726,8 +1582,7 @@
           "status": {
             "enum": [
               "owned",
-              "wantlist",
-              "considering"
+              "wantlist"
             ],
             "title": "Status",
             "type": "string"
@@ -1872,8 +1727,7 @@
           "status": {
             "enum": [
               "owned",
-              "wantlist",
-              "considering"
+              "wantlist"
             ],
             "title": "Status",
             "type": "string"
@@ -1937,19 +1791,6 @@
         "title": "RecordSummary",
         "type": "object"
       },
-      "ReembedOut": {
-        "properties": {
-          "embedded": {
-            "title": "Embedded",
-            "type": "integer"
-          }
-        },
-        "required": [
-          "embedded"
-        ],
-        "title": "ReembedOut",
-        "type": "object"
-      },
       "SectionIn": {
         "properties": {
           "name": {
@@ -1991,37 +1832,6 @@
           "records"
         ],
         "title": "SectionOut",
-        "type": "object"
-      },
-      "SemanticHit": {
-        "properties": {
-          "note": {
-            "$ref": "#/components/schemas/NoteOut"
-          },
-          "record": {
-            "$ref": "#/components/schemas/RecordRef"
-          },
-          "score": {
-            "title": "Score",
-            "type": "number"
-          },
-          "track": {
-            "anyOf": [
-              {
-                "$ref": "#/components/schemas/TrackOut"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          }
-        },
-        "required": [
-          "score",
-          "note",
-          "record"
-        ],
-        "title": "SemanticHit",
         "type": "object"
       },
       "StyleCount": {
@@ -2112,21 +1922,6 @@
           "track_count"
         ],
         "title": "TagDef",
-        "type": "object"
-      },
-      "TagDefIn": {
-        "properties": {
-          "name": {
-            "maxLength": 50,
-            "minLength": 1,
-            "title": "Name",
-            "type": "string"
-          }
-        },
-        "required": [
-          "name"
-        ],
-        "title": "TagDefIn",
         "type": "object"
       },
       "TagDefUpdate": {
@@ -2950,47 +2745,6 @@
         "title": "UnitPatch",
         "type": "object"
       },
-      "UnmatchedFile": {
-        "properties": {
-          "file": {
-            "title": "File",
-            "type": "string"
-          },
-          "reason": {
-            "title": "Reason",
-            "type": "string"
-          }
-        },
-        "required": [
-          "file",
-          "reason"
-        ],
-        "title": "UnmatchedFile",
-        "type": "object"
-      },
-      "UnmatchedTrack": {
-        "properties": {
-          "position": {
-            "title": "Position",
-            "type": "string"
-          },
-          "title": {
-            "title": "Title",
-            "type": "string"
-          },
-          "track_id": {
-            "title": "Track Id",
-            "type": "integer"
-          }
-        },
-        "required": [
-          "track_id",
-          "position",
-          "title"
-        ],
-        "title": "UnmatchedTrack",
-        "type": "object"
-      },
       "UnsortedRecord": {
         "properties": {
           "artist": {
@@ -3276,27 +3030,6 @@
         "summary": "Open Vault",
         "tags": [
           "admin"
-        ]
-      }
-    },
-    "/api/admin/reembed": {
-      "post": {
-        "operationId": "reembed",
-        "responses": {
-          "200": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ReembedOut"
-                }
-              }
-            },
-            "description": "Successful Response"
-          }
-        },
-        "summary": "Reembed",
-        "tags": [
-          "search"
         ]
       }
     },
@@ -4115,8 +3848,7 @@
                 {
                   "enum": [
                     "owned",
-                    "wantlist",
-                    "considering"
+                    "wantlist"
                   ],
                   "type": "string"
                 },
@@ -4575,48 +4307,6 @@
         ]
       }
     },
-    "/api/records/{record_id}/audio-match": {
-      "get": {
-        "operationId": "audio_match",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "record_id",
-            "required": true,
-            "schema": {
-              "title": "Record Id",
-              "type": "integer"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AudioMatchReport"
-                }
-              }
-            },
-            "description": "Successful Response"
-          },
-          "422": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            },
-            "description": "Validation Error"
-          }
-        },
-        "summary": "Audio Match",
-        "tags": [
-          "records"
-        ]
-      }
-    },
     "/api/records/{record_id}/discard": {
       "post": {
         "description": "Drop analysis proposals (all of them, or only `track_ids`) without touching the tracks.",
@@ -4983,6 +4673,7 @@
     },
     "/api/search/exact": {
       "get": {
+        "description": "Notes with a highlighted snippet, plus records whose artist, title or label match.",
         "operationId": "exact",
         "parameters": [
           {
@@ -5031,65 +4722,6 @@
           }
         },
         "summary": "Exact",
-        "tags": [
-          "search"
-        ]
-      }
-    },
-    "/api/search/semantic": {
-      "get": {
-        "operationId": "semantic",
-        "parameters": [
-          {
-            "in": "query",
-            "name": "q",
-            "required": true,
-            "schema": {
-              "minLength": 1,
-              "title": "Q",
-              "type": "string"
-            }
-          },
-          {
-            "in": "query",
-            "name": "limit",
-            "required": false,
-            "schema": {
-              "default": 20,
-              "maximum": 100,
-              "minimum": 1,
-              "title": "Limit",
-              "type": "integer"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "items": {
-                    "$ref": "#/components/schemas/SemanticHit"
-                  },
-                  "title": "Response Semantic",
-                  "type": "array"
-                }
-              }
-            },
-            "description": "Successful Response"
-          },
-          "422": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            },
-            "description": "Validation Error"
-          }
-        },
-        "summary": "Semantic",
         "tags": [
           "search"
         ]
@@ -5327,7 +4959,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/GroupRename"
+                "$ref": "#/components/schemas/GroupIn"
               }
             }
           },
@@ -5379,7 +5011,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/TagDefIn"
+                "$ref": "#/components/schemas/TagIn"
               }
             }
           },
@@ -5523,8 +5155,7 @@
                 {
                   "enum": [
                     "owned",
-                    "wantlist",
-                    "considering"
+                    "wantlist"
                   ],
                   "type": "string"
                 },
@@ -5806,102 +5437,9 @@
         ]
       }
     },
-    "/api/tracks/{track_id}/audio": {
-      "delete": {
-        "operationId": "unassign_audio",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "track_id",
-            "required": true,
-            "schema": {
-              "title": "Track Id",
-              "type": "integer"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/TrackOut"
-                }
-              }
-            },
-            "description": "Successful Response"
-          },
-          "422": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            },
-            "description": "Validation Error"
-          }
-        },
-        "summary": "Unassign Audio",
-        "tags": [
-          "tracks"
-        ]
-      },
-      "post": {
-        "description": "Pin one file from the record's audio folder to this track (then run analysis again).",
-        "operationId": "assign_audio",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "track_id",
-            "required": true,
-            "schema": {
-              "title": "Track Id",
-              "type": "integer"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AssignAudio"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/TrackOut"
-                }
-              }
-            },
-            "description": "Successful Response"
-          },
-          "422": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            },
-            "description": "Validation Error"
-          }
-        },
-        "summary": "Assign Audio",
-        "tags": [
-          "tracks"
-        ]
-      }
-    },
     "/api/tracks/{track_id}/audio-file": {
       "get": {
-        "description": "Your own file for a track, so the page can play it. Only files level 0 matched inside AUDIO_DIR.",
+        "description": "Your own file for a track, for the player: only files level 0 matched, inside AUDIO_DIR.",
         "operationId": "track_audio_file",
         "parameters": [
           {

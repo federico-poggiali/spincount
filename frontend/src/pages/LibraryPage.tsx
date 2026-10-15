@@ -27,6 +27,7 @@ export default function LibraryPage({ defaultStatus }: { defaultStatus: Status }
     if (!("page" in patch)) next.page = 1;
     setParams(serializeFilters(next, defaultStatus));
   };
+  const clear = () => change({ q: "", bpmMin: undefined, bpmMax: undefined, key: undefined, tags: [], styles: [], status: defaultStatus });
 
   const limit = pageSize(filters.view);
   const query: LibraryQuery = {
@@ -66,7 +67,7 @@ export default function LibraryPage({ defaultStatus }: { defaultStatus: Status }
         filters={filters} defaultStatus={defaultStatus} tags={tags.data ?? []} styleCounts={styleCounts.data ?? []}
         keyFormat={keyFormat} onKeyFormat={setKeyFormat} showKeys={keysOn}
         onOpenSearch={() => setSearchOpen(true)}
-        onChange={change} onClear={() => setParams(serializeFilters({ ...filters, q: "", bpmMin: undefined, bpmMax: undefined, key: undefined, tags: [], styles: [], status: defaultStatus, page: 1 }, defaultStatus))}
+        onChange={change} onClear={clear}
       />
 
       {searchOpen && <SearchPopup onClose={() => setSearchOpen(false)} />}
@@ -80,7 +81,7 @@ export default function LibraryPage({ defaultStatus }: { defaultStatus: Status }
               <>
                 <h2>Nothing matches these filters.</h2>
                 <p>Loosen the tempo range, drop a tag or style, or clear everything.</p>
-                <button className="ghost" onClick={() => setParams(new URLSearchParams())}>Clear filters</button>
+                <button className="ghost" onClick={clear}>Clear filters</button>
               </>
             ) : (
               <>

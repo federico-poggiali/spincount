@@ -6,7 +6,8 @@ whole collection in Obsidian. The BPM and key come from [bpmkey](#bpmkey-the-bpm
 
 ```
 Discogs link ──> intake ──> SQLite (the only place anything is written)
-                   │            ├── analysis job: BPM + key via bpmkey      (no audio files needed)
+                   │            ├── audio job:    find each track's audio via audioresearch (on add)
+                   │            ├── analysis job: BPM + key via bpmkey, proposed for you to validate
                    │            ├── Discogs job:  add to your collection    (owned records only)
                    │            └── vault sync:   generated Obsidian files  (overwritten each sync)
                    └──> web app (React) on the same port as the API (FastAPI)
@@ -29,15 +30,16 @@ has no login, so do not expose the port.
 | --- | --- |
 | `make run` | build the app and serve it on port 8000 (`PORT=8100 make run` to change) |
 | `make dev` + `make frontend-dev` | API with auto-reload, and the Vite dev server on :5173 with live reload |
-| `make test-all` | backend tests, frontend component tests, browser tests (`make test`, `make test-frontend`, `make e2e`) |
-| `make lint`, `make coverage` | ruff, and a coverage report |
+| `make test-all` | every Python suite, frontend component tests, browser tests (`make test`, `make test-frontend`, `make e2e`) |
+| `make lint`, `make coverage` | ruff and the TypeScript check, and a coverage report |
 | `make backup` | copy the database to `backend/backups/` now |
 | `make sync-vault` | rebuild the Obsidian files now (the app also does this a couple of seconds after any change) |
 | `make backfill-styles` | fetch Discogs styles (and catalogue number, year if missing) for records added before styles existed; calls Discogs once per record |
 | `make openapi`, `make types` | re-export `docs/openapi.json`, and regenerate the frontend's API types from it |
 
-Data lives in `backend/data/vinyl.db`, your audio in `audio/`, the Obsidian files in `vault/`. Paths and other settings
-are in `.env` (see `.env.example`).
+The database lives at `DB_PATH` (default `backend/data/vinyl.db`; better outside a synced folder, e.g. Application
+Support), and the lookup and audio caches go next to it. Your audio is in `audio/`, the Obsidian files in `vault/`.
+Paths and other settings are in `.env` (see `.env.example`).
 
 ## Obsidian
 
@@ -59,13 +61,16 @@ its tick, tracks can be skipped, and the preview warns when text had to be cut. 
 record is not changed. Country is not stored anywhere, so type it in if you want it. **Download** saves the PNGs;
 printing straight to the Brother (`brother_ql`) is not wired in yet.
 
-## Audio files (optional)
+## Audio
 
-BPM and key do not need audio: bpmkey looks them up online and, when the databases disagree, finds and analyses the
-audio itself. If you have your own rips, drop them in `audio/<discogs release id>/` (the number in the Discogs URL),
-named like `A1 - Title.wav`. They are matched to tracks by position, then by title, and **override** the lookup for
-the tracks they match. Anything that does not match is listed on the record page, where you can assign it by hand.
-A BPM or key you enter by hand is marked *manual* and is never overwritten by re-analysis (the x unlocks it).
+Adding a record starts a search for each track's audio (your own files first, then Discogs videos, iTunes, Bandcamp,
+SoundCloud and record stores); the record page plays what was found. BPM and key do not need it: bpmkey looks them
+up online and, when the databases disagree, finds and analyses audio itself.
+
+Your own rips win over everything: use **Upload audio** on the record page, or drop them in `audio/<discogs release
+id>/` (the number in the Discogs URL), named like `A1 - Title.wav`. They are matched to tracks by position, then by
+title (never by guess), and their analysis **overrides** the lookup. Analysis results wait for you to validate them;
+a BPM or key you enter by hand is marked *manual* and is never overwritten unless you say so (the x unlocks it).
 
 ## Backups
 
@@ -84,16 +89,25 @@ Docker was not available where this was developed. `make run` is the supported w
 
 ## Not built yet
 
-- Search **by meaning** (finding "banging track" from "huge energy"): the plumbing is in place, but no embedding model
-  is configured, so the Search page offers exact word search until one is plugged in (`backend/app/deps.py`).
 - Printing labels straight to the Brother QL (labels can be downloaded as PNG today).
 - Two-way Obsidian sync, playlist and set building by Camelot compatibility.
+- BPM and key from the audio the app found (today bpmkey still searches audio on its own).
 
 ## Layout
 
-`backend/` FastAPI app, SQLite schema and tests · `frontend/` React app, component and browser tests · `bpmkey/` the
-lookup engine · `benchmark/` how its accuracy was measured · `vault/` generated Obsidian files · `audio/` your files ·
-`docs/` progress notes and the exported OpenAPI schema · `building_plan/` the original plan.
+| Folder | What |
+| --- | --- |
+| `backend/` | FastAPI app (`app/`): routes, SQLite schema and migrations, jobs, labels, vault; tests in `tests/` |
+| `frontend/` | React app; component tests next to the components, browser tests in `e2e/` |
+| `bpmkey/` | BPM and key engine (below); also holds the settings every part shares (`bpmkey/config.py`) |
+| `audioresearch/` | Finds each track's audio: your files, Discogs videos, iTunes, Bandcamp, SoundCloud, stores |
+| `docs/openapi.json` | The API schema; the frontend's types are generated from it (`make types`) |
+| `docs/cleanup-2026-10.md` | What the October 2026 cleanup removed, and next steps to make the app lighter |
+| `audio/`, `vault/` | Your audio files, and the generated Obsidian vault |
+
+Temporary, kept only for debugging and to be removed once the app covers them: bpmkey's command line and web page
+(`python -m bpmkey`, `python -m bpmkey.server`) and audioresearch's command line and process viewer
+(`python -m audioresearch`, `... viewer`).
 
 ---
 
@@ -111,7 +125,7 @@ It looks values up online first, compares the sources, and only analyses the aud
 - [x] Audio analysis fallback: yt-dlp + Essentia (BPM, EDM key profile)
 - [x] Camelot conversion, reconciliation, SQLite cache, CSV export
 
-## Usage
+## Usage (temporary: the app is the way to use it)
 
 ```bash
 python3 -m venv .venv && source .venv/bin/activate
@@ -146,7 +160,7 @@ Measured against human-labelled electronic music (Beatport previews; audio not i
 | Key, exact match, Essentia `edma` profile (same clips) | 58% (0.65) |
 | Key, exact match, classical Krumhansl profile (same clips) | 49% (0.59) |
 
-Key detection is a small committee (`bpmkey/keydetect.py`): Essentia's `edmm` and `bgate` profiles plus the track's mean chroma vote on all 24 keys, with weights fitted on GiantSteps (`benchmark/keymodel_fit.py`). It replaced `edmm` alone because `edmm` can only answer minor: on GiantSteps it never produced a major key, so the 15% of clips that are major were always wrong, and a database saying "major" could never overrule it. The committee finds about 4 in 10 of the major keys at the same overall exact accuracy, and its probabilities are better calibrated (log-loss 1.59 to 1.31). Major vs minor stays the hardest call (mode AUC 0.78). `MODE_PRIOR_SHIFT` in `keydetect.py` sets how readily it says major: GiantSteps is 85% minor, so 0 keeps that prior (66% exact, 23% of majors found) and the shipped 1.0 assumes a mixed collection (63-64% exact, 43% of majors). The database reliabilities were estimated from a handful of tracks and the database-combination gains in `benchmark/db_sim.py` are simulated, so treat both as unverified until measured against labelled tracks from a real collection. The benchmark scripts and report are in `benchmark/` (`report_giantsteps.md`); its extra dependencies are in `benchmark/requirements.txt`.
+Key detection is a small committee (`bpmkey/keydetect.py`): Essentia's `edmm` and `bgate` profiles plus the track's mean chroma vote on all 24 keys, with weights fitted on GiantSteps. It replaced `edmm` alone because `edmm` can only answer minor: on GiantSteps it never produced a major key, so the 15% of clips that are major were always wrong, and a database saying "major" could never overrule it. The committee finds about 4 in 10 of the major keys at the same overall exact accuracy, and its probabilities are better calibrated (log-loss 1.59 to 1.31). Major vs minor stays the hardest call (mode AUC 0.78). `MODE_PRIOR_SHIFT` in `keydetect.py` sets how readily it says major: GiantSteps is 85% minor, so 0 keeps that prior (66% exact, 23% of majors found) and the shipped 1.0 assumes a mixed collection (63-64% exact, 43% of majors). The database reliabilities were estimated from a handful of tracks and the database-combination gains were simulated, so treat both as unverified until measured against labelled tracks from a real collection. The benchmark scripts and report were removed from the repo to keep it light; they are in the git history (before October 2026).
 
 Key detection by audio alone is the weak spot, so the database votes matter. A 90% exact-key target is not realistic for any current method.
 

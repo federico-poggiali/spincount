@@ -1,19 +1,9 @@
 [project]
 name = "vinyl-second-brain"
 version = "0.1.0"
-description = "Vinyl record library: Discogs intake, BPM/key analysis, notes, semantic search"
+description = "Vinyl record library: Discogs intake, BPM/key analysis, audio, notes, labels"
 requires-python = ">=3.11"
-dependencies = [
-    "fastapi",
-    "uvicorn[standard]",
-    "httpx",
-    "sqlite-vec",
-    "pillow",
-    "qrcode",
-]
-
-[project.optional-dependencies]
-dev = ["pytest", "pytest-cov", "ruff"]
+# Dependencies: ../requirements.txt (pinned: ../requirements.lock.txt), shared with bpmkey and audioresearch.
 
 [tool.setuptools.packages.find]
 include = ["app*"]

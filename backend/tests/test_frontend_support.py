@@ -17,42 +17,11 @@ def make_record(db_path, release_id=9261843):
     return rid, t1, t2
 
 
-def test_assign_audio_file_by_hand_and_it_survives_matching(client, db_path, audio_dir):
-    rid, t1, t2 = make_record(db_path)
-    folder = audio_dir / "9261843"
-    folder.mkdir()
-    (folder / "odd name.wav").write_bytes(b"x")
-    (folder / "A2 - Second.wav").write_bytes(b"x")
-
-    before = client.get(f"/api/records/{rid}/audio-match").json()
-    assert [u["file"] for u in before["unmatched_files"]] == ["odd name.wav"]
-
-    resp = client.post(f"/api/tracks/{t1}/audio", json={"file": "odd name.wav"})
-    assert resp.status_code == 200 and resp.json()["audio_path"].endswith("odd name.wav")
-    after = client.get(f"/api/records/{rid}/audio-match").json()
-    assert {(m["track_id"], m["method"]) for m in after["matched"]} == {(t1, "assigned"), (t2, "position")}
-    assert after["unmatched_files"] == [] and after["unmatched_tracks"] == []
-
-    # one file, one track: moving it clears the previous owner
-    client.post(f"/api/tracks/{t2}/audio", json={"file": "odd name.wav"})
-    assert client.get(f"/api/tracks/{t1}").json()["audio_path"] is None
-    assert client.delete(f"/api/tracks/{t2}/audio").json()["audio_path"] is None
-
-
-def test_assign_audio_rejects_bad_input(client, db_path, audio_dir):
-    _, t1, _ = make_record(db_path)
-    (audio_dir / "9261843").mkdir()
-    assert client.post(f"/api/tracks/{t1}/audio", json={"file": "missing.wav"}).status_code == 404
-    assert client.post(f"/api/tracks/{t1}/audio", json={"file": "../secret.wav"}).status_code == 422
-    assert client.post("/api/tracks/999/audio", json={"file": "x.wav"}).status_code == 404
-    assert client.delete("/api/tracks/999/audio").status_code == 404
-
-
 def test_exact_search_returns_snippets_and_records(client, db_path):
     rid, t1, _ = make_record(db_path)
     conn = connect(db_path)
-    notes.create(conn, type="prose", body="Huge energy, the floor erupted at midnight", track_id=t1)
-    notes.create(conn, type="location", body="second shelf", record_id=rid)
+    notes.create(conn, body="Huge energy, the floor erupted at midnight", track_id=t1)
+    notes.create(conn, body="second shelf", record_id=rid)
     conn.close()
     body = client.get("/api/search/exact", params={"q": "erupted"}).json()
     assert len(body["notes"]) == 1

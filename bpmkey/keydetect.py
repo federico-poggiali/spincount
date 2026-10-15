@@ -5,7 +5,7 @@ so on its own it is blind to every major key (15% of that set, and probably more
 record collection). The committee instead scores all 24 keys from: each profile's key and strength
 (and which keys are its relative / parallel / fifth), plus the mean chroma read against each
 candidate tonic (a data-fitted key profile that sees the 3rd, 6th and 7th directly). The weights
-come from `benchmark/keymodel_fit.py` (conditional logit, cross-validated on GiantSteps).
+were fitted on GiantSteps Key (conditional logit; the fitting scripts are in the git history).
 
 Cross-validated on GiantSteps: log-loss 1.59 -> 1.31, mode AUC 0.72 -> 0.78, exact 65% -> 66%.
 MODE_PRIOR_SHIFT corrects for GiantSteps being 85% minor; see the README for the trade-off.

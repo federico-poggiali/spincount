@@ -73,7 +73,7 @@ function useGroupMutation<A>(fn: (a: A) => Promise<{ items: TagGroup[] }>) {
     mutationFn: fn,
     onSuccess: (data) => {
       client.setQueryData(["tag-groups"], data.items);
-      for (const key of ["tags", "records", "tracks"]) client.invalidateQueries({ queryKey: [key] });
+      for (const key of ["tags", "records"]) client.invalidateQueries({ queryKey: [key] });
     },
   });
 }

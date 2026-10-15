@@ -4,6 +4,7 @@ import { api } from "../api/api";
 import { JobChip } from "../components/JobChip";
 import { KeyFormatToggle } from "../components/KeyFormatToggle";
 import { useKeyConfidenceEnabled, useKeyFormat, useKeysEnabled } from "../hooks";
+import { plural } from "../lib";
 import { pushToast } from "../toast";
 import styles from "./SettingsPage.module.css";
 
@@ -20,8 +21,7 @@ export default function SettingsPage() {
   });
   const [stylesJob, setStylesJob] = useState<number | null>(null);
   const fetchStyles = useMutation({ mutationFn: api.backfillStyles, onSuccess: ({ job_id }) => setStylesJob(job_id) });
-  const [libraryJobs, setLibraryJobs] = useState<number[]>([]);
-  const analyseLibrary = useMutation({ mutationFn: api.findAudioForLibrary, onSuccess: ({ job_ids }) => setLibraryJobs(job_ids) });
+  const findLibraryAudio = useMutation({ mutationFn: api.findAudioForLibrary });
   const [keysOn, setKeysOn] = useKeysEnabled();
   const [keyFormat, setKeyFormat] = useKeyFormat();
   const [confidenceOn, setConfidenceOn] = useKeyConfidenceEnabled();
@@ -97,16 +97,15 @@ export default function SettingsPage() {
         BPM and key are not touched: analysing a record later reuses the audio found.
       </p>
       <div className={styles.actions}>
-        <button className="primary" onClick={() => analyseLibrary.mutate()} disabled={analyseLibrary.isPending}>
-          {analyseLibrary.isPending ? "Queueing…" : "Find audio for the library"}
+        <button className="primary" onClick={() => findLibraryAudio.mutate()} disabled={findLibraryAudio.isPending}>
+          {findLibraryAudio.isPending ? "Queueing…" : "Find audio for the library"}
         </button>
       </div>
-      {analyseLibrary.data && (
+      {findLibraryAudio.data && (
         <p className={styles.hint} role="status" data-testid="library-audio-queued">
-          {analyseLibrary.data.queued === 0 ? "Nothing to do: every record has been searched." : `${analyseLibrary.data.queued} ${analyseLibrary.data.queued === 1 ? "record" : "records"} queued. You can leave this page; they run in the background.`}
+          {findLibraryAudio.data.queued === 0 ? "Nothing to do: every record has been searched." : `${plural(findLibraryAudio.data.queued, "record")} queued. They run in the background; each record page shows its progress.`}
         </p>
       )}
-      {libraryJobs.length > 0 && <p className={styles.hint}>Progress is on each record page (Audio tab).</p>}
 
       <header>
         <span className="micro">discogs</span>

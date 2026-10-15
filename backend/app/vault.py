@@ -16,6 +16,7 @@ from pathlib import Path
 
 from app import config
 from app.db import connect, queries
+from app.keys import wheel_order
 
 log = logging.getLogger(__name__)
 
@@ -68,13 +69,13 @@ FROM #house
 SORT year DESC
 ```
 
-## Wantlist and considering
+## Wantlist
 
 ```dataview
-TABLE artist, title, label, status
+TABLE artist, title, label
 FROM "Records"
-WHERE status != "owned"
-SORT status ASC, artist ASC
+WHERE status = "wantlist"
+SORT artist ASC
 ```
 '''
 
@@ -114,8 +115,7 @@ def render_record(record: dict) -> str:
     tracks = record["tracks"]
     bpms = [t["bpm"] for t in tracks if t["bpm"] is not None]
     keys = sorted({t["key"] for t in tracks if t["key"]})
-    camelot = sorted({t["camelot_key"] for t in tracks if t["camelot_key"]},
-                     key=lambda c: (int(c[:-1]), c[-1]))
+    camelot = sorted({t["camelot_key"] for t in tracks if t["camelot_key"]}, key=wheel_order)
     front = [
         ("discogs_id", record["discogs_release_id"]), ("artist", record["artist"]),
         ("title", record["title"]), ("label", record["label"]), ("catno", record["catno"]),
@@ -150,14 +150,14 @@ def render_record(record: dict) -> str:
     if record["notes"]:
         lines += ["## Notes", ""]
         for n in record["notes"]:
-            lines += [f"### {n['type']}", "", n["body"].strip(), ""]
+            lines += [n["body"].strip(), ""]
     with_notes = [t for t in tracks if t["notes"]]
     if with_notes:
         lines += ["## Track notes", ""]
         for t in with_notes:
             lines += [f"### {t['position']} {t['title']}".replace("  ", " "), ""]
             for n in t["notes"]:
-                lines += [f"**{n['type']}**", "", n["body"].strip(), ""]
+                lines += [n["body"].strip(), ""]
     return "\n".join(lines).rstrip() + "\n"
 
 

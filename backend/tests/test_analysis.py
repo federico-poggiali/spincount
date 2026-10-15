@@ -59,8 +59,8 @@ def test_analysis_job_fills_matched_tracks_and_reports_mismatches(client, db_pat
 
     job = client.get(f"/api/jobs/{job_id}").json()
     assert job["status"] == "done"
-    assert [f["file"] for f in job["result"]["audio_match"]["unmatched_files"]] == ["mystery.wav"]
-    assert [t["track_id"] for t in job["result"]["audio_match"]["unmatched_tracks"]] == [t2]
+    assert [f["file"] for f in job["result"]["audio_files"]["unmatched_files"]] == ["mystery.wav"]
+    assert job["result"]["audio_files"]["unmatched_track_ids"] == [t2]
     conn = connect(db_path)
     assert tracks.get(conn, t1)["bpm"] is None  # nothing lands before validation
     detail = client.get(f"/api/records/{rid}").json()
@@ -113,11 +113,6 @@ def test_local_audio_overrides_lookup(client, db_path, audio_dir):
     conn.close()
 
 
-def test_lookup_key_name_and_failure_isolation():
-    from app.analysis.lookup import key_name
-    assert key_name("8A") == "A minor" and key_name("8B") == "C major" and key_name(None) is None
-
-
 def test_one_bad_file_does_not_block_the_others(client, db_path, audio_dir):
     rid, t1, t2, folder = setup_record(db_path, audio_dir)
     (folder / "A1.wav").write_bytes(b"x")
@@ -147,14 +142,6 @@ def test_analyze_endpoint_errors(client, db_path):
     assert client.get("/api/jobs/99").status_code == 404
 
 
-def test_audio_match_endpoint(client, db_path, audio_dir):
-    rid, t1, t2, folder = setup_record(db_path, audio_dir)
-    (folder / "A2 - Second.wav").write_bytes(b"x")
-    report = client.get(f"/api/records/{rid}/audio-match").json()
-    assert [m["track_id"] for m in report["matched"]] == [t2]
-    assert [t["track_id"] for t in report["unmatched_tracks"]] == [t1]
-
-
 def test_real_engine_on_short_audio(client, db_path, audio_dir):
     """End to end with bpmkey/Essentia on synthetic clips (checks wiring, not accuracy)."""
     rid, t1, t2, folder = setup_record(db_path, audio_dir)
@@ -167,7 +154,7 @@ def test_real_engine_on_short_audio(client, db_path, audio_dir):
     runner.run_pending()
     job = client.get(f"/api/jobs/{job_id}").json()
     assert job["status"] == "done", job
-    assert [f["file"] for f in job["result"]["audio_match"]["unmatched_files"]] == ["stray.wav"]
+    assert [f["file"] for f in job["result"]["audio_files"]["unmatched_files"]] == ["stray.wav"]
     validate_all(client, rid)
     conn = connect(db_path)
     for tid in (t1, t2):

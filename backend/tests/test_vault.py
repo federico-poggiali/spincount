@@ -31,8 +31,8 @@ def fixture_record(conn):
     tags.create_tag(conn, 2, "house")
     tags.add(conn, "record", rid, "french")
     tags.add(conn, "record", rid, "house")
-    notes.create(conn, type="location", body="Shelf B, second row", record_id=rid)
-    notes.create(conn, type="prose", body="Huge energy,\nthe floor erupted.", track_id=t1)
+    notes.create(conn, body="Shelf B, second row", record_id=rid)
+    notes.create(conn, body="Huge energy,\nthe floor erupted.", track_id=t1)
     return rid
 
 
@@ -131,7 +131,8 @@ def test_writes_through_the_api_request_a_sync(client):
     try:
         client.get("/api/records")
         assert Spy.calls == 0  # reads do nothing
-        client.post("/api/notes", json={"type": "a", "body": "x"})  # rejected (422): no sync
+        client.post("/api/notes", json={"body": "x"})  # rejected (422): no sync
+        client.post("/api/labels/render", json={"artist": "A", "title": "B"})  # a preview writes nothing
         assert Spy.calls == 0
         rid = None
         from app.db import connect as c

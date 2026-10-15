@@ -1,4 +1,6 @@
-"""Local web UI: python -m bpmkey.server  ->  http://127.0.0.1:8765"""
+"""Local web UI: python -m bpmkey.server  ->  http://127.0.0.1:8765
+
+TEMPORARY (kept for debugging only; remove once the app covers it, see README)."""
 from __future__ import annotations
 
 import argparse

@@ -11,11 +11,6 @@ CONTACT_EMAIL: str = _bpm.CONTACT_EMAIL
 USER_AGENT: str = f"AudioResearch/0.1 ( {CONTACT_EMAIL} )"
 
 
-def _path(name: str, default: str) -> Path:
-    p = Path(os.environ.get(name, default)).expanduser()
-    return p if p.is_absolute() else ROOT / p
-
-
 def _float(name: str, default: float) -> float:
     try:
         return float(os.environ.get(name, default))
@@ -23,13 +18,11 @@ def _float(name: str, default: float) -> float:
         return default
 
 
-# Spin Count's database folder (DB_PATH in .env, e.g. Application Support) also holds this tool's cache and audio,
-# so gigabytes of downloads stay out of the repo (and out of OneDrive). Without DB_PATH it is the repo, as before.
-_DATA_DIR = Path(os.environ["DB_PATH"]).expanduser().parent if os.environ.get("DB_PATH") else ROOT
-AUDIORESEARCH_DB: Path = _path("AUDIORESEARCH_DB", str(_DATA_DIR / "audioresearch.db"))
-AUDIO_CACHE_DIR: Path = _path("AUDIO_CACHE_DIR", str(_DATA_DIR / "audio_cache"))
+# Next to Spin Count's database (bpmkey.config.DATA_DIR), so gigabytes of downloads stay out of the repo.
+AUDIORESEARCH_DB: Path = _bpm.path_setting("AUDIORESEARCH_DB", _bpm.DATA_DIR / "audioresearch.db")
+AUDIO_CACHE_DIR: Path = _bpm.path_setting("AUDIO_CACHE_DIR", _bpm.DATA_DIR / "audio_cache")
 # level 0: <folder>/<release id>/. The same folder Spin Count reads (AUDIO_DIR), so there is one place for your files.
-LOCAL_AUDIO_DIR: Path = _path("AUDIORESEARCH_LOCAL_AUDIO", os.environ.get("AUDIO_DIR") or "audio")
+LOCAL_AUDIO_DIR: Path = _bpm.path_setting("AUDIORESEARCH_LOCAL_AUDIO", _bpm.path_setting("AUDIO_DIR", ROOT / "audio"))
 REVIEW_THRESHOLD: float = _float("REVIEW_THRESHOLD", 0.6)
 HEALTH_MAX_FAILURES: int = int(_float("AUDIORESEARCH_MAX_FAILURES", 5))
 MAX_VIDEO_SECONDS: int = 20 * 60

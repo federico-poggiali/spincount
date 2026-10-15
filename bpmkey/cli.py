@@ -1,3 +1,6 @@
+"""bpmkey's own command line: python -m bpmkey <discogs link>.
+
+TEMPORARY (kept for debugging only; remove once the app covers it, see README)."""
 from __future__ import annotations
 
 import argparse

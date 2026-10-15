@@ -8,6 +8,7 @@ from app.db import notes as notes_dal
 from app.db import proposals as proposals_dal
 from app.db import records as records_dal
 from app.db import tracks as tracks_dal
+from app.keys import wheel_order
 
 
 @dataclass
@@ -54,16 +55,14 @@ def _style_conditions(f: Filters) -> tuple[list[str], list]:
     return where, list(f.styles)
 
 
-def _tag_exists(tag: str, record_expr: str, track_expr: str | None) -> tuple[str, list]:
-    """A tag is satisfied by the record itself, or by one of its tracks."""
-    sql = ("EXISTS (SELECT 1 FROM record_tags rt JOIN tags g ON g.id = rt.tag_id "
-           f"WHERE rt.record_id = {record_expr} AND g.name = ?)")
-    params = [tag]
-    if track_expr:
-        sql += (" OR EXISTS (SELECT 1 FROM track_tags tt JOIN tags g ON g.id = tt.tag_id "
-                f"WHERE tt.track_id = {track_expr} AND g.name = ?)")
-        params.append(tag)
-    return f"({sql})", params
+def _tag_condition(tag: str, track_clause: str) -> tuple[str, list]:
+    """A tag is satisfied by the record itself, or by a track (`track_clause` says which: this one, or any of
+    the record's)."""
+    sql = ("(EXISTS (SELECT 1 FROM record_tags rt JOIN tags g ON g.id = rt.tag_id "
+           "WHERE rt.record_id = r.id AND g.name = ?) "
+           "OR EXISTS (SELECT 1 FROM track_tags tt JOIN tags g ON g.id = tt.tag_id "
+           f"JOIN tracks tg ON tg.id = tt.track_id WHERE {track_clause} AND g.name = ?))")
+    return sql, [tag, tag]
 
 
 def _tags_for(conn: sqlite3.Connection, table: str, column: str, ids: list[int]) -> dict[int, list[str]]:
@@ -95,12 +94,9 @@ def list_records(conn: sqlite3.Connection, f: Filters) -> tuple[list[dict], int]
                      + " AND ".join(conds) + ")")
         params += p
     for tag in f.tags:
-        # tag on the record, or on any of its tracks
-        sql, p = _tag_exists(tag, "r.id", None)
-        sql_t = ("EXISTS (SELECT 1 FROM track_tags tt JOIN tags g ON g.id = tt.tag_id "
-                 "JOIN tracks t ON t.id = tt.track_id WHERE t.record_id = r.id AND g.name = ?)")
-        where.append(f"({sql} OR {sql_t})")
-        params += p + [tag]
+        sql, p = _tag_condition(tag, "tg.record_id = r.id")
+        where.append(sql)
+        params += p
     conds, p = _style_conditions(f)
     where += conds
     params += p
@@ -138,8 +134,7 @@ def list_records(conn: sqlite3.Connection, f: Filters) -> tuple[list[dict], int]
         st = stats.get(r["id"], {})
         r["track_count"] = st.get("n", 0)
         r["bpm_min"], r["bpm_max"] = st.get("bpm_min"), st.get("bpm_max")
-        r["camelot_keys"] = sorted(filter(None, (st.get("keys") or "").split(",")),
-                                   key=lambda c: (int(c[:-1]), c[-1]))
+        r["camelot_keys"] = sorted(filter(None, (st.get("keys") or "").split(",")), key=wheel_order)
         r["matched_track_ids"] = None
         if f.has_track_filter:
             conds, p = _track_conditions(f, "t")
@@ -164,7 +159,7 @@ def list_tracks(conn: sqlite3.Connection, f: Filters) -> tuple[list[dict], int]:
         where.append("r.status = ?")
         params.append(f.status)
     for tag in f.tags:  # on the track, or inherited from its record
-        sql, p = _tag_exists(tag, "r.id", "t.id")
+        sql, p = _tag_condition(tag, "tg.id = t.id")
         where.append(sql)
         params += p
     conds, p = _style_conditions(f)

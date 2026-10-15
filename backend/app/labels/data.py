@@ -46,10 +46,8 @@ def clean_artist(name: str) -> str:
 
 
 def first_sentence(notes: list[dict]) -> str | None:
-    """One sentence for the label: the first prose note (any note if none is prose), cut at the
-    first full stop."""
-    ordered = sorted(notes, key=lambda n: n["type"] != "prose")
-    for note in ordered:
+    """One sentence for the label: the first non-empty note, cut at the first full stop."""
+    for note in notes:
         text = " ".join(note["body"].split())
         if text:
             return _SENTENCE_END.split(text, maxsplit=1)[0]

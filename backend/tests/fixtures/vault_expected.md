@@ -35,15 +35,11 @@ Virgin · 2001 · 2xVinyl, LP
 
 ## Notes
 
-### location
-
 Shelf B, second row
 
 ## Track notes
 
 ### A1 One More Time
-
-**prose**
 
 Huge energy,
 the floor erupted.
