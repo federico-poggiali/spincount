@@ -17,6 +17,10 @@ from .base import Adapter
 AUDIO_EXTENSIONS = {".wav", ".mp3", ".flac", ".aif", ".aiff", ".m4a", ".ogg"}
 TITLE_THRESHOLD = 0.8
 TITLE_MARGIN = 0.05
+# What the app downloaded itself (fetch.dest_for: "<position>.<adapter>.<ext>") is never one of your files.
+_DOWNLOAD = re.compile(r"\.(?:manual_link|discogs_youtube|youtube_music|itunes|bandcamp|bandcamp_tracks|soundcloud_tracks"
+                       r"|soundcloud_sets|beatport_tracks|beatport_releases|deejay_de|decks_de|hardwax|redeye|clone|runas"
+                       r"|orbitwax|soundmetaphors|one_eye_witness|smallblackdots)$")
 _POSITION = re.compile(r"^\s*([A-Za-z]{1,2}\d{1,2}|\d{1,2}-\d{1,2}|\d{1,3})(?=[\s._\-)]|$)")
 
 
@@ -42,7 +46,8 @@ def find_audio_files(folder: Path) -> list[Path]:
     if not folder.is_dir():
         return []
     return sorted(p for p in folder.iterdir()
-                  if p.is_file() and not p.name.startswith(".") and p.suffix.lower() in AUDIO_EXTENSIONS)
+                  if p.is_file() and not p.name.startswith(".") and p.suffix.lower() in AUDIO_EXTENSIONS
+                  and not _DOWNLOAD.search(p.stem))
 
 
 def match_files(files: list[Path], tracks: list[TrackRef]) -> dict:

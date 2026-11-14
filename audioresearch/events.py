@@ -7,6 +7,8 @@ import uuid
 from dataclasses import asdict, dataclass, field
 from typing import Any, Callable, Optional
 
+from . import progress
+
 RUN_STARTED = "run_started"
 RELEASE_IDENTIFIED = "release_identified"
 LEVEL_STARTED = "level_started"
@@ -64,6 +66,7 @@ class Emitter:
 
     def emit(self, type: str, *, level: int | None = None, adapter: str | None = None, stage: str | None = None,
              position: str | None = None, **data: Any) -> None:
+        progress.beat()
         if self.callback is None:
             return
         with self._lock:  # the callback runs under the lock so events arrive in seq order

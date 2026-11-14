@@ -8,7 +8,10 @@ from bpmkey.config import path_setting
 BACKEND_DIR = Path(__file__).resolve().parent.parent
 
 DB_PATH = path_setting("DB_PATH", BACKEND_DIR / "data" / "vinyl.db")
-AUDIO_DIR = path_setting("AUDIO_DIR", REPO_ROOT / "audio")
+AUDIO_DIR = path_setting("AUDIO_DIR", REPO_ROOT / "audio")  # your own files only: audio/<discogs release id>/
+# What the audio search downloads to check a match: next to the database, never among your files.
+AUDIO_STALL_SECONDS = 30  # a search that makes no progress at all for this long is stopped
+AUDIO_CACHE_DIR = path_setting("AUDIO_CACHE_DIR", DB_PATH.parent / "audio_cache")
 VAULT_DIR = path_setting("VAULT_DIR", REPO_ROOT / "vault")
 FRONTEND_DIST = path_setting("FRONTEND_DIST", REPO_ROOT / "frontend" / "dist")
 DISCOGS_TOKEN = os.environ.get("DISCOGS_TOKEN", "")

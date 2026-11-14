@@ -20,6 +20,7 @@ from app.routes import (
     admin,
     audio,
     crate,
+    debug,
     jobs,
     labels,
     notes,
@@ -51,7 +52,7 @@ async def lifespan(app: FastAPI):
     conn.close()
     syncer = app.state.vault_syncer = VaultSyncer(config.VAULT_DIR)
     app.state.runner = JobRunner({
-        analysis_job.JOB_TYPE: analysis_job.make_handler(_discogs, research_fn=audio_stage.research_release),
+        analysis_job.JOB_TYPE: analysis_job.make_handler(),
         audio_job.JOB_TYPE: audio_job.make_handler(audio_stage.research_release),
         youtube_links.JOB_TYPE: youtube_links.make_handler(),
         sync.JOB_TYPE: sync.make_handler(_discogs),
@@ -77,7 +78,7 @@ app.add_middleware(CORSMiddleware, allow_origins=config.CORS_ORIGINS, allow_meth
                    allow_headers=["*"])
 errors.install(app)
 for module in (records, audio, tracks, notes, tags, styles, labels, search, crate, jobs, admin,
-               library_sync_routes, copies_routes, youtube):
+               library_sync_routes, copies_routes, youtube, debug):
     app.include_router(module.router)
 
 

@@ -4,7 +4,7 @@ from app.analysis import engine
 from app.analysis.job import make_handler
 from app.db import connect, records, tracks
 from app.jobs.runner import JobRunner
-from tests.conftest import make_discogs, make_wav
+from tests.conftest import analysis_of, make_wav
 
 
 def setup_record(db_path, audio_dir, release_id=9261843):
@@ -18,13 +18,8 @@ def setup_record(db_path, audio_dir, release_id=9261843):
     return rid, t1, t2, folder
 
 
-def fake_lookup(record, track_rows, release):
-    return {}
-
-
 def handler(**kwargs):
-    kwargs.setdefault("lookup_fn", fake_lookup)
-    return make_handler(make_discogs, **kwargs)
+    return make_handler(**kwargs)
 
 
 def fake_analyze(path):
@@ -73,21 +68,17 @@ def test_analysis_job_fills_matched_tracks_and_reports_mismatches(client, db_pat
     conn.close()
 
 
-def test_lookup_from_discogs_link_needs_no_audio(client, db_path, audio_dir):
+def test_audio_the_search_found_is_analysed_when_there_is_no_file_of_yours(client, db_path, audio_dir):
     rid, t1, t2, _ = setup_record(db_path, audio_dir)
-
-    def lookup(record, track_rows, release):
-        assert release["id"] == 9261843  # the release JSON is passed on for its videos
-        return {t1: {"bpm": 126.0, "key": "C minor", "camelot_key": "5A", "confidence": None,
-                     "raw": {"status": "agreed", "bpm_alt": 63.0}}}
-
-    runner = JobRunner({"analysis": handler(lookup_fn=lookup)})
+    found = {"bpm": 126.0, "key": "C minor", "camelot_key": "5A", "confidence": None, "raw": {"bpm_alt": 63.0}}
+    runner = JobRunner({"analysis": analysis_of({t1: found})})
     client.app.state.runner = runner
+    assert client.get(f"/api/records/{rid}/audio").json()["analysable_track_ids"] == [t1]
     job_id = client.post(f"/api/records/{rid}/analyze").json()["job_id"]
     runner.run_pending()
     job = client.get(f"/api/jobs/{job_id}").json()
     assert job["status"] == "done"
-    assert job["result"]["looked_up_track_ids"] == [t1]
+    assert job["result"]["from_found_audio_track_ids"] == [t1]
     assert job["result"]["no_data_track_ids"] == [t2]
     validate_all(client, rid)
     conn = connect(db_path)
@@ -96,12 +87,19 @@ def test_lookup_from_discogs_link_needs_no_audio(client, db_path, audio_dir):
     conn.close()
 
 
-def test_local_audio_overrides_lookup(client, db_path, audio_dir):
+def test_nothing_is_analysed_before_there_is_audio(client, db_path, audio_dir):
+    rid, t1, t2, folder = setup_record(db_path, audio_dir)
+    assert client.post(f"/api/records/{rid}/analyze").status_code == 409
+    (folder / "A1.wav").write_bytes(b"x")
+    assert client.post(f"/api/records/{rid}/analyze", json={"track_ids": [t2]}).status_code == 409   # A2 has none
+    assert client.post(f"/api/records/{rid}/analyze", json={"track_ids": [t1]}).status_code == 202
+
+
+def test_your_own_file_wins_over_the_audio_the_search_found(client, db_path, audio_dir):
     rid, t1, t2, folder = setup_record(db_path, audio_dir)
     (folder / "A1.wav").write_bytes(b"x")
     looked = {"bpm": 100.0, "key": "C major", "camelot_key": "8B", "confidence": None, "raw": {}}
-    runner = JobRunner({"analysis": handler(analyze=fake_analyze,
-                                            lookup_fn=lambda *a: {t1: looked, t2: looked})})
+    runner = JobRunner({"analysis": analysis_of({t1: looked, t2: looked}, own=fake_analyze)})
     client.app.state.runner = runner
     job_id = client.post(f"/api/records/{rid}/analyze").json()["job_id"]
     runner.run_pending()
@@ -109,7 +107,7 @@ def test_local_audio_overrides_lookup(client, db_path, audio_dir):
     validate_all(client, rid)
     conn = connect(db_path)
     assert tracks.get(conn, t1)["bpm"] == 124.0 and tracks.get(conn, t1)["audio_path"]
-    assert tracks.get(conn, t2)["bpm"] == 100.0  # no file for A2: lookup stands
+    assert tracks.get(conn, t2)["bpm"] == 100.0  # no file of yours for A2: the audio the search found
     conn.close()
 
 
@@ -138,7 +136,7 @@ def test_analyze_endpoint_errors(client, db_path):
     conn = connect(db_path)
     rid = records.create(conn, artist="A", title="B")
     conn.close()
-    assert client.post(f"/api/records/{rid}/analyze").status_code == 400
+    assert client.post(f"/api/records/{rid}/analyze").status_code == 409   # nothing to analyse yet
     assert client.get("/api/jobs/99").status_code == 404
 
 
@@ -167,7 +165,7 @@ def test_real_engine_on_short_audio(client, db_path, audio_dir):
 
 
 def run_lookup(client, rid, results):
-    runner = JobRunner({"analysis": handler(lookup_fn=lambda *a: results)})
+    runner = JobRunner({"analysis": analysis_of(results)})
     client.app.state.runner = runner
     client.post(f"/api/records/{rid}/analyze")
     runner.run_pending()

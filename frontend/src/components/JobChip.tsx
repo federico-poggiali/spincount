@@ -30,11 +30,14 @@ export function JobChip({ label, jobId, onSettled, onRetry, retrying }: Props) {
   }, [job.data, onSettled]);
 
   const skipped = job.data?.status === "done" && typeof (job.data.result as { skipped?: string } | null)?.skipped === "string";
+  // A search stopped early because it stalled: what it found is kept, and it can be started again.
+  const halted = job.data?.status === "done" ? (job.data.result as { halted?: string } | null)?.halted : undefined;
   const text =
     status === "queued" ? "waiting"
     : status === "running" ? "working…"
     : status === "failed" ? "failed"
     : skipped ? "skipped"
+    : halted ? "stopped"
     : "done";
 
   return (
@@ -44,9 +47,10 @@ export function JobChip({ label, jobId, onSettled, onRetry, retrying }: Props) {
         <span className="micro">{label}</span>
         <b role="status">{text}</b>
         {status === "failed" && job.data?.error && <small>{job.data.error}</small>}
+        {halted && <small>Stopped: {halted}. What was found is kept.</small>}
         {skipped && <small>{(job.data!.result as { skipped: string }).skipped}</small>}
       </div>
-      {status === "failed" && <button className="ghost small" onClick={onRetry} disabled={retrying}>Retry</button>}
+      {(status === "failed" || halted) && <button className="ghost small" onClick={onRetry} disabled={retrying}>Retry</button>}
     </div>
   );
 }

@@ -36,3 +36,5 @@ frontend/tsconfig.tsbuildinfo
 youtube_token.json
 .venv311/
 .claude/
+.DS_Store
+.vscode/

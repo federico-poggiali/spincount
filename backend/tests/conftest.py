@@ -145,3 +145,28 @@ def client(db_path, audio_dir, discogs_calls, collection, wants):
     app.state.runner = JobRunner({})
     yield TestClient(app)
     app.dependency_overrides.clear()
+
+
+def give_audio(track_ids, source="discogs_youtube"):
+    """These tracks now have audio the search found (a file on disk), so they can be analysed."""
+    from app.db import track_audio
+
+    folder = config.DB_PATH.parent / "found"
+    folder.mkdir(exist_ok=True)
+    conn = connect(config.DB_PATH)
+    for tid in track_ids:
+        path = folder / f"{tid}.fake"
+        path.write_bytes(b"x")
+        track_audio.put(conn, tid, status="found", source=source, level=1, quality="full", confidence=0.9,
+                        reason="", url=None, page=None, audio_path=str(path), readings=[], alternatives=[],
+                        found_at="2026-11-14T00:00:00Z")
+    conn.close()
+
+
+def analysis_of(results, own=None):
+    """An analysis handler: the tracks in `results` have found audio that analyses to those values; your own
+    files analyse with `own`."""
+    from app.analysis.job import make_handler
+
+    give_audio(results)
+    return make_handler(analyze=lambda path: results[int(path.stem)] if path.suffix == ".fake" else own(path))

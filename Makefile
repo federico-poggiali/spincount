@@ -4,11 +4,12 @@ RUN_PY := cd backend && PYTHONPATH=..:. ../$(PY)
 export PATH := $(CURDIR)/.nodeenv/bin:$(PATH)
 PORT ?= 8000
 
-.PHONY: help setup run dev frontend-dev build test test-frontend e2e test-all lint coverage \
+.PHONY: help setup run run-test dev frontend-dev build test test-frontend e2e test-all lint coverage \
         sync-vault backfill-styles openapi types backup
 
 help:
 	@echo "make run        build the app and serve it on http://127.0.0.1:$(PORT)  (sets everything up first)"
+	@echo "make run-test   the same, with a test panel: background jobs live and the time of each search step"
 	@echo "make dev        API with auto-reload; run 'make frontend-dev' in a second terminal"
 	@echo "make test-all   every Python suite, the frontend tests and the browser tests"
 	@echo "make backup     copy the database to backend/backups/ now"
@@ -35,6 +36,12 @@ build: frontend/node_modules
 	cd frontend && npm run --silent build
 
 run: setup build
+	$(RUN_PY) -m uvicorn app.main:app --host 127.0.0.1 --port $(PORT)
+
+# Same app, plus a panel (bottom left) showing what runs in the background and how long each search step takes.
+# The terminal also logs every job and step with its time.
+run-test: export SPINCOUNT_TEST_RUN := 1
+run-test: setup build
 	$(RUN_PY) -m uvicorn app.main:app --host 127.0.0.1 --port $(PORT)
 
 dev: $(PY)

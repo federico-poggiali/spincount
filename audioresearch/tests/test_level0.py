@@ -74,3 +74,11 @@ def test_manual_link_is_level_0_and_invalidates_the_cache(tmp_path):
     r2 = research("55", range(2), identity=ident(), registry=reg, store=store, audio_dir=tmp_path / "ac")
     assert (r2.track("A1").source, r2.track("A1").level) == ("manual_link", 0)
     assert "pasted link" in r2.track("A1").reason and r2.track("A1").confidence == 0.95
+
+
+def test_what_the_app_downloaded_is_never_one_of_your_files(tmp_path):
+    from audioresearch.adapters.local_files import find_audio_files
+
+    for name in ("B1.itunes.m4a", "A.bandcamp_tracks.m4a", "A1 - Mine.mp3", "a2.title.wav"):
+        (tmp_path / name).write_bytes(b"x")
+    assert [p.name for p in find_audio_files(tmp_path)] == ["A1 - Mine.mp3", "a2.title.wav"]

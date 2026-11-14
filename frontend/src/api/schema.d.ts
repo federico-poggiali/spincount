@@ -140,6 +140,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/audio/sources": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Audio Sources
+         * @description The sources the audio search can use, grouped as Settings shows them.
+         */
+        get: operations["audio_sources"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/copies/{copy_id}": {
         parameters: {
             query?: never;
@@ -711,7 +731,8 @@ export interface paths {
         put?: never;
         /**
          * Analyze
-         * @description Analyse the whole record, or only `track_ids` when given.
+         * @description Analyse the whole record, or only `track_ids` when given, from audio that is already there: your own
+         *     files, then what the audio search found. 409 when none of those tracks has audio yet.
          */
         post: operations["analyze"];
         delete?: never;
@@ -792,8 +813,8 @@ export interface paths {
         put?: never;
         /**
          * Find Audio
-         * @description Search for this record's audio (again, with `refresh`; every level for every track, with `everything`).
-         *     BPM and key are not touched.
+         * @description Search this record's audio from scratch; tracks covered by your own files are left alone. Fast or
+         *     lengthy, and which sources, come from Settings. BPM and key are not touched.
          */
         post: operations["find_audio"];
         delete?: never;
@@ -890,8 +911,8 @@ export interface paths {
         put?: never;
         /**
          * Upload Audio
-         * @description Put one of your own files in the record's audio folder (the request body is the file). Searching
-         *     audio afterwards matches it to its track before anything online.
+         * @description Put one of your own files in the record's audio folder (the request body is the file) and match it
+         *     to its track by its name. Nothing is searched; your file becomes that track's audio.
          */
         post: operations["upload_audio"];
         delete?: never;
@@ -1338,16 +1359,15 @@ export interface components {
         };
         /** AnalyzeRequest */
         AnalyzeRequest: {
-            /**
-             * Refresh Audio
-             * @default false
-             */
-            refresh_audio: boolean;
             /** Track Ids */
             track_ids?: number[] | null;
         };
         /** AppSettings */
         AppSettings: {
+            /** Audio Search Lengthy */
+            audio_search_lengthy: boolean;
+            /** Audio Sources Off */
+            audio_sources_off: string[];
             /** Auto Collection */
             auto_collection: boolean;
             /** Auto Wantlist */
@@ -1361,6 +1381,10 @@ export interface components {
         };
         /** AppSettingsPatch */
         AppSettingsPatch: {
+            /** Audio Search Lengthy */
+            audio_search_lengthy?: boolean | null;
+            /** Audio Sources Off */
+            audio_sources_off?: string[] | null;
             /** Auto Collection */
             auto_collection?: boolean | null;
             /** Auto Wantlist */
@@ -1371,6 +1395,25 @@ export interface components {
             push_every_min?: number | null;
             /** Youtube Playlist */
             youtube_playlist?: boolean | null;
+        };
+        /** AudioSource */
+        AudioSource: {
+            /** Label */
+            label: string;
+            /** Name */
+            name: string;
+        };
+        /**
+         * AudioSourceGroup
+         * @description Audio sources that are switched on and off together in Settings (record shops also one by one).
+         */
+        AudioSourceGroup: {
+            /** Key */
+            key: string;
+            /** Label */
+            label: string;
+            /** Sources */
+            sources: components["schemas"]["AudioSource"][];
         };
         /** BandcampEmbed */
         BandcampEmbed: {
@@ -1480,19 +1523,6 @@ export interface components {
             notes: components["schemas"]["ExactNoteHit"][];
             /** Records */
             records: components["schemas"]["RecordRef"][];
-        };
-        /** FindAudioRequest */
-        FindAudioRequest: {
-            /**
-             * Everything
-             * @default false
-             */
-            everything: boolean;
-            /**
-             * Refresh
-             * @default false
-             */
-            refresh: boolean;
         };
         /** FindYouTubeRequest */
         FindYouTubeRequest: {
@@ -1923,6 +1953,11 @@ export interface components {
         };
         /** RecordAudioOut */
         RecordAudioOut: {
+            /**
+             * Analysable Track Ids
+             * @default []
+             */
+            analysable_track_ids: number[];
             /** Previews */
             previews: {
                 [key: string]: unknown;
@@ -2562,6 +2597,11 @@ export interface components {
         Uploaded: {
             /** File */
             file: string;
+            /**
+             * Matched Track Ids
+             * @default []
+             */
+            matched_track_ids: number[];
         };
         /** ValidateRequest */
         ValidateRequest: {
@@ -2813,6 +2853,26 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    audio_sources: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AudioSourceGroup"][];
                 };
             };
         };
@@ -4100,11 +4160,7 @@ export interface operations {
             };
             cookie?: never;
         };
-        requestBody?: {
-            content: {
-                "application/json": components["schemas"]["FindAudioRequest"] | null;
-            };
-        };
+        requestBody?: never;
         responses: {
             /** @description Successful Response */
             202: {

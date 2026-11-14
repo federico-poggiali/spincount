@@ -1,7 +1,7 @@
 from app import sync
 from app.db import connect, records
 from app.jobs.runner import JobRunner
-from tests.conftest import make_discogs
+from tests.conftest import give_audio, make_discogs
 
 INTAKE = {"discogs_url": "https://www.discogs.com/release/9261843"}
 
@@ -86,6 +86,7 @@ def test_sync_failure_does_not_touch_analysis_job(client, collection, db_path):
         sync.JOB_TYPE: sync.make_handler(lambda: make_discogs(fail_collection=True)),
         "analysis": lambda conn, job: {"ok": True},
     })
+    give_audio([t["id"] for t in client.get(f"/api/records/{rid}").json()["tracks"]])
     sync_job = client.post(f"/api/records/{rid}/sync-discogs").json()["job_id"]
     analysis_job = client.post(f"/api/records/{rid}/analyze").json()["job_id"]
     runner.run_pending()
@@ -96,6 +97,7 @@ def test_sync_failure_does_not_touch_analysis_job(client, collection, db_path):
 def test_analyze_can_be_limited_to_chosen_tracks(client):
     rec = client.post("/api/records/intake", json=INTAKE).json()
     ids = [t["id"] for t in rec["tracks"]]
+    give_audio(ids)
     seen = []
     client.app.state.runner = runner = JobRunner({"analysis": lambda conn, job: seen.append(job["params"]) or {}})
     job = client.post(f"/api/records/{rec['id']}/analyze", json={"track_ids": ids[:1]}).json()["job_id"]

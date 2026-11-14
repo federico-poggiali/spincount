@@ -50,7 +50,7 @@ def library(client):
 
 def test_settings_default_to_collection_on_and_wantlist_off(client):
     off = {"auto_collection": True, "auto_wantlist": False, "import_every_min": 0, "push_every_min": 0,
-           "youtube_playlist": False}
+           "youtube_playlist": False, "audio_search_lengthy": False, "audio_sources_off": []}
     assert client.get("/api/settings").json() == off
     assert client.patch("/api/settings", json={"auto_wantlist": True}).json() == {**off, "auto_wantlist": True}
 

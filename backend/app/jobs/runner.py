@@ -4,6 +4,7 @@ import sqlite3
 import threading
 from collections.abc import Callable
 
+from app.activity import activity
 from app.db import connect, jobs
 
 log = logging.getLogger(__name__)
@@ -44,13 +45,17 @@ class JobRunner:
             if job is None or job["status"] != "queued":
                 return
             jobs.set_status(conn, job_id, "running")
+            activity.job_started(job)
             try:
                 result = self.handlers[job["type"]](conn, job)
             except Exception as exc:
                 log.exception("job %s (%s) failed", job_id, job["type"])
-                jobs.set_status(conn, job_id, "failed", error=f"{type(exc).__name__}: {exc}")
+                error = f"{type(exc).__name__}: {exc}"
+                jobs.set_status(conn, job_id, "failed", error=error)
+                activity.job_finished(job_id, "failed", error)
             else:
                 jobs.set_status(conn, job_id, "done", result=result)
+                activity.job_finished(job_id, "done")
         finally:
             conn.close()
             if self._on_done:

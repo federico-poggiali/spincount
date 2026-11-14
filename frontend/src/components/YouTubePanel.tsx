@@ -83,7 +83,7 @@ export function YouTubePanel({ record }: { record: RecordDetail }) {
         </ul>
       )}
       {searched && !connected && status.isSuccess && (
-        <p className={styles.hint}><Link to="/settings">Connect YouTube in Settings</Link> to add these to a playlist.</p>
+        <p className={styles.hint}><Link to="/settings?section=youtube">Connect YouTube in Settings</Link> to add these to a playlist.</p>
       )}
       {searched && connected && (
         <div className={styles.add}>

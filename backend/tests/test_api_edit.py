@@ -1,9 +1,8 @@
 import pytest
 
-from app.analysis.job import make_handler
 from app.db import connect, records, tracks
 from app.jobs.runner import JobRunner
-from tests.conftest import make_discogs
+from tests.conftest import analysis_of
 
 
 @pytest.fixture
@@ -24,7 +23,7 @@ def test_manual_override_survives_validation_unless_overwritten(client, rec, db_
     assert body["bpm_manual"] and body["key_manual"]
 
     lookup = {"bpm": 100.0, "key": "C major", "camelot_key": "8B", "confidence": 0.9, "raw": {"x": 1}}
-    runner = JobRunner({"analysis": make_handler(make_discogs, lookup_fn=lambda *a: {t1: lookup})})
+    runner = JobRunner({"analysis": analysis_of({t1: lookup})})
     client.app.state.runner = runner
 
     def analyse_and_validate(**extra):

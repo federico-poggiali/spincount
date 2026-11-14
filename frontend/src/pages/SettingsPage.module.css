@@ -1,4 +1,18 @@
-.page { display: grid; gap: 22px; max-width: 760px; }
+.layout { display: grid; grid-template-columns: minmax(0, 760px) 180px; gap: 48px; align-items: start; }
+.page { display: grid; gap: 22px; min-width: 0; }
+.menu { position: sticky; top: 24px; border-left: 1px solid var(--line); padding-left: 16px; }
+.menu ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+.menu button { all: unset; box-sizing: border-box; display: block; width: 100%; padding: 7px 10px; border-radius: var(--r-m); color: var(--ink-3); font-size: 0.875rem; font-weight: 500; cursor: pointer; }
+.menu button:hover { color: var(--ink-2); background: color-mix(in srgb, var(--ink-3) 10%, transparent); }
+.menu button:focus-visible { outline: 2px solid var(--signal); outline-offset: 1px; }
+.menu button.current { color: var(--ink); box-shadow: inset 2px 0 0 var(--signal); }
+@media (max-width: 900px) {
+  .layout { grid-template-columns: minmax(0, 1fr); gap: 20px; }
+  .menu { order: -1; position: static; border-left: 0; border-bottom: 1px solid var(--line); padding: 0 0 8px; overflow-x: auto; }
+  .menu ul { display: flex; gap: 4px; }
+  .menu button { white-space: nowrap; }
+  .menu button.current { box-shadow: inset 0 -2px 0 var(--signal); }
+}
 .page h1 { font: 600 clamp(2rem, 5vw, 3.2rem)/1 var(--sans); letter-spacing: -0.02em; margin-top: 8px; }
 .warning { margin: 0; padding: 14px 16px; border: 1px solid var(--signal); border-radius: var(--r-m); }
 .facts { display: grid; gap: 16px; margin: 0; }
@@ -11,3 +25,10 @@
 .toggle input { width: 18px; height: 18px; accent-color: var(--signal); }
 .app { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; padding: 12px 14px; border: 1px solid var(--line); border-radius: var(--r-m); }
 .clientId { flex: 1 1 220px; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 0.8125rem; color: var(--ink-2); }
+
+.choices { display: flex; gap: 24px; flex-wrap: wrap; }
+.sources, .sources ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.sources ul { padding: 10px 0 0; grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr)); }
+.sources ul .toggle { font-weight: 400; }
+.sources details { padding-left: 28px; margin-top: 6px; }
+.sources summary { cursor: pointer; color: var(--ink-3); font-size: 0.8125rem; }

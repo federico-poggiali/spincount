@@ -11,7 +11,56 @@ import { plural } from "../lib";
 import { pushToast } from "../toast";
 import styles from "./SettingsPage.module.css";
 
+const SECTIONS = [
+  { key: "discogs", label: "Discogs" },
+  { key: "audio", label: "Audio" },
+  { key: "analysis", label: "Analysis" },
+  { key: "youtube", label: "YouTube" },
+  { key: "vault", label: "Obsidian vault" },
+] as const;
+type SectionKey = (typeof SECTIONS)[number]["key"];
+
+/** Settings, one section at a time, picked from the menu on the right. The section lives in ?section= so
+ *  other pages can link straight to it; Google's sign-in comes back with ?youtube=…, which opens YouTube. */
 export default function SettingsPage() {
+  const [params, setParams] = useSearchParams();
+  const asked = params.get("section");
+  const section: SectionKey = SECTIONS.some((s) => s.key === asked)
+    ? (asked as SectionKey)
+    : params.has("youtube") ? "youtube" : "discogs";
+  const label = SECTIONS.find((s) => s.key === section)!.label;
+
+  return (
+    <div className={styles.layout}>
+      <div className={styles.page}>
+        <header>
+          <span className="micro">settings</span>
+          <h1>{label}</h1>
+        </header>
+        {section === "discogs" && <DiscogsSection />}
+        {section === "audio" && <><AudioSearchSection /><LibraryAudioSection /></>}
+        {section === "analysis" && <KeySection />}
+        {section === "youtube" && <YouTubeSection />}
+        {section === "vault" && <VaultSection />}
+      </div>
+      <nav className={styles.menu} aria-label="Settings sections">
+        <ul>
+          {SECTIONS.map((s) => (
+            <li key={s.key}>
+              <button type="button" className={s.key === section ? styles.current : ""}
+                aria-current={s.key === section ? "page" : undefined}
+                onClick={() => setParams({ section: s.key }, { replace: true })}>
+                {s.label}
+              </button>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </div>
+  );
+}
+
+function VaultSection() {
   const client = useQueryClient();
   const status = useQuery({ queryKey: ["vault-status"], queryFn: api.vaultStatus });
   const sync = useMutation({
@@ -22,21 +71,10 @@ export default function SettingsPage() {
     mutationFn: api.openVault,
     onSuccess: (r) => pushToast(r.opened ? "Revealed in Finder." : `Not generated yet. It will be at ${r.path}`, "info"),
   });
-  const [stylesJob, setStylesJob] = useState<number | null>(null);
-  const fetchStyles = useMutation({ mutationFn: api.backfillStyles, onSuccess: ({ job_id }) => setStylesJob(job_id) });
-  const findLibraryAudio = useMutation({ mutationFn: api.findAudioForLibrary });
-  const [keysOn, setKeysOn] = useKeysEnabled();
-  const [keyFormat, setKeyFormat] = useKeyFormat();
-  const [confidenceOn, setConfidenceOn] = useKeyConfidenceEnabled();
   const last = sync.data ?? status.data?.last_sync ?? null;
 
   return (
-    <div className={styles.page}>
-      <header>
-        <span className="micro">settings</span>
-        <h1>Obsidian vault</h1>
-      </header>
-
+    <>
       <p className={styles.warning} role="note">
         <b>Edits made inside Obsidian are overwritten.</b> The vault is rebuilt from this app on every sync. Change a record, note
         or tag here and it appears in Obsidian; the other way round never happens.
@@ -63,7 +101,17 @@ export default function SettingsPage() {
         <button className="ghost" onClick={() => reveal.mutate()} disabled={reveal.isPending}>Show Dataview examples in Finder</button>
       </div>
       <p className={styles.hint}>The vault also syncs by itself a couple of seconds after any change. The Dataview examples file shows ready-made queries by BPM, key and tag.</p>
+    </>
+  );
+}
 
+function KeySection() {
+  const [keysOn, setKeysOn] = useKeysEnabled();
+  const [keyFormat, setKeyFormat] = useKeyFormat();
+  const [confidenceOn, setConfidenceOn] = useKeyConfidenceEnabled();
+
+  return (
+    <>
       <header>
         <span className="micro">analysis</span>
         <h2>Musical key</h2>
@@ -88,7 +136,15 @@ export default function SettingsPage() {
       <p className={styles.hint}>
         Adds the confidence percentage and the low-confidence warnings next to proposed and analysed keys. Needs musical key on.
       </p>
+    </>
+  );
+}
 
+function LibraryAudioSection() {
+  const findLibraryAudio = useMutation({ mutationFn: api.findAudioForLibrary });
+
+  return (
+    <>
       <header>
         <span className="micro">audio</span>
         <h2>Find audio for the library</h2>
@@ -109,8 +165,18 @@ export default function SettingsPage() {
           {findLibraryAudio.data.queued === 0 ? "Nothing to do: every record has been searched." : `${plural(findLibraryAudio.data.queued, "record")} queued. They run in the background; each record page shows its progress.`}
         </p>
       )}
+    </>
+  );
+}
 
-      <YouTubeSection />
+function DiscogsSection() {
+  const client = useQueryClient();
+  const [stylesJob, setStylesJob] = useState<number | null>(null);
+  const fetchStyles = useMutation({ mutationFn: api.backfillStyles, onSuccess: ({ job_id }) => setStylesJob(job_id) });
+
+  return (
+    <>
+      <DiscogsSync />
 
       <header>
         <span className="micro">discogs</span>
@@ -127,9 +193,81 @@ export default function SettingsPage() {
         <JobChip label="Styles" jobId={stylesJob} onRetry={() => fetchStyles.mutate()} retrying={fetchStyles.isPending}
           onSettled={() => { client.invalidateQueries({ queryKey: ["styles"] }); client.invalidateQueries({ queryKey: ["records"] }); }} />
       )}
+    </>
+  );
+}
 
-      <DiscogsSync />
-    </div>
+/** How "Search audio" works everywhere: fast or lengthy, and which sources it asks. Record shops can be
+ *  switched one by one. Your own files are not listed: they always come first. */
+function AudioSearchSection() {
+  const client = useQueryClient();
+  const settings = useQuery({ queryKey: ["app-settings"], queryFn: api.getSettings });
+  const groups = useQuery({ queryKey: ["audio-sources"], queryFn: api.audioSources, staleTime: Infinity });
+  const save = useMutation({ mutationFn: api.patchSettings, onSuccess: (s) => client.setQueryData(["app-settings"], s) });
+  const lengthy = settings.data?.audio_search_lengthy ?? false;
+  const off = new Set(settings.data?.audio_sources_off ?? []);
+  const locked = !settings.data || save.isPending;
+  const set = (names: string[], on: boolean) => {
+    const next = new Set(off);
+    names.forEach((n) => (on ? next.delete(n) : next.add(n)));
+    save.mutate({ audio_sources_off: [...next] });
+  };
+
+  return (
+    <>
+      <header>
+        <span className="micro">audio</span>
+        <h2>Audio search</h2>
+      </header>
+      <div className={styles.choices} role="radiogroup" aria-label="Search mode">
+        <label className={styles.toggle}>
+          <input type="radio" name="audio-mode" checked={!lengthy} disabled={locked} onChange={() => save.mutate({ audio_search_lengthy: false })} />
+          <span>Fast</span>
+        </label>
+        <label className={styles.toggle}>
+          <input type="radio" name="audio-mode" checked={lengthy} disabled={locked} onChange={() => save.mutate({ audio_search_lengthy: true })} />
+          <span>Lengthy</span>
+        </label>
+      </div>
+      <p className={styles.hint}>
+        {lengthy
+          ? "Lengthy asks every source below for every track, so each track also gets its other sources. It is much slower."
+          : "Fast asks the sources below one after the other and stops as soon as every track has audio."}
+        {" "}Search audio on a record always starts from scratch. Tracks with a file you uploaded are never searched.
+      </p>
+      <ul className={styles.sources} aria-label="Sources the search uses">
+        {(groups.data ?? []).map((g) => {
+          const names = g.sources.map((s) => s.name);
+          const onCount = names.filter((n) => !off.has(n)).length;
+          const box = (
+            <label className={styles.toggle}>
+              <input type="checkbox" checked={onCount > 0} disabled={locked}
+                ref={(el) => { if (el) el.indeterminate = onCount > 0 && onCount < names.length; }}
+                onChange={(e) => set(names, e.target.checked)} />
+              <span>{g.label}</span>
+            </label>
+          );
+          return g.key !== "shops" ? <li key={g.key}>{box}</li> : (
+            <li key={g.key}>
+              {box}
+              <details>
+                <summary>Choose shops ({onCount} of {names.length} on)</summary>
+                <ul>
+                  {g.sources.map((s) => (
+                    <li key={s.name}>
+                      <label className={styles.toggle}>
+                        <input type="checkbox" checked={!off.has(s.name)} disabled={locked} onChange={(e) => set([s.name], e.target.checked)} />
+                        <span>{s.label}</span>
+                      </label>
+                    </li>
+                  ))}
+                </ul>
+              </details>
+            </li>
+          );
+        })}
+      </ul>
+    </>
   );
 }
 
@@ -160,7 +298,7 @@ function YouTubeSection() {
     if (!back) return;
     if (back === "connected") pushToast("YouTube connected.", "info");
     else pushToast(params.get("message") ?? "YouTube sign-in failed.");
-    setParams({}, { replace: true });
+    setParams({ section: "youtube" }, { replace: true });
   }, [params, setParams]);
 
   return (

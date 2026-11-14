@@ -3,7 +3,6 @@ from app.analysis.job import make_handler
 from app.audio import job as audio_job
 from app.db import connect, records, track_audio, tracks
 from app.jobs.runner import JobRunner
-from tests.conftest import make_discogs
 
 
 def contract(release_id=9261843, version=1, **extra):
@@ -34,29 +33,21 @@ class Research:
     def __init__(self, result=None, error=None):
         self.calls, self.result, self.error = [], result, error
 
-    def __call__(self, release_id, audio_dir, refresh, everything=False):
+    def __call__(self, release_id, audio_dir, refresh, everything=False, sources_off=()):
         self.calls.append((release_id, refresh))
-        self.everything = everything
+        self.everything, self.sources_off, self.audio_dir = everything, list(sources_off), audio_dir
         if self.error:
             raise self.error
         return self.result or contract()
 
 
-def run_analysis(client, rid, research, body=None):
-    runner = JobRunner({"analysis": make_handler(make_discogs, lookup_fn=lambda r, t, rel: {}, research_fn=research)})
-    client.app.state.runner = runner
-    job_id = client.post(f"/api/records/{rid}/analyze", json=body).json()["job_id"]
-    runner.run_pending()
-    return client.get(f"/api/jobs/{job_id}").json()
-
-
 def test_audio_is_found_stored_and_shown(client, db_path):
     rid, t1, t2 = setup_record(db_path)
     research = Research()
-    job = run_analysis(client, rid, research)
+    job = run_audio_job(client, rid, research)
     assert job["status"] == "done"
-    assert research.calls == [(9261843, False)]
-    assert job["result"]["audio_research"]["counts"] == {"found": 2, "not_found": 1}
+    assert research.calls == [(9261843, True)]
+    assert job["result"]["counts"] == {"found": 2, "not_found": 1}
     audio = {a["track_id"]: a for a in client.get(f"/api/records/{rid}/audio").json()["tracks"]}
     assert set(audio) == {t1, t2}  # the contract's unknown track Z9 is ignored
     assert (audio[t1]["status"], audio[t1]["source"], audio[t1]["quality"], audio[t1]["confidence"]) == \
@@ -66,30 +57,10 @@ def test_audio_is_found_stored_and_shown(client, db_path):
     assert audio[t2]["status"] == "not_found"
 
 
-def test_analysing_again_reuses_the_audio_unless_asked(client, db_path):
-    rid, *_ = setup_record(db_path)
-    research = Research()
-    run_analysis(client, rid, research)
-    again = run_analysis(client, rid, research)
-    assert len(research.calls) == 1
-    assert again["result"]["audio_research"] == {"ran": False, "reason": "audio already found", "stored_track_ids": []}
-    run_analysis(client, rid, research, {"refresh_audio": True})
-    assert research.calls[-1] == (9261843, True)
-
-
-def test_a_failed_audio_search_never_stops_the_analysis(client, db_path):
-    rid, *_ = setup_record(db_path)
-    job = run_analysis(client, rid, Research(error=RuntimeError("site down")))
-    assert job["status"] == "done"
-    assert "site down" in job["result"]["audio_research"]["error"]
-    assert client.get(f"/api/records/{rid}/audio").json()["tracks"] == []
-
-
 def test_an_unknown_contract_version_is_refused(client, db_path):
     rid, *_ = setup_record(db_path)
-    job = run_analysis(client, rid, Research(result=contract(version=2)))
-    assert job["status"] == "done"
-    assert "contract version" in job["result"]["audio_research"]["error"]
+    job = run_audio_job(client, rid, Research(result=contract(version=2)))
+    assert job["status"] == "failed" and "contract version" in job["error"]
     assert client.get(f"/api/records/{rid}/audio").json()["tracks"] == []
 
 
@@ -114,7 +85,7 @@ def test_library_run_queues_only_records_without_audio(client, db_path):
 
 def test_deleting_a_track_removes_its_audio(client, db_path):
     rid, t1, _ = setup_record(db_path)
-    run_analysis(client, rid, Research())
+    run_audio_job(client, rid, Research())
     conn = connect(db_path)
     conn.execute("DELETE FROM tracks WHERE id = ?", (t1,))
     conn.commit()
@@ -122,10 +93,10 @@ def test_deleting_a_track_removes_its_audio(client, db_path):
     conn.close()
 
 
-def run_audio_job(client, rid, research, body=None):
+def run_audio_job(client, rid, research):
     runner = JobRunner({"audio": audio_job.make_handler(research)})
     client.app.state.runner = runner
-    job_id = client.post(f"/api/records/{rid}/find-audio", json=body).json()["job_id"]
+    job_id = client.post(f"/api/records/{rid}/find-audio").json()["job_id"]
     runner.run_pending()
     return client.get(f"/api/jobs/{job_id}").json()
 
@@ -150,25 +121,27 @@ def test_the_audio_job_fails_visibly_and_can_search_again(client, db_path):
     assert job["status"] == "failed" and "site down" in job["error"]
     research.error = None
     run_audio_job(client, rid, research)
-    run_audio_job(client, rid, research, {"refresh": True})
-    assert [refresh for _, refresh in research.calls] == [False, False, True]
+    run_audio_job(client, rid, research)
+    assert [refresh for _, refresh in research.calls] == [True, True, True]   # Search audio: always from scratch
 
 
-def test_finding_more_sources_searches_everything_even_when_audio_was_found(client, db_path):
+def test_the_search_follows_settings_for_its_mode_and_sources(client, db_path):
     rid, *_ = setup_record(db_path)
     research = Research()
     run_audio_job(client, rid, research)
-    run_audio_job(client, rid, research, {"everything": True})
-    assert len(research.calls) == 2 and research.everything is True
-
-
-def test_analysis_reuses_audio_found_on_add(client, db_path):
-    rid, *_ = setup_record(db_path)
-    research = Research()
+    assert (research.everything, research.sources_off) == (False, [])   # fast, every source
+    saved = client.patch("/api/settings", json={"audio_search_lengthy": True, "audio_sources_off": ["itunes", "hardwax"]})
+    assert saved.json()["audio_sources_off"] == ["hardwax", "itunes"]
     run_audio_job(client, rid, research)
-    job = run_analysis(client, rid, research)
-    assert len(research.calls) == 1
-    assert job["result"]["audio_research"]["ran"] is False
+    assert (research.everything, research.sources_off) == (True, ["hardwax", "itunes"])
+    assert client.patch("/api/settings", json={"audio_sources_off": ["../x"]}).status_code == 422
+
+
+def test_audio_sources_are_listed_in_groups_with_the_shops_one_by_one(client):
+    groups = {g["key"]: g for g in client.get("/api/audio/sources").json()}
+    assert list(groups)[0] == "youtube" and "shops" in groups
+    assert {"name": "hardwax", "label": "Hard Wax"} in groups["shops"]["sources"]
+    assert not any(s["name"] in ("local_files", "manual_link") for g in groups.values() for s in g["sources"])
 
 
 def test_previews_follow_the_viewer_rules(client, db_path):
@@ -217,7 +190,7 @@ def test_upload_audio_saves_into_the_records_folder(client, db_path, audio_dir):
     rid, _, _ = setup_record(db_path)
     url = f"/api/records/{rid}/upload-audio"
     sent = client.post(url, params={"filename": "A1 - First.mp3"}, content=b"ID3fake")
-    assert sent.status_code == 201 and sent.json() == {"file": "A1 - First.mp3"}
+    assert sent.status_code == 201 and sent.json()["file"] == "A1 - First.mp3"
     assert (audio_dir / "9261843" / "A1 - First.mp3").read_bytes() == b"ID3fake"
     assert client.post(url, params={"filename": "notes.txt"}, content=b"x").status_code == 422
     assert client.post(url, params={"filename": "../x.mp3"}, content=b"x").status_code == 422
@@ -236,3 +209,48 @@ def test_find_audio_needs_a_release(client, db_path):
     conn.close()
     assert client.post(f"/api/records/{rid}/find-audio").status_code == 400
     assert client.post("/api/records/999/find-audio").status_code == 404
+
+
+def test_an_upload_becomes_its_tracks_audio_without_searching(client, db_path, audio_dir):
+    rid, t1, t2 = setup_record(db_path)
+    run_audio_job(client, rid, Research())   # A1 found on Bandcamp, A2 not found
+    sent = client.post(f"/api/records/{rid}/upload-audio", params={"filename": "A1 - First.mp3"}, content=b"ID3fake")
+    assert sent.json()["matched_track_ids"] == [t1]
+    assert client.app.state.runner.handlers.keys() == {"audio"}   # and nothing new was queued
+    audio = {a["track_id"]: a for a in client.get(f"/api/records/{rid}/audio").json()["tracks"]}
+    assert (audio[t1]["source"], audio[t1]["status"], audio[t1]["level"]) == ("local_files", "found", 0)
+    assert audio[t1]["alternatives"][0]["source"] == "bandcamp"   # what it had stays as another source
+    assert audio[t2]["status"] == "not_found"
+    assert client.get(f"/api/tracks/{t1}/audio-file").content == b"ID3fake"
+    again = client.post(f"/api/records/{rid}/upload-audio", params={"filename": "mystery.mp3"}, content=b"ID3fake")
+    assert again.json()["matched_track_ids"] == []
+
+
+def test_downloads_never_go_among_your_files(client, db_path, audio_dir):
+    from app import config
+
+    rid, *_ = setup_record(db_path)
+    research = Research()
+    run_audio_job(client, rid, research)
+    assert research.audio_dir == config.AUDIO_CACHE_DIR != audio_dir
+
+
+def test_a_download_left_among_your_files_is_not_analysed_as_yours(client, db_path, audio_dir):
+    rid, t1, t2 = setup_record(db_path)
+    (audio_dir / "9261843").mkdir()
+    (audio_dir / "9261843" / "A1.wav").write_bytes(b"x")
+    (audio_dir / "9261843" / "A2.itunes.m4a").write_bytes(b"x")   # a download: not yours
+    mine = {"bpm": 124.0, "key": "A minor", "camelot_key": "8A", "confidence": 0.7, "raw": {}}
+    runner = JobRunner({"analysis": make_handler(analyze=lambda path: mine)})
+    client.app.state.runner = runner
+    job_id = client.post(f"/api/records/{rid}/analyze").json()["job_id"]
+    runner.run_pending()
+    result = client.get(f"/api/jobs/{job_id}").json()["result"]
+    assert result["from_audio_files_track_ids"] == [t1] and result["no_data_track_ids"] == [t2]
+
+
+def test_a_halted_search_is_reported_and_keeps_what_it_found(client, db_path):
+    rid, t1, _ = setup_record(db_path)
+    job = run_audio_job(client, rid, Research(result=contract(halted="nothing progressed for 30 s")))
+    assert job["status"] == "done" and job["result"]["halted"] == "nothing progressed for 30 s"
+    assert {a["track_id"] for a in client.get(f"/api/records/{rid}/audio").json()["tracks"]} >= {t1}

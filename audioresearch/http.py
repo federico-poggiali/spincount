@@ -9,7 +9,7 @@ from typing import Any, Callable
 
 import requests
 
-from . import config
+from . import config, progress
 from .adapters.base import AdapterError
 
 
@@ -65,6 +65,7 @@ class HttpClient:
                 except requests.RequestException as e:
                     r, last_err = None, f"{type(e).__name__}: {e}"
             if r is not None:
+                progress.beat()   # a site answered: the search is alive
                 if r.status_code < 400:
                     return r
                 last_err = f"HTTP {r.status_code} for {url}"

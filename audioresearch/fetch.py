@@ -11,7 +11,7 @@ import subprocess
 from pathlib import Path
 from typing import Callable
 
-from . import config
+from . import config, progress
 from .adapters.base import AdapterError
 from .models import FetchedAudio, Quality, ReleaseIdentity
 
@@ -76,7 +76,7 @@ def ytdlp_download(url: str, dest: Path, *, max_seconds: int = config.MAX_VIDEO_
 
     dest.parent.mkdir(parents=True, exist_ok=True)
     opts = {"format": "bestaudio/best", "outtmpl": f"{dest}.%(ext)s", "noplaylist": True, "quiet": True, "noprogress": True,
-            "no_warnings": True, "match_filter": yt_dlp.utils.match_filter_func(f"duration<={max_seconds}")}
+            "no_warnings": True, "progress_hooks": [lambda _d: progress.beat()], "match_filter": yt_dlp.utils.match_filter_func(f"duration<={max_seconds}")}
     if throttle:
         throttle()
     try:
@@ -108,6 +108,7 @@ def http_download(url: str, dest: Path, *, site: str, adapter: str, http=None) -
     with open(path, "wb") as f:
         for chunk in r.iter_content(1 << 16):
             f.write(chunk)
+            progress.beat()
     if path.stat().st_size == 0:
         path.unlink()
         raise AdapterError(f"empty download from {url}")

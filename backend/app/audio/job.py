@@ -1,6 +1,7 @@
 """The 'audio' job: find audio for a record's tracks (audioresearch), nothing else.
 
-Queued when a record is added and from Settings for the whole library. Analysis later reuses what it found.
+Queued when a record is added and from Settings for the whole library. "Search audio" on a record queues it
+with `refresh`: every track is searched from scratch, except the ones covered by your own files.
 """
 import sqlite3
 from collections.abc import Callable
@@ -22,7 +23,7 @@ def make_handler(research_fn: stage.ResearchFn,
             raise ValueError("record has no Discogs release id")
         params = job.get("params") or {}
         report = stage.run(conn, record, tracks.list_for_record(conn, record["id"]), research_fn, audio_dir,
-                           refresh=bool(params.get("refresh")), everything=bool(params.get("everything")))
+                           refresh=bool(params.get("refresh")))
         if "error" in report:  # here finding audio is the whole job, so a failure shows (and can be retried)
             raise RuntimeError(report["error"])
         return report

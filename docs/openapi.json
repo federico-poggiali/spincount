@@ -66,11 +66,6 @@
       },
       "AnalyzeRequest": {
         "properties": {
-          "refresh_audio": {
-            "default": false,
-            "title": "Refresh Audio",
-            "type": "boolean"
-          },
           "track_ids": {
             "anyOf": [
               {
@@ -91,6 +86,17 @@
       },
       "AppSettings": {
         "properties": {
+          "audio_search_lengthy": {
+            "title": "Audio Search Lengthy",
+            "type": "boolean"
+          },
+          "audio_sources_off": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Audio Sources Off",
+            "type": "array"
+          },
           "auto_collection": {
             "title": "Auto Collection",
             "type": "boolean"
@@ -117,13 +123,41 @@
           "auto_wantlist",
           "import_every_min",
           "push_every_min",
-          "youtube_playlist"
+          "youtube_playlist",
+          "audio_search_lengthy",
+          "audio_sources_off"
         ],
         "title": "AppSettings",
         "type": "object"
       },
       "AppSettingsPatch": {
         "properties": {
+          "audio_search_lengthy": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Audio Search Lengthy"
+          },
+          "audio_sources_off": {
+            "anyOf": [
+              {
+                "items": {
+                  "pattern": "^[a-z_]+$",
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Audio Sources Off"
+          },
           "auto_collection": {
             "anyOf": [
               {
@@ -185,6 +219,51 @@
           }
         },
         "title": "AppSettingsPatch",
+        "type": "object"
+      },
+      "AudioSource": {
+        "properties": {
+          "label": {
+            "title": "Label",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "label"
+        ],
+        "title": "AudioSource",
+        "type": "object"
+      },
+      "AudioSourceGroup": {
+        "description": "Audio sources that are switched on and off together in Settings (record shops also one by one).",
+        "properties": {
+          "key": {
+            "title": "Key",
+            "type": "string"
+          },
+          "label": {
+            "title": "Label",
+            "type": "string"
+          },
+          "sources": {
+            "items": {
+              "$ref": "#/components/schemas/AudioSource"
+            },
+            "title": "Sources",
+            "type": "array"
+          }
+        },
+        "required": [
+          "key",
+          "label",
+          "sources"
+        ],
+        "title": "AudioSourceGroup",
         "type": "object"
       },
       "BandcampEmbed": {
@@ -535,22 +614,6 @@
           "records"
         ],
         "title": "ExactResults",
-        "type": "object"
-      },
-      "FindAudioRequest": {
-        "properties": {
-          "everything": {
-            "default": false,
-            "title": "Everything",
-            "type": "boolean"
-          },
-          "refresh": {
-            "default": false,
-            "title": "Refresh",
-            "type": "boolean"
-          }
-        },
-        "title": "FindAudioRequest",
         "type": "object"
       },
       "FindYouTubeRequest": {
@@ -1735,6 +1798,14 @@
       },
       "RecordAudioOut": {
         "properties": {
+          "analysable_track_ids": {
+            "default": [],
+            "items": {
+              "type": "integer"
+            },
+            "title": "Analysable Track Ids",
+            "type": "array"
+          },
           "previews": {
             "additionalProperties": true,
             "title": "Previews",
@@ -3798,6 +3869,14 @@
           "file": {
             "title": "File",
             "type": "string"
+          },
+          "matched_track_ids": {
+            "default": [],
+            "items": {
+              "type": "integer"
+            },
+            "title": "Matched Track Ids",
+            "type": "array"
           }
         },
         "required": [
@@ -4258,6 +4337,32 @@
           }
         },
         "summary": "Bandcamp Embed",
+        "tags": [
+          "audio"
+        ]
+      }
+    },
+    "/api/audio/sources": {
+      "get": {
+        "description": "The sources the audio search can use, grouped as Settings shows them.",
+        "operationId": "audio_sources",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/AudioSourceGroup"
+                  },
+                  "title": "Response Audio Sources",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Audio Sources",
         "tags": [
           "audio"
         ]
@@ -5862,7 +5967,7 @@
     },
     "/api/records/{record_id}/analyze": {
       "post": {
-        "description": "Analyse the whole record, or only `track_ids` when given.",
+        "description": "Analyse the whole record, or only `track_ids` when given, from audio that is already there: your own\nfiles, then what the audio search found. 409 when none of those tracks has audio yet.",
         "operationId": "analyze",
         "parameters": [
           {
@@ -6133,7 +6238,7 @@
     },
     "/api/records/{record_id}/find-audio": {
       "post": {
-        "description": "Search for this record's audio (again, with `refresh`; every level for every track, with `everything`).\nBPM and key are not touched.",
+        "description": "Search this record's audio from scratch; tracks covered by your own files are left alone. Fast or\nlengthy, and which sources, come from Settings. BPM and key are not touched.",
         "operationId": "find_audio",
         "parameters": [
           {
@@ -6146,23 +6251,6 @@
             }
           }
         ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "anyOf": [
-                  {
-                    "$ref": "#/components/schemas/FindAudioRequest"
-                  },
-                  {
-                    "type": "null"
-                  }
-                ],
-                "title": "Body"
-              }
-            }
-          }
-        },
         "responses": {
           "202": {
             "content": {
@@ -6391,7 +6479,7 @@
     },
     "/api/records/{record_id}/upload-audio": {
       "post": {
-        "description": "Put one of your own files in the record's audio folder (the request body is the file). Searching\naudio afterwards matches it to its track before anything online.",
+        "description": "Put one of your own files in the record's audio folder (the request body is the file) and match it\nto its track by its name. Nothing is searched; your file becomes that track's audio.",
         "operationId": "upload_audio",
         "parameters": [
           {

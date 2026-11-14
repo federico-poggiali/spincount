@@ -3,6 +3,7 @@ import { useIsFetching, useQuery } from "@tanstack/react-query";
 import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
 import { api } from "../api/api";
 import { Icon, type IconName } from "./Icon";
+import { TestRunPanel } from "./TestRunPanel";
 import { Toasts } from "./Toasts";
 import styles from "./Shell.module.css";
 
@@ -103,6 +104,7 @@ export function Shell() {
         <Outlet />
       </main>
       <Toasts />
+      <TestRunPanel />
     </div>
   );
 }

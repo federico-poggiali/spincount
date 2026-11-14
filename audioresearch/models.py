@@ -179,6 +179,7 @@ class ReleaseResult:
     tracks: list[TrackResult]
     adapters_off: list[str] = field(default_factory=list)
     generated_at: str = field(default_factory=_now)
+    halted: str | None = None   # why the search was stopped early; not part of the stored contract
 
     def to_dict(self) -> dict:
         return {"contract_version": CONTRACT_VERSION, "discogs_release_id": self.discogs_release_id, "tracks": [t.to_dict() for t in self.tracks],

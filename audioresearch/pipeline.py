@@ -2,12 +2,13 @@
 from __future__ import annotations
 
 import logging
+import threading
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Callable, Iterable
 
-from . import config, decide as decide_mod, events as ev, fetch as fetch_mod, verify as verify_mod
+from . import config, decide as decide_mod, events as ev, fetch as fetch_mod, progress, verify as verify_mod
 from .adapters import Registry, default_registry
 from .adapters.base import Adapter, AdapterUnavailable
 from .decide import Accepted, confidence, decide_track
@@ -47,6 +48,7 @@ class Run:
         self.overrides = store.overrides(identity.discogs_release_id) if store else {}
         self.rejected_urls = {o["detail"] for o in self.overrides.values() if o["action"] == "reject" and o["detail"]}
         self.searched: set[tuple[str, str]] = set()   # (adapter, position) pairs already searched this run
+        self.watch: progress.Watch | None = None   # set by research(): the run's threads beat on it
 
     # ---- helpers -------------------------------------------------------------------------------
     def settled(self, pos: str) -> bool:
@@ -54,13 +56,11 @@ class Run:
         return r.level == 0 and r.status == Status.FOUND or (r.status == Status.FOUND and r.quality == Quality.FULL)
 
     def eligible(self, adapter: Adapter, pos: str) -> bool:
-        if self.search_all:
-            return True
         r = self.results[pos]
-        if r.status == Status.NOT_FOUND:
-            return True
         if r.level == 0 and r.status == Status.FOUND:
-            return False  # level 0 always wins and is never replaced
+            return False  # level 0 always wins and is never replaced: your own file needs no search
+        if self.search_all or r.status == Status.NOT_FOUND:
+            return True
         if r.status == Status.FOUND and r.quality.rank >= adapter.max_quality.rank:
             return False
         return True
@@ -91,6 +91,7 @@ class Run:
 
     # ---- stage 2 + 3 for one group of adapters -------------------------------------------------
     def _run_group(self, level: int, group: list[Adapter]) -> list[_AdapterRun]:
+        progress.bind(self.watch)
         runs: list[_AdapterRun] = []
         taken: set[str] = set()   # positions an earlier adapter of the group already matched
         for adapter in group:
@@ -208,6 +209,7 @@ class Run:
 
     def _work_position(self, level: int, pos: str, matches: list[Match], adapters: dict[str, Adapter]) -> dict:
         """Fetch candidates best first; stop at the first one that verifies."""
+        progress.bind(self.watch)
         track = self.identity.track(pos)
         out = {"fetched": {}, "failed": {}, "accepted": {}, "rejected": {}, "accepted_items": [], "verify_ms": 0}
         bump = lambda k, name: out[k].__setitem__(name, out[k].get(name, 0) + 1)  # noqa: E731
@@ -331,7 +333,10 @@ class Run:
 def research(url_or_id: str | int, levels: Iterable[int] = range(0, 6), refresh: bool = False, on_event=None, *,
              registry: Registry | None = None, identity: ReleaseIdentity | None = None, discogs=None, store=None,
              audio_dir: Path | None = None, run_id: str | None = None, review_threshold: float | None = None,
-             max_candidates: int = 3, search_all: bool = False) -> ReleaseResult:
+             max_candidates: int = 3, search_all: bool = False,
+             stall_seconds: float | None = None) -> ReleaseResult:
+    """`stall_seconds`: halt the search when nothing has progressed for that long (no event, no answer from a
+    site, no downloaded data). What was found until then is returned, with `halted` saying why."""
     levels = sorted(set(levels))
     callback = on_event
     if store is not None:
@@ -365,15 +370,52 @@ def research(url_or_id: str | int, levels: Iterable[int] = range(0, 6), refresh:
             return cached
     run = Run(identity, registry, em, store=store, refresh=refresh, audio_dir=audio_dir,
               review_threshold=review_threshold, max_candidates=max_candidates, search_all=search_all)
-    for level in levels:
-        run.run_level(level)
-        if run.all_found():
-            break  # every track has audio: no point searching the higher levels
+    run.watch = progress.Watch()
+
+    def search() -> None:
+        progress.bind(run.watch)
+        for level in levels:
+            run.run_level(level)
+            if run.all_found():
+                break  # every track has audio: no point searching the higher levels
+
+    halted = _watched(search, run.watch, stall_seconds) if stall_seconds else search()
     result = run.final()
+    if halted:
+        result.halted = f"nothing progressed for {int(stall_seconds)} s"
+        for t in result.tracks:
+            if t.status == Status.NOT_FOUND:
+                t.reason = f"search stopped: {result.halted}"
     if store is not None:
-        store.save_result(result, levels, em.run_id)
-        store.save_readings(identity.discogs_release_id, em.run_id, run.readings)
+        if not halted:   # a halted search is not the release's answer: the next one must not reuse it
+            store.save_result(result, levels, em.run_id)
+            store.save_readings(identity.discogs_release_id, em.run_id, run.readings)
         store.save_run_result(em.run_id, result)
     em.emit(ev.RUN_FINISHED, **result.counts(), ms=total.ms, adapters_off=result.adapters_off,
-            release_id=identity.discogs_release_id)
+            release_id=identity.discogs_release_id, halted=result.halted)
     return result
+
+
+def _watched(work: Callable[[], None], watch: progress.Watch, stall_seconds: float) -> bool:
+    """Run `work` on its own thread; True when it had to be halted because it stalled. Its threads stop at
+    their next beat; one stuck inside a call is left behind (daemon) and ends when that call returns."""
+    failure: list[BaseException] = []
+
+    def target() -> None:
+        try:
+            work()
+        except progress.Halted:
+            pass
+        except BaseException as e:  # noqa: BLE001  handed to the caller below
+            failure.append(e)
+
+    thread = threading.Thread(target=target, name="audioresearch-run", daemon=True)
+    thread.start()
+    while thread.is_alive():
+        thread.join(0.2)
+        if thread.is_alive() and watch.quiet_for() > stall_seconds:
+            watch.halted = True
+            return True
+    if failure:
+        raise failure[0]
+    return False

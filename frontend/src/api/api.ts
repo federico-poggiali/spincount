@@ -39,6 +39,7 @@ export type UnitPatch = Partial<S["UnitPatch"]>;
 export type CubePatch = Partial<S["CubePatch"]>;
 export type RecordOut = S["RecordOut"];
 export type AppSettings = S["AppSettings"];
+export type AudioSourceGroup = S["AudioSourceGroup"];
 export type SyncCompare = S["SyncCompare"];
 export type SyncItem = S["SyncItem"];
 export type CopyOut = S["CopyOut"];
@@ -125,8 +126,25 @@ export type LibraryQuery = {
   offset?: number;
 };
 
+/** The test-run panel's feed (`make run-test` only, not in the API schema). Times are epoch ms. */
+export type ActivityStep = {
+  level: number | null; adapter: string | null; stage: string; started: number; ms: number | null; open: boolean;
+  tracks: number | null; detail: Record<string, string | number | boolean | null>;
+};
+export type ActivityJob = {
+  id: number; type: string; record_id: number | null; record: string | null; params: Record<string, unknown>;
+  started: number; finished: number | null; status: string; error: string | null; cached: boolean;
+  steps: ActivityStep[]; levels: { level: number; started: number; ms: number | null; unfound: number; resolved?: number }[];
+  tracks: number | null; found: number | null;
+};
+export type Activity = {
+  now: number; current: ActivityJob | null; recent: ActivityJob[];
+  queued: { id: number; type: string; record_id: number | null; record: string | null }[];
+};
+
 export const api = {
   health: (signal?: AbortSignal) => get<{ status: string }>("/health", undefined, signal),
+  activity: (signal?: AbortSignal) => get<Activity>("/api/debug/activity", undefined, signal),
 
   listRecords: (query: LibraryQuery, signal?: AbortSignal) =>
     get<Page<RecordSummary>>("/api/records", query, signal),
@@ -141,16 +159,15 @@ export const api = {
   deleteCopy: (copyId: number) => send<CopyOut[]>("DELETE", `/api/copies/${copyId}`),
   intake: (body: { discogs_url: string; status: Status }) =>
     request<IntakeResponse>("POST", "/api/records/intake", { body }),
-  analyze: (id: number, trackIds?: number[], refreshAudio = false) =>
-    send<{ job_id: number }>("POST", `/api/records/${id}/analyze`,
-      trackIds || refreshAudio ? { track_ids: trackIds, refresh_audio: refreshAudio } : undefined),
+  /** From audio that is already there (your files, then what the search found); 409 when there is none. */
+  analyze: (id: number, trackIds?: number[]) =>
+    send<{ job_id: number }>("POST", `/api/records/${id}/analyze`, trackIds ? { track_ids: trackIds } : undefined),
   recordAudio: (id: number) => get<RecordAudio>(`/api/records/${id}/audio`),
-  /** `everything` searches every level for every track, for more sources (slower). */
-  findAudio: (id: number, refresh = false, everything = false) =>
-    send<{ job_id: number }>("POST", `/api/records/${id}/find-audio`,
-      refresh || everything ? { refresh, everything } : undefined),
+  /** Searches the record's audio from scratch (your own files stay); mode and sources come from Settings. */
+  findAudio: (id: number) => send<{ job_id: number }>("POST", `/api/records/${id}/find-audio`),
+  audioSources: () => get<AudioSourceGroup[]>("/api/audio/sources"),
   uploadAudio: (id: number, file: File) =>
-    request<{ file: string }>("POST", `/api/records/${id}/upload-audio`, { query: { filename: file.name }, file }).then((r) => r.data),
+    request<{ file: string; matched_track_ids: number[] }>("POST", `/api/records/${id}/upload-audio`, { query: { filename: file.name }, file }).then((r) => r.data),
   audioFileUrl: (trackId: number) => `/api/tracks/${trackId}/audio-file`,
   recordYouTube: (id: number) => get<{ tracks: TrackYouTube[] }>(`/api/records/${id}/youtube`),
   findYouTube: (id: number, refresh = false) =>

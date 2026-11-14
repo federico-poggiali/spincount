@@ -33,7 +33,8 @@ export type RecordAudioState = {
   /** Null until audio has been searched for. */
   view: (position: string, trackId: number) => TrackAudioView | null;
   searched: boolean;
-  playFirst: (() => void) | null;
+  /** Tracks with audio to analyse: a file of yours, or one the search found. */
+  analysable: Set<number>;
   /** The hidden <audio> element and the docked embedded player; render once, anywhere. */
   player: ReactNode;
 };
@@ -150,6 +151,6 @@ export function useRecordAudio(record: RecordDetail | undefined): RecordAudioSta
 
   return {
     view, searched, player, others,
-    playFirst: order.length > 0 ? () => void play(order[0]) : null,
+    analysable: new Set(data?.analysable_track_ids ?? []),
   };
 }

@@ -123,3 +123,30 @@ def test_search_all_never_stops_and_searches_every_level_for_every_track(tmp_pat
     assert (1, "A1") in matched and (2, "A1") in matched
     assert [a["source"] for a in res.track("A1").alternatives] in (["bc"], ["yt"])
     assert next(e for e in events if e.type == "run_started").data["search_all"] is True
+
+
+def test_a_track_with_a_file_of_yours_is_not_searched_even_when_searching_everything(tmp_path):
+    mine = FakeAdapter("mine", 0, [tc("mine", 0, "A1", "Night Drive", extra={"trusted": True})])
+    yt = FakeAdapter("yt", 1, [tc("yt", 1, p, t, d) for p, t, d in (("A1", "Night Drive", 360), ("A2", "Morning Light", 400))])
+    res = run(Registry([mine, yt], disabled=set()), tmp_path, search_all=True)
+    assert yt.searched == [["A2", "B1"]]
+    assert [(t.position, t.level) for t in res.tracks][:2] == [("A1", 0), ("A2", 1)]
+
+
+def test_a_search_that_stops_progressing_is_halted_and_keeps_what_it_found(tmp_path):
+    import time
+
+    yt = FakeAdapter("yt", 1, [tc("yt", 1, "A1", "Night Drive", 360)])
+    stuck = FakeAdapter("stuck", 2, [tc("stuck", 2, "A2", "Morning Light", 400)], delay=5)   # a site that hangs
+    started = time.monotonic()
+    res = run(Registry([yt, stuck], disabled=set()), tmp_path, stall_seconds=0.5)
+    assert time.monotonic() - started < 3
+    assert res.halted == "nothing progressed for 0 s"
+    assert [(t.position, t.status) for t in res.tracks] == [("A1", Status.FOUND), ("A2", Status.NOT_FOUND), ("B1", Status.NOT_FOUND)]
+    assert res.tracks[1].reason.startswith("search stopped")
+
+
+def test_a_search_that_keeps_progressing_is_not_halted(tmp_path):
+    yt = FakeAdapter("yt", 1, [tc("yt", 1, "A1", "Night Drive", 360)], delay=0.2)
+    res = run(Registry([yt], disabled=set()), tmp_path, stall_seconds=5)
+    assert res.halted is None and res.tracks[0].status == Status.FOUND

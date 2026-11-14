@@ -108,14 +108,14 @@ test("library filters live in the URL and the back button restores them", async 
 test("settings: keys are hidden until switched on", async ({ page }) => {
   await page.goto("/?view=tracks");
   await expect(page.getByRole("button", { name: "Key", exact: true })).toHaveCount(0);
-  await page.goto("/settings");
+  await page.goto("/settings?section=analysis");
   await page.getByLabel("Analyse and show musical key").check();
   await page.goto("/?view=tracks");
   await expect(page.getByRole("button", { name: "Key", exact: true })).toBeVisible();
 });
 
 test("settings: sync the vault and see the result", async ({ page }) => {
-  await page.goto("/settings");
+  await page.goto("/settings?section=vault");
   await expect(page.getByTestId("vault-dir")).toContainText("e2e/.run/vault");
   await page.getByRole("button", { name: "Sync vault now" }).click();
   await expect(page.getByTestId("last-result")).toContainText("unchanged");
@@ -286,7 +286,7 @@ test("adding a record finds its audio by itself; the track table plays it like t
   await expect(page.getByTestId("found-audio-A2")).toContainText("needs a look");
   await page.getByText("Other audio sources").click();
   await expect(page.getByTestId("other-audio").getByRole("link", { name: /Redeye/ }).first()).toHaveAttribute("href", /redeyerecords\.co\.uk/);
-  await expect(page.getByTestId("other-audio").getByRole("button", { name: "Find more sources" })).toBeEnabled();
+  await expect(page.getByTestId("other-audio").getByRole("link", { name: "Settings" })).toBeVisible();
   await expect(page.getByTestId("found-audio-A3")).toContainText("not found");
   // Play: a YouTube track opens the docked player, closing it stops.
   await page.getByRole("button", { name: "Play A1" }).click();
@@ -295,7 +295,7 @@ test("adding a record finds its audio by itself; the track table plays it like t
   await page.getByRole("button", { name: "Close player" }).click();
   await expect(page.getByRole("region", { name: "Player" })).toHaveCount(0);
   // Settings: records already searched are skipped.
-  await page.goto("/settings");
+  await page.goto("/settings?section=audio");
   await page.getByRole("button", { name: "Find audio for the library" }).click();
   await expect(page.getByTestId("library-audio-queued")).toContainText(/Nothing to do|queued/);
 });

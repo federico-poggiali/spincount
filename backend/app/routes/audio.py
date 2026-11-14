@@ -7,13 +7,15 @@ from fastapi import APIRouter, Depends, HTTPException, Query, Request
 from fastapi.responses import FileResponse
 
 from app import config
+from app.analysis import job as analysis_job
 from app.audio import job as audio_job
+from app.audio import sources, stage
 from app.audio.files import AUDIO_EXTENSIONS, audio_folder
 from app.audio.previews import plan_for_record
 from app.db import track_audio, tracks
 from app.deps import get_db, get_runner, require_record
 from app.jobs.runner import JobRunner
-from app.schemas import BandcampEmbed, FindAudioRequest, JobStarted, RecordAudioOut, Uploaded
+from app.schemas import AudioSourceGroup, BandcampEmbed, JobStarted, RecordAudioOut, Uploaded
 
 router = APIRouter(tags=["audio"])
 
@@ -23,28 +25,35 @@ MAX_UPLOAD = 1024 * 1024 * 1024  # one file
 @router.get("/api/records/{record_id}/audio", response_model=RecordAudioOut)
 def record_audio(record_id: int, conn: sqlite3.Connection = Depends(get_db)) -> dict:
     """What audioresearch found for each track, and which link each track plays."""
-    require_record(conn, record_id)
+    record = require_record(conn, record_id)
+    usable, _ = analysis_job.audio_for_analysis(conn, record, tracks.list_for_record(conn, record_id))
     return {"tracks": list(track_audio.for_record(conn, record_id).values()),
-            "previews": plan_for_record(conn, record_id)}
+            "previews": plan_for_record(conn, record_id), "analysable_track_ids": sorted(usable)}
 
 
 @router.post("/api/records/{record_id}/find-audio", status_code=202, response_model=JobStarted)
-def find_audio(record_id: int, body: FindAudioRequest | None = None,
-               conn: sqlite3.Connection = Depends(get_db), runner: JobRunner = Depends(get_runner)) -> dict:
-    """Search for this record's audio (again, with `refresh`; every level for every track, with `everything`).
-    BPM and key are not touched."""
+def find_audio(record_id: int, conn: sqlite3.Connection = Depends(get_db),
+               runner: JobRunner = Depends(get_runner)) -> dict:
+    """Search this record's audio from scratch; tracks covered by your own files are left alone. Fast or
+    lengthy, and which sources, come from Settings. BPM and key are not touched."""
     if require_record(conn, record_id)["discogs_release_id"] is None:
         raise HTTPException(400, "record has no Discogs release id, so nothing to search for")
-    params = {k: True for k in ("refresh", "everything") if body and getattr(body, k)} or None
-    return {"job_id": runner.enqueue(audio_job.JOB_TYPE, record_id, params), "status": "queued"}
+    return {"job_id": runner.enqueue(audio_job.JOB_TYPE, record_id, {"refresh": True}), "status": "queued"}
+
+
+@router.get("/api/audio/sources", response_model=list[AudioSourceGroup])
+def audio_sources() -> list[dict]:
+    """The sources the audio search can use, grouped as Settings shows them."""
+    return sources.groups()
 
 
 @router.post("/api/records/{record_id}/upload-audio", status_code=201, response_model=Uploaded)
 async def upload_audio(record_id: int, request: Request, filename: str = Query(min_length=1),
                        conn: sqlite3.Connection = Depends(get_db)) -> dict:
-    """Put one of your own files in the record's audio folder (the request body is the file). Searching
-    audio afterwards matches it to its track before anything online."""
-    folder = audio_folder(require_record(conn, record_id))
+    """Put one of your own files in the record's audio folder (the request body is the file) and match it
+    to its track by its name. Nothing is searched; your file becomes that track's audio."""
+    record = require_record(conn, record_id)
+    folder = audio_folder(record)
     if folder is None:
         raise HTTPException(400, "record has no Discogs release id, so it has no audio folder")
     if Path(filename).name != filename or filename.startswith("."):
@@ -66,7 +75,8 @@ async def upload_audio(record_id: int, request: Request, filename: str = Query(m
     if size == 0:
         target.unlink(missing_ok=True)
         raise HTTPException(422, "the file is empty")
-    return {"file": filename}
+    matched = stage.store_own_files(conn, record, tracks.list_for_record(conn, record_id))
+    return {"file": filename, "matched_track_ids": matched}
 
 
 _BINARY = {"application/octet-stream": {"schema": {"type": "string", "format": "binary"}}}

@@ -35,15 +35,22 @@ def discogs() -> DiscogsClient:
                          sleep=lambda s: None)
 
 
-def fake_lookup(record, tracks, release):
+def fake_audio(conn, record, all_tracks, audio_dir=None):
+    """Every track has audio the search found, so the analysis has something to measure."""
+    found = {t["id"]: {"path": Path(f"{i}.fake"), "own": False, "source": "discogs_youtube", "quality": "full"}
+             for i, t in enumerate(all_tracks)}
+    return found, {"folder": None, "matched": [], "unmatched_files": [], "unmatched_track_ids": []}
+
+
+def fake_analyze(path):
     keys = [("8A", "A minor"), ("4A", "F minor"), ("9B", "G major"), ("11A", "F# minor")]
-    return {t["id"]: {"bpm": 120.0 + 4 * i, "key": keys[i % 4][1], "camelot_key": keys[i % 4][0],
-                      "confidence": 0.7 if i % 3 else 0.2,
-                      "raw": {"status": "analyzed", "bpm_alt": 60.0 + 2 * i, "measurements": []}}
-            for i, t in enumerate(tracks)}
+    i = int(path.stem)
+    return {"bpm": 120.0 + 4 * i, "key": keys[i % 4][1], "camelot_key": keys[i % 4][0],
+            "confidence": 0.7 if i % 3 else 0.2,
+            "raw": {"status": "analyzed", "bpm_alt": 60.0 + 2 * i, "measurements": []}}
 
 
-def fake_research(release_id, audio_dir, refresh, everything=False):
+def fake_research(release_id, audio_dir, refresh, everything=False, sources_off=()):
     """A saved-shape audioresearch contract: first track found on Bandcamp, second needs review, the rest not found."""
     base = {"contract_version": 1, "discogs_release_id": release_id, "adapters_off": [], "generated_at": "2026-10-14T00:00:00Z"}
     fixtures = {9261843: "release_simple.json", 46673: "release_heading.json", 12472: "release_cd.json"}
@@ -63,7 +70,8 @@ def fake_research(release_id, audio_dir, refresh, everything=False):
 
 
 _make_handler = analysis_job.make_handler
-analysis_job.make_handler = lambda factory, **kw: _make_handler(factory, lookup_fn=fake_lookup, **{**kw, "research_fn": fake_research})
+analysis_job.make_handler = lambda **kw: _make_handler(analyze=fake_analyze)
+analysis_job.audio_for_analysis = fake_audio
 from app.audio import job as audio_job  # noqa: E402
 
 _audio_handler = audio_job.make_handler

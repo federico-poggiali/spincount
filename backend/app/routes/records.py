@@ -149,19 +149,20 @@ def sync_discogs(record_id: int, conn: sqlite3.Connection = Depends(get_db),
 @router.post("/{record_id}/analyze", status_code=202, response_model=JobStarted)
 def analyze(record_id: int, body: AnalyzeRequest | None = None, conn: sqlite3.Connection = Depends(get_db),
             runner: JobRunner = Depends(get_runner)) -> dict:
-    """Analyse the whole record, or only `track_ids` when given."""
+    """Analyse the whole record, or only `track_ids` when given, from audio that is already there: your own
+    files, then what the audio search found. 409 when none of those tracks has audio yet."""
     record = require_record(conn, record_id)
     body = body or AnalyzeRequest()
-    if record["discogs_release_id"] is None:
-        raise HTTPException(400, "record has no Discogs release id, so nothing to look up")
+    all_tracks = tracks.list_for_record(conn, record_id)
+    wanted = {t["id"] for t in all_tracks}
     params = {}
     if body.track_ids is not None:
-        own = {t["id"] for t in tracks.list_for_record(conn, record_id)}
-        if not body.track_ids or not set(body.track_ids) <= own:
+        if not body.track_ids or not set(body.track_ids) <= wanted:
             raise HTTPException(400, "track_ids must be a non-empty list of tracks on this record")
-        params["track_ids"] = sorted(set(body.track_ids))
-    if body.refresh_audio:
-        params["refresh_audio"] = True
+        wanted = set(body.track_ids)
+        params["track_ids"] = sorted(wanted)
+    if not wanted & set(analysis_job.audio_for_analysis(conn, record, all_tracks)[0]):
+        raise HTTPException(409, "no audio to analyse yet: search or upload audio first")
     return {"job_id": runner.enqueue(analysis_job.JOB_TYPE, record_id, params or None), "status": "queued"}
 
 

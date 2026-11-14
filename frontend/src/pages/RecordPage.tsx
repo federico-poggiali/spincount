@@ -56,17 +56,20 @@ export default function RecordPage() {
     mutationFn: (trackIds?: number[]) => api.analyze(id, trackIds),
     onSuccess: ({ job_id }, trackIds) => { setAnalysisIds(trackIds ?? null); setAnalysisJob(job_id); setAnalysing(true); },
   });
+  // Search audio: every track from scratch, except the ones covered by your own files. Fast or lengthy, and
+  // which sources, are chosen in Settings.
   const searchAgain = useMutation({
-    mutationFn: (everything: boolean = false) => api.findAudio(id, !everything, everything),
+    mutationFn: () => api.findAudio(id),
     onSuccess: ({ job_id }) => { setAudioJob(job_id); setFindingAudio(true); },
   });
-  // Your own files go into the record's audio folder; searching afterwards matches them to their tracks first.
+  // Your own files go into the record's audio folder and are matched to their tracks by name. Nothing is searched.
   const upload = useMutation({
     mutationFn: async (files: File[]) => {
-      for (const file of files) await api.uploadAudio(id, file);
-      return api.findAudio(id, true);
+      const matched = new Set<number>();
+      for (const file of files) (await api.uploadAudio(id, file)).matched_track_ids.forEach((t) => matched.add(t));
+      return { files: files.length, matched: matched.size };
     },
-    onSuccess: ({ job_id }) => { setAudioJob(job_id); setFindingAudio(true); },
+    onSettled: () => refresh(),
   });
   const pickFiles = useRef<HTMLInputElement>(null);
   // Analysis results wait as proposals until validated; `conflict` holds tracks whose hand-set values they'd replace.
@@ -106,6 +109,8 @@ export default function RecordPage() {
 
   const r = record.data;
   const analysisBusy = analyze.isPending || analysing;
+  // Analysis only measures audio that is already there: tracks you uploaded or the search found.
+  const canAnalyse = selected.size ? [...selected].some((t) => audio.analysable.has(t)) : audio.analysable.size > 0;
   const busyIds = analysing ? new Set(analysisIds ?? r.tracks.map((t) => t.id)) : undefined;
   const recordNote = r.notes.map((n) => n.body.trim()).find(Boolean);
   const pending = r.tracks.filter((t) => t.proposal);
@@ -161,20 +166,20 @@ export default function RecordPage() {
       <section aria-label="Tracks">
           <div className={styles.toolbar}>
             <div className={styles.toolbarActions}>
-              <button className="primary" onClick={() => analyze.mutate(selected.size ? [...selected] : undefined)}
-                disabled={analysisBusy || r.discogs_release_id == null}>
-                {selected.size === 0 ? "Analyse all tracks" : `Analyse ${selected.size} ${selected.size === 1 ? "track" : "tracks"}`}
-              </button>
-              {selected.size > 0 && <button className="ghost" onClick={() => setSelected(new Set())}>Clear selection</button>}
-              <button className="ghost" onClick={() => searchAgain.mutate(false)} disabled={findingAudio || searchAgain.isPending || upload.isPending || r.discogs_release_id == null}>
-                {findingAudio || searchAgain.isPending ? "Searching audio…" : audio.searched ? "Search audio again" : "Find audio"}
-              </button>
               <button className="ghost" onClick={() => pickFiles.current?.click()} disabled={upload.isPending || findingAudio || r.discogs_release_id == null}>
                 {upload.isPending ? "Uploading…" : "Upload audio"}
               </button>
               <input ref={pickFiles} type="file" accept="audio/*,.flac,.aif,.aiff" multiple hidden aria-label="Audio files to upload"
                 onChange={(e) => { const files = [...(e.target.files ?? [])]; e.target.value = ""; if (files.length) upload.mutate(files); }} />
-              {audio.playFirst && <button className="ghost" onClick={audio.playFirst}>▶ Play record</button>}
+              <button className="ghost" onClick={() => searchAgain.mutate()} disabled={findingAudio || searchAgain.isPending || upload.isPending || r.discogs_release_id == null}>
+                {findingAudio || searchAgain.isPending ? "Searching audio…" : "Search audio"}
+              </button>
+              <button className="primary" onClick={() => analyze.mutate(selected.size ? [...selected] : undefined)}
+                disabled={analysisBusy || !canAnalyse}
+                title={canAnalyse ? undefined : selected.size ? "The ticked tracks have no audio yet. Search or upload audio first." : "No audio yet. Search or upload audio first."}>
+                {selected.size === 0 ? "Analyse all tracks" : `Analyse ${selected.size} ${selected.size === 1 ? "track" : "tracks"}`}
+              </button>
+              {selected.size > 0 && <button className="ghost" onClick={() => setSelected(new Set())}>Clear selection</button>}
               {youtubeOn && (
                 <button className="ghost" aria-expanded={youtubeOpen} onClick={() => setYoutubeOpen((o) => !o)}>Add to YT playlist</button>
               )}
@@ -182,7 +187,7 @@ export default function RecordPage() {
             </div>
             {(analysisJob != null || syncJob != null || audioJob != null) && (
               <div className={styles.jobs}>
-                {audioJob != null && <JobChip label="Finding audio" jobId={audioJob} onSettled={() => { setFindingAudio(false); refresh(); }} onRetry={() => searchAgain.mutate(searchAgain.variables ?? false)} retrying={searchAgain.isPending} />}
+                {audioJob != null && <JobChip label="Finding audio" jobId={audioJob} onSettled={() => { setFindingAudio(false); refresh(); }} onRetry={() => searchAgain.mutate()} retrying={searchAgain.isPending} />}
                 {analysisJob != null && <JobChip label="Analysis" jobId={analysisJob} onSettled={() => { setAnalysing(false); refresh(); }} onRetry={() => analyze.mutate(analysisIds ?? undefined)} />}
                 {syncJob != null && <JobChip label="Discogs sync" jobId={syncJob} onSettled={() => { setSyncRunning(false); refresh(); }} onRetry={() => sync.mutate()} />}
               </div>
@@ -228,12 +233,10 @@ export default function RecordPage() {
           {audio.searched && (
             <details className={styles.others} data-testid="other-audio">
               <summary>Other audio sources{audio.others.length > 0 && <span>{audio.others.reduce((n, o) => n + o.links.length, 0)}</span>}</summary>
-              <div className={styles.othersHead}>
-                <p className={styles.hint}>{audio.others.length > 0 ? "Everything else the search found for each track." : "No other sources yet."} Finding more searches every source for every track, so it is slower.</p>
-                <button className="ghost small" onClick={() => searchAgain.mutate(true)} disabled={findingAudio || searchAgain.isPending || upload.isPending}>
-                  {findingAudio && searchAgain.variables ? "Finding more sources…" : "Find more sources"}
-                </button>
-              </div>
+              <p className={styles.hint}>
+                {audio.others.length > 0 ? "Everything else the search found for each track." : "No other sources yet."}{" "}
+                The lengthy search finds more: switch it on in <Link to="/settings?section=audio">Settings</Link>, then search audio again.
+              </p>
               {audio.others.length > 0 && <ul>
                 {audio.others.map((o) => (
                   <li key={o.position}>
@@ -245,6 +248,12 @@ export default function RecordPage() {
                 ))}
               </ul>}
             </details>
+          )}
+          {upload.isSuccess && (
+            <p className={styles.hint} role="status">
+              {upload.data.files === 1 ? "1 file uploaded" : `${upload.data.files} files uploaded`}, {upload.data.matched} matched to {upload.data.matched === 1 ? "a track" : "tracks"}.
+              {upload.data.matched < upload.data.files && " A file is matched by the position (A1, B2) or the track title in its name."}
+            </p>
           )}
           {upload.isError && <p className={styles.hint} role="alert">Upload failed: {(upload.error as Error).message}</p>}
           <p className={styles.hint}>Click a {keysOn ? "BPM or key" : "BPM"} to set it yourself. A value you set is marked manual; validating new analysis asks before replacing it.</p>

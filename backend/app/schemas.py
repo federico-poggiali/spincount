@@ -1,5 +1,5 @@
 """Pydantic models for the JSON API (the frontend generates its types from these)."""
-from typing import Generic, Literal, TypeVar
+from typing import Annotated, Generic, Literal, TypeVar
 
 from pydantic import BaseModel, Field
 
@@ -116,7 +116,6 @@ class ValidateRequest(BaseModel):
 
 class AnalyzeRequest(BaseModel):
     track_ids: list[int] | None = None  # omitted: the whole record
-    refresh_audio: bool = False  # search for audio again even if some was already found
 
 
 class DiscardRequest(BaseModel):
@@ -278,15 +277,24 @@ class ExactResults(BaseModel):
 class RecordAudioOut(BaseModel):
     tracks: list[TrackAudioOut]  # tracks never searched are left out
     previews: dict  # audioresearch's plan: {tracks: {position: option | null}, families, stores}
+    analysable_track_ids: list[int] = []  # tracks with audio to analyse: your file, or one the search found
 
 
-class FindAudioRequest(BaseModel):
-    refresh: bool = False  # search again even where audio was already found
-    everything: bool = False  # search every level for every track, for more sources (slower)
+class AudioSource(BaseModel):
+    name: str
+    label: str
+
+
+class AudioSourceGroup(BaseModel):
+    """Audio sources that are switched on and off together in Settings (record shops also one by one)."""
+    key: str
+    label: str
+    sources: list[AudioSource]
 
 
 class Uploaded(BaseModel):
     file: str
+    matched_track_ids: list[int] = []  # tracks whose audio is now one of your files (matched by file name)
 
 
 class BandcampEmbed(BaseModel):
@@ -413,6 +421,8 @@ class AppSettings(BaseModel):
     import_every_min: int  # Discogs -> Spin Count on a schedule; 0 = only when asked
     push_every_min: int    # Spin Count -> Discogs on a schedule; 0 = only when asked
     youtube_playlist: bool  # "Add to YT playlist": every track is looked up on YouTube, for playlists
+    audio_search_lengthy: bool  # the audio search asks every source for every track (slower, more sources)
+    audio_sources_off: list[str]  # audio sources the search skips (names from /api/audio/sources)
 
 
 MAX_EVERY = 7 * 24 * 60  # a week, in minutes
@@ -424,6 +434,8 @@ class AppSettingsPatch(BaseModel):
     import_every_min: int | None = Field(default=None, ge=0, le=MAX_EVERY)
     push_every_min: int | None = Field(default=None, ge=0, le=MAX_EVERY)
     youtube_playlist: bool | None = None
+    audio_search_lengthy: bool | None = None
+    audio_sources_off: list[Annotated[str, Field(pattern=r"^[a-z_]+$")]] | None = None
 
 
 class SyncItem(BaseModel):
