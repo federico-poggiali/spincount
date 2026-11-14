@@ -7,6 +7,7 @@ import { FilterBar } from "../components/FilterBar";
 import { RecordGrid, RecordTable, TrackResults } from "../components/LibraryResults";
 import { Icon } from "../components/Icon";
 import { Pagination } from "../components/Pagination";
+import { RecentlyTraded } from "../components/RecentlyTraded";
 import { Skeleton, SkeletonGrid } from "../components/Skeleton";
 import { useKeyFormat, useKeysEnabled, useStyles, useTags } from "../hooks";
 import { isFiltered, pageSize, parseFilters, serializeFilters, type Filters } from "../libraryParams";
@@ -49,6 +50,9 @@ export default function LibraryPage({ defaultStatus }: { defaultStatus: Status }
     placeholderData: (prev, prevQuery) => (prevQuery?.queryKey[1] === (tracksView ? "tracks" : "records") ? prev : undefined),
   });
 
+  const traded = useQuery({ queryKey: ["records", "recently-traded"], queryFn: api.recentlyTraded, enabled: defaultStatus === "wantlist" });
+  const tradedItems = defaultStatus === "wantlist" ? traded.data ?? [] : [];
+
   const title = defaultStatus === "owned" ? "Library" : "Wishlist";
   const data = result.data;
   const empty = data && data.total === 0;
@@ -72,6 +76,7 @@ export default function LibraryPage({ defaultStatus }: { defaultStatus: Status }
 
       {searchOpen && <SearchPopup onClose={() => setSearchOpen(false)} />}
 
+      <div className={tradedItems.length ? styles.withAside : styles.single}>
       <section aria-live="polite" aria-busy={result.isFetching} className={result.isPlaceholderData ? styles.stale : undefined}>
         {!data && result.isPending && (filters.view === "grid" ? <SkeletonGrid /> : <Skeleton rows={10} height={44} />)}
         {result.isError && !data && <p className={styles.empty}>Couldn't load the library. Check that the backend is running.</p>}
@@ -99,6 +104,8 @@ export default function LibraryPage({ defaultStatus }: { defaultStatus: Status }
         )}
         {data && <Pagination page={filters.page} limit={limit} total={data.total} onPage={(page) => change({ page })} />}
       </section>
+      {tradedItems.length > 0 && <RecentlyTraded items={tradedItems} />}
+      </div>
     </div>
   );
 }

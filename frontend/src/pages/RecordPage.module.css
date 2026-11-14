@@ -74,3 +74,5 @@
 .others li span { display: flex; flex-wrap: wrap; gap: 4px 14px; }
 .others li small { color: var(--ink-3); }
 @media (max-width: 640px) { .others li { grid-template-columns: 1fr; gap: 2px; } }
+.deleteAsk { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.deleteAsk p { flex-basis: 100%; margin: 0; color: var(--ink-2); font-size: 0.8125rem; }

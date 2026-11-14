@@ -1,0 +1,37 @@
+.sync { display: grid; gap: 14px; }
+.toggle { display: inline-flex; align-items: center; gap: 10px; font-weight: 500; cursor: pointer; }
+.toggle input { width: 18px; height: 18px; accent-color: var(--signal); }
+.hint { margin: 0; color: var(--ink-3); font-size: 0.875rem; }
+.error { margin: 0; color: var(--signal-ink); }
+.actions { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+
+.cards { display: grid; gap: 12px; }
+.card { display: grid; gap: 10px; justify-items: start; padding: 14px 16px; border: 1px solid var(--line-2); border-radius: var(--r-m); background: var(--surface); }
+.card h3 { margin: 0; font-size: 1rem; font-weight: 600; }
+.same { margin: 0; color: var(--ink-2); font-size: 0.875rem; }
+
+.list { list-style: none; margin: 0; padding: 0; width: 100%; max-height: 280px; overflow-y: auto; border-top: 1px solid var(--line); }
+.list li { border-bottom: 1px solid var(--line); }
+.list li > span, .list label { display: flex; align-items: center; gap: 10px; padding: 8px 2px; font-size: 0.875rem; }
+.list label { cursor: pointer; }
+.list input { width: 16px; height: 16px; flex: none; accent-color: var(--signal); }
+.item { display: flex; align-items: baseline; gap: 10px; min-width: 0; width: 100%; }
+.name { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--ink-2); }
+.name b { color: var(--ink); font-weight: 500; }
+.year { color: var(--ink-3); font-family: var(--mono); font-size: 0.8rem; }
+.tag { margin-left: auto; flex: none; font-size: 0.75rem; color: var(--ink-3); }
+
+.danger { border-color: color-mix(in srgb, var(--signal) 45%, transparent); }
+.confirm { display: grid; gap: 8px; width: 100%; max-width: 360px; }
+.confirm label { font-size: 0.875rem; color: var(--ink-2); }
+.confirm input { padding: 8px 10px; border: 1px solid var(--line-2); border-radius: var(--r-s); background: var(--bg); color: var(--ink); font-size: 0.95rem; }
+.confirm input:focus-visible { outline: none; border-color: var(--signal); box-shadow: 0 0 0 3px color-mix(in srgb, var(--signal) 28%, transparent); }
+.destroy { padding: 8px 14px; border: 0; border-radius: var(--r-s); background: var(--signal-fill); color: var(--on-signal); font-weight: 600; cursor: pointer; }
+.destroy:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.schedule { display: grid; gap: 8px; }
+.every { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-size: 0.875rem; }
+.everyLabel { min-width: 160px; font-weight: 500; }
+.every select, .every input { padding: 6px 8px; border: 1px solid var(--line-2); border-radius: var(--r-s); background: var(--bg); color: var(--ink); font: inherit; }
+.every input { width: 72px; font-variant-numeric: tabular-nums; }
+.every select:focus-visible, .every input:focus-visible { outline: none; border-color: var(--signal); box-shadow: 0 0 0 3px color-mix(in srgb, var(--signal) 28%, transparent); }

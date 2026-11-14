@@ -1,8 +1,11 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { api } from "../api/api";
+import { DiscogsSync } from "../components/DiscogsSync";
 import { JobChip } from "../components/JobChip";
 import { KeyFormatToggle } from "../components/KeyFormatToggle";
+import { YouTubeCredentialsForm, YouTubeQuota, YouTubeSetupGuide } from "../components/YouTubeSetup";
 import { useKeyConfidenceEnabled, useKeyFormat, useKeysEnabled } from "../hooks";
 import { plural } from "../lib";
 import { pushToast } from "../toast";
@@ -107,6 +110,8 @@ export default function SettingsPage() {
         </p>
       )}
 
+      <YouTubeSection />
+
       <header>
         <span className="micro">discogs</span>
         <h2>Styles</h2>
@@ -122,6 +127,122 @@ export default function SettingsPage() {
         <JobChip label="Styles" jobId={stylesJob} onRetry={() => fetchStyles.mutate()} retrying={fetchStyles.isPending}
           onSettled={() => { client.invalidateQueries({ queryKey: ["styles"] }); client.invalidateQueries({ queryKey: ["records"] }); }} />
       )}
+
+      <DiscogsSync />
     </div>
+  );
+}
+
+/** Add to YT playlist: when on, every track is looked up on YouTube (links only) and each record page can add
+ *  the tracks you pick to one of your YouTube playlists. Nothing goes to YouTube by itself. */
+function YouTubeSection() {
+  const client = useQueryClient();
+  const settings = useQuery({ queryKey: ["app-settings"], queryFn: api.getSettings });
+  const save = useMutation({ mutationFn: api.patchSettings, onSuccess: (s) => client.setQueryData(["app-settings"], s) });
+  const on = settings.data?.youtube_playlist ?? false;
+  const status = useQuery({ queryKey: ["youtube-status"], queryFn: api.youtubeStatus, enabled: on });
+  const connect = useMutation({ mutationFn: api.connectYouTube, onSuccess: ({ url }) => window.location.assign(url) });
+  const disconnect = useMutation({
+    mutationFn: api.disconnectYouTube,
+    onSuccess: () => client.invalidateQueries({ queryKey: ["youtube-status"] }),
+  });
+  const findLibrary = useMutation({ mutationFn: api.findYouTubeForLibrary });
+  const removeApp = useMutation({
+    mutationFn: api.removeYouTubeCredentials,
+    onSuccess: () => client.invalidateQueries({ queryKey: ["youtube-status"] }),
+  });
+  const [changing, setChanging] = useState(false);
+  const yt = status.data;
+  // Google's sign-in comes back here with ?youtube=connected or ?youtube=error&message=…
+  const [params, setParams] = useSearchParams();
+  useEffect(() => {
+    const back = params.get("youtube");
+    if (!back) return;
+    if (back === "connected") pushToast("YouTube connected.", "info");
+    else pushToast(params.get("message") ?? "YouTube sign-in failed.");
+    setParams({}, { replace: true });
+  }, [params, setParams]);
+
+  return (
+    <>
+      <header>
+        <span className="micro">youtube</span>
+        <h2>Add to YT playlist</h2>
+      </header>
+      <label className={styles.toggle}>
+        <input type="checkbox" checked={on} disabled={!settings.data || save.isPending}
+          onChange={(e) => save.mutate({ youtube_playlist: e.target.checked })} />
+        <span>Add to YT playlist</span>
+      </label>
+      <p className={styles.hint}>
+        With this on, every track of a record you add is looked up on YouTube, whatever its audio came from: the videos
+        linked on Discogs first, then a YouTube search checked on title, artist and length. Nothing is downloaded. Each
+        record page then has an Add to YT playlist button: you pick the tracks and one of your playlists. Nothing is added
+        to YouTube by itself.
+      </p>
+      {on && yt && !yt.configured && (
+        <>
+          <p className={styles.hint} role="note">
+            To add tracks to your playlists, Spin Count signs in with your own Google app. It takes about ten minutes, once,
+            and gives you your own YouTube quota: 10,000 units a day, about 200 tracks added.
+          </p>
+          <YouTubeSetupGuide />
+          <YouTubeCredentialsForm />
+        </>
+      )}
+      {on && yt?.configured && (changing ? (
+        <YouTubeCredentialsForm onDone={() => setChanging(false)} />
+      ) : (
+        <div className={styles.app}>
+          <span className="micro">Your Google app</span>
+          <span className={`mono ${styles.clientId}`} title={yt.client_id ?? ""}>{yt.client_id}</span>
+          {yt.source === "env" ? (
+            <span className={styles.hint}>from .env</span>
+          ) : (
+            <span className={styles.actions}>
+              <button className="ghost small" onClick={() => setChanging(true)}>Change</button>
+              <button className="ghost small danger" disabled={removeApp.isPending}
+                onClick={() => window.confirm("Remove your Google app from Spin Count? This also disconnects YouTube.") && removeApp.mutate()}>
+                Remove
+              </button>
+            </span>
+          )}
+        </div>
+      ))}
+      {on && yt?.usage && <YouTubeQuota usage={yt.usage} />}
+      {on && yt?.configured && (
+        <div className={styles.actions}>
+          {yt.connected ? (
+            <>
+              <span className={styles.hint} data-testid="youtube-connected">YouTube account connected.</span>
+              <button className="ghost" onClick={() => disconnect.mutate()} disabled={disconnect.isPending}>Disconnect</button>
+            </>
+          ) : (
+            <button className="primary" onClick={() => connect.mutate()} disabled={connect.isPending}>
+              {connect.isPending ? "Opening Google…" : "Connect YouTube"}
+            </button>
+          )}
+        </div>
+      )}
+      {connect.isError && <p className={styles.error} role="alert">{(connect.error as Error).message}</p>}
+      {on && (
+        <>
+          <p className={styles.hint}>
+            Records added before this was on have no YouTube links yet. This looks up every track not searched yet, record
+            by record. It is quick and uses none of YouTube&apos;s daily quota; running it again continues where it stopped.
+          </p>
+          <div className={styles.actions}>
+            <button className="ghost" onClick={() => findLibrary.mutate()} disabled={findLibrary.isPending}>
+              {findLibrary.isPending ? "Queueing…" : "Find YouTube for the library"}
+            </button>
+          </div>
+          {findLibrary.data && (
+            <p className={styles.hint} role="status">
+              {findLibrary.data.queued === 0 ? "Nothing to do: every track has been looked up." : `${plural(findLibrary.data.queued, "record")} queued. They run in the background.`}
+            </p>
+          )}
+        </>
+      )}
+    </>
   );
 }

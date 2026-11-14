@@ -1,16 +1,33 @@
-.page { display: grid; gap: 28px; }
-.head { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; flex-wrap: wrap; }
-.head h1 { font: 600 clamp(1.8rem, 4vw, 2.8rem)/1 var(--sans); letter-spacing: -0.02em; overflow-wrap: anywhere; margin-top: 8px; }
-.sub { margin: 6px 0 0; color: var(--ink-2); }
+.page { display: grid; gap: 20px; }
+.head { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; flex-wrap: wrap; }
+.head h1 { font: 600 clamp(1.4rem, 2.6vw, 2rem)/1.05 var(--sans); letter-spacing: -0.02em; overflow-wrap: anywhere; margin-top: 8px; }
+.sub { margin: 4px 0 0; color: var(--ink-2); font-size: 0.875rem; }
 .head a { display: inline-flex; align-items: center; text-decoration: none; }
-.layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 480px); gap: 32px; align-items: start; }
-.preview { display: grid; gap: 14px; position: sticky; top: 16px; min-width: 0; }
+/* The editor keeps a readable width; the preview takes the rest, stays in view and scrolls on its own. */
+.layout { display: grid; grid-template-columns: minmax(300px, 540px) minmax(340px, 1fr); gap: clamp(20px, 3vw, 40px); align-items: start; }
+.preview {
+  display: grid; gap: 12px; position: sticky; top: 16px; min-width: 0;
+  max-height: calc(100dvh - 32px); overflow-y: auto; overscroll-behavior: contain; padding-bottom: 4px;
+  container-type: inline-size;
+}
+.actions { display: flex; flex-wrap: wrap; gap: 8px; }
+/* stacked labels are kept small enough that two fit the window's height; with room for two across, side by side */
+.figures { display: grid; gap: 14px; align-items: start; max-width: max(300px, calc((100dvh - 300px) * 0.737)); }
+@container (min-width: 700px) { .figures { grid-template-columns: 1fr 1fr; max-width: none; } }
+.figure { margin: 0; display: grid; gap: 6px; min-width: 0; }
+.figure img { display: block; width: 100%; height: auto; border-radius: 6px; box-shadow: 0 0 0 1px var(--line-2); }
+.figure figcaption { display: flex; justify-content: space-between; align-items: center; gap: 8px; min-width: 0; }
+.choose :global(.micro) { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .warnings { display: grid; gap: 6px; margin: 0; padding: 10px 14px; border: 1px solid var(--signal); border-radius: var(--r-m); font-size: 0.875rem; color: var(--signal-ink); }
 .figure[data-skipped] img { opacity: 0.3; }
-.choose { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; }
+.choose { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; min-width: 0; }
 .choose input { width: 16px; height: 16px; accent-color: var(--signal); cursor: pointer; }
 .hint { margin: 0; color: var(--ink-3); font-size: 0.8125rem; }
 .missing { display: grid; gap: 12px; justify-items: start; padding-top: 10vh; }
 .missing h1 { font: 600 2rem/1.05 var(--sans); letter-spacing: -0.02em; }
 .missing a { text-decoration: none; display: inline-flex; align-items: center; }
-@media (max-width: 960px) { .layout { grid-template-columns: 1fr; } .preview { position: static; order: -1; } }
+@media (max-width: 900px) {
+  .layout { grid-template-columns: 1fr; }
+  .preview { position: static; order: -1; max-height: none; overflow: visible; }
+  .figures { max-width: none; }
+}

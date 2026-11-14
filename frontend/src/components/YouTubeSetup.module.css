@@ -1,0 +1,30 @@
+.steps { list-style: none; margin: 0; padding: 0; display: grid; border: 1px solid var(--line); border-radius: var(--r-l); }
+.step { display: grid; grid-template-columns: 24px 1fr auto; gap: 12px; align-items: start; padding: 14px 16px; }
+.step + .step { border-top: 1px solid var(--line); }
+.number {
+  display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%;
+  border: 1px solid var(--line-2); font: 500 0.75rem/1 var(--mono); color: var(--ink-2);
+}
+.stepText { display: grid; gap: 4px; min-width: 0; }
+.stepText b { font-weight: 500; }
+.stepText p { margin: 0; color: var(--ink-3); font-size: 0.875rem; }
+
+.form { display: grid; gap: 12px; }
+.field { display: grid; gap: 6px; }
+.field input { width: 100%; font-size: 0.8125rem; }
+.formActions { display: flex; gap: 10px; flex-wrap: wrap; }
+.error { margin: 0; color: var(--signal-ink); font-size: 0.875rem; }
+
+.quota { display: grid; gap: 8px; }
+.bar { height: 4px; border-radius: 2px; background: var(--line); overflow: hidden; }
+.fill, .fillLow { display: block; height: 100%; border-radius: inherit; transition: width 0.4s var(--ease); }
+.fill { background: var(--ink-2); }
+.fillLow { background: var(--signal); }
+.quotaText { margin: 0; color: var(--ink-3); font-size: 0.8125rem; }
+.compact { gap: 6px; }
+.compact .quotaText { font-size: 0.75rem; }
+
+@media (max-width: 560px) {
+  .step { grid-template-columns: 24px 1fr; }
+  .step a { grid-column: 2; justify-self: start; }
+}

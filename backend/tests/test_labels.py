@@ -152,6 +152,12 @@ def test_label_is_only_for_records_in_the_library(client):
     assert client.post("/api/records/999/label/render", json=sample().model_dump()).status_code == 404
 
 
+def test_wishlist_records_get_no_label(client, conn):
+    rid = records.create(conn, artist="A", title="Wanted", status="wantlist")
+    assert client.get(f"/api/records/{rid}/label").status_code == 409
+    assert client.post(f"/api/records/{rid}/label/render", json=sample().model_dump()).status_code == 409
+
+
 def test_render_returns_pngs_and_changes_nothing(client, record_id, conn):
     edited = client.get(f"/api/records/{record_id}/label").json()
     edited["artist"] = "Someone Else"
@@ -262,3 +268,105 @@ def _ink_below(img: Image.Image, top: int) -> tuple[int, int, int, int]:
     from PIL import ImageOps
     x0, y0, x1, y1 = ImageOps.invert(img.crop((0, top, img.width, img.height))).getbbox()
     return x0, y0 + top, x1, y1 + top
+
+
+# ---- text sizes ----
+
+def black(png: bytes) -> int:
+    return pixels(png).histogram()[0]
+
+
+def test_a_short_note_grows_to_fill_the_empty_space():
+    short = label_render.render_main(sample(note="Peak time."), lambda _: None)
+    long_ = label_render.render_main(sample(note="Peak time. " * 12), lambda _: None)
+    lone = label_render.render_main(sample(note=None), lambda _: None)
+    # the two words alone take more ink than the info at the usual note size would
+    assert black(short) - black(lone) > 3 * (black(label_render.render_main(
+        sample(note="Peak time.", sizes={"note": 0.6}), lambda _: None)) - black(lone)) / 2
+    assert not warnings_of(sample(note="Peak time.")) and black(long_) > black(lone)
+
+
+def test_size_sliders_make_text_bigger_or_smaller():
+    def ink(**sizes) -> int:  # short texts, so none has to shrink to fit
+        return black(label_render.render_main(sample(artist="Moby", title="Go", note=None, sizes=sizes),
+                                              lambda _: None))
+    usual = ink()
+    for field in ("artist", "title", "details", "info"):
+        big, small = ink(**{field: 1.4}), ink(**{field: 0.7})
+        assert small < usual < big, field
+
+
+def test_bigger_track_text_needs_more_labels():
+    many = [LabelTrack(position=f"A{i}", bpm="128", key="8A", note="Long build") for i in range(1, 6)]
+    assert len(label_render.render_tracks(sample(many), lambda _: None)) == 1
+    assert len(label_render.render_tracks(sample(many, sizes={"tracks": 1.6}), lambda _: None)) > 1
+
+
+def test_sizes_are_bounded():
+    with pytest.raises(ValueError):
+        sample(sizes={"note": 3})
+
+
+# ---- designs ----
+
+DESIGNS = ["glitchy", "corrupted", "penguin", "republic", "factory"]
+
+
+@pytest.mark.parametrize("design", DESIGNS)
+def test_every_design_draws_both_labels_at_print_size(design):
+    data = sample([LabelTrack(position=p, bpm="128", key="8A", note="Build") for p in ("A1", "A2", "B1")],
+                  design=design, note="Relentless and hypnotic, best after midnight.")
+    images, warnings = label_render.render(data)
+    assert [i.kind for i in images] == ["main", "tracks"]
+    for image in images:
+        img = pixels(image.png)
+        assert img.size == (696, 472) and img.mode == "1"
+    assert warnings == []
+
+
+@pytest.mark.parametrize("design", DESIGNS)
+def test_every_design_honours_hidden_fields_and_sizes(design):
+    base = black(label_render.render(sample(design=design))[0][0].png)
+    hidden = sample(design=design, hidden=["label", "catno", "year", "country", "styles", "note", "qr"])
+    assert black(label_render.render(hidden)[0][0].png) != base  # (penguin swaps its white QR panel for the oval)
+    bigger = sample(design=design, sizes={"title": 1.5}, title="Go")
+    assert black(label_render.render(bigger)[0][0].png) != black(label_render.render(sample(design=design, title="Go"))[0][0].png)
+
+
+@pytest.mark.parametrize("design", DESIGNS)
+def test_every_design_survives_names_its_font_cannot_spell(design):
+    images, _ = label_render.render(sample(design=design, artist="坂本龍一", title="音楽図鑑", label="School"))
+    assert pixels(images[0].png).histogram()[0] > 0
+
+
+def test_only_the_glitchy_designs_carry_doodles(monkeypatch):
+    placed = []
+    monkeypatch.setattr("app.labels.doodles.place", lambda *a, **k: placed.append(1))
+    for design in DESIGNS:
+        placed.clear()
+        label_render.render(sample(design=design))
+        assert bool(placed) == (design in ("glitchy", "corrupted")), design
+
+
+def test_a_very_long_note_is_cut_with_a_warning_in_every_design():
+    for design in DESIGNS:
+        assert any("note" in w for w in warnings_of(sample(design=design, note="Peak time. " * 60))), design
+
+
+# ---- presets ----
+
+def test_presets_save_replace_by_name_and_delete(client):
+    look = {"design": "penguin", "sizes": {"title": 1.2}, "hidden": ["country"], "track_hidden": ["tags"]}
+    items = client.post("/api/label-presets", json={"name": "Shelf", "look": look}).json()["items"]
+    assert [(p["name"], p["look"]["design"], p["look"]["sizes"]["title"]) for p in items] == [("Shelf", "penguin", 1.2)]
+    items = client.post("/api/label-presets", json={"name": "shelf", "look": {**look, "design": "factory"}}).json()["items"]
+    assert len(items) == 1 and items[0]["look"]["design"] == "factory"  # same name, any case: replaced
+    client.post("/api/label-presets", json={"name": "Gig", "look": {}})
+    assert [p["name"] for p in client.get("/api/label-presets").json()["items"]] == ["Gig", "shelf"]
+    assert client.delete(f"/api/label-presets/{items[0]['id']}").json()["items"][0]["name"] == "Gig"
+    assert client.delete("/api/label-presets/999").status_code == 404
+
+
+def test_presets_reject_unknown_designs_and_blank_names(client):
+    assert client.post("/api/label-presets", json={"name": "x", "look": {"design": "comic sans"}}).status_code == 422
+    assert client.post("/api/label-presets", json={"name": "   ", "look": {}}).status_code == 422

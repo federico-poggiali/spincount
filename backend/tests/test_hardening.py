@@ -43,9 +43,25 @@ def test_requests_are_logged_as_structured_json(client, caplog):
 def test_openapi_lists_every_endpoint_with_a_schema():
     schema = app.openapi()
     documented = {(path, method) for path, ops in schema["paths"].items() for method in ops}
-    from app.routes import admin, audio, crate, jobs, labels, notes, records, search, styles, tags, tracks
-    modules = (records, audio, tracks, notes, tags, styles, labels, search, crate, jobs, admin)
-    all_routes = [r for m in modules for r in m.router.routes]
+    from app.routes import (
+        admin,
+        audio,
+        copies,
+        crate,
+        jobs,
+        labels,
+        library_sync,
+        notes,
+        records,
+        search,
+        styles,
+        tags,
+        tracks,
+        youtube,
+    )
+    modules = (records, audio, tracks, notes, tags, styles, labels, search, crate, jobs, admin, library_sync,
+               copies, youtube)
+    all_routes = [r for m in modules for r in m.router.routes if r.include_in_schema]  # not Google's callback
     all_routes.append(next(r for r in app.routes if getattr(r, "path", "") == "/health"))
     routes = {(r.path, m.lower()) for r in all_routes for m in r.methods if m not in ("HEAD", "OPTIONS")}
     assert routes == documented

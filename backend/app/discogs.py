@@ -64,8 +64,19 @@ class DiscogsClient:
 
     def collection_instances(self, release_id: int) -> list[int]:
         """Instance ids of this release in the user's collection (any folder)."""
+        return [i for i, _ in self._instances(release_id)]
+
+    def _instances(self, release_id: int) -> list[tuple[int, int]]:
         data = self._request("GET", f"/users/{self.username}/collection/releases/{release_id}").json()
-        return [r["instance_id"] for r in data.get("releases", [])]
+        return [(r["instance_id"], r.get("folder_id", DEFAULT_FOLDER)) for r in data.get("releases", [])]
+
+    def remove_from_collection(self, release_id: int) -> int:
+        """Remove every copy of a release from the collection. Returns how many were removed."""
+        found = self._instances(release_id)
+        for instance_id, folder_id in found:
+            self._request("DELETE", f"/users/{self.username}/collection/folders/{folder_id}"
+                                    f"/releases/{release_id}/instances/{instance_id}")
+        return len(found)
 
     def add_to_collection(self, release_id: int, folder_id: int = DEFAULT_FOLDER) -> tuple[int, bool]:
         """Add a release unless it is already collected. Returns (instance_id, added)."""
@@ -74,6 +85,44 @@ class DiscogsClient:
             return existing[0], False
         path = f"/users/{self.username}/collection/folders/{folder_id}/releases/{release_id}"
         return self._request("POST", path).json()["instance_id"], True
+
+    def collection_releases(self) -> list[dict]:
+        """Every release in the user's collection (all folders), once per release, as a light record
+        with how many copies of it the collection holds."""
+        found: dict[int, dict] = {}
+        for item in self._pages(f"/users/{self.username}/collection/folders/0/releases", "releases"):
+            if item["id"] in found:
+                found[item["id"]]["copies"] += 1
+                continue
+            info = item.get("basic_information") or {}
+            found[item["id"]] = {
+                "discogs_release_id": item["id"],
+                "artist": _join_artists(info.get("artists", [])) or "Unknown artist",
+                "title": info.get("title") or "",
+                "year": info.get("year") or None,
+                "cover_url": info.get("thumb") or None,
+                "copies": 1,
+            }
+        return list(found.values())
+
+    def wantlist_ids(self) -> set[int]:
+        return {w["id"] for w in self._pages(f"/users/{self.username}/wants", "wants")}
+
+    def add_to_wantlist(self, release_id: int) -> None:
+        """Put a release on the user's wantlist (Discogs keeps one entry per release)."""
+        self._request("PUT", f"/users/{self.username}/wants/{release_id}")
+
+    def remove_from_wantlist(self, release_id: int) -> None:
+        self._request("DELETE", f"/users/{self.username}/wants/{release_id}")
+
+    def _pages(self, path: str, key: str):
+        page = 1
+        while True:
+            data = self._request("GET", path, params={"per_page": 100, "page": page}).json()
+            yield from data.get(key, [])
+            if page >= (data.get("pagination") or {}).get("pages", 1):
+                return
+            page += 1
 
     def resolve(self, url: str) -> tuple[int, int | None]:
         """Return (release_id, master_id); master_id is set when the URL was a master."""

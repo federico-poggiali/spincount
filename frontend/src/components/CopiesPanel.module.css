@@ -1,0 +1,11 @@
+.panel { display: grid; gap: 8px; }
+.panel h3 { margin: 0; font-size: 0.8125rem; font-weight: 600; color: var(--ink-2); }
+.list { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.row { display: flex; align-items: center; gap: 8px; }
+.number { flex: none; width: 2.2em; color: var(--ink-3); font-family: var(--mono); font-size: 0.8rem; }
+.select { flex: 1; min-width: 0; padding: 6px 8px; border: 1px solid var(--line-2); border-radius: var(--r-s); background: var(--bg); color: var(--ink); font: inherit; font-size: 0.8125rem; }
+.select:focus-visible { outline: none; border-color: var(--signal); box-shadow: 0 0 0 3px color-mix(in srgb, var(--signal) 28%, transparent); }
+.link { justify-self: start; padding: 0; border: 0; background: none; color: var(--ink-2); font: inherit; font-size: 0.8125rem; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+.link:hover { color: var(--ink); }
+.link:disabled { opacity: 0.5; cursor: default; }
+.hint { margin: 0; color: var(--ink-3); font-size: 0.75rem; }

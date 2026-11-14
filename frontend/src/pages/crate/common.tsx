@@ -14,7 +14,11 @@ export type Mode = "dig" | "build";
 export type Selection = { kind: "cube" | "unit"; id: number } | null;
 export type Rect = { x: number; y: number; rows: number; cols: number };
 export type Act = (fn: () => Promise<CrateOut | void>) => void;
-export type PlaceRecord = (recordId: number, sectionId: number | null) => void;
+/** copyId is set when a second (or later) copy moves; copy 1 moves the record itself. */
+export type PlaceRecord = (recordId: number, sectionId: number | null, copyId?: number | null) => void;
+
+/** A list key that tells two copies of one record apart. */
+export const rowKey = (r: CrateRecord) => `${r.id}-${r.copy_number ?? 1}`;
 
 export const cubeCount = (cube: CubeOut) => cube.sections.reduce((n, s) => n + s.records.length, 0);
 
@@ -28,15 +32,16 @@ export function RecordRow({ record, sectionId, places, onPlace, children }: {
   record: CrateRecord; sectionId: number | null; places: Map<number, Place>; onPlace: PlaceRecord; children?: ReactNode;
 }) {
   return (
-    <li className={styles.row} draggable onDragStart={(e) => { e.dataTransfer.setData(DRAG_TYPE, String(record.id)); e.dataTransfer.effectAllowed = "move"; }}>
-      <span className={styles.grip} aria-hidden="true">⋮⋮</span>
+    <li className={styles.row} draggable={record.copy_id == null}
+      onDragStart={(e) => { e.dataTransfer.setData(DRAG_TYPE, String(record.id)); e.dataTransfer.effectAllowed = "move"; }}>
+      <span className={styles.grip} aria-hidden="true">{record.copy_id == null ? "⋮⋮" : ""}</span>
       <Cover url={record.cover_url} size={40} />
       <div className={styles.rowText}>
-        <Link to={`/records/${record.id}`}><b>{record.title}</b></Link>
+        <Link to={`/records/${record.id}`}><b>{record.title}</b>{record.copy_id != null && <span className={styles.copyTag}> copy {record.copy_number}</span>}</Link>
         <span>{record.artist}{record.year ? ` · ${record.year}` : ""}</span>
         {children}
       </div>
-      <ShelfSelect className={styles.move} value={sectionId} places={places} label={`Move ${record.title}`} onChange={(id) => onPlace(record.id, id)} />
+      <ShelfSelect className={styles.move} value={sectionId} places={places} label={`Move ${record.title}`} onChange={(id) => onPlace(record.id, id, record.copy_id)} />
     </li>
   );
 }

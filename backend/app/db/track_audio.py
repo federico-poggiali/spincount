@@ -30,6 +30,12 @@ def for_record(conn: sqlite3.Connection, record_id: int) -> dict[int, dict]:
     return {r["track_id"]: _out(r) for r in rows}
 
 
+def for_tracks(conn: sqlite3.Connection, track_ids: list[int]) -> dict[int, dict]:
+    marks = ",".join("?" * len(track_ids)) or "NULL"
+    rows = conn.execute(f"SELECT * FROM track_audio WHERE track_id IN ({marks})", track_ids)
+    return {r["track_id"]: _out(r) for r in rows}
+
+
 def records_without_audio(conn: sqlite3.Connection) -> list[int]:
     """Records with a Discogs id and tracks, none of which has an audio row yet."""
     rows = conn.execute(

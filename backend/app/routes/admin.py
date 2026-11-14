@@ -6,11 +6,12 @@ from fastapi import APIRouter, Depends, HTTPException, Request
 
 from app import backfill, config
 from app.audio import job as audio_job
-from app.db import track_audio
+from app.db import track_audio, track_youtube
 from app.deps import get_db, get_runner
 from app.jobs.runner import JobRunner
 from app.schemas import JobStarted, LibraryAudioStarted, OpenedPath, VaultStatus, VaultSyncOut
 from app.vault import EXAMPLES_FILE, VaultSyncer
+from app.youtube import links as youtube_links
 
 router = APIRouter(prefix="/api/admin", tags=["admin"])
 
@@ -47,6 +48,16 @@ def find_audio_for_library(conn: sqlite3.Connection = Depends(get_db),
     searched are skipped, so running it again only continues where it stopped. BPM and key are not touched."""
     ids = [runner.enqueue(audio_job.JOB_TYPE, record_id)
            for record_id in track_audio.records_without_audio(conn)]
+    return {"queued": len(ids), "job_ids": ids}
+
+
+@router.post("/find-youtube", status_code=202, response_model=LibraryAudioStarted)
+def find_youtube_for_library(conn: sqlite3.Connection = Depends(get_db),
+                             runner: JobRunner = Depends(get_runner)) -> dict:
+    """Find every track not searched yet on YouTube, record by record (links only, no quota used). Running it
+    again only continues where it stopped."""
+    ids = [runner.enqueue(youtube_links.JOB_TYPE, record_id)
+           for record_id in track_youtube.records_without_youtube(conn)]
     return {"queued": len(ids), "job_ids": ids}
 
 

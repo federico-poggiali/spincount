@@ -40,6 +40,7 @@ export function LabelPreview({ images, warnings, stem, onReset, canReset, hint }
           {warnings.map((w) => <li key={w}>{w}</li>)}
         </ul>
       )}
+      <div className={styles.figures}>
       {images.map((image) => (
         <figure key={image.name} className={styles.figure} data-skipped={isSkipped(image.name) || undefined}>
           <img src={`data:image/png;base64,${image.png_base64}`} alt={`${imageTitle(image)} preview`} width={image.width} height={image.height} />
@@ -55,6 +56,7 @@ export function LabelPreview({ images, warnings, stem, onReset, canReset, hint }
           </figcaption>
         </figure>
       ))}
+      </div>
       <p className={styles.hint}>{hint}</p>
     </aside>
   );

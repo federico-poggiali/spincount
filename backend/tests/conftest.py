@@ -24,7 +24,8 @@ def load_fixture(name: str) -> dict:
 
 def fake_discogs_transport(calls: list[str] | None = None,
                            collection: dict[int, list[int]] | None = None,
-                           fail_collection: bool = False) -> httpx.MockTransport:
+                           fail_collection: bool = False,
+                           wants: set[int] | None = None) -> httpx.MockTransport:
     """Serves saved real responses. Master 137924 resolves to release 12472 (served as 'cd')."""
     releases = {
         9261843: load_fixture("release_simple.json"),
@@ -42,6 +43,15 @@ def fake_discogs_transport(calls: list[str] | None = None,
             if fail_collection:
                 return httpx.Response(500)
             owned = collection if collection is not None else {}
+            if parts[3:] == ["folders", "0", "releases"]:  # GET the whole collection, page by page
+                per_page, page = int(request.url.params["per_page"]), int(request.url.params["page"])
+                items = [{"id": rid, "instance_id": i, "basic_information": {
+                    "title": releases[rid]["title"] if rid in releases else f"Release {rid}",
+                    "artists": [{"name": "Fake Artist", "join": ""}], "year": 2001, "thumb": ""}}
+                    for rid, instances in owned.items() for i in instances]
+                pages = max(1, -(-len(items) // per_page))
+                return httpx.Response(200, json={"pagination": {"page": page, "pages": pages},
+                                                 "releases": items[(page - 1) * per_page:page * per_page]})
             if parts[3] == "releases":  # GET instances of one release
                 rid = int(parts[4])
                 instances = [{"instance_id": i} for i in owned.get(rid, [])]
@@ -54,6 +64,16 @@ def fake_discogs_transport(calls: list[str] | None = None,
             if request.method == "DELETE":
                 owned[rid].remove(int(parts[8]))
                 return httpx.Response(204)
+        if parts[:3] == ["users", "tester", "wants"]:
+            wanted = wants if wants is not None else set()
+            if len(parts) == 3:  # GET the wantlist (one page is enough here)
+                return httpx.Response(200, json={"pagination": {"page": 1, "pages": 1},
+                                                 "wants": [{"id": rid} for rid in sorted(wanted)]})
+            if request.method == "DELETE":
+                wanted.discard(int(parts[3]))
+                return httpx.Response(204)
+            wanted.add(int(parts[3]))
+            return httpx.Response(201, json={"id": int(parts[3])})
         if parts[0] == "releases" and int(parts[1]) in releases:
             return httpx.Response(200, json=releases[int(parts[1])])
         if parts[0] == "masters" and int(parts[1]) == 137924:
@@ -109,14 +129,19 @@ def collection():
     return {}
 
 
-def make_discogs(calls=None, collection=None, fail_collection=False) -> DiscogsClient:
-    transport = fake_discogs_transport(calls, collection, fail_collection)
+@pytest.fixture
+def wants():
+    return set()
+
+
+def make_discogs(calls=None, collection=None, fail_collection=False, wants=None) -> DiscogsClient:
+    transport = fake_discogs_transport(calls, collection, fail_collection, wants)
     return DiscogsClient("test-token", client=httpx.Client(transport=transport), sleep=lambda s: None)
 
 
 @pytest.fixture
-def client(db_path, audio_dir, discogs_calls, collection):
-    app.dependency_overrides[get_discogs] = lambda: make_discogs(discogs_calls, collection)
+def client(db_path, audio_dir, discogs_calls, collection, wants):
+    app.dependency_overrides[get_discogs] = lambda: make_discogs(discogs_calls, collection, wants=wants)
     app.state.runner = JobRunner({})
     yield TestClient(app)
     app.dependency_overrides.clear()

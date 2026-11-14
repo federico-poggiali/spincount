@@ -4,7 +4,8 @@ import sqlite3
 from app.db import _util
 
 _COLUMNS = {"discogs_release_id", "artist", "title", "label", "year", "format", "cover_url",
-            "status", "discogs_collection_synced", "styles", "styles_manual", "catno"}
+            "status", "discogs_collection_synced", "styles", "styles_manual", "catno",
+            "traded_at", "discogs_wantlist_synced"}
 
 
 def clean_styles(styles: list[str]) -> list[str]:

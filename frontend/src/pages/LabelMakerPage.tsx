@@ -1,13 +1,13 @@
-import { useState, type FormEvent } from "react";
+import { useMemo, useState, type FormEvent } from "react";
 import { keepPreviousData, useMutation, useQuery } from "@tanstack/react-query";
 import { api, type LabelData } from "../api/api";
-import { LabelEditor } from "../components/LabelEditor";
+import { DEFAULT_SIZES, LabelEditor, withSavedLook } from "../components/LabelEditor";
 import { fileStem, LabelPreview } from "../components/LabelPreview";
-import { useDebounced } from "../hooks";
+import { useDebounced, useLabelPresets } from "../hooks";
 import shared from "../styles/intake.module.css";
 import styles from "./LabelPage.module.css";
 
-const BLANK: LabelData = { artist: "", title: "", styles: [], hidden: [], tracks: [] };
+const BLANK: LabelData = { artist: "", title: "", styles: [], hidden: [], tracks: [], sizes: DEFAULT_SIZES, design: "glitchy" };
 
 /** Make a label for a record you do not have: start blank, or paste a Discogs link to fill it in. Nothing is saved. */
 export default function LabelMakerPage() {
@@ -18,8 +18,9 @@ export default function LabelMakerPage() {
     mutationFn: () => api.labelFromDiscogs(url.trim()),
     onSuccess: (data) => { setStart(data); setEdited(null); },
   });
-  const label = edited ?? start;
+  const label = useMemo(() => edited ?? (start && withSavedLook(start)), [edited, start]);
   const settled = useDebounced(label, 250);
+  const presets = useLabelPresets();
   const preview = useQuery({
     queryKey: ["label-render", "loose", settled],
     queryFn: () => api.renderLooseLabel(settled!),
@@ -52,7 +53,7 @@ export default function LabelMakerPage() {
 
       {label && (
         <div className={styles.layout}>
-          <LabelEditor value={label} onChange={setEdited} loose />
+          <LabelEditor value={label} onChange={setEdited} loose presets={presets} />
           <LabelPreview
             images={preview.data?.images ?? []} warnings={preview.data?.warnings ?? []} stem={fileStem(label)}
             onReset={() => setEdited(null)} canReset={edited != null}

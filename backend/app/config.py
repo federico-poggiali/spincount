@@ -15,3 +15,10 @@ DISCOGS_TOKEN = os.environ.get("DISCOGS_TOKEN", "")
 USER_AGENT = f"VinylSecondBrain/0.1 ( {os.environ.get('CONTACT_EMAIL', '')} )"
 CORS_ORIGINS = [o.strip() for o in os.environ.get(
     "CORS_ORIGINS", "http://localhost:5173,http://127.0.0.1:5173").split(",") if o.strip()]
+# "Add to YT playlist": your Google OAuth client of type "Desktop app", from .env or pasted in Settings (kept
+# in YOUTUBE_CLIENT; .env wins). The sign-in token and today's quota count are kept next to the database too.
+YOUTUBE_CLIENT_ID = os.environ.get("YOUTUBE_CLIENT_ID", "")
+YOUTUBE_CLIENT_SECRET = os.environ.get("YOUTUBE_CLIENT_SECRET", "")
+YOUTUBE_CLIENT = path_setting("YOUTUBE_CLIENT", DB_PATH.parent / "youtube_client.json")
+YOUTUBE_TOKEN = path_setting("YOUTUBE_TOKEN", DB_PATH.parent / "youtube_token.json")
+YOUTUBE_USAGE = path_setting("YOUTUBE_USAGE", DB_PATH.parent / "youtube_usage.json")

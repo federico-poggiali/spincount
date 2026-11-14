@@ -156,7 +156,9 @@ test("make a label: preview follows the edits, the record stays untouched, and i
   await page.getByLabel("Country", { exact: true }).fill("UK");
   await expect.poll(() => main.getAttribute("src")).not.toBe(before);
   const withCountry = await main.getAttribute("src");
+  await page.getByRole("button", { name: /Customize/ }).click();
   await page.getByLabel("Print country").uncheck();
+  await expect(page.getByLabel("Country", { exact: true })).toHaveCount(0); // left off the label, so off the form
   await expect.poll(() => main.getAttribute("src")).not.toBe(withCountry);
 
   const download = page.waitForEvent("download");

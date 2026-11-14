@@ -1,6 +1,69 @@
 {
   "components": {
     "schemas": {
+      "AddToPlaylist": {
+        "properties": {
+          "track_ids": {
+            "items": {
+              "type": "integer"
+            },
+            "maxItems": 200,
+            "minItems": 1,
+            "title": "Track Ids",
+            "type": "array"
+          }
+        },
+        "required": [
+          "track_ids"
+        ],
+        "title": "AddToPlaylist",
+        "type": "object"
+      },
+      "AddedToPlaylist": {
+        "properties": {
+          "added": {
+            "items": {
+              "type": "integer"
+            },
+            "title": "Added",
+            "type": "array"
+          },
+          "already": {
+            "items": {
+              "type": "integer"
+            },
+            "title": "Already",
+            "type": "array"
+          },
+          "failed": {
+            "items": {
+              "$ref": "#/components/schemas/TrackError"
+            },
+            "title": "Failed",
+            "type": "array"
+          },
+          "no_video": {
+            "items": {
+              "type": "integer"
+            },
+            "title": "No Video",
+            "type": "array"
+          },
+          "quota_exceeded": {
+            "title": "Quota Exceeded",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "added",
+          "already",
+          "no_video",
+          "failed",
+          "quota_exceeded"
+        ],
+        "title": "AddedToPlaylist",
+        "type": "object"
+      },
       "AnalyzeRequest": {
         "properties": {
           "refresh_audio": {
@@ -26,6 +89,104 @@
         "title": "AnalyzeRequest",
         "type": "object"
       },
+      "AppSettings": {
+        "properties": {
+          "auto_collection": {
+            "title": "Auto Collection",
+            "type": "boolean"
+          },
+          "auto_wantlist": {
+            "title": "Auto Wantlist",
+            "type": "boolean"
+          },
+          "import_every_min": {
+            "title": "Import Every Min",
+            "type": "integer"
+          },
+          "push_every_min": {
+            "title": "Push Every Min",
+            "type": "integer"
+          },
+          "youtube_playlist": {
+            "title": "Youtube Playlist",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "auto_collection",
+          "auto_wantlist",
+          "import_every_min",
+          "push_every_min",
+          "youtube_playlist"
+        ],
+        "title": "AppSettings",
+        "type": "object"
+      },
+      "AppSettingsPatch": {
+        "properties": {
+          "auto_collection": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Auto Collection"
+          },
+          "auto_wantlist": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Auto Wantlist"
+          },
+          "import_every_min": {
+            "anyOf": [
+              {
+                "maximum": 10080.0,
+                "minimum": 0.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Import Every Min"
+          },
+          "push_every_min": {
+            "anyOf": [
+              {
+                "maximum": 10080.0,
+                "minimum": 0.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Push Every Min"
+          },
+          "youtube_playlist": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Youtube Playlist"
+          }
+        },
+        "title": "AppSettingsPatch",
+        "type": "object"
+      },
       "BandcampEmbed": {
         "properties": {
           "id": {
@@ -42,6 +203,63 @@
           "id"
         ],
         "title": "BandcampEmbed",
+        "type": "object"
+      },
+      "CopyOut": {
+        "properties": {
+          "copy_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Copy Id"
+          },
+          "number": {
+            "title": "Number",
+            "type": "integer"
+          },
+          "section_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Section Id"
+          }
+        },
+        "required": [
+          "number",
+          "copy_id",
+          "section_id"
+        ],
+        "title": "CopyOut",
+        "type": "object"
+      },
+      "CopyPlace": {
+        "properties": {
+          "section_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Section Id"
+          }
+        },
+        "required": [
+          "section_id"
+        ],
+        "title": "CopyPlace",
         "type": "object"
       },
       "CrateOut": {
@@ -73,6 +291,22 @@
           "artist": {
             "title": "Artist",
             "type": "string"
+          },
+          "copy_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Copy Id"
+          },
+          "copy_number": {
+            "default": 1,
+            "title": "Copy Number",
+            "type": "integer"
           },
           "cover_url": {
             "anyOf": [
@@ -319,6 +553,17 @@
         "title": "FindAudioRequest",
         "type": "object"
       },
+      "FindYouTubeRequest": {
+        "properties": {
+          "refresh": {
+            "default": false,
+            "title": "Refresh",
+            "type": "boolean"
+          }
+        },
+        "title": "FindYouTubeRequest",
+        "type": "object"
+      },
       "FromDiscogs": {
         "properties": {
           "discogs_url": {
@@ -549,6 +794,17 @@
             "title": "Tracks",
             "type": "array"
           },
+          "traded_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Traded At"
+          },
           "year": {
             "anyOf": [
               {
@@ -706,6 +962,18 @@
             "description": "Not stored: type it in if you want it printed",
             "title": "Country"
           },
+          "design": {
+            "default": "glitchy",
+            "enum": [
+              "glitchy",
+              "corrupted",
+              "penguin",
+              "republic",
+              "factory"
+            ],
+            "title": "Design",
+            "type": "string"
+          },
           "hidden": {
             "default": [],
             "items": {
@@ -756,6 +1024,17 @@
             ],
             "description": "The Discogs page the QR code opens",
             "title": "Qr Url"
+          },
+          "sizes": {
+            "$ref": "#/components/schemas/LabelSizes",
+            "default": {
+              "artist": 1.0,
+              "details": 1.0,
+              "info": 1.0,
+              "note": 1.0,
+              "title": 1.0,
+              "tracks": 1.0
+            }
           },
           "styles": {
             "default": [],
@@ -833,6 +1112,127 @@
         "title": "LabelImage",
         "type": "object"
       },
+      "LabelLook": {
+        "description": "Everything Customize sets, apart from the text: what a saved preset holds.",
+        "properties": {
+          "design": {
+            "default": "glitchy",
+            "enum": [
+              "glitchy",
+              "corrupted",
+              "penguin",
+              "republic",
+              "factory"
+            ],
+            "title": "Design",
+            "type": "string"
+          },
+          "hidden": {
+            "default": [],
+            "items": {
+              "enum": [
+                "label",
+                "catno",
+                "year",
+                "country",
+                "styles",
+                "note",
+                "qr"
+              ],
+              "type": "string"
+            },
+            "title": "Hidden",
+            "type": "array"
+          },
+          "sizes": {
+            "$ref": "#/components/schemas/LabelSizes",
+            "default": {
+              "artist": 1.0,
+              "details": 1.0,
+              "info": 1.0,
+              "note": 1.0,
+              "title": 1.0,
+              "tracks": 1.0
+            }
+          },
+          "track_hidden": {
+            "default": [],
+            "items": {
+              "enum": [
+                "artist",
+                "bpm",
+                "key",
+                "tags",
+                "note"
+              ],
+              "type": "string"
+            },
+            "title": "Track Hidden",
+            "type": "array"
+          }
+        },
+        "title": "LabelLook",
+        "type": "object"
+      },
+      "LabelPreset": {
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          },
+          "look": {
+            "$ref": "#/components/schemas/LabelLook"
+          },
+          "name": {
+            "maxLength": 60,
+            "minLength": 1,
+            "title": "Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "look",
+          "id"
+        ],
+        "title": "LabelPreset",
+        "type": "object"
+      },
+      "LabelPresetIn": {
+        "properties": {
+          "look": {
+            "$ref": "#/components/schemas/LabelLook"
+          },
+          "name": {
+            "maxLength": 60,
+            "minLength": 1,
+            "title": "Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "look"
+        ],
+        "title": "LabelPresetIn",
+        "type": "object"
+      },
+      "LabelPresetList": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/LabelPreset"
+            },
+            "title": "Items",
+            "type": "array"
+          }
+        },
+        "required": [
+          "items"
+        ],
+        "title": "LabelPresetList",
+        "type": "object"
+      },
       "LabelRender": {
         "properties": {
           "images": {
@@ -855,6 +1255,59 @@
           "warnings"
         ],
         "title": "LabelRender",
+        "type": "object"
+      },
+      "LabelSizes": {
+        "description": "How big each text is, as a factor of its usual size. Text still shrinks to fit from there.",
+        "properties": {
+          "artist": {
+            "default": 1.0,
+            "maximum": 1.6,
+            "minimum": 0.6,
+            "title": "Artist",
+            "type": "number"
+          },
+          "details": {
+            "default": 1.0,
+            "description": "The label and Cat# line",
+            "maximum": 1.6,
+            "minimum": 0.6,
+            "title": "Details",
+            "type": "number"
+          },
+          "info": {
+            "default": 1.0,
+            "description": "Year, country and styles",
+            "maximum": 1.6,
+            "minimum": 0.6,
+            "title": "Info",
+            "type": "number"
+          },
+          "note": {
+            "default": 1.0,
+            "description": "The largest the note may grow to fill the label",
+            "maximum": 1.6,
+            "minimum": 0.6,
+            "title": "Note",
+            "type": "number"
+          },
+          "title": {
+            "default": 1.0,
+            "maximum": 1.6,
+            "minimum": 0.6,
+            "title": "Title",
+            "type": "number"
+          },
+          "tracks": {
+            "default": 1.0,
+            "description": "All the text on the tracks label",
+            "maximum": 1.6,
+            "minimum": 0.6,
+            "title": "Tracks",
+            "type": "number"
+          }
+        },
+        "title": "LabelSizes",
         "type": "object"
       },
       "LabelTrack": {
@@ -1262,6 +1715,24 @@
         "title": "ProposalOut",
         "type": "object"
       },
+      "PushRequest": {
+        "properties": {
+          "record_ids": {
+            "items": {
+              "type": "integer"
+            },
+            "maxItems": 2000,
+            "minItems": 1,
+            "title": "Record Ids",
+            "type": "array"
+          }
+        },
+        "required": [
+          "record_ids"
+        ],
+        "title": "PushRequest",
+        "type": "object"
+      },
       "RecordAudioOut": {
         "properties": {
           "previews": {
@@ -1403,6 +1874,17 @@
             "title": "Tracks",
             "type": "array"
           },
+          "traded_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Traded At"
+          },
           "year": {
             "anyOf": [
               {
@@ -1433,6 +1915,152 @@
           "notes"
         ],
         "title": "RecordDetail",
+        "type": "object"
+      },
+      "RecordOut": {
+        "properties": {
+          "added_at": {
+            "title": "Added At",
+            "type": "string"
+          },
+          "artist": {
+            "title": "Artist",
+            "type": "string"
+          },
+          "catno": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Catno"
+          },
+          "cover_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cover Url"
+          },
+          "discogs_collection_synced": {
+            "title": "Discogs Collection Synced",
+            "type": "boolean"
+          },
+          "discogs_release_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Discogs Release Id"
+          },
+          "format": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Format"
+          },
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          },
+          "label": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Label"
+          },
+          "status": {
+            "enum": [
+              "owned",
+              "wantlist"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "styles": {
+            "default": [],
+            "items": {
+              "type": "string"
+            },
+            "title": "Styles",
+            "type": "array"
+          },
+          "styles_manual": {
+            "title": "Styles Manual",
+            "type": "boolean"
+          },
+          "tags": {
+            "default": [],
+            "items": {
+              "type": "string"
+            },
+            "title": "Tags",
+            "type": "array"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          },
+          "traded_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Traded At"
+          },
+          "year": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Year"
+          }
+        },
+        "required": [
+          "id",
+          "discogs_release_id",
+          "artist",
+          "title",
+          "label",
+          "catno",
+          "year",
+          "format",
+          "cover_url",
+          "status",
+          "added_at",
+          "discogs_collection_synced",
+          "styles_manual"
+        ],
+        "title": "RecordOut",
         "type": "object"
       },
       "RecordPatch": {
@@ -1760,6 +2388,17 @@
             "title": "Track Count",
             "type": "integer"
           },
+          "traded_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Traded At"
+          },
           "year": {
             "anyOf": [
               {
@@ -1789,6 +2428,59 @@
           "track_count"
         ],
         "title": "RecordSummary",
+        "type": "object"
+      },
+      "RecordYouTubeOut": {
+        "properties": {
+          "tracks": {
+            "items": {
+              "$ref": "#/components/schemas/TrackYouTubeOut"
+            },
+            "title": "Tracks",
+            "type": "array"
+          }
+        },
+        "required": [
+          "tracks"
+        ],
+        "title": "RecordYouTubeOut",
+        "type": "object"
+      },
+      "ResetCounts": {
+        "properties": {
+          "analysed_tracks": {
+            "title": "Analysed Tracks",
+            "type": "integer"
+          },
+          "notes": {
+            "title": "Notes",
+            "type": "integer"
+          },
+          "records": {
+            "title": "Records",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "records",
+          "notes",
+          "analysed_tracks"
+        ],
+        "title": "ResetCounts",
+        "type": "object"
+      },
+      "ResetRequest": {
+        "properties": {
+          "confirm": {
+            "description": "Must be \"RESET\"",
+            "title": "Confirm",
+            "type": "string"
+          }
+        },
+        "required": [
+          "confirm"
+        ],
+        "title": "ResetRequest",
         "type": "object"
       },
       "SectionIn": {
@@ -1866,6 +2558,159 @@
           "items"
         ],
         "title": "StyleList",
+        "type": "object"
+      },
+      "SyncCompare": {
+        "properties": {
+          "discogs_count": {
+            "title": "Discogs Count",
+            "type": "integer"
+          },
+          "kept": {
+            "items": {
+              "$ref": "#/components/schemas/SyncItem"
+            },
+            "title": "Kept",
+            "type": "array"
+          },
+          "owned_count": {
+            "title": "Owned Count",
+            "type": "integer"
+          },
+          "owned_wanted": {
+            "items": {
+              "$ref": "#/components/schemas/SyncItem"
+            },
+            "title": "Owned Wanted",
+            "type": "array"
+          },
+          "reset": {
+            "$ref": "#/components/schemas/ResetCounts"
+          },
+          "to_copy": {
+            "items": {
+              "$ref": "#/components/schemas/SyncItem"
+            },
+            "title": "To Copy",
+            "type": "array"
+          },
+          "to_discogs": {
+            "items": {
+              "$ref": "#/components/schemas/SyncItem"
+            },
+            "title": "To Discogs",
+            "type": "array"
+          },
+          "to_import": {
+            "items": {
+              "$ref": "#/components/schemas/SyncItem"
+            },
+            "title": "To Import",
+            "type": "array"
+          },
+          "to_trade": {
+            "items": {
+              "$ref": "#/components/schemas/SyncItem"
+            },
+            "title": "To Trade",
+            "type": "array"
+          },
+          "to_wantlist": {
+            "items": {
+              "$ref": "#/components/schemas/SyncItem"
+            },
+            "title": "To Wantlist",
+            "type": "array"
+          }
+        },
+        "required": [
+          "discogs_count",
+          "owned_count",
+          "to_discogs",
+          "to_import",
+          "to_trade",
+          "to_copy",
+          "kept",
+          "to_wantlist",
+          "owned_wanted",
+          "reset"
+        ],
+        "title": "SyncCompare",
+        "type": "object"
+      },
+      "SyncItem": {
+        "properties": {
+          "artist": {
+            "title": "Artist",
+            "type": "string"
+          },
+          "copies": {
+            "default": 1,
+            "title": "Copies",
+            "type": "integer"
+          },
+          "cover_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cover Url"
+          },
+          "discogs_release_id": {
+            "title": "Discogs Release Id",
+            "type": "integer"
+          },
+          "here": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Here"
+          },
+          "id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Id"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          },
+          "year": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Year"
+          }
+        },
+        "required": [
+          "id",
+          "discogs_release_id",
+          "artist",
+          "title",
+          "year",
+          "cover_url"
+        ],
+        "title": "SyncItem",
         "type": "object"
       },
       "TagCount": {
@@ -2150,6 +2995,24 @@
           "found_at"
         ],
         "title": "TrackAudioOut",
+        "type": "object"
+      },
+      "TrackError": {
+        "properties": {
+          "error": {
+            "title": "Error",
+            "type": "string"
+          },
+          "track_id": {
+            "title": "Track Id",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "track_id",
+          "error"
+        ],
+        "title": "TrackError",
         "type": "object"
       },
       "TrackHit": {
@@ -2584,6 +3447,101 @@
         "title": "TrackPatch",
         "type": "object"
       },
+      "TrackYouTubeOut": {
+        "description": "A track's YouTube video, for \"Add to YT playlist\": a stored lookup, or the YouTube link the audio\nsearch already found. Tracks with neither are left out.",
+        "properties": {
+          "channel": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Channel"
+          },
+          "confidence": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Confidence"
+          },
+          "duration": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Duration"
+          },
+          "found_at": {
+            "title": "Found At",
+            "type": "string"
+          },
+          "source": {
+            "anyOf": [
+              {
+                "enum": [
+                  "audio",
+                  "search"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source"
+          },
+          "title": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Title"
+          },
+          "track_id": {
+            "title": "Track Id",
+            "type": "integer"
+          },
+          "video_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Video Id"
+          }
+        },
+        "required": [
+          "track_id",
+          "video_id",
+          "source",
+          "title",
+          "channel",
+          "duration",
+          "confidence",
+          "found_at"
+        ],
+        "title": "TrackYouTubeOut",
+        "type": "object"
+      },
       "UnitCreate": {
         "properties": {
           "cols": {
@@ -2750,6 +3708,22 @@
           "artist": {
             "title": "Artist",
             "type": "string"
+          },
+          "copy_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Copy Id"
+          },
+          "copy_number": {
+            "default": 1,
+            "title": "Copy Number",
+            "type": "integer"
           },
           "cover_url": {
             "anyOf": [
@@ -2958,6 +3932,155 @@
         ],
         "title": "VaultSyncOut",
         "type": "object"
+      },
+      "YouTubeConnect": {
+        "properties": {
+          "url": {
+            "title": "Url",
+            "type": "string"
+          }
+        },
+        "required": [
+          "url"
+        ],
+        "title": "YouTubeConnect",
+        "type": "object"
+      },
+      "YouTubeCredentials": {
+        "properties": {
+          "client_id": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Client Id",
+            "type": "string"
+          },
+          "client_secret": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Client Secret",
+            "type": "string"
+          }
+        },
+        "required": [
+          "client_id",
+          "client_secret"
+        ],
+        "title": "YouTubeCredentials",
+        "type": "object"
+      },
+      "YouTubeCredentialsSaved": {
+        "properties": {
+          "checked": {
+            "title": "Checked",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "checked"
+        ],
+        "title": "YouTubeCredentialsSaved",
+        "type": "object"
+      },
+      "YouTubePlaylist": {
+        "properties": {
+          "count": {
+            "title": "Count",
+            "type": "integer"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "count"
+        ],
+        "title": "YouTubePlaylist",
+        "type": "object"
+      },
+      "YouTubeStatus": {
+        "properties": {
+          "client_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Client Id"
+          },
+          "configured": {
+            "title": "Configured",
+            "type": "boolean"
+          },
+          "connected": {
+            "title": "Connected",
+            "type": "boolean"
+          },
+          "source": {
+            "anyOf": [
+              {
+                "enum": [
+                  "env",
+                  "settings"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source"
+          },
+          "usage": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/YouTubeUsage"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "configured",
+          "connected"
+        ],
+        "title": "YouTubeStatus",
+        "type": "object"
+      },
+      "YouTubeUsage": {
+        "description": "Quota units this app spent today, counted here (Google has no API for it); resets at Pacific\nmidnight.",
+        "properties": {
+          "limit": {
+            "title": "Limit",
+            "type": "integer"
+          },
+          "resets_at": {
+            "title": "Resets At",
+            "type": "string"
+          },
+          "used": {
+            "title": "Used",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "used",
+          "limit",
+          "resets_at"
+        ],
+        "title": "YouTubeUsage",
+        "type": "object"
       }
     }
   },
@@ -3006,6 +4129,28 @@
           }
         },
         "summary": "Find Audio For Library",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/admin/find-youtube": {
+      "post": {
+        "description": "Find every track not searched yet on YouTube, record by record (links only, no quota used). Running it\nagain only continues where it stopped.",
+        "operationId": "find_youtube_for_library",
+        "responses": {
+          "202": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LibraryAudioStarted"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Find Youtube For Library",
         "tags": [
           "admin"
         ]
@@ -3115,6 +4260,107 @@
         "summary": "Bandcamp Embed",
         "tags": [
           "audio"
+        ]
+      }
+    },
+    "/api/copies/{copy_id}": {
+      "delete": {
+        "description": "Drop a second (or later) copy. Copy 1 is the record itself: delete the record instead.",
+        "operationId": "delete_copy",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "copy_id",
+            "required": true,
+            "schema": {
+              "title": "Copy Id",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/CopyOut"
+                  },
+                  "title": "Response Delete Copy",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Delete Copy",
+        "tags": [
+          "copies"
+        ]
+      },
+      "patch": {
+        "operationId": "place_copy",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "copy_id",
+            "required": true,
+            "schema": {
+              "title": "Copy Id",
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CopyPlace"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/CopyOut"
+                  },
+                  "title": "Response Place Copy",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Place Copy",
+        "tags": [
+          "copies"
         ]
       }
     },
@@ -3507,6 +4753,276 @@
         ]
       }
     },
+    "/api/discogs-sync/compare": {
+      "get": {
+        "description": "What differs between the library and the Discogs collection. Changes nothing.",
+        "operationId": "sync_compare",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SyncCompare"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Sync Compare",
+        "tags": [
+          "discogs sync"
+        ]
+      }
+    },
+    "/api/discogs-sync/kept/{release_id}": {
+      "delete": {
+        "description": "Let imports bring a release you once deleted here back again.",
+        "operationId": "sync_forget_kept",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "release_id",
+            "required": true,
+            "schema": {
+              "title": "Release Id",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Sync Forget Kept",
+        "tags": [
+          "discogs sync"
+        ]
+      }
+    },
+    "/api/discogs-sync/pull": {
+      "post": {
+        "description": "Import the Discogs collection records missing here; wishlist ones become owned.",
+        "operationId": "sync_pull",
+        "responses": {
+          "202": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JobStarted"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Sync Pull",
+        "tags": [
+          "discogs sync"
+        ]
+      }
+    },
+    "/api/discogs-sync/push": {
+      "post": {
+        "description": "Add exactly these owned records to the Discogs collection (the ones the preview listed).",
+        "operationId": "sync_push",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PushRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JobStarted"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Sync Push",
+        "tags": [
+          "discogs sync"
+        ]
+      }
+    },
+    "/api/discogs-sync/refresh": {
+      "post": {
+        "description": "Release details and tracklists again from Discogs, keeping everything you added.",
+        "operationId": "sync_refresh",
+        "responses": {
+          "202": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JobStarted"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Sync Refresh",
+        "tags": [
+          "discogs sync"
+        ]
+      }
+    },
+    "/api/discogs-sync/reset": {
+      "post": {
+        "description": "Back up, delete every owned record and its data, then import the Discogs collection.",
+        "operationId": "sync_reset",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResetRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JobStarted"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Sync Reset",
+        "tags": [
+          "discogs sync"
+        ]
+      }
+    },
+    "/api/discogs-sync/wantlist": {
+      "post": {
+        "description": "Put exactly these wishlist records on the Discogs wantlist (the ones the preview listed).",
+        "operationId": "sync_wantlist_push",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PushRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JobStarted"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Sync Wantlist Push",
+        "tags": [
+          "discogs sync"
+        ]
+      }
+    },
+    "/api/discogs-sync/wantlist-tidy": {
+      "post": {
+        "description": "Take exactly these owned records off the Discogs wantlist.",
+        "operationId": "sync_wantlist_tidy",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PushRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JobStarted"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Sync Wantlist Tidy",
+        "tags": [
+          "discogs sync"
+        ]
+      }
+    },
     "/api/jobs/{job_id}": {
       "get": {
         "operationId": "get_job",
@@ -3546,6 +5062,109 @@
         "summary": "Get Job",
         "tags": [
           "jobs"
+        ]
+      }
+    },
+    "/api/label-presets": {
+      "get": {
+        "operationId": "list_label_presets",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LabelPresetList"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "List Label Presets",
+        "tags": [
+          "labels"
+        ]
+      },
+      "post": {
+        "description": "Save the look under a name; an existing preset with that name is replaced.",
+        "operationId": "save_label_preset",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LabelPresetIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LabelPresetList"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Save Label Preset",
+        "tags": [
+          "labels"
+        ]
+      }
+    },
+    "/api/label-presets/{preset_id}": {
+      "delete": {
+        "operationId": "delete_label_preset",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "preset_id",
+            "required": true,
+            "schema": {
+              "title": "Preset Id",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LabelPresetList"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Delete Label Preset",
+        "tags": [
+          "labels"
         ]
       }
     },
@@ -3968,6 +5587,32 @@
         ]
       }
     },
+    "/api/records/recently-traded": {
+      "get": {
+        "description": "Records that moved from the wishlist to owned, newest first (the last 90 days, at most 20).",
+        "operationId": "recently_traded",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/RecordOut"
+                  },
+                  "title": "Response Recently Traded",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Recently Traded",
+        "tags": [
+          "records"
+        ]
+      }
+    },
     "/api/records/{item_id}/tags": {
       "post": {
         "operationId": "add_record_tag",
@@ -4081,6 +5726,7 @@
     },
     "/api/records/{record_id}": {
       "delete": {
+        "description": "Delete the record with its tracks, notes and tag links. An owned record that is in the Discogs\ncollection leaves it too with from_discogs; otherwise it stays there and imports skip it.",
         "operationId": "delete_record",
         "parameters": [
           {
@@ -4090,6 +5736,16 @@
             "schema": {
               "title": "Record Id",
               "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "from_discogs",
+            "required": false,
+            "schema": {
+              "default": false,
+              "title": "From Discogs",
+              "type": "boolean"
             }
           }
         ],
@@ -4307,6 +5963,114 @@
         ]
       }
     },
+    "/api/records/{record_id}/copies": {
+      "get": {
+        "operationId": "list_copies",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "record_id",
+            "required": true,
+            "schema": {
+              "title": "Record Id",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/CopyOut"
+                  },
+                  "title": "Response List Copies",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "List Copies",
+        "tags": [
+          "copies"
+        ]
+      },
+      "post": {
+        "description": "One more copy of the record, unsorted unless a section is given.",
+        "operationId": "add_copy",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "record_id",
+            "required": true,
+            "schema": {
+              "title": "Record Id",
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "anyOf": [
+                  {
+                    "$ref": "#/components/schemas/CopyPlace"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "title": "Body"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/CopyOut"
+                  },
+                  "title": "Response Add Copy",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Add Copy",
+        "tags": [
+          "copies"
+        ]
+      }
+    },
     "/api/records/{record_id}/discard": {
       "post": {
         "description": "Drop analysis proposals (all of them, or only `track_ids`) without touching the tracks.",
@@ -4424,6 +6188,66 @@
         "summary": "Find Audio",
         "tags": [
           "audio"
+        ]
+      }
+    },
+    "/api/records/{record_id}/find-youtube": {
+      "post": {
+        "description": "Find this record's tracks on YouTube (again, with `refresh`). Links only, nothing is downloaded.",
+        "operationId": "find_youtube",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "record_id",
+            "required": true,
+            "schema": {
+              "title": "Record Id",
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "anyOf": [
+                  {
+                    "$ref": "#/components/schemas/FindYouTubeRequest"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "title": "Body"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JobStarted"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Find Youtube",
+        "tags": [
+          "youtube"
         ]
       }
     },
@@ -4671,6 +6495,49 @@
         ]
       }
     },
+    "/api/records/{record_id}/youtube": {
+      "get": {
+        "description": "Each track's YouTube video, found or not, including the YouTube links the audio search already found;\ntracks with neither are left out.",
+        "operationId": "record_youtube",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "record_id",
+            "required": true,
+            "schema": {
+              "title": "Record Id",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RecordYouTubeOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Record Youtube",
+        "tags": [
+          "youtube"
+        ]
+      }
+    },
     "/api/search/exact": {
       "get": {
         "description": "Notes with a highlighted snippet, plus records whose artist, title or label match.",
@@ -4724,6 +6591,66 @@
         "summary": "Exact",
         "tags": [
           "search"
+        ]
+      }
+    },
+    "/api/settings": {
+      "get": {
+        "operationId": "get_settings",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AppSettings"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Get Settings",
+        "tags": [
+          "discogs sync"
+        ]
+      },
+      "patch": {
+        "operationId": "patch_settings",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AppSettingsPatch"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AppSettings"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Patch Settings",
+        "tags": [
+          "discogs sync"
         ]
       }
     },
@@ -5478,6 +7405,197 @@
         "summary": "Track Audio File",
         "tags": [
           "audio"
+        ]
+      }
+    },
+    "/api/youtube/connect": {
+      "post": {
+        "description": "Start the Google sign-in: open the returned page; Google comes back to the callback, which returns to\nSettings on the page that asked (this app, or the dev server).",
+        "operationId": "youtube_connect",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/YouTubeConnect"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Youtube Connect",
+        "tags": [
+          "youtube"
+        ]
+      }
+    },
+    "/api/youtube/connection": {
+      "delete": {
+        "operationId": "youtube_disconnect",
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Youtube Disconnect",
+        "tags": [
+          "youtube"
+        ]
+      }
+    },
+    "/api/youtube/credentials": {
+      "delete": {
+        "description": "Forget the client ID and secret saved in Settings, and sign out.",
+        "operationId": "youtube_remove_credentials",
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Youtube Remove Credentials",
+        "tags": [
+          "youtube"
+        ]
+      },
+      "put": {
+        "description": "Keep your own Google app's client ID and secret (your own 10,000 units a day), checked with Google\nfirst. A different app than before signs you out of YouTube.",
+        "operationId": "youtube_save_credentials",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/YouTubeCredentials"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/YouTubeCredentialsSaved"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Youtube Save Credentials",
+        "tags": [
+          "youtube"
+        ]
+      }
+    },
+    "/api/youtube/playlists": {
+      "get": {
+        "description": "Your playlists, to pick where tracks go.",
+        "operationId": "youtube_playlists",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/YouTubePlaylist"
+                  },
+                  "title": "Response Youtube Playlists",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Youtube Playlists",
+        "tags": [
+          "youtube"
+        ]
+      }
+    },
+    "/api/youtube/playlists/{playlist_id}/tracks": {
+      "post": {
+        "description": "Add these tracks' videos to one of your playlists, in the order given. A video already in it is\nskipped, so adding twice is safe. Each video added costs 50 of YouTube's 10,000 daily quota units.",
+        "operationId": "add_to_playlist",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "playlist_id",
+            "required": true,
+            "schema": {
+              "title": "Playlist Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddToPlaylist"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddedToPlaylist"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Add To Playlist",
+        "tags": [
+          "youtube"
+        ]
+      }
+    },
+    "/api/youtube/status": {
+      "get": {
+        "operationId": "youtube_status",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/YouTubeStatus"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Youtube Status",
+        "tags": [
+          "youtube"
         ]
       }
     },

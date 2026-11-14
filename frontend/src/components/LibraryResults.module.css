@@ -1,9 +1,6 @@
 /* Grid: covers in hairline cards. Table: an Attio record list, framed, hairline rows, quiet column heads. */
 .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px; }
 .item { position: relative; }
-.noteSlot { position: absolute; top: 18px; right: 18px; z-index: 2; opacity: 0; transition: opacity 0.2s var(--ease); }
-.item:hover .noteSlot, .item:focus-within .noteSlot, .noteSlot:has([data-filled="true"]), .noteSlot:has([aria-expanded="true"]) { opacity: 1; }
-@media (hover: none) { .noteSlot { opacity: 1; } }
 .card {
   display: grid; gap: 10px; height: 100%; align-content: start; padding: 8px 8px 12px; text-decoration: none;
   border: 1px solid var(--line); border-radius: var(--r-l); background: var(--surface);
@@ -24,10 +21,6 @@
 .more { color: var(--ink-3); font-size: 0.75rem; font-weight: 500; }
 .none { color: var(--ink-3); }
 .key { font: 600 0.75rem/1 var(--mono); padding: 4px 6px; border: 1px solid var(--line-2); border-radius: var(--r-s); }
-.badge { display: inline-flex; align-items: center; gap: 6px; font-size: 0.75rem; font-weight: 500; color: var(--ink-2); text-transform: capitalize; }
-.badge::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--ink-3); }
-.badge[data-status="owned"] { color: var(--ink); }
-.badge[data-status="owned"]::before { background: var(--signal); }
 
 .frame { border: 1px solid var(--line); border-radius: var(--r-l); background: var(--surface); overflow-x: auto; }
 .table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
@@ -44,7 +37,6 @@
 .table tbody th a:hover { color: var(--signal-ink); }
 .thumb { width: 52px; }
 .thumb > * { width: 28px; border-radius: 5px; overflow: hidden; }
-.noteCell { width: 44px; text-align: right !important; }
 .dim { color: var(--ink-2); }
 .rec { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; color: var(--ink-2); }
 .rec:hover { color: var(--ink); }

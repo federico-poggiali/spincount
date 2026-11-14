@@ -24,6 +24,10 @@ export type LabelData = S["LabelData"];
 export type LabelTrack = S["LabelTrack"];
 export type LabelRender = S["LabelRender"];
 export type LabelImage = S["LabelImage"];
+export type LabelSizes = S["LabelSizes"];
+export type LabelLook = S["LabelLook"];
+export type LabelPreset = S["LabelPreset"];
+export type Design = NonNullable<LabelData["design"]>;
 export type CrateOut = S["CrateOut"];
 export type UnitOut = S["UnitOut"];
 export type CubeOut = S["CubeOut"];
@@ -33,6 +37,15 @@ export type UnsortedRecord = S["UnsortedRecord"];
 export type UnitCreate = S["UnitCreate"];
 export type UnitPatch = Partial<S["UnitPatch"]>;
 export type CubePatch = Partial<S["CubePatch"]>;
+export type RecordOut = S["RecordOut"];
+export type AppSettings = S["AppSettings"];
+export type SyncCompare = S["SyncCompare"];
+export type SyncItem = S["SyncItem"];
+export type CopyOut = S["CopyOut"];
+export type TrackYouTube = S["TrackYouTubeOut"];
+export type YouTubeStatus = S["YouTubeStatus"];
+export type YouTubePlaylist = S["YouTubePlaylist"];
+export type AddedToPlaylist = S["AddedToPlaylist"];
 export type Status = RecordSummary["status"];
 export type Page<T> = { items: T[]; total: number; limit: number; offset: number };
 
@@ -121,7 +134,11 @@ export const api = {
     get<Page<TrackHit>>("/api/tracks", query, signal),
   getRecord: (id: number) => get<RecordDetail>(`/api/records/${id}`),
   patchRecord: (id: number, body: RecordPatch) => send<RecordDetail>("PATCH", `/api/records/${id}`, body),
-  deleteRecord: (id: number) => send<void>("DELETE", `/api/records/${id}`),
+  deleteRecord: (id: number, fromDiscogs = false) => send<void>("DELETE", `/api/records/${id}${fromDiscogs ? "?from_discogs=true" : ""}`),
+  listCopies: (id: number) => get<CopyOut[]>(`/api/records/${id}/copies`),
+  addCopy: (id: number) => send<CopyOut[]>("POST", `/api/records/${id}/copies`),
+  placeCopy: (copyId: number, section_id: number | null) => send<CopyOut[]>("PATCH", `/api/copies/${copyId}`, { section_id }),
+  deleteCopy: (copyId: number) => send<CopyOut[]>("DELETE", `/api/copies/${copyId}`),
   intake: (body: { discogs_url: string; status: Status }) =>
     request<IntakeResponse>("POST", "/api/records/intake", { body }),
   analyze: (id: number, trackIds?: number[], refreshAudio = false) =>
@@ -135,6 +152,9 @@ export const api = {
   uploadAudio: (id: number, file: File) =>
     request<{ file: string }>("POST", `/api/records/${id}/upload-audio`, { query: { filename: file.name }, file }).then((r) => r.data),
   audioFileUrl: (trackId: number) => `/api/tracks/${trackId}/audio-file`,
+  recordYouTube: (id: number) => get<{ tracks: TrackYouTube[] }>(`/api/records/${id}/youtube`),
+  findYouTube: (id: number, refresh = false) =>
+    send<{ job_id: number }>("POST", `/api/records/${id}/find-youtube`, refresh ? { refresh } : undefined),
   bandcampEmbed: (url: string) => get<{ kind: string; id: number }>("/api/audio/bandcamp-embed", { url }),
   validate: (id: number, trackIds: number[], overwriteManual = false) =>
     send<RecordDetail>("POST", `/api/records/${id}/validate`, { track_ids: trackIds, overwrite_manual: overwriteManual }),
@@ -166,6 +186,9 @@ export const api = {
   renderLooseLabel: (body: LabelData) => send<LabelRender>("POST", "/api/labels/render", body),
   getLabel: (id: number) => get<LabelData>(`/api/records/${id}/label`),
   renderLabel: (id: number, body: LabelData) => send<LabelRender>("POST", `/api/records/${id}/label/render`, body),
+  listLabelPresets: () => get<{ items: LabelPreset[] }>("/api/label-presets").then((r) => r.items),
+  saveLabelPreset: (name: string, look: LabelLook) => send<{ items: LabelPreset[] }>("POST", "/api/label-presets", { name, look }).then((r) => r.items),
+  deleteLabelPreset: (id: number) => send<{ items: LabelPreset[] }>("DELETE", `/api/label-presets/${id}`).then((r) => r.items),
 
   listStyles: () => get<{ items: StyleCount[] }>("/api/styles"),
 
@@ -184,6 +207,27 @@ export const api = {
   vaultStatus: () => get<VaultStatus>("/api/admin/vault-status"),
   syncVault: () => send<VaultSyncOut>("POST", "/api/admin/sync-vault"),
   findAudioForLibrary: () => send<{ queued: number; job_ids: number[] }>("POST", "/api/admin/find-audio"),
+  findYouTubeForLibrary: () => send<{ queued: number; job_ids: number[] }>("POST", "/api/admin/find-youtube"),
+  youtubeStatus: () => get<YouTubeStatus>("/api/youtube/status"),
+  saveYouTubeCredentials: (client_id: string, client_secret: string) =>
+    send<{ checked: boolean }>("PUT", "/api/youtube/credentials", { client_id, client_secret }),
+  removeYouTubeCredentials: () => send<void>("DELETE", "/api/youtube/credentials"),
+  connectYouTube: () => send<{ url: string }>("POST", "/api/youtube/connect"),
+  disconnectYouTube: () => send<void>("DELETE", "/api/youtube/connection"),
+  youtubePlaylists: () => get<YouTubePlaylist[]>("/api/youtube/playlists"),
+  addToPlaylist: (playlistId: string, track_ids: number[]) =>
+    send<AddedToPlaylist>("POST", `/api/youtube/playlists/${encodeURIComponent(playlistId)}/tracks`, { track_ids }),
   backfillStyles: () => send<{ job_id: number }>("POST", "/api/admin/backfill-styles"),
+  getSettings: () => get<AppSettings>("/api/settings"),
+  patchSettings: (patch: Partial<AppSettings>) => send<AppSettings>("PATCH", "/api/settings", patch),
+  compareDiscogs: () => get<SyncCompare>("/api/discogs-sync/compare"),
+  pushToDiscogs: (record_ids: number[]) => send<{ job_id: number }>("POST", "/api/discogs-sync/push", { record_ids }),
+  pullFromDiscogs: () => send<{ job_id: number }>("POST", "/api/discogs-sync/pull"),
+  resetFromDiscogs: (confirm: string) => send<{ job_id: number }>("POST", "/api/discogs-sync/reset", { confirm }),
+  recentlyTraded: () => get<RecordOut[]>("/api/records/recently-traded"),
+  wantlistPush: (record_ids: number[]) => send<{ job_id: number }>("POST", "/api/discogs-sync/wantlist", { record_ids }),
+  wantlistTidy: (record_ids: number[]) => send<{ job_id: number }>("POST", "/api/discogs-sync/wantlist-tidy", { record_ids }),
+  refreshFromDiscogs: () => send<{ job_id: number }>("POST", "/api/discogs-sync/refresh"),
+  forgetKept: (releaseId: number) => send<void>("DELETE", `/api/discogs-sync/kept/${releaseId}`),
   openVault: () => send<{ opened: boolean; path: string }>("POST", "/api/admin/open-vault"),
 };

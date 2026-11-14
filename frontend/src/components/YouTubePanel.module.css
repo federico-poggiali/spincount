@@ -1,0 +1,21 @@
+.panel { display: grid; gap: 10px; margin-bottom: 12px; padding: 12px 14px; border: 1px solid var(--line-2); border-radius: var(--r-m); background: var(--surface); }
+.head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.head h3 { margin: 0; font-size: 0.875rem; font-weight: 600; }
+.list { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.row { display: grid; grid-template-columns: auto 2.6em minmax(0, 1fr) minmax(0, 1.2fr); align-items: center; gap: 10px; font-size: 0.8125rem; }
+.row input { width: 16px; height: 16px; accent-color: var(--signal); }
+.position { color: var(--ink-3); font-family: var(--mono); font-size: 0.8rem; }
+.title { overflow-wrap: anywhere; }
+.video { color: var(--ink-2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.video:hover { color: var(--ink); }
+.missing { color: var(--ink-3); }
+.add { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.select { flex: 1; min-width: 12rem; padding: 6px 8px; border: 1px solid var(--line-2); border-radius: var(--r-s); background: var(--bg); color: var(--ink); font: inherit; font-size: 0.8125rem; }
+.select:focus-visible { outline: none; border-color: var(--signal); box-shadow: 0 0 0 3px color-mix(in srgb, var(--signal) 28%, transparent); }
+.hint { margin: 0; color: var(--ink-3); font-size: 0.8125rem; }
+.hint a { color: var(--ink-2); }
+.error { margin: 0; color: var(--signal-ink); font-size: 0.8125rem; }
+@media (max-width: 640px) {
+  .row { grid-template-columns: auto 2.6em minmax(0, 1fr); }
+  .video, .missing { grid-column: 3; }
+}

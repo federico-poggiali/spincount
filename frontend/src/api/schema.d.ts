@@ -45,6 +45,27 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/admin/find-youtube": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Find Youtube For Library
+         * @description Find every track not searched yet on YouTube, record by record (links only, no quota used). Running it
+         *     again only continues where it stopped.
+         */
+        post: operations["find_youtube_for_library"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/admin/open-vault": {
         parameters: {
             query?: never;
@@ -117,6 +138,27 @@ export interface paths {
         options?: never;
         head?: never;
         patch?: never;
+        trace?: never;
+    };
+    "/api/copies/{copy_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Delete Copy
+         * @description Drop a second (or later) copy. Copy 1 is the record itself: delete the record instead.
+         */
+        delete: operations["delete_copy"];
+        options?: never;
+        head?: never;
+        /** Place Copy */
+        patch: operations["place_copy"];
         trace?: never;
     };
     "/api/crate": {
@@ -256,6 +298,166 @@ export interface paths {
         patch: operations["update_unit"];
         trace?: never;
     };
+    "/api/discogs-sync/compare": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Sync Compare
+         * @description What differs between the library and the Discogs collection. Changes nothing.
+         */
+        get: operations["sync_compare"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/discogs-sync/kept/{release_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Sync Forget Kept
+         * @description Let imports bring a release you once deleted here back again.
+         */
+        delete: operations["sync_forget_kept"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/discogs-sync/pull": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Sync Pull
+         * @description Import the Discogs collection records missing here; wishlist ones become owned.
+         */
+        post: operations["sync_pull"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/discogs-sync/push": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Sync Push
+         * @description Add exactly these owned records to the Discogs collection (the ones the preview listed).
+         */
+        post: operations["sync_push"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/discogs-sync/refresh": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Sync Refresh
+         * @description Release details and tracklists again from Discogs, keeping everything you added.
+         */
+        post: operations["sync_refresh"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/discogs-sync/reset": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Sync Reset
+         * @description Back up, delete every owned record and its data, then import the Discogs collection.
+         */
+        post: operations["sync_reset"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/discogs-sync/wantlist": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Sync Wantlist Push
+         * @description Put exactly these wishlist records on the Discogs wantlist (the ones the preview listed).
+         */
+        post: operations["sync_wantlist_push"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/discogs-sync/wantlist-tidy": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Sync Wantlist Tidy
+         * @description Take exactly these owned records off the Discogs wantlist.
+         */
+        post: operations["sync_wantlist_tidy"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/jobs/{job_id}": {
         parameters: {
             query?: never;
@@ -268,6 +470,44 @@ export interface paths {
         put?: never;
         post?: never;
         delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/label-presets": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Label Presets */
+        get: operations["list_label_presets"];
+        put?: never;
+        /**
+         * Save Label Preset
+         * @description Save the look under a name; an existing preset with that name is replaced.
+         */
+        post: operations["save_label_preset"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/label-presets/{preset_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Delete Label Preset */
+        delete: operations["delete_label_preset"];
         options?: never;
         head?: never;
         patch?: never;
@@ -383,6 +623,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/records/recently-traded": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Recently Traded
+         * @description Records that moved from the wishlist to owned, newest first (the last 90 days, at most 20).
+         */
+        get: operations["recently_traded"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/records/{item_id}/tags": {
         parameters: {
             query?: never;
@@ -428,7 +688,11 @@ export interface paths {
         get: operations["get_record"];
         put?: never;
         post?: never;
-        /** Delete Record */
+        /**
+         * Delete Record
+         * @description Delete the record with its tracks, notes and tag links. An owned record that is in the Discogs
+         *     collection leaves it too with from_discogs; otherwise it stays there and imports skip it.
+         */
         delete: operations["delete_record"];
         options?: never;
         head?: never;
@@ -476,6 +740,27 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/records/{record_id}/copies": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Copies */
+        get: operations["list_copies"];
+        put?: never;
+        /**
+         * Add Copy
+         * @description One more copy of the record, unsorted unless a section is given.
+         */
+        post: operations["add_copy"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/records/{record_id}/discard": {
         parameters: {
             query?: never;
@@ -511,6 +796,26 @@ export interface paths {
          *     BPM and key are not touched.
          */
         post: operations["find_audio"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/records/{record_id}/find-youtube": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Find Youtube
+         * @description Find this record's tracks on YouTube (again, with `refresh`). Links only, nothing is downloaded.
+         */
+        post: operations["find_youtube"];
         delete?: never;
         options?: never;
         head?: never;
@@ -615,6 +920,27 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/records/{record_id}/youtube": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Record Youtube
+         * @description Each track's YouTube video, found or not, including the YouTube links the audio search already found;
+         *     tracks with neither are left out.
+         */
+        get: operations["record_youtube"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/search/exact": {
         parameters: {
             query?: never;
@@ -633,6 +959,24 @@ export interface paths {
         options?: never;
         head?: never;
         patch?: never;
+        trace?: never;
+    };
+    "/api/settings": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Settings */
+        get: operations["get_settings"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** Patch Settings */
+        patch: operations["patch_settings"];
         trace?: never;
     };
     "/api/styles": {
@@ -832,6 +1176,127 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/youtube/connect": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Youtube Connect
+         * @description Start the Google sign-in: open the returned page; Google comes back to the callback, which returns to
+         *     Settings on the page that asked (this app, or the dev server).
+         */
+        post: operations["youtube_connect"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/youtube/connection": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Youtube Disconnect */
+        delete: operations["youtube_disconnect"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/youtube/credentials": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Youtube Save Credentials
+         * @description Keep your own Google app's client ID and secret (your own 10,000 units a day), checked with Google
+         *     first. A different app than before signs you out of YouTube.
+         */
+        put: operations["youtube_save_credentials"];
+        post?: never;
+        /**
+         * Youtube Remove Credentials
+         * @description Forget the client ID and secret saved in Settings, and sign out.
+         */
+        delete: operations["youtube_remove_credentials"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/youtube/playlists": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Youtube Playlists
+         * @description Your playlists, to pick where tracks go.
+         */
+        get: operations["youtube_playlists"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/youtube/playlists/{playlist_id}/tracks": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Add To Playlist
+         * @description Add these tracks' videos to one of your playlists, in the order given. A video already in it is
+         *     skipped, so adding twice is safe. Each video added costs 50 of YouTube's 10,000 daily quota units.
+         */
+        post: operations["add_to_playlist"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/youtube/status": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Youtube Status */
+        get: operations["youtube_status"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/health": {
         parameters: {
             query?: never;
@@ -853,6 +1318,24 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        /** AddToPlaylist */
+        AddToPlaylist: {
+            /** Track Ids */
+            track_ids: number[];
+        };
+        /** AddedToPlaylist */
+        AddedToPlaylist: {
+            /** Added */
+            added: number[];
+            /** Already */
+            already: number[];
+            /** Failed */
+            failed: components["schemas"]["TrackError"][];
+            /** No Video */
+            no_video: number[];
+            /** Quota Exceeded */
+            quota_exceeded: boolean;
+        };
         /** AnalyzeRequest */
         AnalyzeRequest: {
             /**
@@ -863,12 +1346,52 @@ export interface components {
             /** Track Ids */
             track_ids?: number[] | null;
         };
+        /** AppSettings */
+        AppSettings: {
+            /** Auto Collection */
+            auto_collection: boolean;
+            /** Auto Wantlist */
+            auto_wantlist: boolean;
+            /** Import Every Min */
+            import_every_min: number;
+            /** Push Every Min */
+            push_every_min: number;
+            /** Youtube Playlist */
+            youtube_playlist: boolean;
+        };
+        /** AppSettingsPatch */
+        AppSettingsPatch: {
+            /** Auto Collection */
+            auto_collection?: boolean | null;
+            /** Auto Wantlist */
+            auto_wantlist?: boolean | null;
+            /** Import Every Min */
+            import_every_min?: number | null;
+            /** Push Every Min */
+            push_every_min?: number | null;
+            /** Youtube Playlist */
+            youtube_playlist?: boolean | null;
+        };
         /** BandcampEmbed */
         BandcampEmbed: {
             /** Id */
             id: number;
             /** Kind */
             kind: string;
+        };
+        /** CopyOut */
+        CopyOut: {
+            /** Copy Id */
+            copy_id: number | null;
+            /** Number */
+            number: number;
+            /** Section Id */
+            section_id: number | null;
+        };
+        /** CopyPlace */
+        CopyPlace: {
+            /** Section Id */
+            section_id: number | null;
         };
         /** CrateOut */
         CrateOut: {
@@ -881,6 +1404,13 @@ export interface components {
         CrateRecord: {
             /** Artist */
             artist: string;
+            /** Copy Id */
+            copy_id?: number | null;
+            /**
+             * Copy Number
+             * @default 1
+             */
+            copy_number: number;
             /** Cover Url */
             cover_url: string | null;
             /** Id */
@@ -958,6 +1488,14 @@ export interface components {
              * @default false
              */
             everything: boolean;
+            /**
+             * Refresh
+             * @default false
+             */
+            refresh: boolean;
+        };
+        /** FindYouTubeRequest */
+        FindYouTubeRequest: {
             /**
              * Refresh
              * @default false
@@ -1044,6 +1582,8 @@ export interface components {
             title: string;
             /** Tracks */
             tracks: components["schemas"]["TrackOut"][];
+            /** Traded At */
+            traded_at?: string | null;
             /** Year */
             year: number | null;
         };
@@ -1090,6 +1630,12 @@ export interface components {
              */
             country?: string | null;
             /**
+             * Design
+             * @default glitchy
+             * @enum {string}
+             */
+            design: "glitchy" | "corrupted" | "penguin" | "republic" | "factory";
+            /**
              * Hidden
              * @default []
              */
@@ -1103,6 +1649,17 @@ export interface components {
              * @description The Discogs page the QR code opens
              */
             qr_url?: string | null;
+            /**
+             * @default {
+             *       "artist": 1,
+             *       "details": 1,
+             *       "info": 1,
+             *       "note": 1,
+             *       "title": 1,
+             *       "tracks": 1
+             *     }
+             */
+            sizes: components["schemas"]["LabelSizes"];
             /**
              * Styles
              * @default []
@@ -1134,12 +1691,104 @@ export interface components {
             /** Width */
             width: number;
         };
+        /**
+         * LabelLook
+         * @description Everything Customize sets, apart from the text: what a saved preset holds.
+         */
+        LabelLook: {
+            /**
+             * Design
+             * @default glitchy
+             * @enum {string}
+             */
+            design: "glitchy" | "corrupted" | "penguin" | "republic" | "factory";
+            /**
+             * Hidden
+             * @default []
+             */
+            hidden: ("label" | "catno" | "year" | "country" | "styles" | "note" | "qr")[];
+            /**
+             * @default {
+             *       "artist": 1,
+             *       "details": 1,
+             *       "info": 1,
+             *       "note": 1,
+             *       "title": 1,
+             *       "tracks": 1
+             *     }
+             */
+            sizes: components["schemas"]["LabelSizes"];
+            /**
+             * Track Hidden
+             * @default []
+             */
+            track_hidden: ("artist" | "bpm" | "key" | "tags" | "note")[];
+        };
+        /** LabelPreset */
+        LabelPreset: {
+            /** Id */
+            id: number;
+            look: components["schemas"]["LabelLook"];
+            /** Name */
+            name: string;
+        };
+        /** LabelPresetIn */
+        LabelPresetIn: {
+            look: components["schemas"]["LabelLook"];
+            /** Name */
+            name: string;
+        };
+        /** LabelPresetList */
+        LabelPresetList: {
+            /** Items */
+            items: components["schemas"]["LabelPreset"][];
+        };
         /** LabelRender */
         LabelRender: {
             /** Images */
             images: components["schemas"]["LabelImage"][];
             /** Warnings */
             warnings: string[];
+        };
+        /**
+         * LabelSizes
+         * @description How big each text is, as a factor of its usual size. Text still shrinks to fit from there.
+         */
+        LabelSizes: {
+            /**
+             * Artist
+             * @default 1
+             */
+            artist: number;
+            /**
+             * Details
+             * @description The label and Cat# line
+             * @default 1
+             */
+            details: number;
+            /**
+             * Info
+             * @description Year, country and styles
+             * @default 1
+             */
+            info: number;
+            /**
+             * Note
+             * @description The largest the note may grow to fill the label
+             * @default 1
+             */
+            note: number;
+            /**
+             * Title
+             * @default 1
+             */
+            title: number;
+            /**
+             * Tracks
+             * @description All the text on the tracks label
+             * @default 1
+             */
+            tracks: number;
         };
         /** LabelTrack */
         LabelTrack: {
@@ -1267,6 +1916,11 @@ export interface components {
             /** Proposed At */
             proposed_at: string;
         };
+        /** PushRequest */
+        PushRequest: {
+            /** Record Ids */
+            record_ids: number[];
+        };
         /** RecordAudioOut */
         RecordAudioOut: {
             /** Previews */
@@ -1319,6 +1973,52 @@ export interface components {
             title: string;
             /** Tracks */
             tracks: components["schemas"]["TrackOut"][];
+            /** Traded At */
+            traded_at?: string | null;
+            /** Year */
+            year: number | null;
+        };
+        /** RecordOut */
+        RecordOut: {
+            /** Added At */
+            added_at: string;
+            /** Artist */
+            artist: string;
+            /** Catno */
+            catno: string | null;
+            /** Cover Url */
+            cover_url: string | null;
+            /** Discogs Collection Synced */
+            discogs_collection_synced: boolean;
+            /** Discogs Release Id */
+            discogs_release_id: number | null;
+            /** Format */
+            format: string | null;
+            /** Id */
+            id: number;
+            /** Label */
+            label: string | null;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "owned" | "wantlist";
+            /**
+             * Styles
+             * @default []
+             */
+            styles: string[];
+            /** Styles Manual */
+            styles_manual: boolean;
+            /**
+             * Tags
+             * @default []
+             */
+            tags: string[];
+            /** Title */
+            title: string;
+            /** Traded At */
+            traded_at?: string | null;
             /** Year */
             year: number | null;
         };
@@ -1425,8 +2125,32 @@ export interface components {
             title: string;
             /** Track Count */
             track_count: number;
+            /** Traded At */
+            traded_at?: string | null;
             /** Year */
             year: number | null;
+        };
+        /** RecordYouTubeOut */
+        RecordYouTubeOut: {
+            /** Tracks */
+            tracks: components["schemas"]["TrackYouTubeOut"][];
+        };
+        /** ResetCounts */
+        ResetCounts: {
+            /** Analysed Tracks */
+            analysed_tracks: number;
+            /** Notes */
+            notes: number;
+            /** Records */
+            records: number;
+        };
+        /** ResetRequest */
+        ResetRequest: {
+            /**
+             * Confirm
+             * @description Must be "RESET"
+             */
+            confirm: string;
         };
         /** SectionIn */
         SectionIn: {
@@ -1458,6 +2182,50 @@ export interface components {
         StyleList: {
             /** Items */
             items: components["schemas"]["StyleCount"][];
+        };
+        /** SyncCompare */
+        SyncCompare: {
+            /** Discogs Count */
+            discogs_count: number;
+            /** Kept */
+            kept: components["schemas"]["SyncItem"][];
+            /** Owned Count */
+            owned_count: number;
+            /** Owned Wanted */
+            owned_wanted: components["schemas"]["SyncItem"][];
+            reset: components["schemas"]["ResetCounts"];
+            /** To Copy */
+            to_copy: components["schemas"]["SyncItem"][];
+            /** To Discogs */
+            to_discogs: components["schemas"]["SyncItem"][];
+            /** To Import */
+            to_import: components["schemas"]["SyncItem"][];
+            /** To Trade */
+            to_trade: components["schemas"]["SyncItem"][];
+            /** To Wantlist */
+            to_wantlist: components["schemas"]["SyncItem"][];
+        };
+        /** SyncItem */
+        SyncItem: {
+            /** Artist */
+            artist: string;
+            /**
+             * Copies
+             * @default 1
+             */
+            copies: number;
+            /** Cover Url */
+            cover_url: string | null;
+            /** Discogs Release Id */
+            discogs_release_id: number;
+            /** Here */
+            here?: number | null;
+            /** Id */
+            id: number | null;
+            /** Title */
+            title: string;
+            /** Year */
+            year: number | null;
         };
         /** TagCount */
         TagCount: {
@@ -1551,6 +2319,13 @@ export interface components {
             track_id: number;
             /** Url */
             url: string | null;
+        };
+        /** TrackError */
+        TrackError: {
+            /** Error */
+            error: string;
+            /** Track Id */
+            track_id: number;
         };
         /** TrackHit */
         TrackHit: {
@@ -1677,6 +2452,29 @@ export interface components {
              */
             unlock: ("bpm" | "key")[];
         };
+        /**
+         * TrackYouTubeOut
+         * @description A track's YouTube video, for "Add to YT playlist": a stored lookup, or the YouTube link the audio
+         *     search already found. Tracks with neither are left out.
+         */
+        TrackYouTubeOut: {
+            /** Channel */
+            channel: string | null;
+            /** Confidence */
+            confidence: number | null;
+            /** Duration */
+            duration: number | null;
+            /** Found At */
+            found_at: string;
+            /** Source */
+            source: ("audio" | "search") | null;
+            /** Title */
+            title: string | null;
+            /** Track Id */
+            track_id: number;
+            /** Video Id */
+            video_id: string | null;
+        };
         /** UnitCreate */
         UnitCreate: {
             /** Cols */
@@ -1733,6 +2531,13 @@ export interface components {
         UnsortedRecord: {
             /** Artist */
             artist: string;
+            /** Copy Id */
+            copy_id?: number | null;
+            /**
+             * Copy Number
+             * @default 1
+             */
+            copy_number: number;
             /** Cover Url */
             cover_url: string | null;
             /** Id */
@@ -1801,6 +2606,57 @@ export interface components {
             /** Written */
             written: number;
         };
+        /** YouTubeConnect */
+        YouTubeConnect: {
+            /** Url */
+            url: string;
+        };
+        /** YouTubeCredentials */
+        YouTubeCredentials: {
+            /** Client Id */
+            client_id: string;
+            /** Client Secret */
+            client_secret: string;
+        };
+        /** YouTubeCredentialsSaved */
+        YouTubeCredentialsSaved: {
+            /** Checked */
+            checked: boolean;
+        };
+        /** YouTubePlaylist */
+        YouTubePlaylist: {
+            /** Count */
+            count: number;
+            /** Id */
+            id: string;
+            /** Title */
+            title: string;
+        };
+        /** YouTubeStatus */
+        YouTubeStatus: {
+            /** Client Id */
+            client_id?: string | null;
+            /** Configured */
+            configured: boolean;
+            /** Connected */
+            connected: boolean;
+            /** Source */
+            source?: ("env" | "settings") | null;
+            usage?: components["schemas"]["YouTubeUsage"] | null;
+        };
+        /**
+         * YouTubeUsage
+         * @description Quota units this app spent today, counted here (Google has no API for it); resets at Pacific
+         *     midnight.
+         */
+        YouTubeUsage: {
+            /** Limit */
+            limit: number;
+            /** Resets At */
+            resets_at: string;
+            /** Used */
+            used: number;
+        };
     };
     responses: never;
     parameters: never;
@@ -1831,6 +2687,26 @@ export interface operations {
         };
     };
     find_audio_for_library: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LibraryAudioStarted"];
+                };
+            };
+        };
+    };
+    find_youtube_for_library: {
         parameters: {
             query?: never;
             header?: never;
@@ -1928,6 +2804,72 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["BandcampEmbed"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_copy: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                copy_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CopyOut"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    place_copy: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                copy_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CopyPlace"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CopyOut"][];
                 };
             };
             /** @description Validation Error */
@@ -2227,6 +3169,227 @@ export interface operations {
             };
         };
     };
+    sync_compare: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SyncCompare"];
+                };
+            };
+        };
+    };
+    sync_forget_kept: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                release_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    sync_pull: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["JobStarted"];
+                };
+            };
+        };
+    };
+    sync_push: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PushRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["JobStarted"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    sync_refresh: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["JobStarted"];
+                };
+            };
+        };
+    };
+    sync_reset: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ResetRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["JobStarted"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    sync_wantlist_push: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PushRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["JobStarted"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    sync_wantlist_tidy: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PushRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["JobStarted"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     get_job: {
         parameters: {
             query?: never;
@@ -2245,6 +3408,90 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["JobOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_label_presets: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LabelPresetList"];
+                };
+            };
+        };
+    };
+    save_label_preset: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["LabelPresetIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LabelPresetList"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_label_preset: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                preset_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LabelPresetList"];
                 };
             };
             /** @description Validation Error */
@@ -2493,6 +3740,26 @@ export interface operations {
             };
         };
     };
+    recently_traded: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RecordOut"][];
+                };
+            };
+        };
+    };
     add_record_tag: {
         parameters: {
             query?: never;
@@ -2593,7 +3860,9 @@ export interface operations {
     };
     delete_record: {
         parameters: {
-            query?: never;
+            query?: {
+                from_discogs?: boolean;
+            };
             header?: never;
             path: {
                 record_id: number;
@@ -2721,6 +3990,72 @@ export interface operations {
             };
         };
     };
+    list_copies: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                record_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CopyOut"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    add_copy: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                record_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["CopyPlace"] | null;
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CopyOut"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     discard: {
         parameters: {
             query?: never;
@@ -2768,6 +4103,41 @@ export interface operations {
         requestBody?: {
             content: {
                 "application/json": components["schemas"]["FindAudioRequest"] | null;
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["JobStarted"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    find_youtube: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                record_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["FindYouTubeRequest"] | null;
             };
         };
         responses: {
@@ -2956,6 +4326,37 @@ export interface operations {
             };
         };
     };
+    record_youtube: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                record_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RecordYouTubeOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     exact: {
         parameters: {
             query: {
@@ -2975,6 +4376,59 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["ExactResults"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_settings: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AppSettings"];
+                };
+            };
+        };
+    };
+    patch_settings: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AppSettingsPatch"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AppSettings"];
                 };
             };
             /** @description Validation Error */
@@ -3447,6 +4901,170 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    youtube_connect: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["YouTubeConnect"];
+                };
+            };
+        };
+    };
+    youtube_disconnect: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    youtube_save_credentials: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["YouTubeCredentials"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["YouTubeCredentialsSaved"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    youtube_remove_credentials: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    youtube_playlists: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["YouTubePlaylist"][];
+                };
+            };
+        };
+    };
+    add_to_playlist: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                playlist_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AddToPlaylist"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AddedToPlaylist"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    youtube_status: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["YouTubeStatus"];
                 };
             };
         };

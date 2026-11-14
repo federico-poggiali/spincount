@@ -186,12 +186,22 @@ def layout(conn: sqlite3.Connection) -> dict:
                             "ORDER BY t.name"):
         tags.setdefault(row[0], []).append(row[1])
     by_section: dict[int | None, list[dict]] = {}
+    owned = {}
     for row in conn.execute("SELECT id, artist, title, year, cover_url, styles, section_id FROM records "
                             "WHERE status = 'owned' ORDER BY artist COLLATE NOCASE, title COLLATE NOCASE"):
         record = dict(row)
         record["styles"] = json.loads(record["styles"]) if record["styles"] else []
         record["tags"] = tags.get(record["id"], [])
-        by_section.setdefault(record.pop("section_id"), []).append(record)
+        section_id = record.pop("section_id")
+        owned[record["id"]] = record
+        by_section.setdefault(section_id, []).append(record)
+    numbers: dict[int, int] = {}
+    for row in conn.execute("SELECT id, record_id, section_id FROM record_copies ORDER BY id"):
+        if (record := owned.get(row["record_id"])) is None:
+            continue
+        numbers[row["record_id"]] = numbers.get(row["record_id"], 1) + 1
+        by_section.setdefault(row["section_id"], []).append(
+            {**record, "copy_number": numbers[row["record_id"]], "copy_id": row["id"]})
 
     units = [dict(u) for u in conn.execute("SELECT * FROM shelf_units ORDER BY y, x, id")]
     cubes: dict[int, list[dict]] = {}

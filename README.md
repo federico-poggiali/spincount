@@ -72,6 +72,29 @@ id>/` (the number in the Discogs URL), named like `A1 - Title.wav`. They are mat
 title (never by guess), and their analysis **overrides** the lookup. Analysis results wait for you to validate them;
 a BPM or key you enter by hand is marked *manual* and is never overwritten unless you say so (the x unlocks it).
 
+## Add to YT playlist
+
+Off by default; switch it on in Settings. Every track of a record you add is then looked up on YouTube (the videos
+linked on Discogs first, then a yt-dlp search checked by the matcher; links only, no quota). **Find YouTube for the
+library** does the records you already have. On a record page, **Add to YT playlist** lets you tick tracks and pick
+one of your playlists; videos already in it are skipped. Nothing is added to YouTube by itself.
+
+Connecting your account needs your own Google app (an OAuth client), once. Settings walks you through it, each step
+with a button to its Google Cloud page:
+
+1. In the [Google Cloud console](https://console.cloud.google.com/), create a project and enable **YouTube Data API v3**.
+2. Under *Google Auth Platform*, set up the sign-in screen (External), then **Publish app** so its status is
+   **In production** (in *Testing*, Google ends the sign-in every 7 days). You will see an "unverified app" warning
+   when you sign in: that is expected for your own client.
+3. Create an OAuth client of type **Desktop app**, paste its client ID and secret in Settings (they are checked with
+   Google, then kept in `youtube_client.json` next to the database, readable only by you), and **Connect YouTube**.
+   `YOUTUBE_CLIENT_ID` and `YOUTUBE_CLIENT_SECRET` in `.env` still work, and win over Settings.
+
+The token is kept in `youtube_token.json` next to the database. Your own project has its own quota: 10,000 units a
+day, and adding one video costs 50, so about 200 tracks a day. Google has no API for the quota left, so Spin Count
+counts the units it spends (`youtube_usage.json`) and shows them in Settings and on the record panel; the count resets
+at midnight Pacific time, like Google's.
+
 ## Backups
 
 `make backup` writes a consistent, timestamped copy of the database to `backend/backups/` (safe while the app runs).

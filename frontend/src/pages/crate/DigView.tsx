@@ -2,7 +2,7 @@ import { useState } from "react";
 import type { CrateRecord, CubeOut, UnsortedRecord } from "../../api/api";
 import { placeLabel, type Place } from "../../crate";
 import styles from "./crate.module.css";
-import { DRAG_TYPE, matches, RecordRow, type PlaceRecord } from "./common";
+import { DRAG_TYPE, matches, RecordRow, rowKey, type PlaceRecord } from "./common";
 
 /** Records you own that are not on the shelf yet, to drag onto a cube. */
 export function Tray({ records, places, onPlace }: { records: UnsortedRecord[]; places: Map<number, Place>; onPlace: PlaceRecord }) {
@@ -28,9 +28,9 @@ export function Tray({ records, places, onPlace }: { records: UnsortedRecord[]; 
           {shown.slice(0, 200).map((r) => {
             const hint = r.suggestion ? places.get(r.suggestion.section_id) : undefined;
             return (
-              <RecordRow key={r.id} record={r} sectionId={null} places={places} onPlace={onPlace}>
+              <RecordRow key={rowKey(r)} record={r} sectionId={null} places={places} onPlace={onPlace}>
                 {hint && r.suggestion && (
-                  <button type="button" className={styles.suggest} onClick={() => onPlace(r.id, r.suggestion!.section_id)}
+                  <button type="button" className={styles.suggest} onClick={() => onPlace(r.id, r.suggestion!.section_id, r.copy_id)}
                     title={`Matches ${r.suggestion.reasons.join(", ")}`}>
                     → {placeLabel(hint)} <em>{r.suggestion.reasons.join(", ")}</em>
                   </button>
@@ -54,7 +54,7 @@ export function FindResults({ found, unsortedHits, onShow }: { found: { record: 
       </div>
       <ul className={styles.found}>
         {found.slice(0, 30).map(({ record, place }) => (
-          <li key={record.id}>
+          <li key={rowKey(record)}>
             <button type="button" onClick={() => onShow(place.cube)}>
               <b>{record.artist} – {record.title}</b>
               <span>{placeLabel(place)}</span>
@@ -62,7 +62,7 @@ export function FindResults({ found, unsortedHits, onShow }: { found: { record: 
           </li>
         ))}
         {unsortedHits.slice(0, 10).map((r) => (
-          <li key={r.id}><span className={styles.foundOff}><b>{r.artist} – {r.title}</b><span>not on the shelf yet</span></span></li>
+          <li key={rowKey(r)}><span className={styles.foundOff}><b>{r.artist} – {r.title}</b><span>not on the shelf yet</span></span></li>
         ))}
         {found.length + unsortedHits.length === 0 && <li className={styles.hint}>Nothing you own matches.</li>}
       </ul>

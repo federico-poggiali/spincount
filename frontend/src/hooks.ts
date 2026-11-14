@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type RefObject } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { api, type NoteCreate, type NotePatch, type RecordDetail, type RecordPatch, type TrackPatch } from "./api/api";
+import { api, type LabelLook, type NoteCreate, type NotePatch, type RecordDetail, type RecordPatch, type TrackPatch } from "./api/api";
 import { keyByCamelot, type KeyFormat } from "./lib";
 
 export function useDebounced<T>(value: T, ms = 300): T {
@@ -211,4 +211,19 @@ export function useDismiss(root: RefObject<HTMLElement | null>, open: boolean, c
     document.addEventListener("mousedown", onDown);
     return () => document.removeEventListener("mousedown", onDown);
   }, [open, root]);
+}
+
+/** Label presets (named looks, kept in the database) for the label editor's Customize panel. */
+export function useLabelPresets() {
+  const client = useQueryClient();
+  const key = ["label-presets"];
+  const presets = useQuery({ queryKey: key, queryFn: api.listLabelPresets, staleTime: Infinity });
+  const settle = { onSuccess: (items: Awaited<ReturnType<typeof api.listLabelPresets>>) => client.setQueryData(key, items) };
+  const save = useMutation({ mutationFn: ({ name, look }: { name: string; look: LabelLook }) => api.saveLabelPreset(name, look), ...settle });
+  const remove = useMutation({ mutationFn: (id: number) => api.deleteLabelPreset(id), ...settle });
+  return {
+    items: presets.data ?? [],
+    save: (name: string, look: LabelLook) => save.mutate({ name, look }),
+    remove: (id: number) => remove.mutate(id),
+  };
 }

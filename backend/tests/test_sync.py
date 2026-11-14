@@ -15,13 +15,19 @@ def job_of(client, job_id):
     return client.get(f"/api/jobs/{job_id}").json()
 
 
-def test_intake_only_starts_finding_audio(client):
-    """A new record starts its audio search; analysis and the Discogs sync wait for the user."""
+def test_intake_finds_audio_and_adds_owned_records_to_discogs(client):
+    """A new owned record starts its audio search and its Discogs sync; analysis waits for the user."""
     body = client.post("/api/records/intake", json=INTAKE).json()
-    assert set(body["jobs"]) == {"audio"}
+    assert set(body["jobs"]) == {"audio", "discogs_sync"}
     assert job_of(client, body["jobs"]["audio"])["type"] == "audio"
+    assert job_of(client, body["jobs"]["discogs_sync"])["type"] == "discogs_sync"
     again = client.post("/api/records/intake", json=INTAKE).json()
     assert again["jobs"] is None  # already in the library: nothing new starts
+
+
+def test_intake_to_the_wantlist_does_not_touch_discogs(client):
+    body = client.post("/api/records/intake", json={**INTAKE, "status": "wantlist"}).json()
+    assert set(body["jobs"]) == {"audio"}
 
 
 def test_wantlist_is_not_synced(client):
@@ -30,9 +36,9 @@ def test_wantlist_is_not_synced(client):
 
 
 def test_sync_adds_once_and_marks_record(client, collection, db_path):
-    rid = client.post("/api/records/intake", json=INTAKE).json()["id"]
+    body = client.post("/api/records/intake", json=INTAKE).json()
+    rid, first = body["id"], body["jobs"]["discogs_sync"]
     client.app.state.runner = runner = runner_with(collection)
-    first = client.post(f"/api/records/{rid}/sync-discogs").json()["job_id"]
     runner.run_pending()
     job = job_of(client, first)
     assert job["status"] == "done" and job["result"]["added"] is True

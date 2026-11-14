@@ -8,6 +8,9 @@ from typing import Literal
 from pydantic import BaseModel, Field
 
 MainField = Literal["label", "catno", "year", "country", "styles", "note", "qr"]
+# glitchy: the pixel original · corrupted: glitchy, torn · penguin: Tschichold's Penguin grid ·
+# republic: The Designers Republic · factory: Saville's catalogue-number sleeves
+Design = Literal["glitchy", "corrupted", "penguin", "republic", "factory"]
 TrackField = Literal["artist", "bpm", "key", "tags", "note"]
 
 
@@ -22,6 +25,20 @@ class LabelTrack(BaseModel):
     hidden: list[TrackField] = []
 
 
+def _scale(description: str | None = None):
+    return Field(default=1.0, ge=0.6, le=1.6, description=description)
+
+
+class LabelSizes(BaseModel):
+    """How big each text is, as a factor of its usual size. Text still shrinks to fit from there."""
+    artist: float = _scale()
+    details: float = _scale("The label and Cat# line")
+    title: float = _scale()
+    info: float = _scale("Year, country and styles")
+    note: float = _scale("The largest the note may grow to fill the label")
+    tracks: float = _scale("All the text on the tracks label")
+
+
 class LabelData(BaseModel):
     artist: str
     label: str | None = None
@@ -34,6 +51,16 @@ class LabelData(BaseModel):
     qr_url: str | None = Field(default=None, description="The Discogs page the QR code opens")
     hidden: list[MainField] = []
     tracks: list[LabelTrack] = []
+    sizes: LabelSizes = LabelSizes()
+    design: Design = "glitchy"
+
+
+class LabelLook(BaseModel):
+    """Everything Customize sets, apart from the text: what a saved preset holds."""
+    design: Design = "glitchy"
+    sizes: LabelSizes = LabelSizes()
+    hidden: list[MainField] = []
+    track_hidden: list[TrackField] = []
 
 
 _DISCOGS_SUFFIX = re.compile(r"\s*\(\d+\)(?=\s*(?:[&,/]|$))")

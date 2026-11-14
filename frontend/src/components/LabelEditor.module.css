@@ -1,19 +1,83 @@
-.editor { display: grid; gap: 28px; min-width: 0; }
-.group { display: grid; gap: 10px; }
-.group h2 { font: 600 1.25rem var(--sans); letter-spacing: -0.02em; margin-bottom: 4px; }
-.field { display: grid; grid-template-columns: 96px minmax(0, 1fr) 22px; gap: 10px; align-items: center; }
-.field textarea { min-height: 64px; }
-.print { width: 18px; height: 18px; accent-color: var(--signal); cursor: pointer; }
-.qr { font: 400 0.8125rem var(--mono); color: var(--ink-3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.tracksHead { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+/* Compact and fluid: the fields reflow with the editor's own width (container queries), not the window's. */
+.editor { display: grid; gap: 22px; min-width: 0; container-type: inline-size; }
+.group { display: grid; gap: 10px; min-width: 0; }
+.group h2 { font: 600 1rem var(--sans); letter-spacing: -0.01em; }
+.head { display: flex; justify-content: space-between; align-items: center; gap: 12px; min-height: 28px; }
 .bulk { display: flex; gap: 6px; }
-.empty { margin: 0; color: var(--ink-3); font-size: 0.875rem; }
-.track { margin: 0; padding: 10px 12px 12px; border: 1px solid var(--line-2); border-radius: var(--r-m); min-width: 0; }
+.empty { margin: 0; color: var(--ink-3); font-size: 0.8125rem; }
+
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px 12px; }
+.field { display: grid; gap: 5px; min-width: 0; align-content: start; }
+.field[data-wide] { grid-column: 1 / -1; }
+.field :global(.micro) { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.field :global(.field-input) { height: 32px; padding: 0 10px; font-size: 0.875rem; width: 100%; }
+.field textarea:global(.field-input) { height: auto; min-height: 52px; padding: 7px 10px; font-size: 0.8125rem; }
+
+/* Customize: closed by default, one line saying what is changed */
+.customize { border: 1px solid var(--line-2); border-radius: var(--r-m); background: var(--glass); min-width: 0; }
+.customizeToggle {
+  display: flex; align-items: center; gap: 10px; width: 100%; padding: 9px 12px; background: none; border: 0;
+  color: inherit; font: 600 0.875rem var(--sans); cursor: pointer; text-align: left; border-radius: inherit;
+}
+.customizeToggle:focus-visible { outline: 2px solid var(--signal); outline-offset: 2px; }
+.customizeState { flex: 1; min-width: 0; font: 400 0.75rem var(--mono); color: var(--ink-3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.chevron { color: var(--ink-3); transition: transform 0.2s var(--ease); }
+.customize[data-open] .chevron { transform: rotate(180deg); }
+.customizeBody { display: grid; gap: 14px; padding: 4px 12px 12px; border-top: 1px solid var(--line); padding-top: 12px; }
+.toggleGroup { display: grid; gap: 8px; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip {
+  position: relative; display: inline-flex; align-items: center; height: 28px; padding: 0 11px; border-radius: 999px;
+  border: 1px solid var(--line-2); color: var(--ink-3); font-size: 0.8125rem; cursor: pointer; user-select: none;
+  text-decoration: line-through; transition: border-color 0.15s var(--ease), color 0.15s var(--ease), background 0.15s var(--ease);
+}
+.chip:has(input:checked) { color: var(--ink); text-decoration: none; border-color: color-mix(in srgb, var(--signal) 55%, transparent); background: color-mix(in srgb, var(--signal) 14%, transparent); }
+.chip:has(input:focus-visible) { outline: 2px solid var(--signal); outline-offset: 2px; }
+.chip input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; }
+/* designs: one row per family, a segmented control for its variations */
+/* each family as wide as its buttons need: two variations get twice the room of one */
+.families { display: flex; flex-wrap: wrap; gap: 8px; }
+.family { display: grid; gap: 5px; min-width: calc(var(--n) * 96px); flex: var(--n) 1 0; }
+.familyName { font-size: 0.75rem; color: var(--ink-3); }
+.segments { display: flex; border: 1px solid var(--line-2); border-radius: var(--r-m); padding: 2px; gap: 2px; }
+.segments button {
+  flex: 1; min-width: 0; height: 28px; padding: 0 8px; border: 0; border-radius: calc(var(--r-m) - 2px); background: none;
+  color: var(--ink-2); font: 500 0.8125rem var(--sans); cursor: pointer; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  transition: background 0.15s var(--ease), color 0.15s var(--ease);
+}
+.segments button:hover { color: var(--ink); }
+.segments button[aria-pressed="true"] { background: color-mix(in srgb, var(--signal) 18%, transparent); color: var(--ink); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--signal) 55%, transparent); }
+.segments button:focus-visible { outline: 2px solid var(--signal); outline-offset: 1px; }
+
+.preset { display: inline-flex; align-items: center; height: 28px; border: 1px solid var(--line-2); border-radius: 999px; overflow: hidden; }
+.preset[data-active] { border-color: color-mix(in srgb, var(--signal) 55%, transparent); background: color-mix(in srgb, var(--signal) 14%, transparent); }
+.preset button { height: 100%; border: 0; background: none; color: var(--ink); font: 500 0.8125rem var(--sans); cursor: pointer; padding: 0 4px 0 11px; }
+.preset .presetDelete { padding: 0 9px 0 4px; color: var(--ink-3); }
+.preset .presetDelete:hover { color: var(--signal-ink); }
+.preset button:focus-visible { outline: 2px solid var(--signal); outline-offset: -2px; }
+.presetForm { display: flex; gap: 8px; }
+.presetForm :global(.field-input) { flex: 1; min-width: 0; height: 30px; font-size: 0.8125rem; }
+
+.customizeFoot { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+
+.sizes { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 6px 20px; }
+.size { display: grid; grid-template-columns: 92px minmax(0, 1fr) 38px; gap: 8px; align-items: center; min-height: 24px; font-size: 0.8125rem; color: var(--ink-2); }
+.size span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.size input { width: 100%; margin: 0; accent-color: var(--signal); cursor: pointer; }
+.size output { font-size: 0.75rem; color: var(--ink-2); text-align: right; }
+
+/* one row per track: the side position on the left, its fields beside it */
+.track { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 12px; padding: 8px 0; border-top: 1px solid var(--line); min-width: 0; }
 .track[data-skipped] .trackFields { opacity: 0.4; }
-.track legend { padding: 0 6px; }
-.include { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; font-weight: 600; }
+.trackHead { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; padding-top: 21px; min-width: 44px; }
+.trackHead :global(.field-input) { height: 28px; width: 56px; padding: 0 6px; font-size: 0.8125rem; }
+.include { display: inline-flex; align-items: center; gap: 6px; height: 32px; cursor: pointer; font-weight: 600; font-size: 0.875rem; }
 .include input { accent-color: var(--signal); }
-.trackFields { display: grid; gap: 8px; }
-.trackFields .field { grid-template-columns: 72px minmax(0, 1fr) 22px; }
-.trackFields .field :global(.micro) { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-@media (max-width: 720px) { .field { grid-template-columns: 76px minmax(0, 1fr) 22px; } }
+/* BPM and key are a few characters: narrow; tags and the note share the rest */
+.trackFields { display: flex; flex-wrap: wrap; gap: 8px 10px; min-width: 0; }
+.trackFields .field { flex: 1 1 140px; }
+.trackFields .field[data-narrow] { flex: 0 0 64px; }
+.trackFields .field[data-wide] { flex-basis: 100%; }
+@container (max-width: 460px) {
+  .grid { grid-template-columns: 1fr 1fr; }
+}

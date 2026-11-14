@@ -33,7 +33,8 @@ export default function CratePage() {
   }, [places, q]);
   const hitSections = useMemo(() => new Set(found.map((f) => f.place.section.id)), [found]);
 
-  const placeRecord = (recordId: number, sectionId: number | null) => act(() => api.place([recordId], sectionId));
+  const placeRecord = (recordId: number, sectionId: number | null, copyId?: number | null) =>
+    act(() => (copyId != null ? api.placeCopy(copyId, sectionId).then(() => undefined) : api.place([recordId], sectionId)));
   const cube = selected?.kind === "cube" ? units.flatMap((u) => u.cubes.map((c) => ({ unit: u, cube: c }))).find((x) => x.cube.id === selected.id) : undefined;
   const unit = selected?.kind === "unit" ? units.find((u) => u.id === selected.id) : undefined;
 

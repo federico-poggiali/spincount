@@ -8,7 +8,7 @@ from fastapi.responses import FileResponse
 from fastapi.routing import APIRoute
 from fastapi.staticfiles import StaticFiles
 
-from app import backfill, config, errors, sync
+from app import backfill, config, errors, library_sync, sync
 from app.analysis import job as analysis_job
 from app.audio import job as audio_job
 from app.audio import stage as audio_stage
@@ -16,8 +16,25 @@ from app.db import connect, migrate
 from app.discogs import DiscogsClient
 from app.jobs.runner import JobRunner
 from app.logging_config import configure as configure_logging
-from app.routes import admin, audio, crate, jobs, labels, notes, records, search, styles, tags, tracks
+from app.routes import (
+    admin,
+    audio,
+    crate,
+    jobs,
+    labels,
+    notes,
+    records,
+    search,
+    styles,
+    tags,
+    tracks,
+    youtube,
+)
+from app.routes import copies as copies_routes
+from app.routes import library_sync as library_sync_routes
+from app.sync_schedule import SyncScheduler
 from app.vault import VaultSyncer
+from app.youtube import links as youtube_links
 
 log = logging.getLogger("app.request")
 
@@ -36,12 +53,17 @@ async def lifespan(app: FastAPI):
     app.state.runner = JobRunner({
         analysis_job.JOB_TYPE: analysis_job.make_handler(_discogs, research_fn=audio_stage.research_release),
         audio_job.JOB_TYPE: audio_job.make_handler(audio_stage.research_release),
+        youtube_links.JOB_TYPE: youtube_links.make_handler(),
         sync.JOB_TYPE: sync.make_handler(_discogs),
         backfill.JOB_TYPE: backfill.make_handler(_discogs),
+        **library_sync.make_handlers(_discogs),
     }, on_done=syncer.request)
     app.state.runner.start()
+    schedule = SyncScheduler(app.state.runner)
+    schedule.start()
     syncer.request()  # bring the vault up to date at startup
     yield
+    schedule.stop()
     app.state.runner.stop()
     syncer.stop()
 
@@ -54,7 +76,8 @@ app = FastAPI(title="Vinyl Second-Brain", lifespan=lifespan, generate_unique_id_
 app.add_middleware(CORSMiddleware, allow_origins=config.CORS_ORIGINS, allow_methods=["*"],
                    allow_headers=["*"])
 errors.install(app)
-for module in (records, audio, tracks, notes, tags, styles, labels, search, crate, jobs, admin):
+for module in (records, audio, tracks, notes, tags, styles, labels, search, crate, jobs, admin,
+               library_sync_routes, copies_routes, youtube):
     app.include_router(module.router)
 
 

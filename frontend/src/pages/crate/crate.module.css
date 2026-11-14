@@ -124,3 +124,4 @@
   .tools { width: 100%; }
   .find { flex: 1; }
 }
+.copyTag { color: var(--ink-3); font-weight: 400; font-size: 0.8em; }

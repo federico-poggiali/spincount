@@ -23,8 +23,9 @@ const client = new QueryClient({
     },
   }),
   mutationCache: new MutationCache({
-    onError: (error) => {
-      if (!isAbort(error)) pushToast(describe(error));
+    // meta.quiet: the form shows the error itself, next to the fields.
+    onError: (error, _variables, _context, mutation) => {
+      if (!isAbort(error) && mutation.meta?.quiet !== true) pushToast(describe(error));
     },
   }),
   defaultOptions: { queries: { retry: false, refetchOnWindowFocus: false, staleTime: 5_000 } },

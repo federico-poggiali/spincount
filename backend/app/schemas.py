@@ -3,6 +3,8 @@ from typing import Generic, Literal, TypeVar
 
 from pydantic import BaseModel, Field
 
+from app.labels.data import LabelLook
+
 T = TypeVar("T")
 Status = Literal["owned", "wantlist"]  # owned = the library; wantlist = everything else
 
@@ -89,6 +91,7 @@ class RecordOut(BaseModel):
     styles: list[str] = []  # Discogs styles; hand-edited when styles_manual is set
     styles_manual: bool
     tags: list[str] = []
+    traded_at: str | None = None  # when it moved from the wishlist to owned
 
 
 class RecordSummary(RecordOut):
@@ -245,6 +248,19 @@ class FromDiscogs(BaseModel):
     discogs_url: str
 
 
+class LabelPresetIn(BaseModel):
+    name: str = Field(min_length=1, max_length=60)
+    look: LabelLook
+
+
+class LabelPreset(LabelPresetIn):
+    id: int
+
+
+class LabelPresetList(BaseModel):
+    items: list[LabelPreset]
+
+
 class ExactNoteHit(BaseModel):
     snippet: str  # matches wrapped in \x02 ... \x03
     note: NoteOut
@@ -307,6 +323,8 @@ class OpenedPath(BaseModel):
 
 class CrateRecord(BaseModel):
     id: int
+    copy_number: int = 1        # which copy of the record sits here
+    copy_id: int | None = None  # set for copy 2 and up
     artist: str
     title: str
     year: int | None
@@ -385,3 +403,145 @@ class SectionIn(BaseModel):
 class PlaceIn(BaseModel):
     record_ids: list[int] = Field(min_length=1, max_length=500)
     section_id: int | None  # null puts the records back in unsorted
+
+
+# ---- syncing with Discogs ----
+
+class AppSettings(BaseModel):
+    auto_collection: bool  # adding an owned record also adds it to the Discogs collection
+    auto_wantlist: bool    # adding a wishlist record also adds it to the Discogs wantlist
+    import_every_min: int  # Discogs -> Spin Count on a schedule; 0 = only when asked
+    push_every_min: int    # Spin Count -> Discogs on a schedule; 0 = only when asked
+    youtube_playlist: bool  # "Add to YT playlist": every track is looked up on YouTube, for playlists
+
+
+MAX_EVERY = 7 * 24 * 60  # a week, in minutes
+
+
+class AppSettingsPatch(BaseModel):
+    auto_collection: bool | None = None
+    auto_wantlist: bool | None = None
+    import_every_min: int | None = Field(default=None, ge=0, le=MAX_EVERY)
+    push_every_min: int | None = Field(default=None, ge=0, le=MAX_EVERY)
+    youtube_playlist: bool | None = None
+
+
+class SyncItem(BaseModel):
+    id: int | None  # the Spin Count record; null for a release not imported yet
+    discogs_release_id: int
+    artist: str
+    title: str
+    year: int | None
+    cover_url: str | None
+    copies: int = 1          # copies in the Discogs collection
+    here: int | None = None  # copies in Spin Count, when they differ
+
+
+class ResetCounts(BaseModel):
+    records: int
+    notes: int
+    analysed_tracks: int
+
+
+class SyncCompare(BaseModel):
+    discogs_count: int
+    owned_count: int
+    to_discogs: list[SyncItem]  # owned here, missing from the Discogs collection
+    to_import: list[SyncItem]   # in the Discogs collection, missing here
+    to_trade: list[SyncItem]    # in the Discogs collection, on the wishlist here
+    to_copy: list[SyncItem]     # more copies on Discogs than here
+    kept: list[SyncItem]        # deleted here but kept on Discogs: imports skip them
+    to_wantlist: list[SyncItem]   # on the wishlist here, not on the Discogs wantlist
+    owned_wanted: list[SyncItem]  # owned here, still on the Discogs wantlist
+    reset: ResetCounts          # what a reset would erase
+
+
+class PushRequest(BaseModel):
+    record_ids: list[int] = Field(min_length=1, max_length=2000)
+
+
+class CopyOut(BaseModel):
+    number: int           # 1 is the record itself
+    copy_id: int | None   # None for copy 1
+    section_id: int | None  # its shelf place; None = unsorted
+
+
+class CopyPlace(BaseModel):
+    section_id: int | None
+
+
+class ResetRequest(BaseModel):
+    confirm: str = Field(description='Must be "RESET"')
+
+
+class TrackYouTubeOut(BaseModel):
+    """A track's YouTube video, for "Add to YT playlist": a stored lookup, or the YouTube link the audio
+    search already found. Tracks with neither are left out."""
+    track_id: int
+    video_id: str | None  # null: searched, YouTube does not have it
+    source: Literal["audio", "search"] | None  # the audio search's link (from Discogs), or a YouTube search
+    title: str | None     # the video's title (search only)
+    channel: str | None
+    duration: int | None
+    confidence: float | None
+    found_at: str
+
+
+class RecordYouTubeOut(BaseModel):
+    tracks: list[TrackYouTubeOut]
+
+
+class FindYouTubeRequest(BaseModel):
+    refresh: bool = False  # search again even for tracks already searched
+
+
+class YouTubeUsage(BaseModel):
+    """Quota units this app spent today, counted here (Google has no API for it); resets at Pacific
+    midnight."""
+    used: int
+    limit: int      # 10,000: a Google Cloud project's default
+    resets_at: str  # UTC, ISO 8601
+
+
+class YouTubeStatus(BaseModel):
+    configured: bool  # your Google app's client ID and secret are set (Settings or .env)
+    connected: bool   # signed in to a YouTube account
+    source: Literal["env", "settings"] | None = None  # where the client ID and secret come from
+    client_id: str | None = None  # not secret; shown so you know which Google app is used
+    usage: YouTubeUsage | None = None  # only once configured
+
+
+class YouTubeCredentials(BaseModel):
+    client_id: str = Field(min_length=1, max_length=200)
+    client_secret: str = Field(min_length=1, max_length=200)
+
+
+class YouTubeCredentialsSaved(BaseModel):
+    checked: bool  # false: Google could not be reached, so the ID and secret were saved unchecked
+
+
+class YouTubeConnect(BaseModel):
+    url: str  # Google's sign-in page; it comes back to /api/youtube/callback
+
+
+class YouTubePlaylist(BaseModel):
+    id: str
+    title: str
+    count: int
+
+
+class AddToPlaylist(BaseModel):
+    track_ids: list[int] = Field(min_length=1, max_length=200)  # added in this order
+
+
+class TrackError(BaseModel):
+    track_id: int
+    error: str
+
+
+class AddedToPlaylist(BaseModel):
+    added: list[int]     # track ids
+    already: list[int]   # their video was in the playlist already
+    no_video: list[int]  # not on YouTube, or not searched yet
+    failed: list[TrackError]
+    quota_exceeded: bool  # YouTube stopped it for today; the rest of the tracks were not tried

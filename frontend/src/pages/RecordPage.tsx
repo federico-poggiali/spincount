@@ -1,8 +1,9 @@
 import { useCallback, useRef, useState } from "react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { api, ApiError } from "../api/api";
 import { ClampedNote } from "../components/ClampedNote";
+import { CopiesPanel } from "../components/CopiesPanel";
 import { Cover } from "../components/Cover";
 import { Icon } from "../components/Icon";
 import { JobChip } from "../components/JobChip";
@@ -14,6 +15,7 @@ import { Skeleton } from "../components/Skeleton";
 import { StyleEditor } from "../components/StyleEditor";
 import { TagEditor } from "../components/TagEditor";
 import { TrackTable } from "../components/TrackTable";
+import { YouTubePanel } from "../components/YouTubePanel";
 import { recordKey, usePatchRecord, useKeyFormat, useKeyConfidenceEnabled, useKeysEnabled, useRecord, useStyleMutations, useStyles, useTagMutations, useTags } from "../hooks";
 import { LOW_CONFIDENCE } from "../lib";
 import styles from "./RecordPage.module.css";
@@ -44,6 +46,8 @@ export default function RecordPage() {
   const [confidenceOn] = useKeyConfidenceEnabled();
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [askShelf, setAskShelf] = useState(!!arrival?.askShelf);
+  const youtubeOn = useQuery({ queryKey: ["app-settings"], queryFn: api.getSettings }).data?.youtube_playlist ?? false;
+  const [youtubeOpen, setYoutubeOpen] = useState(false);
 
   const audio = useRecordAudio(record.data);
   const [selected, setSelected] = useState<Set<number>>(new Set());
@@ -78,13 +82,14 @@ export default function RecordPage() {
   const [syncRunning, setSyncRunning] = useState(false);
   const sync = useMutation({ mutationFn: () => api.syncDiscogs(id), onSuccess: ({ job_id }) => { setSyncJob(job_id); setSyncRunning(true); } });
   const del = useMutation({
-    mutationFn: () => api.deleteRecord(id),
+    mutationFn: (fromDiscogs: boolean) => api.deleteRecord(id, fromDiscogs),
     onSuccess: () => { client.invalidateQueries({ queryKey: ["records"] }); navigate("/"); },
   });
   const refresh = useCallback(() => {
     client.invalidateQueries({ queryKey: ["records"] });
     client.invalidateQueries({ queryKey: recordKey(id) });
     client.invalidateQueries({ queryKey: ["record-audio", id] });
+    client.invalidateQueries({ queryKey: ["record-youtube", id] });
   }, [client, id]);
 
   if (record.isError) {
@@ -147,7 +152,7 @@ export default function RecordPage() {
           {r.discogs_release_id != null && (
             <a className="ghost small" href={`https://www.discogs.com/release/${r.discogs_release_id}`} target="_blank" rel="noreferrer">Discogs <Icon name="external" size={12} /></a>
           )}
-          <Link className="ghost small" to={`/records/${id}/label`}>Make label</Link>
+          {r.status === "owned" && <Link className="ghost small" to={`/records/${id}/label`}>Make label</Link>}
         </div>
       </header>
 
@@ -170,6 +175,9 @@ export default function RecordPage() {
               <input ref={pickFiles} type="file" accept="audio/*,.flac,.aif,.aiff" multiple hidden aria-label="Audio files to upload"
                 onChange={(e) => { const files = [...(e.target.files ?? [])]; e.target.value = ""; if (files.length) upload.mutate(files); }} />
               {audio.playFirst && <button className="ghost" onClick={audio.playFirst}>▶ Play record</button>}
+              {youtubeOn && (
+                <button className="ghost" aria-expanded={youtubeOpen} onClick={() => setYoutubeOpen((o) => !o)}>Add to YT playlist</button>
+              )}
               <span className={styles.spacer} />
             </div>
             {(analysisJob != null || syncJob != null || audioJob != null) && (
@@ -213,6 +221,7 @@ export default function RecordPage() {
             )}
             {selected.size > 0 && <p className={styles.hint}>Only the ticked tracks will be analysed.</p>}
           </div>
+          {youtubeOn && youtubeOpen && <YouTubePanel record={r} />}
           <TrackTable record={r} audio={audio} editable keyFormat={keyFormat} showKeys={keysOn} busyIds={busyIds} selection={{ ids: selected, onChange: setSelected }}
             onUse={r.status === "owned" ? (t) => startValidate([t]) : undefined} onPass={(t) => discard.mutate([t.id])} />
           {audio.player}
@@ -272,6 +281,7 @@ export default function RecordPage() {
               </div>
             )}
           </dl>
+          {r.status === "owned" && <div className={styles.attrBlock}><CopiesPanel recordId={r.id} /></div>}
           <div className={styles.attrBlock}>
             <StyleEditor
               styles={r.styles ?? []} manual={r.styles_manual} suggestions={(allStyles.data ?? []).map((s) => s.name)}
@@ -288,9 +298,16 @@ export default function RecordPage() {
             />
           </div>
           <div className={styles.danger}>
-            {confirmDelete ? (
+            {confirmDelete && r.status === "owned" && r.discogs_collection_synced ? (
+              <div className={styles.deleteAsk} role="group" aria-label="Delete this record">
+                <p>It is in your Discogs collection too. Remove it there as well?</p>
+                <button className="ghost small danger" onClick={() => del.mutate(true)} disabled={del.isPending}>Delete here and on Discogs</button>
+                <button className="ghost small danger" onClick={() => del.mutate(false)} disabled={del.isPending}>Delete here only</button>
+                <button className="ghost small" onClick={() => setConfirmDelete(false)}>Keep</button>
+              </div>
+            ) : confirmDelete ? (
               <>
-                <button className="ghost small danger" onClick={() => del.mutate()} disabled={del.isPending}>Confirm delete</button>
+                <button className="ghost small danger" onClick={() => del.mutate(false)} disabled={del.isPending}>Confirm delete</button>
                 <button className="ghost small" onClick={() => setConfirmDelete(false)}>Keep</button>
               </>
             ) : (

@@ -4,10 +4,10 @@ from collections.abc import Callable
 from fastapi import APIRouter, Depends, HTTPException, Response
 
 from app import intake as intake_service
-from app import sync
+from app import library_sync, sync
 from app.analysis import job as analysis_job
 from app.audio import job as audio_job
-from app.db import proposals, queries, records, tracks
+from app.db import _util, proposals, queries, records, settings, tracks
 from app.deps import (
     discogs_errors,
     get_db,
@@ -27,10 +27,12 @@ from app.schemas import (
     JobStarted,
     Page,
     RecordDetail,
+    RecordOut,
     RecordPatch,
     RecordSummary,
     ValidateRequest,
 )
+from app.youtube import links as youtube_links
 
 router = APIRouter(prefix="/api/records", tags=["records"])
 
@@ -41,12 +43,19 @@ def intake(body: IntakeRequest, response: Response, conn: sqlite3.Connection = D
     with discogs_errors():
         result = intake_service.intake(conn, discogs, body.discogs_url, body.status)
     response.status_code = 201 if result.created else 200
-    # A new record starts finding its audio straight away. BPM and key wait for "Analyse" (which reuses it).
-    job = None
+    # A new record starts finding its audio straight away and, if Settings say so, goes into the Discogs
+    # collection (owned) or wantlist (wishlist). BPM and key wait for "Analyse" (which reuses the audio).
+    jobs = {}
     if result.created and result.record["discogs_release_id"] is not None:
-        job = runner.enqueue(audio_job.JOB_TYPE, result.record["id"])
-    return {**result.record, "resolved_from_master": result.resolved_from_master,
-            "jobs": {"audio": job} if job is not None else None}
+        record_id = result.record["id"]
+        jobs["audio"] = runner.enqueue(audio_job.JOB_TYPE, record_id)
+        if settings.get(conn, "youtube_playlist"):  # after the audio job, so its YouTube links are reused
+            jobs["youtube"] = runner.enqueue(youtube_links.JOB_TYPE, record_id)
+        if result.record["status"] == "owned" and settings.get(conn, "auto_collection"):
+            jobs["discogs_sync"] = runner.enqueue(sync.JOB_TYPE, record_id)
+        elif result.record["status"] != "owned" and settings.get(conn, "auto_wantlist"):
+            jobs["discogs_want"] = runner.enqueue(library_sync.WANT, record_id)
+    return {**result.record, "resolved_from_master": result.resolved_from_master, "jobs": jobs or None}
 
 
 @router.get("", response_model=Page[RecordSummary])
@@ -54,6 +63,17 @@ def list_records(f: queries.Filters = Depends(library_filters),
                  conn: sqlite3.Connection = Depends(get_db)) -> dict:
     items, total = queries.list_records(conn, f)
     return {"items": items, "total": total, "limit": f.limit, "offset": f.offset}
+
+
+@router.get("/recently-traded", response_model=list[RecordOut])
+def recently_traded(conn: sqlite3.Connection = Depends(get_db)) -> list[dict]:
+    """Records that moved from the wishlist to owned, newest first (the last 90 days, at most 20)."""
+    rows = conn.execute(
+        "SELECT * FROM records WHERE status = 'owned' "
+        "AND traded_at >= strftime('%Y-%m-%dT%H:%M:%SZ', 'now', '-90 days') "
+        "ORDER BY traded_at DESC LIMIT 20").fetchall()
+    decoded = [records.decode(dict(r)) for r in rows]
+    return [{**r, "styles": r["styles"] or []} for r in decoded]
 
 
 @router.get("/{record_id}", response_model=RecordDetail)
@@ -78,11 +98,18 @@ def patch_record(record_id: int, body: RecordPatch, conn: sqlite3.Connection = D
         changes.update(_discogs_styles(before, discogs))
     elif "styles" in changes:
         changes["styles_manual"] = 1  # what the user types always wins over Discogs
+    becomes_owned = changes.get("status") == "owned" and before["status"] != "owned"
+    if becomes_owned:
+        changes["traded_at"] = _util.now()  # off the wishlist: shown as recently traded
     records.update(conn, record_id, **changes)
-    # Moving a record to 'owned' adds it to Discogs, as intake would. Moving away never removes it.
-    if (changes.get("status") == "owned" and before["status"] != "owned"
-            and not before["discogs_collection_synced"] and before["discogs_release_id"]):
-        runner.enqueue(sync.JOB_TYPE, record_id)
+    # A status change reaches Discogs as intake would, if Settings say so. Nothing is ever removed there.
+    if before["discogs_release_id"]:
+        if (becomes_owned and not before["discogs_collection_synced"]
+                and settings.get(conn, "auto_collection")):
+            runner.enqueue(sync.JOB_TYPE, record_id)
+        elif (changes.get("status") == "wantlist" and before["status"] == "owned"
+                and not before["discogs_wantlist_synced"] and settings.get(conn, "auto_wantlist")):
+            runner.enqueue(library_sync.WANT, record_id)
     return queries.record_detail(conn, record_id)
 
 
@@ -96,9 +123,17 @@ def _discogs_styles(record: dict, discogs: Callable[[], DiscogsClient]) -> dict:
 
 
 @router.delete("/{record_id}", status_code=204)
-def delete_record(record_id: int, conn: sqlite3.Connection = Depends(get_db)) -> Response:
-    require_record(conn, record_id)
-    records.delete(conn, record_id)  # also removes tracks, notes, tags links; Discogs is untouched
+def delete_record(record_id: int, from_discogs: bool = False, conn: sqlite3.Connection = Depends(get_db),
+                  runner: JobRunner = Depends(get_runner)) -> Response:
+    """Delete the record with its tracks, notes and tag links. An owned record that is in the Discogs
+    collection leaves it too with from_discogs; otherwise it stays there and imports skip it."""
+    record = require_record(conn, record_id)
+    records.delete(conn, record_id)
+    if record["status"] == "owned" and record["discogs_release_id"] and record["discogs_collection_synced"]:
+        if from_discogs:
+            runner.enqueue(library_sync.REMOVE, params={"discogs_release_id": record["discogs_release_id"]})
+        else:
+            library_sync.keep_on_discogs(conn, record)
     return Response(status_code=204)
 
 

@@ -1,7 +1,7 @@
 import { api, type CubeOut, type UnitOut } from "../../api/api";
 import { cubeName, type Place } from "../../crate";
 import styles from "./crate.module.css";
-import { Inline, RecordRow, type Act, type PlaceRecord } from "./common";
+import { Inline, RecordRow, rowKey, type Act, type PlaceRecord } from "./common";
 
 export function CubePanel({ unit, cube, places, act, onPlace, onClose }: {
   unit: UnitOut; cube: CubeOut; places: Map<number, Place>; act: Act;
@@ -39,7 +39,7 @@ export function CubePanel({ unit, cube, places, act, onPlace, onClose }: {
             <p className={styles.hint}>Empty. Drag records here from Unsorted.</p>
           ) : (
             <ul className={styles.rows} aria-label={`Records in ${split ? s.name || `section ${i + 1}` : cubeName(cube)}`}>
-              {s.records.map((r) => <RecordRow key={r.id} record={r} sectionId={s.id} places={places} onPlace={onPlace} />)}
+              {s.records.map((r) => <RecordRow key={rowKey(r)} record={r} sectionId={s.id} places={places} onPlace={onPlace} />)}
             </ul>
           )}
         </div>

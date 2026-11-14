@@ -10,3 +10,7 @@
 }
 .empty h2 { font-size: 1.25rem; color: var(--ink); }
 .empty p { margin: 0; max-width: 44ch; }
+.single { min-width: 0; }
+.withAside { display: grid; gap: 24px; grid-template-columns: minmax(0, 1fr) 280px; align-items: start; }
+.withAside > section { min-width: 0; }
+@media (max-width: 1100px) { .withAside { grid-template-columns: minmax(0, 1fr); } }

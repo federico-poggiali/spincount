@@ -9,3 +9,5 @@
 .error { margin: 0; color: var(--signal-ink); }
 .toggle { display: inline-flex; align-items: center; gap: 10px; font-weight: 500; cursor: pointer; }
 .toggle input { width: 18px; height: 18px; accent-color: var(--signal); }
+.app { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; padding: 12px 14px; border: 1px solid var(--line); border-radius: var(--r-m); }
+.clientId { flex: 1 1 220px; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 0.8125rem; color: var(--ink-2); }
