@@ -27,7 +27,7 @@ test("add a record, take a note, find it by search, and see it in the vault", as
   await expect(page.getByText(/tracks? to validate/)).toBeVisible();
   await page.getByRole("button", { name: "Validate all" }).click();
   await expect(page.getByText(/tracks? to validate/)).toHaveCount(0);
-  await page.getByRole("button", { name: "Add to Discogs collection" }).click();
+  await page.getByRole("button", { name: /(Add to|In) Discogs collection/ }).click();
   await expect(page.getByTestId("job-discogs-sync").getByRole("status")).toHaveText("done");
   await expect(page.getByRole("row", { name: /Ambivalent Remix/ })).toContainText("8A (current)");
 
@@ -173,7 +173,7 @@ test("make a label: preview follows the edits, the record stays untouched, and i
   expect(record.title).toBe("7_1 12-inch Mixes");
 
   await page.goto("/records/99999/label");
-  await expect(page.getByRole("heading", { name: /isn't in your library/ })).toBeVisible();
+  await expect(page.getByRole("heading", { name: /doesn't exist, so there is no label/ })).toBeVisible();
 });
 
 test("make a label for a record that is not in the library: blank, and from a pasted link", async ({ page, request }) => {

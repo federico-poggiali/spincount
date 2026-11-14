@@ -34,3 +34,5 @@ frontend/tsconfig.tsbuildinfo
 # Local tooling
 .claude/settings.local.json
 youtube_token.json
+.venv311/
+.claude/
