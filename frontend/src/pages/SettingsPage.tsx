@@ -165,6 +165,44 @@ function LibraryAudioSection() {
           {findLibraryAudio.data.queued === 0 ? "Nothing to do: every record has been searched." : `${plural(findLibraryAudio.data.queued, "record")} queued. They run in the background; each record page shows its progress.`}
         </p>
       )}
+      <DownloadedAudio />
+    </>
+  );
+}
+
+const megabytes = (bytes: number) => `${(bytes / 1024 / 1024).toFixed(bytes < 10 * 1024 * 1024 ? 1 : 0)} MB`;
+
+/** Audio the app downloaded is only kept until the track's analysis is validated or discarded. */
+function DownloadedAudio() {
+  const client = useQueryClient();
+  const usage = useQuery({ queryKey: ["downloads"], queryFn: api.downloads });
+  const clear = useMutation({
+    mutationFn: api.clearDownloads,
+    onSuccess: (out) => {
+      client.setQueryData(["downloads"], { files: out.files, bytes: out.bytes });
+      pushToast(out.deleted === 0 ? "Nothing to clear" : `Cleared ${plural(out.deleted, "file")}, ${megabytes(out.freed_bytes)}`, "info");
+    },
+  });
+
+  return (
+    <>
+      <header>
+        <span className="micro">audio</span>
+        <h2>Downloaded audio</h2>
+      </header>
+      <p className={styles.hint}>
+        Audio the app downloads (YouTube, shop clips) is only needed to analyse a track, so it is deleted once you validate or
+        discard that analysis. Analysing the track again downloads it again. Your own files are never touched.
+      </p>
+      <p className={styles.hint} data-testid="downloads-usage">
+        {usage.data ? `${plural(usage.data.files, "file")} kept, ${megabytes(usage.data.bytes)}.` : "…"}
+      </p>
+      <div className={styles.actions}>
+        <button onClick={() => clear.mutate()} disabled={clear.isPending || usage.data?.files === 0}>
+          {clear.isPending ? "Clearing…" : "Clear downloaded audio"}
+        </button>
+      </div>
+      <p className={styles.hint}>Keeps only the files a track still needs: an analysis waiting for you, or one not run yet.</p>
     </>
   );
 }

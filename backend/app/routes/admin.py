@@ -5,11 +5,20 @@ import sys
 from fastapi import APIRouter, Depends, HTTPException, Request
 
 from app import backfill, config
+from app.audio import downloads
 from app.audio import job as audio_job
 from app.db import track_audio, track_youtube
 from app.deps import get_db, get_runner
 from app.jobs.runner import JobRunner
-from app.schemas import JobStarted, LibraryAudioStarted, OpenedPath, VaultStatus, VaultSyncOut
+from app.schemas import (
+    DownloadsCleared,
+    DownloadsUsage,
+    JobStarted,
+    LibraryAudioStarted,
+    OpenedPath,
+    VaultStatus,
+    VaultSyncOut,
+)
 from app.vault import EXAMPLES_FILE, VaultSyncer
 from app.youtube import links as youtube_links
 
@@ -59,6 +68,18 @@ def find_youtube_for_library(conn: sqlite3.Connection = Depends(get_db),
     ids = [runner.enqueue(youtube_links.JOB_TYPE, record_id)
            for record_id in track_youtube.records_without_youtube(conn)]
     return {"queued": len(ids), "job_ids": ids}
+
+
+@router.get("/downloads", response_model=DownloadsUsage)
+def downloads_usage() -> dict:
+    """How much audio the app has downloaded and still keeps (never your own files)."""
+    return downloads.usage()
+
+
+@router.post("/clear-downloads", response_model=DownloadsCleared)
+def clear_downloads(conn: sqlite3.Connection = Depends(get_db)) -> dict:
+    """Delete every download no track still needs (kept: analysis waiting for you, or never analysed)."""
+    return downloads.clear(conn)
 
 
 @router.post("/open-vault", response_model=OpenedPath)

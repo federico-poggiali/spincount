@@ -322,6 +322,16 @@ class LibraryAudioStarted(BaseModel):
     job_ids: list[int]
 
 
+class DownloadsUsage(BaseModel):
+    files: int
+    bytes: int
+
+
+class DownloadsCleared(DownloadsUsage):
+    deleted: int
+    freed_bytes: int
+
+
 class OpenedPath(BaseModel):
     opened: bool
     path: str

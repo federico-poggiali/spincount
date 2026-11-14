@@ -8,8 +8,8 @@ from fastapi.responses import FileResponse
 
 from app import config
 from app.analysis import job as analysis_job
+from app.audio import downloads, sources, stage
 from app.audio import job as audio_job
-from app.audio import sources, stage
 from app.audio.files import AUDIO_EXTENSIONS, audio_folder
 from app.audio.previews import plan_for_record
 from app.db import track_audio, tracks
@@ -26,7 +26,9 @@ MAX_UPLOAD = 1024 * 1024 * 1024  # one file
 def record_audio(record_id: int, conn: sqlite3.Connection = Depends(get_db)) -> dict:
     """What audioresearch found for each track, and which link each track plays."""
     record = require_record(conn, record_id)
-    usable, _ = analysis_job.audio_for_analysis(conn, record, tracks.list_for_record(conn, record_id))
+    all_tracks = tracks.list_for_record(conn, record_id)
+    usable, _ = analysis_job.audio_for_analysis(conn, record, all_tracks)
+    usable = set(usable) | downloads.cleaned(conn, [t["id"] for t in all_tracks])  # fetched again on analyse
     return {"tracks": list(track_audio.for_record(conn, record_id).values()),
             "previews": plan_for_record(conn, record_id), "analysable_track_ids": sorted(usable)}
 

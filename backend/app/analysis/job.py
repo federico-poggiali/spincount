@@ -57,8 +57,10 @@ def audio_for_analysis(conn: sqlite3.Connection, record: dict, all_tracks: list[
     return out, own
 
 
-def make_handler(analyze: Callable[[Path], dict] = engine.analyze,
-                 audio_dir: Path | None = None) -> Callable[[sqlite3.Connection, dict], dict]:
+def make_handler(analyze: Callable[[Path], dict] = engine.analyze, audio_dir: Path | None = None,
+                 research_fn: Callable | None = None) -> Callable[[sqlite3.Connection, dict], dict]:
+    """`research_fn` (the audio search) is used only when a track's download was deleted after an earlier
+    validation (`fetch_again`): the record is searched again first, which downloads it again."""
     def handler(conn: sqlite3.Connection, job: dict) -> dict:
         record = records.get(conn, job["record_id"])
         if record is None:
@@ -66,6 +68,10 @@ def make_handler(analyze: Callable[[Path], dict] = engine.analyze,
         params = job.get("params") or {}
         all_tracks = tracks.list_for_record(conn, record["id"])
         selected = set(params["track_ids"]) if params.get("track_ids") is not None else None
+        searched_again = None
+        if params.get("fetch_again") and research_fn is not None:
+            from app.audio import stage
+            searched_again = stage.run(conn, record, all_tracks, research_fn, refresh=True)
         audio, own = audio_for_analysis(conn, record, all_tracks, audio_dir)
 
         from_files: list[int] = []
@@ -93,6 +99,7 @@ def make_handler(analyze: Callable[[Path], dict] = engine.analyze,
             "no_data_track_ids": no_audio,
             "audio_files": own,
             "errors": errors,
+            **({"searched_again": searched_again} if searched_again is not None else {}),
         }
 
     return handler

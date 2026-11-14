@@ -6,6 +6,7 @@ from fastapi import APIRouter, Depends, HTTPException, Response
 from app import intake as intake_service
 from app import library_sync, sync
 from app.analysis import job as analysis_job
+from app.audio import downloads
 from app.audio import job as audio_job
 from app.db import _util, proposals, queries, records, settings, tracks
 from app.deps import (
@@ -161,8 +162,12 @@ def analyze(record_id: int, body: AnalyzeRequest | None = None, conn: sqlite3.Co
             raise HTTPException(400, "track_ids must be a non-empty list of tracks on this record")
         wanted = set(body.track_ids)
         params["track_ids"] = sorted(wanted)
-    if not wanted & set(analysis_job.audio_for_analysis(conn, record, all_tracks)[0]):
+    usable = set(analysis_job.audio_for_analysis(conn, record, all_tracks)[0])
+    fetch_again = downloads.cleaned(conn, sorted(wanted - usable))  # download deleted after validation
+    if not wanted & (usable | fetch_again):
         raise HTTPException(409, "no audio to analyse yet: search or upload audio first")
+    if fetch_again:
+        params["fetch_again"] = True
     return {"job_id": runner.enqueue(analysis_job.JOB_TYPE, record_id, params or None), "status": "queued"}
 
 
@@ -177,6 +182,7 @@ def validate(record_id: int, body: ValidateRequest, conn: sqlite3.Connection = D
     if not set(body.track_ids) <= set(proposals.for_record(conn, record_id)):
         raise HTTPException(400, NOT_PENDING)
     analysis_job.validate(conn, sorted(set(body.track_ids)), body.overwrite_manual)
+    downloads.release(conn, sorted(set(body.track_ids)))  # validated: the download has done its job
     return queries.record_detail(conn, record_id)
 
 
@@ -190,4 +196,5 @@ def discard(record_id: int, body: DiscardRequest | None = None,
     if not set(ids) <= set(pending):
         raise HTTPException(400, NOT_PENDING)
     proposals.delete(conn, ids)
+    downloads.release(conn, ids)
     return queries.record_detail(conn, record_id)

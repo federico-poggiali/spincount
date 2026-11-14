@@ -105,6 +105,7 @@ def make_wav(path: Path, bpm: float = 120, freqs=(220.0, 261.63, 329.63), second
 def db_path(tmp_path, monkeypatch):
     path = tmp_path / "test.db"
     monkeypatch.setattr(config, "DB_PATH", path)
+    monkeypatch.setattr(config, "AUDIO_CACHE_DIR", tmp_path / "audio_cache")  # never the real downloads
     conn = connect(path)
     migrate(conn)
     conn.close()

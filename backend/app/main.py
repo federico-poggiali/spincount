@@ -52,7 +52,7 @@ async def lifespan(app: FastAPI):
     conn.close()
     syncer = app.state.vault_syncer = VaultSyncer(config.VAULT_DIR)
     app.state.runner = JobRunner({
-        analysis_job.JOB_TYPE: analysis_job.make_handler(),
+        analysis_job.JOB_TYPE: analysis_job.make_handler(research_fn=audio_stage.research_release),
         audio_job.JOB_TYPE: audio_job.make_handler(audio_stage.research_release),
         youtube_links.JOB_TYPE: youtube_links.make_handler(),
         sync.JOB_TYPE: sync.make_handler(_discogs),

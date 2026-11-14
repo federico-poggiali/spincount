@@ -24,6 +24,46 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/admin/clear-downloads": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Clear Downloads
+         * @description Delete every download no track still needs (kept: analysis waiting for you, or never analysed).
+         */
+        post: operations["clear_downloads"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/admin/downloads": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Downloads Usage
+         * @description How much audio the app has downloaded and still keeps (never your own files).
+         */
+        get: operations["downloads_usage"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/admin/find-audio": {
         parameters: {
             query?: never;
@@ -1509,6 +1549,24 @@ export interface components {
             /** Track Ids */
             track_ids?: number[] | null;
         };
+        /** DownloadsCleared */
+        DownloadsCleared: {
+            /** Bytes */
+            bytes: number;
+            /** Deleted */
+            deleted: number;
+            /** Files */
+            files: number;
+            /** Freed Bytes */
+            freed_bytes: number;
+        };
+        /** DownloadsUsage */
+        DownloadsUsage: {
+            /** Bytes */
+            bytes: number;
+            /** Files */
+            files: number;
+        };
         /** ExactNoteHit */
         ExactNoteHit: {
             note: components["schemas"]["NoteOut"];
@@ -2722,6 +2780,46 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["JobStarted"];
+                };
+            };
+        };
+    };
+    clear_downloads: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DownloadsCleared"];
+                };
+            };
+        };
+    };
+    downloads_usage: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DownloadsUsage"];
                 };
             };
         };

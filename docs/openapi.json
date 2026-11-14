@@ -561,6 +561,52 @@
         "title": "DiscardRequest",
         "type": "object"
       },
+      "DownloadsCleared": {
+        "properties": {
+          "bytes": {
+            "title": "Bytes",
+            "type": "integer"
+          },
+          "deleted": {
+            "title": "Deleted",
+            "type": "integer"
+          },
+          "files": {
+            "title": "Files",
+            "type": "integer"
+          },
+          "freed_bytes": {
+            "title": "Freed Bytes",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "files",
+          "bytes",
+          "deleted",
+          "freed_bytes"
+        ],
+        "title": "DownloadsCleared",
+        "type": "object"
+      },
+      "DownloadsUsage": {
+        "properties": {
+          "bytes": {
+            "title": "Bytes",
+            "type": "integer"
+          },
+          "files": {
+            "title": "Files",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "files",
+          "bytes"
+        ],
+        "title": "DownloadsUsage",
+        "type": "object"
+      },
       "ExactNoteHit": {
         "properties": {
           "note": {
@@ -4186,6 +4232,50 @@
           }
         },
         "summary": "Backfill Styles",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/admin/clear-downloads": {
+      "post": {
+        "description": "Delete every download no track still needs (kept: analysis waiting for you, or never analysed).",
+        "operationId": "clear_downloads",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DownloadsCleared"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Clear Downloads",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/admin/downloads": {
+      "get": {
+        "description": "How much audio the app has downloaded and still keeps (never your own files).",
+        "operationId": "downloads_usage",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DownloadsUsage"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Downloads Usage",
         "tags": [
           "admin"
         ]

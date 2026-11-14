@@ -224,6 +224,9 @@ export const api = {
   vaultStatus: () => get<VaultStatus>("/api/admin/vault-status"),
   syncVault: () => send<VaultSyncOut>("POST", "/api/admin/sync-vault"),
   findAudioForLibrary: () => send<{ queued: number; job_ids: number[] }>("POST", "/api/admin/find-audio"),
+  downloads: () => get<{ files: number; bytes: number }>("/api/admin/downloads"),
+  clearDownloads: () =>
+    send<{ files: number; bytes: number; deleted: number; freed_bytes: number }>("POST", "/api/admin/clear-downloads"),
   findYouTubeForLibrary: () => send<{ queued: number; job_ids: number[] }>("POST", "/api/admin/find-youtube"),
   youtubeStatus: () => get<YouTubeStatus>("/api/youtube/status"),
   saveYouTubeCredentials: (client_id: string, client_secret: string) =>
